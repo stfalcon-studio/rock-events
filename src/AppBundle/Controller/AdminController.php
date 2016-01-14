@@ -15,8 +15,6 @@ class AdminController extends BaseAdminController
 
     /**
      * {@inheritdoc}
-     *
-     * @param User $user
      */
     public function prePersistUsersEntity(User $user)
     {
@@ -25,8 +23,6 @@ class AdminController extends BaseAdminController
 
     /**
      * {@inheritdoc}
-     *
-     * @param User $user
      */
     public function preUpdateUsersEntity(User $user)
     {
@@ -35,8 +31,6 @@ class AdminController extends BaseAdminController
 
     /**
      * {@inheritdoc}
-     *
-     * @param $user
      */
     public function preUpdateUserEntity($user)
     {
@@ -45,8 +39,6 @@ class AdminController extends BaseAdminController
 
     /**
      * {@inheritdoc}
-     *
-     * @return User
      */
     public function createNewUserEntity()
     {
