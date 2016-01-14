@@ -12,3 +12,5 @@ easy_admin:
                     - { property: 'plainPassword', type: 'password' }
                     - { property: 'enabled'}
                     - { property: 'locked'}
+                    - { property: 'createdAt', label: 'Created At' }
+                    - { property: 'updatedAt', label: 'Updated At' }
