@@ -17,11 +17,19 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "javiereguiluz/easyadmin-bundle": "^1.10",
+        "doctrine/migrations": "^1.2",
+        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "fresh/doctrine-enum-bundle": "v3.3",
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "ftrrtf/rollbar-bundle": "^0.14.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "symfony/phpunit-bridge": "~2.7"
+        "symfony/phpunit-bridge": "~2.7",
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "scripts": {
         "post-install-cmd": [
@@ -44,7 +52,7 @@
     "config": {
         "bin-dir": "bin",
         "platform": {
-            "php": "5.3.9"
+            "php": "5.4.0"
         }
     },
     "extra": {

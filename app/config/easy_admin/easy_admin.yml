@@ -1,0 +1,14 @@
+easy_admin:
+    entities:
+        User:
+            label: User
+            class: AppBundle\Entity\User
+            edit:
+                fields: ['username', 'email', 'enabled', 'locked']
+            new:
+                fields:
+                    - { property: 'username' }
+                    - { property: 'email', type: 'email', label: 'E-mail address' }
+                    - { property: 'plainPassword', type: 'password' }
+                    - { property: 'enabled'}
+                    - { property: 'locked'}

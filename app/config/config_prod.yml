@@ -25,3 +25,26 @@ monolog:
             level: debug
         console:
             type:  console
+
+ftrrtf_rollbar:
+    notifier:
+        server:
+            transport:
+                type: curl
+                access_token: %rollbar_server_access_token%
+            # or async
+            #    type: agent
+            #    agent_log_location: %kernel.logs_dir%/%kernel.environment%.rollbar
+        client:
+            access_token: %rollbar_client_access_token%
+            # optional
+            source_map_enabled: true
+            code_version: "some version string, such as a version number or git sha"
+            guess_uncaught_frames: true
+            rollbarjs_version: "rollbar_js_version" # i.e. v1.7, if empty then the newest available version (v1.x) will be used
+            # optional - if not passed, window.location.origin will be only allowed host
+            # allowed_js_hosts:
+            #   - http://myhost.mydomain.com
+            #   - http://myhost2.mydomain.com
+    environment:
+        environment: "%rollbar_environment%[%kernel.environment%]"
