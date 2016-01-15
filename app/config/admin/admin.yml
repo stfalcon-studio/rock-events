@@ -10,6 +10,12 @@ easy_admin:
                     - { property: 'username' }
                     - { property: 'email', type: 'email', label: 'E-mail address' }
                     - { property: 'plainPassword', type: 'password' }
+                    - { property: 'surname' }
+                    - { property: 'name' }
+                    - { property: 'county' }
+                    - { property: 'city' }
+                    - { property: 'address' }
+                    - { property: 'phone' }
                     - { property: 'enabled'}
                     - { property: 'locked'}
                     - { property: 'createdAt', label: 'Created At' }

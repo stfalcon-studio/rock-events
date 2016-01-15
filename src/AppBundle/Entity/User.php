@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User Entity
@@ -26,6 +27,62 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string $surname Surname
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="100")
+     * @Assert\Type(type="string")
+     */
+    private $surname;
+
+    /**
+     * @var string $name Name
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="100")
+     * @Assert\Type(type="string")
+     */
+    private $name;
+
+    /**
+     * @var string $county County
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @Assert\Type(type="string")
+     * @Assert\Country()
+     */
+    private $county;
+
+    /**
+     * @var string $city City
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    private $city;
+
+    /**
+     * @var string $address Address
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    private $address;
+
+    /**
+     * @var string $phone Phone
+     *
+     * @ORM\Column(type="string", length=30, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    private $phone;
 
     /**
      * Constructor
@@ -58,4 +115,148 @@ class User extends BaseUser
         return $this->credentialsExpireAt;
     }
 
+
+    /**
+     * Set surname
+     *
+     * @param string $surname
+     *
+     * @return User
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * Get surname
+     *
+     * @return string
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set county
+     *
+     * @param string $county
+     *
+     * @return User
+     */
+    public function setCounty($county)
+    {
+        $this->county = $county;
+
+        return $this;
+    }
+
+    /**
+     * Get county
+     *
+     * @return string
+     */
+    public function getCounty()
+    {
+        return $this->county;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return User
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return User
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
 }
