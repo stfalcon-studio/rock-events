@@ -24,4 +24,35 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        // By default all users are admins
+        $this->roles = ['ROLE_ADMIN'];
+    }
+
+    /**
+     * Get expires at
+     *
+     * @return \DateTime Expires at
+     */
+    public function getExpiresAt()
+    {
+        return $this->expiresAt;
+    }
+
+    /**
+     * Get credentials expire at
+     *
+     * @return \DateTime Credentials expire at
+     */
+    public function getCredentialsExpireAt()
+    {
+        return $this->credentialsExpireAt;
+    }
+
 }
