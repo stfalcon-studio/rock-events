@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -26,6 +27,14 @@ class Group
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     *
+     * @var Collection|\AppBundle\Entity\UserGroup $usersGroups Users Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="group")
+     */
+    private $usersGroups;
 
     /**
      * @var string $name Name
@@ -53,7 +62,6 @@ class Group
      * @ORM\Column(type="string", length=100, nullable=true)
      *
      * @Assert\Type(type="string")
-     * @Assert\Country()
      */
     private $country;
 
@@ -203,5 +211,46 @@ class Group
     public function getYearFoundation()
     {
         return $this->yearFoundation;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->usersGroups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add usersGroup
+     *
+     * @param \AppBundle\Entity\UserGroup $usersGroup
+     *
+     * @return Group
+     */
+    public function addUsersGroup(\AppBundle\Entity\UserGroup $usersGroup)
+    {
+        $this->usersGroups[] = $usersGroup;
+
+        return $this;
+    }
+
+    /**
+     * Remove usersGroup
+     *
+     * @param \AppBundle\Entity\UserGroup $usersGroup
+     */
+    public function removeUsersGroup(\AppBundle\Entity\UserGroup $usersGroup)
+    {
+        $this->usersGroups->removeElement($usersGroup);
+    }
+
+    /**
+     * Get usersGroups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsersGroups()
+    {
+        return $this->usersGroups;
     }
 }

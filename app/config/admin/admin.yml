@@ -4,7 +4,18 @@ easy_admin:
             label: User
             class: AppBundle\Entity\User
             edit:
-                fields: ['username', 'email', 'enabled', 'locked']
+                fields:
+                    - { property: 'username' }
+                    - { property: 'email', type: 'email', label: 'E-mail address' }
+                    - { property: 'plainPassword', type: 'password' }
+                    - { property: 'surname' }
+                    - { property: 'name' }
+                    - { property: 'county' }
+                    - { property: 'city' }
+                    - { property: 'address' }
+                    - { property: 'phone' }
+                    - { property: 'enabled'}
+                    - { property: 'locked'}
             new:
                 fields:
                     - { property: 'username' }
@@ -18,5 +29,35 @@ easy_admin:
                     - { property: 'phone' }
                     - { property: 'enabled'}
                     - { property: 'locked'}
-                    - { property: 'createdAt', label: 'Created At' }
-                    - { property: 'updatedAt', label: 'Updated At' }
+        Group:
+            label: Group
+            class: AppBundle\Entity\Group
+            list:
+                fields:
+                    - { property: name }
+                    - { property: description }
+                    - { property: country }
+                    - { property: city }
+                    - { property: yearFoundation }
+            show:
+                fields:
+                    - { property: name }
+                    - { property: description }
+                    - { property: country }
+                    - { property: city }
+                    - { property: yearFoundation }
+            new:
+                fields:
+                    - { property: name }
+                    - { property: description }
+                    - { property: country }
+                    - { property: city }
+                    - { property: yearFoundation }
+            edit:
+                fields:
+                    - { property: name }
+                    - { property: description }
+                    - { property: country }
+                    - { property: city }
+                    - { property: yearFoundation }
+
