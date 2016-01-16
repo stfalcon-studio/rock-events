@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -30,11 +30,27 @@ class Group
 
     /**
      *
-     * @var Collection|\AppBundle\Entity\UserGroup $usersGroups Users Groups
+     * @var ArrayCollection|UserGroup[] $usersGroups Users Groups
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="group")
      */
     private $usersGroups;
+
+    /**
+     * @var User $user User created by
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="groupCreatedBy")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $createdBy;
+
+    /**
+     * @var User $user User updated by
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="groupUpdatedBy")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $updatedBy;
 
     /**
      * @var string $name Name
@@ -75,7 +91,7 @@ class Group
     private $city;
 
     /**
-     * @var int $yearFoundation Year Foundation
+     * @var int $yearFoundation Year foundation
      *
      * @ORM\Column(type="integer", nullable=true)
      *
@@ -84,9 +100,17 @@ class Group
     private $yearFoundation;
 
     /**
-     * Get id
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->usersGroups = new ArrayCollection();
+    }
+
+    /**
+     * Get ID
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -96,7 +120,7 @@ class Group
     /**
      * Set name
      *
-     * @param string $name
+     * @param string $name Name
      *
      * @return Group
      */
@@ -110,7 +134,7 @@ class Group
     /**
      * Get name
      *
-     * @return string
+     * @return string Name
      */
     public function getName()
     {
@@ -120,7 +144,7 @@ class Group
     /**
      * Set description
      *
-     * @param string $description
+     * @param string $description Description
      *
      * @return Group
      */
@@ -134,7 +158,7 @@ class Group
     /**
      * Get description
      *
-     * @return string
+     * @return string Description
      */
     public function getDescription()
     {
@@ -144,7 +168,7 @@ class Group
     /**
      * Set country
      *
-     * @param string $country
+     * @param string $country Country
      *
      * @return Group
      */
@@ -158,7 +182,7 @@ class Group
     /**
      * Get country
      *
-     * @return string
+     * @return string Country
      */
     public function getCountry()
     {
@@ -168,7 +192,7 @@ class Group
     /**
      * Set city
      *
-     * @param string $city
+     * @param string $city City
      *
      * @return Group
      */
@@ -182,7 +206,7 @@ class Group
     /**
      * Get city
      *
-     * @return string
+     * @return string City
      */
     public function getCity()
     {
@@ -190,9 +214,9 @@ class Group
     }
 
     /**
-     * Set yearFoundation
+     * Set year foundation
      *
-     * @param integer $yearFoundation
+     * @param int $yearFoundation Year foundation
      *
      * @return Group
      */
@@ -204,53 +228,66 @@ class Group
     }
 
     /**
-     * Get yearFoundation
+     * Get year foundation
      *
-     * @return integer
+     * @return int Year foundation
      */
     public function getYearFoundation()
     {
         return $this->yearFoundation;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->usersGroups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add usersGroup
+     * Get users groups
      *
-     * @param \AppBundle\Entity\UserGroup $usersGroup
-     *
-     * @return Group
-     */
-    public function addUsersGroup(\AppBundle\Entity\UserGroup $usersGroup)
-    {
-        $this->usersGroups[] = $usersGroup;
-
-        return $this;
-    }
-
-    /**
-     * Remove usersGroup
-     *
-     * @param \AppBundle\Entity\UserGroup $usersGroup
-     */
-    public function removeUsersGroup(\AppBundle\Entity\UserGroup $usersGroup)
-    {
-        $this->usersGroups->removeElement($usersGroup);
-    }
-
-    /**
-     * Get usersGroups
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return UserGroup[]|ArrayCollection Users Groups
      */
     public function getUsersGroups()
     {
         return $this->usersGroups;
+    }
+
+    /**
+     * Get created by user
+     *
+     * @return User Created by user
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * Set created by user
+     *
+     * @param User $createdBy Created by user
+     *
+     * @return $this
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->createdBy = $createdBy;
+    }
+
+    /**
+     * Get updated by user
+     *
+     * @return User Updated by user
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updatedBy;
+    }
+
+    /**
+     * Set updated by user
+     *
+     * @param User $updatedBy Updated by user
+     *
+     * @return $this
+     */
+    public function setUpdatedBy($updatedBy)
+    {
+        $this->updatedBy = $updatedBy;
     }
 }

@@ -9,6 +9,6 @@ use Doctrine\ORM\EntityRepository;
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  */
-class GroupRepository extends EntityRepository
+class GenreRepository extends EntityRepository
 {
 }

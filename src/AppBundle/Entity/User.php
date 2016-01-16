@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -30,11 +30,40 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var Collection|\AppBundle\Entity\UserGroup $usersGroups Users Groups
+     * @var ArrayCollection|UserGroup[] $usersGroups Users Groups
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="user")
      */
     private $usersGroups;
+
+    /**
+     * @var ArrayCollection|Group[] $groupCreatedBy Group created by
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Group", mappedBy="createdBy")
+     */
+    private $groupCreatedBy;
+
+    /**
+     * @var ArrayCollection|Group[] $groupUpdatedBy Group updated by
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Group", mappedBy="updatedBy")
+     */
+    private $groupUpdatedBy;
+
+    /**
+     * @var ArrayCollection|Genre[] $genreCreatedBy Genre created by
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Genre", mappedBy="createdBy")
+     */
+    private $genreCreatedBy;
+
+    /**
+     * @var ArrayCollection|Genre[] $genreUpdatedBy Genre updated by
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Genre", mappedBy="updatedBy")
+     */
+    private $genreUpdatedBy;
+
 
     /**
      * @var string $surname Surname
@@ -126,7 +155,7 @@ class User extends BaseUser
     /**
      * Set surname
      *
-     * @param string $surname
+     * @param string $surname Surname
      *
      * @return User
      */
@@ -140,7 +169,7 @@ class User extends BaseUser
     /**
      * Get surname
      *
-     * @return string
+     * @return string Surname
      */
     public function getSurname()
     {
@@ -150,7 +179,7 @@ class User extends BaseUser
     /**
      * Set name
      *
-     * @param string $name
+     * @param string $name Name
      *
      * @return User
      */
@@ -164,7 +193,7 @@ class User extends BaseUser
     /**
      * Get name
      *
-     * @return string
+     * @return string Name
      */
     public function getName()
     {
@@ -174,7 +203,7 @@ class User extends BaseUser
     /**
      * Set county
      *
-     * @param string $county
+     * @param string $county Country
      *
      * @return User
      */
@@ -188,7 +217,7 @@ class User extends BaseUser
     /**
      * Get county
      *
-     * @return string
+     * @return string Country
      */
     public function getCounty()
     {
@@ -198,7 +227,7 @@ class User extends BaseUser
     /**
      * Set city
      *
-     * @param string $city
+     * @param string $city City
      *
      * @return User
      */
@@ -212,7 +241,7 @@ class User extends BaseUser
     /**
      * Get city
      *
-     * @return string
+     * @return string City
      */
     public function getCity()
     {
@@ -222,7 +251,7 @@ class User extends BaseUser
     /**
      * Set address
      *
-     * @param string $address
+     * @param string $address Address
      *
      * @return User
      */
@@ -236,7 +265,7 @@ class User extends BaseUser
     /**
      * Get address
      *
-     * @return string
+     * @return string Address
      */
     public function getAddress()
     {
@@ -246,7 +275,7 @@ class User extends BaseUser
     /**
      * Set phone
      *
-     * @param string $phone
+     * @param string $phone Phone
      *
      * @return User
      */
@@ -260,7 +289,7 @@ class User extends BaseUser
     /**
      * Get phone
      *
-     * @return string
+     * @return string Phone
      */
     public function getPhone()
     {
@@ -268,36 +297,53 @@ class User extends BaseUser
     }
 
     /**
-     * Add usersGroup
+     * Get users groups
      *
-     * @param \AppBundle\Entity\UserGroup $usersGroup
-     *
-     * @return User
-     */
-    public function addUsersGroup(\AppBundle\Entity\UserGroup $usersGroup)
-    {
-        $this->usersGroups[] = $usersGroup;
-
-        return $this;
-    }
-
-    /**
-     * Remove usersGroup
-     *
-     * @param \AppBundle\Entity\UserGroup $usersGroup
-     */
-    public function removeUsersGroup(\AppBundle\Entity\UserGroup $usersGroup)
-    {
-        $this->usersGroups->removeElement($usersGroup);
-    }
-
-    /**
-     * Get usersGroups
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return UserGroup[]|ArrayCollection Users Groups
      */
     public function getUsersGroups()
     {
         return $this->usersGroups;
     }
+
+    /**
+     * Get group created by
+     *
+     * @return Group[]|ArrayCollection Group created by
+     */
+    public function getGroupCreatedBy()
+    {
+        return $this->groupCreatedBy;
+    }
+
+    /**
+     * Get group updated by
+     *
+     * @return Group[]|ArrayCollection Group updated by
+     */
+    public function getGroupUpdatedBy()
+    {
+        return $this->groupUpdatedBy;
+    }
+
+    /**
+     * Get genre created by
+     *
+     * @return Genre[]|ArrayCollection Genre created by
+     */
+    public function getGenreCreatedBy()
+    {
+        return $this->genreCreatedBy;
+    }
+
+    /**
+     * Get genre updated by
+     *
+     * @return Genre[]|ArrayCollection Genre updated by
+     */
+    public function getGenreUpdatedBy()
+    {
+        return $this->genreUpdatedBy;
+    }
+
 }

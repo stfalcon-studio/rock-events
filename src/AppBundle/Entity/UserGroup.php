@@ -7,7 +7,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * User Group Preference Entity
+ * User Group Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  *
@@ -29,7 +29,7 @@ class UserGroup
 
 
     /**
-     * @var \AppBundle\Entity\User $user User
+     * @var User $user User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="usersGroups")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
@@ -38,7 +38,7 @@ class UserGroup
     private $user;
 
     /**
-     * @var \AppBundle\Entity\Group $group Group
+     * @var Group $group Group
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="usersGroups")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
@@ -47,9 +47,9 @@ class UserGroup
     private $group;
 
     /**
-     * Get id
+     * Get ID
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -59,11 +59,11 @@ class UserGroup
     /**
      * Set user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
      *
      * @return UserGroup
      */
-    public function setUser(\AppBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
 
@@ -73,7 +73,7 @@ class UserGroup
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -83,11 +83,11 @@ class UserGroup
     /**
      * Set group
      *
-     * @param \AppBundle\Entity\Group $group
+     * @param Group $group Group
      *
      * @return UserGroup
      */
-    public function setGroup(\AppBundle\Entity\Group $group)
+    public function setGroup(Group $group)
     {
         $this->group = $group;
 
@@ -97,7 +97,7 @@ class UserGroup
     /**
      * Get group
      *
-     * @return \AppBundle\Entity\Group
+     * @return Group
      */
     public function getGroup()
     {

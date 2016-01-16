@@ -60,4 +60,7 @@ easy_admin:
                     - { property: country }
                     - { property: city }
                     - { property: yearFoundation }
+        Genre:
+            label: Genre
+            class: AppBundle\Entity\Genre
 
