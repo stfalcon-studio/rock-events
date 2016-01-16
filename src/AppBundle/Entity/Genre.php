@@ -37,6 +37,14 @@ class Genre
     private $usersGenres;
 
     /**
+     *
+     * @var ArrayCollection|GroupGenre[] $groupsGenres Group Genres
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\GroupGenre", mappedBy="genre")
+     */
+    private $groupsGenres;
+
+    /**
      * @var User $user User created by
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="genreCreatedBy")
@@ -153,6 +161,16 @@ class Genre
     public function getUsersGenres()
     {
         return $this->usersGenres;
+    }
+
+    /**
+     * Get groups genres
+     *
+     * @return GroupGenre[]|ArrayCollection Groups Genres
+     */
+    public function getGroupsGenres()
+    {
+        return $this->groupsGenres;
     }
 
 }
