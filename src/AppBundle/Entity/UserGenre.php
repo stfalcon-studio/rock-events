@@ -7,14 +7,14 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * User Group Entity
+ * User Genre Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  *
- * @ORM\Table(name="users_groups")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserGroupRepository")
+ * @ORM\Table(name="users_genres")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserGenreRepository")
  */
-class UserGroup
+class UserGenre
 {
     use TimestampableEntity;
 
@@ -30,43 +30,29 @@ class UserGroup
     /**
      * @var User $user User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="usersGroups")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="usersGenres")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotBlank()
      */
     private $user;
 
     /**
-     * @var Group $group Group
+     * @var Genre $genre Genre
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="usersGroups")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Genre", inversedBy="usersGenres")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotBlank()
      */
-    private $group;
+    private $genre;
 
     /**
      * Get ID
      *
-     * @return int $id ID
+     * @return int
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set user
-     *
-     * @param User $user User
-     *
-     * @return UserGroup
-     */
-    public function setUser(User $user)
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     /**
@@ -80,26 +66,42 @@ class UserGroup
     }
 
     /**
-     * Set group
+     * Set user
      *
-     * @param Group $group Group
+     * @param User $user User
      *
-     * @return UserGroup
+     * @return UserGenre
      */
-    public function setGroup(Group $group)
+    public function setUser($user)
     {
-        $this->group = $group;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get group
+     * Get user
      *
-     * @return Group
+     * @return Genre
      */
-    public function getGroup()
+    public function getGenre()
     {
-        return $this->group;
+        return $this->genre;
     }
+
+    /**
+     * Set user
+     *
+     * @param Genre $genre Genre
+     *
+     * @return Genre
+     */
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+
 }

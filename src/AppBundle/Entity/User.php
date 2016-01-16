@@ -37,6 +37,13 @@ class User extends BaseUser
     private $usersGroups;
 
     /**
+     * @var ArrayCollection|UserGenre[] $usersGenres Users Genres
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGenre", mappedBy="user")
+     */
+    private $usersGenres;
+
+    /**
      * @var ArrayCollection|Group[] $groupCreatedBy Group created by
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Group", mappedBy="createdBy")
@@ -63,7 +70,6 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Genre", mappedBy="updatedBy")
      */
     private $genreUpdatedBy;
-
 
     /**
      * @var string $surname Surname
@@ -304,6 +310,16 @@ class User extends BaseUser
     public function getUsersGroups()
     {
         return $this->usersGroups;
+    }
+
+    /**
+     * Get users genres
+     *
+     * @return UserGenre[]|ArrayCollection Users Genres
+     */
+    public function getUsersGenres()
+    {
+        return $this->usersGenres;
     }
 
     /**
