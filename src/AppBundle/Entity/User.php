@@ -72,6 +72,20 @@ class User extends BaseUser
     private $genreUpdatedBy;
 
     /**
+     * @var ArrayCollection|Event[] $eventCreatedBy Event created by
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="createdBy")
+     */
+    private $eventCreatedBy;
+
+    /**
+     * @var ArrayCollection|Event[] $eventUpdatedBy Event updated by
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="updatedBy")
+     */
+    private $eventUpdatedBy;
+
+    /**
      * @var string $surname Surname
      *
      * @ORM\Column(type="string", length=100, nullable=false)
@@ -360,6 +374,26 @@ class User extends BaseUser
     public function getGenreUpdatedBy()
     {
         return $this->genreUpdatedBy;
+    }
+
+    /**
+     * Get event created by
+     *
+     * @return Event[]|ArrayCollection Event created by
+     */
+    public function getEventCreatedBy()
+    {
+        return $this->eventCreatedBy;
+    }
+
+    /**
+     * Get event updated by
+     *
+     * @return Event[]|ArrayCollection Event updated by
+     */
+    public function getEventUpdatedBy()
+    {
+        return $this->eventUpdatedBy;
     }
 
 }
