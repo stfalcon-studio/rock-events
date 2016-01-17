@@ -47,7 +47,7 @@ class Group
     /**
      * @var User $user User created by
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="groupCreatedBy")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="groupsCreatedBy")
      * @ORM\JoinColumn(nullable=true)
      */
     private $createdBy;
@@ -55,7 +55,7 @@ class Group
     /**
      * @var User $user User updated by
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="groupUpdatedBy")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="groupsUpdatedBy")
      * @ORM\JoinColumn(nullable=true)
      */
     private $updatedBy;

@@ -47,7 +47,7 @@ class Genre
     /**
      * @var User $user User created by
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="genreCreatedBy")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="genresCreatedBy")
      * @ORM\JoinColumn(nullable=true)
      */
     private $createdBy;
@@ -55,7 +55,7 @@ class Genre
     /**
      * @var User $user User updated by
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="genreUpdatedBy")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="genresUpdatedBy")
      * @ORM\JoinColumn(nullable=true)
      */
     private $updatedBy;

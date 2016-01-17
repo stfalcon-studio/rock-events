@@ -44,46 +44,53 @@ class User extends BaseUser
     private $usersGenres;
 
     /**
-     * @var ArrayCollection|Group[] $groupCreatedBy Group created by
+     * @var ArrayCollection|Group[] $groupsCreatedBy Group created by
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Group", mappedBy="createdBy")
      */
-    private $groupCreatedBy;
+    private $groupsCreatedBy;
 
     /**
-     * @var ArrayCollection|Group[] $groupUpdatedBy Group updated by
+     * @var ArrayCollection|Group[] $groupsUpdatedBy Group updated by
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Group", mappedBy="updatedBy")
      */
-    private $groupUpdatedBy;
+    private $groupsUpdatedBy;
 
     /**
-     * @var ArrayCollection|Genre[] $genreCreatedBy Genre created by
+     * @var ArrayCollection|Genre[] $genresCreatedBy Genre created by
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Genre", mappedBy="createdBy")
      */
-    private $genreCreatedBy;
+    private $genresCreatedBy;
 
     /**
-     * @var ArrayCollection|Genre[] $genreUpdatedBy Genre updated by
+     * @var ArrayCollection|Genre[] $genresUpdatedBy Genre updated by
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Genre", mappedBy="updatedBy")
      */
-    private $genreUpdatedBy;
+    private $genresUpdatedBy;
 
     /**
-     * @var ArrayCollection|Event[] $eventCreatedBy Event created by
+     * @var ArrayCollection|Event[] $eventsCreatedBy Event created by
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="createdBy")
      */
-    private $eventCreatedBy;
+    private $eventsCreatedBy;
 
     /**
-     * @var ArrayCollection|Event[] $eventUpdatedBy Event updated by
+     * @var ArrayCollection|Event[] $eventsUpdatedBy Event updated by
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="updatedBy")
      */
-    private $eventUpdatedBy;
+    private $eventsUpdatedBy;
+
+    /**
+     * @var ArrayCollection|Ticket[] $tickets Ticket
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="user")
+     */
+    private $tickets;
 
     /**
      * @var string $surname Surname
@@ -337,63 +344,73 @@ class User extends BaseUser
     }
 
     /**
-     * Get group created by
+     * Get groups created by
      *
      * @return Group[]|ArrayCollection Group created by
      */
     public function getGroupCreatedBy()
     {
-        return $this->groupCreatedBy;
+        return $this->groupsCreatedBy;
     }
 
     /**
-     * Get group updated by
+     * Get groups updated by
      *
      * @return Group[]|ArrayCollection Group updated by
      */
     public function getGroupUpdatedBy()
     {
-        return $this->groupUpdatedBy;
+        return $this->groupsUpdatedBy;
     }
 
     /**
-     * Get genre created by
+     * Get genres created by
      *
      * @return Genre[]|ArrayCollection Genre created by
      */
     public function getGenreCreatedBy()
     {
-        return $this->genreCreatedBy;
+        return $this->genresCreatedBy;
     }
 
     /**
-     * Get genre updated by
+     * Get genres updated by
      *
      * @return Genre[]|ArrayCollection Genre updated by
      */
     public function getGenreUpdatedBy()
     {
-        return $this->genreUpdatedBy;
+        return $this->genresUpdatedBy;
     }
 
     /**
-     * Get event created by
+     * Get events created by
      *
      * @return Event[]|ArrayCollection Event created by
      */
     public function getEventCreatedBy()
     {
-        return $this->eventCreatedBy;
+        return $this->eventsCreatedBy;
     }
 
     /**
-     * Get event updated by
+     * Get events updated by
      *
      * @return Event[]|ArrayCollection Event updated by
      */
     public function getEventUpdatedBy()
     {
-        return $this->eventUpdatedBy;
+        return $this->eventsUpdatedBy;
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return Ticket[]|ArrayCollection Tickets
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 
 }

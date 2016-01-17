@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,9 +29,16 @@ class Event
     private $id;
 
     /**
+    * @var ArrayCollection|Ticket[] $tickets Ticket
+    *
+    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="user")
+    */
+    private $tickets;
+
+    /**
      * @var User $user User created by
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="eventCreatedBy")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="eventsCreatedBy")
      * @ORM\JoinColumn(nullable=true)
      */
     private $createdBy;
@@ -38,7 +46,7 @@ class Event
     /**
      * @var User $user User updated by
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="eventUpdatedBy")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="eventsUpdatedBy")
      * @ORM\JoinColumn(nullable=true)
      */
     private $updatedBy;
@@ -336,5 +344,15 @@ class Event
     public function getUpdatedBy()
     {
         return $this->updatedBy;
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return Ticket[]|ArrayCollection Tickets
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 }
