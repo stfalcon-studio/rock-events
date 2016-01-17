@@ -31,9 +31,16 @@ class Event
     /**
     * @var ArrayCollection|Ticket[] $tickets Ticket
     *
-    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="user")
+    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="event")
     */
     private $tickets;
+
+    /**
+     * @var ArrayCollection|EventGroup[] $eventsGroups Events Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="event")
+     */
+    private $eventsGroups;
 
     /**
      * @var User $user User created by
@@ -354,5 +361,15 @@ class Event
     public function getTickets()
     {
         return $this->tickets;
+    }
+
+    /**
+     * Get events groups
+     *
+     * @return EventGroup[]|ArrayCollection Events Groups
+     */
+    public function getEventsGroups()
+    {
+        return $this->eventsGroups;
     }
 }
