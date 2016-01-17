@@ -4,13 +4,20 @@ easy_admin:
             label: User
             class: AppBundle\Entity\User
             edit:
-                fields: ['username', 'email', 'enabled', 'locked']
+                fields:
+                    - { property: 'username' }
+                    - { property: 'email' }
+                    - { property: 'enabled' }
+            list:
+                fields:
+                    - { property: 'username' }
+                    - { property: 'email' }
+                    - { property: 'enabled' }
+                    - { property: 'createdAt' }
+                    - { property: 'updatedAt' }
             new:
                 fields:
                     - { property: 'username' }
                     - { property: 'email', type: 'email', label: 'E-mail address' }
                     - { property: 'plainPassword', type: 'password' }
-                    - { property: 'enabled'}
-                    - { property: 'locked'}
-                    - { property: 'createdAt', label: 'Created At' }
-                    - { property: 'updatedAt', label: 'Updated At' }
+                    - { property: 'enabled' }
