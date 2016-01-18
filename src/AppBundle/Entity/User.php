@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -26,6 +27,13 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var ArrayCollection|UserGenre[] $usersGenres Users Genres
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGenre", mappedBy="user")
+     */
+    private $usersGenres;
 
     /**
      * Constructor
@@ -56,5 +64,15 @@ class User extends BaseUser
     public function getCredentialsExpireAt()
     {
         return $this->credentialsExpireAt;
+    }
+
+    /**
+     * Get users genres
+     *
+     * @return ArrayCollection|UserGenre[] Users Genres
+     */
+    public function getUsersGenres()
+    {
+        return $this->usersGenres;
     }
 }
