@@ -2,9 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use AppBundle\Entity\BlameableEntityTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -29,6 +29,14 @@ class Group
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     *
+     * @var ArrayCollection|GroupGenre[] $groupsGenres Users Genres
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\GroupGenre", mappedBy="group")
+     */
+    private $groupsGenres;
 
     /**
      * @var string $name Name
@@ -139,5 +147,15 @@ class Group
     public function getFoundedAt()
     {
         return $this->foundedAt;
+    }
+
+    /**
+     * Get groups genres
+     *
+     * @return ArrayCollection|GroupGenre[] Groups Genres
+     */
+    public function getGroupsGenres()
+    {
+        return $this->groupsGenres;
     }
 }
