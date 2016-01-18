@@ -66,6 +66,7 @@ class GroupGenre
     public function setGroup(Group $group)
     {
         $this->group = $group;
+
         return $this;
     }
 
@@ -89,6 +90,7 @@ class GroupGenre
     public function setGenre(Genre $genre)
     {
         $this->genre = $genre;
+
         return $this;
     }
 

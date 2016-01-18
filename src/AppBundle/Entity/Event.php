@@ -151,6 +151,7 @@ class Event
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -174,6 +175,7 @@ class Event
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -197,6 +199,7 @@ class Event
     public function setCountry($country)
     {
         $this->country = $country;
+
         return $this;
     }
 
@@ -220,6 +223,7 @@ class Event
     public function setCity($city)
     {
         $this->city = $city;
+
         return $this;
     }
 
@@ -243,6 +247,7 @@ class Event
     public function setAddress($address)
     {
         $this->address = $address;
+
         return $this;
     }
 
@@ -266,6 +271,7 @@ class Event
     public function setBeginAt($beginAt)
     {
         $this->beginAt = $beginAt;
+
         return $this;
     }
 
@@ -289,6 +295,7 @@ class Event
     public function setEndAt($endAt)
     {
         $this->endAt = $endAt;
+
         return $this;
     }
 
@@ -312,6 +319,7 @@ class Event
     public function setDuration($duration)
     {
         $this->duration = $duration;
+
         return $this;
     }
 

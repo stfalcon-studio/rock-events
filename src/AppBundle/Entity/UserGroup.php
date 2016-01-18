@@ -67,6 +67,7 @@ class UserGroup
     public function setUser(User $user)
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -90,6 +91,7 @@ class UserGroup
     public function setGroup(Group $group)
     {
         $this->group = $group;
+        
         return $this;
     }
 
