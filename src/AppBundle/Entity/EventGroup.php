@@ -67,6 +67,7 @@ class EventGroup
     public function setEvent(Event $event)
     {
         $this->event = $event;
+
         return $this;
     }
 
@@ -90,6 +91,7 @@ class EventGroup
     public function setGroup(Group $group)
     {
         $this->group = $group;
+
         return $this;
     }
 

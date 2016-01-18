@@ -61,9 +61,9 @@ class Genre
     private $name;
 
     /**
-     * Get id
+     * Get ID
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -80,6 +80,7 @@ class Genre
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 

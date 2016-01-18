@@ -77,6 +77,7 @@ class UserGenre
     public function setUser($user)
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -100,6 +101,7 @@ class UserGenre
     public function setGenre($genre)
     {
         $this->genre = $genre;
+
         return $this;
     }
 }

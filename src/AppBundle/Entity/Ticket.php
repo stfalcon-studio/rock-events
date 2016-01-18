@@ -77,6 +77,7 @@ class Ticket
     public function setPrice($price)
     {
         $this->price = $price;
+
         return $this;
     }
 
@@ -100,6 +101,7 @@ class Ticket
     public function setUser(User $user)
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -123,6 +125,7 @@ class Ticket
     public function setEvent(Event $event)
     {
         $this->event = $event;
+
         return $this;
     }
 
