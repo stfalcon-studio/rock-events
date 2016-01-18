@@ -30,7 +30,7 @@ class EventGroup
     /**
      * @var Event $event Event
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="eventsGroups")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="eventGroups")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
@@ -40,7 +40,7 @@ class EventGroup
     /**
      * @var Group $group Group
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="eventsGroups")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="eventGroups")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()

@@ -43,6 +43,13 @@ class User extends BaseUser
     private $userGroups;
 
     /**
+     * @var ArrayCollection|Ticket[] $tickets Ticket
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="user")
+     */
+    private $tickets;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -74,9 +81,26 @@ class User extends BaseUser
     }
 
     /**
-     * Get users genres
+     * Set user genres
      *
-     * @return ArrayCollection|UserGenre[] Users Genres
+     * @param ArrayCollection|UserGenre[] $userGenres User Genre
+     *
+     * @return $this
+     */
+    public function setUserGenres(ArrayCollection $userGenres)
+    {
+        foreach ($userGenres as $userGenre) {
+            $userGenre->setUser($this);
+        }
+        $this->userGenres = $userGenres;
+
+        return $this;
+    }
+
+    /**
+     * Get user genres
+     *
+     * @return ArrayCollection|UserGenre[] User Genres
      */
     public function getUserGenres()
     {
@@ -84,12 +108,56 @@ class User extends BaseUser
     }
 
     /**
-     * Get users groups
+     * Set user groups
      *
-     * @return ArrayCollection|UserGroup[] Users Groups
+     * @param ArrayCollection|UserGroup[] $userGroups User Groups
+     *
+     * @return $this
+     */
+    public function setUserGroups(ArrayCollection $userGroups)
+    {
+        foreach ($userGroups as $userGroup) {
+            $userGroup->setUser($this);
+        }
+        $this->userGroups = $userGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get user groups
+     *
+     * @return ArrayCollection|UserGroup[] User Groups
      */
     public function getUserGroups()
     {
         return $this->userGroups;
+    }
+
+    /**
+     * Set Ticket
+     *
+     * @param ArrayCollection|Ticket[] $tickets Ticket
+     *
+     * @return $this
+     */
+    public function setTickets(ArrayCollection $tickets)
+    {
+        foreach ($tickets as $ticket) {
+            $ticket->setUser($this);
+        }
+        $this->tickets = $tickets;
+
+        return $this;
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return ArrayCollection|Ticket[] Tickets
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 }

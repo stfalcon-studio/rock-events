@@ -40,7 +40,7 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
             ->setFoundedAt(2003)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
-
+        $this->setReference('group-enter-shikari', $group1);
         $manager->persist($group1);
 
         $group2 = (new Group())
@@ -49,6 +49,7 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
             ->setFoundedAt(2004)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
+        $this->setReference('group-bmth', $group2);
         $manager->persist($group2);
 
         $group3 = (new Group())
@@ -57,6 +58,7 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
             ->setFoundedAt(2009)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
+        $this->setReference('group-jinjer', $group3);
         $manager->persist($group3);
 
         $manager->flush();

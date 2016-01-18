@@ -35,7 +35,7 @@ class Genre
 
     /**
      *
-     * @var ArrayCollection|UserGenre[] $userGenre Users Genres
+     * @var ArrayCollection|UserGenre[] $userGenre User Genres
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGenre", mappedBy="genre")
      */
@@ -94,9 +94,26 @@ class Genre
     }
 
     /**
-     * Get groups genres
+     * Set group genres
      *
-     * @return ArrayCollection|GroupGenre[] Groups Genres
+     * @param ArrayCollection|GroupGenre[] $groupGenres Group Genres
+     *
+     * @return $this
+     */
+    public function setGroupGenres(ArrayCollection $groupGenres)
+    {
+        foreach ($groupGenres as $groupGenre) {
+            $groupGenre->setGenre($this);
+        }
+        $this->groupGenres = $groupGenres;
+
+        return $this;
+    }
+
+    /**
+     * Get group genres
+     *
+     * @return ArrayCollection|GroupGenre[] Group Genres
      */
     public function getGroupGenres()
     {
@@ -104,9 +121,26 @@ class Genre
     }
 
     /**
-     * Get users genres
+     * Set user genres
      *
-     * @return ArrayCollection|UserGenre[] Users Genres
+     * @param ArrayCollection|UserGenre[] $userGenre User Genres
+     *
+     * @return $this
+     */
+    public function setUserGenres(ArrayCollection $userGenres)
+    {
+        foreach ($userGenres as $userGenre) {
+            $userGenre->setGenre($this);
+        }
+        $this->userGenres = $userGenres;
+
+        return $this;
+    }
+
+    /**
+     * Get user genres
+     *
+     * @return ArrayCollection|UserGenre[] User Genres
      */
     public function getUserGenres()
     {

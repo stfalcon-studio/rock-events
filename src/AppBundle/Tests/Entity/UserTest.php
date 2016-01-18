@@ -2,12 +2,17 @@
 
 namespace AppBundle\Tests\Entity;
 
+use AppBundle\Entity\Ticket;
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserGenre;
+use AppBundle\Entity\UserGroup;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * UserTest
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
+ * @author Yevgeniy Zholkevskiy <blackbullet@i.ia>
  */
 class UserTest extends \PHPUnit_Framework_TestCase
 {
@@ -55,5 +60,61 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $user = (new User())->setUpdatedAt($now);
         $this->assertEquals($now, $user->getUpdatedAt());
+    }
+
+    /**
+     * Test setter and getter for Expires At
+     */
+    public function testSetGetExpiresAt()
+    {
+        $dateTime = new \DateTime();
+        $user     = (new User())->setExpiresAt($dateTime);
+        $this->assertEquals($dateTime, $user->getExpiresAt());
+    }
+
+    /**
+     * Test setter and getter for Credentials Expire At
+     */
+    public function testSetGetCredentialsExpireAt()
+    {
+        $dateTime = new \DateTime();
+        $user     = (new User())->setCredentialsExpireAt($dateTime);
+        $this->assertEquals($dateTime, $user->getCredentialsExpireAt());
+    }
+
+    /**
+     * Test getter for Users Groups collection
+     */
+    public function testGetSetUsersGroupsCollection()
+    {
+        $userGroups = new ArrayCollection();
+        $userGroups->add(new UserGroup());
+        $user = (new User())->setUserGroups($userGroups);
+        $this->assertEquals(1, $user->getUserGroups()->count());
+        $this->assertEquals($userGroups, $user->getUserGroups());
+    }
+
+    /**
+     * Test getter for Users Genres collection
+     */
+    public function testGetSetUsersGenresCollection()
+    {
+        $userGenres = new ArrayCollection();
+        $userGenres->add(new UserGenre());
+        $user = (new User())->setUserGenres($userGenres);
+        $this->assertEquals(1, $user->getUserGenres()->count());
+        $this->assertEquals($userGenres, $user->getUserGenres());
+    }
+
+    /**
+     * Test getter for Tickets collection
+     */
+    public function testGetTicketsCollection()
+    {
+        $tickets = new ArrayCollection();
+        $tickets->add(new Ticket());
+        $user = (new User())->setTickets($tickets);
+        $this->assertEquals(1, $user->getTickets()->count());
+        $this->assertEquals($tickets, $user->getTickets());
     }
 }

@@ -6,7 +6,6 @@ use AppBundle\Entity\Event;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * LoadEventData
@@ -46,6 +45,7 @@ class LoadEventData extends AbstractFixture implements DependentFixtureInterface
             ->setDuration(64)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
+        $this->setReference('event-zaxid', $event1);
         $manager->persist($event1);
 
         $event2 = (new Event())
@@ -59,6 +59,7 @@ class LoadEventData extends AbstractFixture implements DependentFixtureInterface
             ->setDuration(3)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
+        $this->setReference('event-bmth', $event2);
         $manager->persist($event2);
 
         $event3 = (new Event())
@@ -72,6 +73,7 @@ class LoadEventData extends AbstractFixture implements DependentFixtureInterface
             ->setDuration(3)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
+        $this->setReference('event-torvald', $event3);
         $manager->persist($event3);
 
         $manager->flush();

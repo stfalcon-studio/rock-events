@@ -67,7 +67,7 @@ class Group
     private $description;
 
     /**
-     * @var int $foundedAt Year foundation
+     * @var int $foundedAt founded at
      *
      * @ORM\Column(type="integer", nullable=true)
      *
@@ -134,9 +134,9 @@ class Group
     }
 
     /**
-     * Set year foundation
+     * Set founded at
      *
-     * @param int $foundedAt Year foundation
+     * @param int $foundedAt founded at
      *
      * @return Group
      */
@@ -158,9 +158,26 @@ class Group
     }
 
     /**
-     * Get groups genres
+     * Set group genres
      *
-     * @return ArrayCollection|GroupGenre[] Groups Genres
+     * @param ArrayCollection|GroupGenre[] $groupGenre Group Genres
+     *
+     * @return $this
+     */
+    public function setGroupGenres(ArrayCollection $groupGenres)
+    {
+        foreach ($groupGenres as $groupGenre) {
+            $groupGenre->setGroup($this);
+        }
+        $this->groupGenres = $groupGenres;
+
+        return $this;
+    }
+
+    /**
+     * Get group genres
+     *
+     * @return ArrayCollection|GroupGenre[] Group Genres
      */
     public function getGroupGenres()
     {
@@ -168,9 +185,26 @@ class Group
     }
 
     /**
-     * Get users groups
+     * Set user groups
      *
-     * @return ArrayCollection|UserGroup[] Users Groups
+     * @param ArrayCollection|UserGroup[] $userGroups User Group
+     *
+     * @return $this
+     */
+    public function setUserGroups(ArrayCollection $userGroups)
+    {
+        foreach ($userGroups as $userGroup) {
+            $userGroup->setGroup($this);
+        }
+        $this->userGroups = $userGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get user groups
+     *
+     * @return ArrayCollection|UserGroup[] User Groups
      */
     public function getUserGroups()
     {

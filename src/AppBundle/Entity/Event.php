@@ -2,9 +2,11 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Event Entity
  *
@@ -27,6 +29,20 @@ class Event
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var ArrayCollection|Ticket[] $tickets Ticket
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="event")
+     */
+    private $tickets;
+
+    /**
+     * @var ArrayCollection|EventGroup[] $eventGroups Event Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="event")
+     */
+    private $eventGroups;
 
     /**
      * @var string $name Name
@@ -89,6 +105,15 @@ class Event
     private $beginAt;
 
     /**
+     * @var \DateTime $endAt End At
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @Assert\DateTime()
+     */
+    private $endAt;
+
+    /**
      * @var float $duration
      *
      * @ORM\Column(type="float", nullable=true)
@@ -98,13 +123,13 @@ class Event
     private $duration;
 
     /**
-     * @var \DateTime $endAt End At
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @Assert\DateTime()
+     * Constructor
      */
-    private $endAt;
+    public function __construct()
+    {
+        $this->tickets     = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventGroups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get ID
@@ -232,9 +257,9 @@ class Event
     }
 
     /**
-     * Set begin At
+     * Set begin at
      *
-     * @param \DateTime $beginAt Begin At
+     * @param \DateTime $beginAt Begin at
      *
      * @return Event
      */
@@ -247,7 +272,7 @@ class Event
     /**
      * Get begin at
      *
-     * @return \DateTime Begin At
+     * @return \DateTime Begin at
      */
     public function getBeginAt()
     {
@@ -257,7 +282,7 @@ class Event
     /**
      * Set end at
      *
-     * @param \DateTime $endAt End At
+     * @param \DateTime $endAt End at
      *
      * @return Event
      */
@@ -270,7 +295,7 @@ class Event
     /**
      * Get end at
      *
-     * @return \DateTime End At
+     * @return \DateTime End at
      */
     public function getEndAt()
     {
@@ -298,5 +323,59 @@ class Event
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * Set tickets
+     *
+     * @param ArrayCollection|Ticket[] $tickets Ticket
+     *
+     * @return $this
+     */
+    public function setTickets(ArrayCollection $tickets)
+    {
+        foreach ($tickets as $ticket) {
+            $ticket->setEvent($this);
+        }
+        $this->tickets = $tickets;
+
+        return $this;
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return ArrayCollection|Ticket[] Tickets
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+
+    /**
+     * Set event groups
+     *
+     * @param ArrayCollection|EventGroup[] $eventGroups Event Groups
+     *
+     * @return $this
+     */
+    public function setEventGroups(ArrayCollection $eventGroups)
+    {
+        foreach ($eventGroups as $eventGroup) {
+            $eventGroup->setEvent($this);
+        }
+        $this->eventGroups = $eventGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get event groups
+     *
+     * @return ArrayCollection|EventGroup[] Event Groups
+     */
+    public function getEventGroups()
+    {
+        return $this->eventGroups;
     }
 }
