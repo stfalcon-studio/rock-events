@@ -39,6 +39,14 @@ class Group
     private $groupsGenres;
 
     /**
+     *
+     * @var ArrayCollection|UserGroup[] $usersGroups Users Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="group")
+     */
+    private $usersGroups;
+
+    /**
      * @var string $name Name
      *
      * @ORM\Column(type="string", length=100, nullable=false)
@@ -157,5 +165,15 @@ class Group
     public function getGroupsGenres()
     {
         return $this->groupsGenres;
+    }
+
+    /**
+     * Get users groups
+     *
+     * @return ArrayCollection|UserGroup[] Users Groups
+     */
+    public function getUsersGroups()
+    {
+        return $this->usersGroups;
     }
 }

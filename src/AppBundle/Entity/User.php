@@ -36,6 +36,13 @@ class User extends BaseUser
     private $usersGenres;
 
     /**
+     * @var ArrayCollection|UserGroup[] $usersGroups Users Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="user")
+     */
+    private $usersGroups;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -74,5 +81,15 @@ class User extends BaseUser
     public function getUsersGenres()
     {
         return $this->usersGenres;
+    }
+
+    /**
+     * Get users groups
+     *
+     * @return ArrayCollection|UserGroup[] Users Groups
+     */
+    public function getUsersGroups()
+    {
+        return $this->usersGroups;
     }
 }
