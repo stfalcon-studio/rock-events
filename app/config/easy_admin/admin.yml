@@ -28,3 +28,7 @@ easy_admin:
         Genre:
             label: Genre
             class: AppBundle\Entity\Genre
+
+        Event:
+            label: Event
+            class: AppBundle\Entity\Event
