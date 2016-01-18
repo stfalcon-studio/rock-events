@@ -31,6 +31,7 @@ class UserGenre
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userGenres")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     *
      * @Assert\NotBlank()
      */
     private $user;
@@ -40,6 +41,7 @@ class UserGenre
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Genre", inversedBy="userGenres")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     *
      * @Assert\NotBlank()
      */
     private $genre;

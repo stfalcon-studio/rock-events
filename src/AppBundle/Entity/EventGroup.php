@@ -7,14 +7,14 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * User Group Entity
+ * Event Group Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  *
- * @ORM\Table(name="users_to_groups")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserGroupRepository")
+ * @ORM\Table(name="events_to_groups")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EventGroupRepository")
  */
-class UserGroup
+class EventGroup
 {
     use TimestampableEntity;
 
@@ -28,19 +28,19 @@ class UserGroup
     private $id;
 
     /**
-     * @var User $user User
+     * @var Event $event Event
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userGroups")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="eventsGroups")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
      */
-    private $user;
+    private $event;
 
     /**
      * @var Group $group Group
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="userGroups")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="eventsGroups")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
@@ -50,7 +50,7 @@ class UserGroup
     /**
      * Get ID
      *
-     * @return int $id ID
+     * @return int
      */
     public function getId()
     {
@@ -58,26 +58,26 @@ class UserGroup
     }
 
     /**
-     * Set user
+     * Set event
      *
-     * @param User $user User
+     * @param Event $event
      *
-     * @return UserGroup
+     * @return EventGroup Event
      */
-    public function setUser(User $user)
+    public function setEvent(Event $event)
     {
-        $this->user = $user;
+        $this->event = $event;
         return $this;
     }
 
     /**
-     * Get user
+     * Get event
      *
-     * @return User
+     * @return Event Event
      */
-    public function getUser()
+    public function getEvent()
     {
-        return $this->user;
+        return $this->event;
     }
 
     /**
@@ -85,7 +85,7 @@ class UserGroup
      *
      * @param Group $group Group
      *
-     * @return UserGroup
+     * @return EventGroup Group
      */
     public function setGroup(Group $group)
     {
@@ -96,7 +96,7 @@ class UserGroup
     /**
      * Get group
      *
-     * @return Group
+     * @return Group Group
      */
     public function getGroup()
     {
