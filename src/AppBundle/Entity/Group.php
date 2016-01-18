@@ -32,11 +32,11 @@ class Group
 
     /**
      *
-     * @var ArrayCollection|GroupGenre[] $groupsGenres Users Genres
+     * @var ArrayCollection|GroupGenre[] $groupGenres Users Genres
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\GroupGenre", mappedBy="group")
      */
-    private $groupsGenres;
+    private $groupGenres;
 
     /**
      *
@@ -44,7 +44,7 @@ class Group
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="group")
      */
-    private $usersGroups;
+    private $userGroups;
 
     /**
      * @var string $name Name
@@ -162,9 +162,9 @@ class Group
      *
      * @return ArrayCollection|GroupGenre[] Groups Genres
      */
-    public function getGroupsGenres()
+    public function getGroupGenres()
     {
-        return $this->groupsGenres;
+        return $this->groupGenres;
     }
 
     /**
@@ -172,8 +172,8 @@ class Group
      *
      * @return ArrayCollection|UserGroup[] Users Groups
      */
-    public function getUsersGroups()
+    public function getUserGroups()
     {
-        return $this->usersGroups;
+        return $this->userGroups;
     }
 }

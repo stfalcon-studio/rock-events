@@ -35,19 +35,19 @@ class Genre
 
     /**
      *
-     * @var ArrayCollection|UserGenre[] $usersGenre Users Genres
+     * @var ArrayCollection|UserGenre[] $userGenre Users Genres
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGenre", mappedBy="genre")
      */
-    private $usersGenres;
+    private $userGenres;
 
     /**
      *
-     * @var ArrayCollection|GroupGenre[] $groupsGenres Group Genres
+     * @var ArrayCollection|GroupGenre[] $groupGenres Group Genres
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\GroupGenre", mappedBy="genre")
      */
-    private $groupsGenres;
+    private $groupGenres;
 
     /**
      * @var string $name Name
@@ -98,9 +98,9 @@ class Genre
      *
      * @return ArrayCollection|GroupGenre[] Groups Genres
      */
-    public function getGroupsGenres()
+    public function getGroupGenres()
     {
-        return $this->groupsGenres;
+        return $this->groupGenres;
     }
 
     /**
@@ -108,8 +108,8 @@ class Genre
      *
      * @return ArrayCollection|UserGenre[] Users Genres
      */
-    public function getUsersGenres()
+    public function getUserGenres()
     {
-        return $this->usersGenres;
+        return $this->userGenres;
     }
 }

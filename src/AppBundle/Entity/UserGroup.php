@@ -30,7 +30,7 @@ class UserGroup
     /**
      * @var User $user User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="usersGroups")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userGroups")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotBlank()
      */
@@ -39,7 +39,7 @@ class UserGroup
     /**
      * @var Group $group Group
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="usersGroups")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="userGroups")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotBlank()
      */

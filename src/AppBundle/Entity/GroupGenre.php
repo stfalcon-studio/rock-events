@@ -29,7 +29,7 @@ class GroupGenre
     /**
      * @var Group $group Group
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="groupsGenres")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Group", inversedBy="groupGenres")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
@@ -39,7 +39,7 @@ class GroupGenre
     /**
      * @var Genre $genre Genre
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Genre", inversedBy="groupsGenres")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Genre", inversedBy="groupGenres")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()

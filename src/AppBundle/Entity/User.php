@@ -29,18 +29,18 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var ArrayCollection|UserGenre[] $usersGenres Users Genres
+     * @var ArrayCollection|UserGenre[] $userGenres Users Genres
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGenre", mappedBy="user")
      */
-    private $usersGenres;
+    private $userGenres;
 
     /**
-     * @var ArrayCollection|UserGroup[] $usersGroups Users Groups
+     * @var ArrayCollection|UserGroup[] $userGroups Users Groups
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="user")
      */
-    private $usersGroups;
+    private $userGroups;
 
     /**
      * Constructor
@@ -78,9 +78,9 @@ class User extends BaseUser
      *
      * @return ArrayCollection|UserGenre[] Users Genres
      */
-    public function getUsersGenres()
+    public function getUserGenres()
     {
-        return $this->usersGenres;
+        return $this->userGenres;
     }
 
     /**
@@ -88,8 +88,8 @@ class User extends BaseUser
      *
      * @return ArrayCollection|UserGroup[] Users Groups
      */
-    public function getUsersGroups()
+    public function getUserGroups()
     {
-        return $this->usersGroups;
+        return $this->userGroups;
     }
 }

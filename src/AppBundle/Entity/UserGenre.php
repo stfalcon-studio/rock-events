@@ -29,7 +29,7 @@ class UserGenre
     /**
      * @var User $user User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="usersGenres")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userGenres")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotBlank()
      */
@@ -38,7 +38,7 @@ class UserGenre
     /**
      * @var Genre $genre Genre
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Genre", inversedBy="usersGenres")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Genre", inversedBy="userGenres")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotBlank()
      */
