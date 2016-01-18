@@ -24,3 +24,7 @@ easy_admin:
         Group:
             label: Group
             class: AppBundle\Entity\Group
+
+        Genre:
+            label: Genre
+            class: AppBundle\Entity\Genre
