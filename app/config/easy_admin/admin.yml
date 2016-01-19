@@ -21,3 +21,14 @@ easy_admin:
                     - { property: 'email', type: 'email', label: 'E-mail address' }
                     - { property: 'plainPassword', type: 'password' }
                     - { property: 'enabled' }
+        Group:
+            label: Group
+            class: AppBundle\Entity\Group
+
+        Genre:
+            label: Genre
+            class: AppBundle\Entity\Genre
+
+        Event:
+            label: Event
+            class: AppBundle\Entity\Event

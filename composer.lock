@@ -5,7 +5,6 @@
         "This file is @generated automatically"
     ],
     "hash": "6a84ae6f816919455f0e8bdf4d00857d",
-    "content-hash": "02191914451eaa802d29a08736bfde08",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1307,16 +1306,16 @@
         },
         {
             "name": "javiereguiluz/easyadmin-bundle",
-            "version": "v1.10.4",
+            "version": "v1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/javiereguiluz/EasyAdminBundle.git",
-                "reference": "dbed8ed9f33b03bf4f1d58c394723debc6a6d3b2"
+                "reference": "531401192541696f643a9935eb2ca686a57cac55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/dbed8ed9f33b03bf4f1d58c394723debc6a6d3b2",
-                "reference": "dbed8ed9f33b03bf4f1d58c394723debc6a6d3b2",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/531401192541696f643a9935eb2ca686a57cac55",
+                "reference": "531401192541696f643a9935eb2ca686a57cac55",
                 "shasum": ""
             },
             "require": {
@@ -1382,7 +1381,7 @@
                 "backend",
                 "generator"
             ],
-            "time": "2016-01-15 17:03:36"
+            "time": "2016-01-17 20:36:12"
         },
         {
             "name": "jdorn/sql-formatter",
