@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table>
+        <tbody>
+        <tr>
+            <th>Назва</th>
+            <td>{{ group.name }}</td>
+        </tr>
+        <tr>
+            <th>Опис</th>
+            <td>{{ group.description }}</td>
+        </tr>
+        <tr>
+            <th>Рік створення</th>
+            <td>{{ group.foundedAt }}</td>
+        </tr>
+        <tr>
+            <th>Жанри</th>
+            <td>
+                {% for genre in genres %}
+                    {{ genre.name }},
+                {% endfor %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
