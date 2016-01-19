@@ -5,7 +5,7 @@ namespace AppBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Class EntityRepository
+ * Class EventGroupRepository
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  */
