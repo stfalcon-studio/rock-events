@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Frontend GroupController
@@ -42,14 +43,15 @@ class GroupController extends Controller
      * @return Response
      *
      * @Method("GET")
-     * @Route("/{slug}", requirements={"slug" = "\d+"}, name="groups_show")
+     * @Route("/{slug}", name="groups_show")
+     * @ParamConverter("group", class="AppBundle:Group")
      */
-    public function showAction(Group $slug)
+    public function showAction(Group $group)
     {
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Group')->getGenres($slug->getId());
+        $genres = $this->getDoctrine()->getRepository('AppBundle:Group')->getGenres($group->getId());
 
         return $this->render('AppBundle:frontend\group:show.html.twig', [
-            'group'  => $slug,
+            'group'  => $group,
             'genres' => $genres
         ]);
     }
