@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller\Frontend;
 
-use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Event;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  *
  * @Route("/events")
  */
-class EventController extends BaseController
+class EventController extends Controller
 {
     /**
      * Event list
@@ -27,7 +27,7 @@ class EventController extends BaseController
      */
     public function indexAction()
     {
-        $events = $this->getRepository("AppBundle:Event")->findAll();
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findAll();
 
         return $this->render('AppBundle:frontend\event:index.html.twig', [
             'events' => $events,
@@ -42,12 +42,15 @@ class EventController extends BaseController
      * @return Response
      *
      * @Method("GET")
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="events_show")
+     * @Route("/{slug}", requirements={"slug" = "\d+"}, name="events_show")
      */
-    public function showAction(Event $event)
+    public function showAction(Event $slug)
     {
+        $groups = $this->getDoctrine()->getRepository('AppBundle:Event')->getGroups($slug->getId());
+
         return $this->render('AppBundle:frontend\event:show.html.twig', [
-            'event' => $event,
+            'event'  => $slug,
+            'groups' => $groups
         ]);
     }
 }
