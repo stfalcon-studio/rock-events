@@ -37,7 +37,7 @@ class EventController extends Controller
     /**
      * Event show
      *
-     * @param Event $event
+     * @param Event $slug
      *
      * @return Response
      *
