@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Ticket Entity
@@ -13,6 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="tickets")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TicketRepository")
+ *
+ * @Gedmo\Loggable
  */
 class Ticket
 {
@@ -34,6 +37,8 @@ class Ticket
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
+     *
+     * @Gedmo\Versioned
      */
     private $user;
 
@@ -44,6 +49,8 @@ class Ticket
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
+     *
+     * @Gedmo\Versioned
      */
     private $event;
 
@@ -54,6 +61,8 @@ class Ticket
      *
      * @Assert\NotBlank()
      * @Assert\Type(type="float")
+     *
+     * @Gedmo\Versioned
      */
     private $price;
 

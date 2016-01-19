@@ -1,9 +1,11 @@
 <?php
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Group Genre Entity
@@ -12,6 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="groups_to_genres")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupGenreRepository")
+ *
+ * @Gedmo\Loggable
  */
 class GroupGenre
 {
@@ -33,6 +37,8 @@ class GroupGenre
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
+     *
+     * @Gedmo\Versioned
      */
     private $group;
 
@@ -43,6 +49,8 @@ class GroupGenre
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
+     *
+     * @Gedmo\Versioned
      */
     private $genre;
 

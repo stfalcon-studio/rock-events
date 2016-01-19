@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * User Group Entity
@@ -13,6 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="users_to_groups")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserGroupRepository")
+ *
+ * @Gedmo\Loggable
  */
 class UserGroup
 {
@@ -34,6 +37,8 @@ class UserGroup
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
+     *
+     * @Gedmo\Versioned
      */
     private $user;
 
@@ -44,6 +49,8 @@ class UserGroup
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
+     *
+     * @Gedmo\Versioned
      */
     private $group;
 

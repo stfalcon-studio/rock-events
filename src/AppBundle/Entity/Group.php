@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Group Entity
@@ -14,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="groups")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
+ *
+ * @Gedmo\Loggable
  */
 class Group
 {
@@ -54,6 +57,8 @@ class Group
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="100")
      * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
      */
     private $name;
 
@@ -63,6 +68,8 @@ class Group
      * @ORM\Column(type="text", nullable=true)
      *
      * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
      */
     private $description;
 
@@ -72,6 +79,8 @@ class Group
      * @ORM\Column(type="integer", nullable=true)
      *
      * @Assert\Type(type="integer")
+     *
+     * @Gedmo\Versioned
      */
     private $foundedAt;
 

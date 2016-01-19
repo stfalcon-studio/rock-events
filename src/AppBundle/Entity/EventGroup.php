@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Event Group Entity
@@ -13,6 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="events_to_groups")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventGroupRepository")
+ *
+ * @Gedmo\Loggable
  */
 class EventGroup
 {
@@ -34,6 +37,8 @@ class EventGroup
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
+     *
+     * @Gedmo\Versioned
      */
     private $event;
 
@@ -44,6 +49,8 @@ class EventGroup
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      *
      * @Assert\NotBlank()
+     *
+     * @Gedmo\Versioned
      */
     private $group;
 

@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Event Entity
@@ -14,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="events")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
+ *
+ * @Gedmo\Loggable
  */
 class Event
 {
@@ -52,6 +55,8 @@ class Event
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="255")
      * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
      */
     private $name;
 
@@ -61,6 +66,8 @@ class Event
      * @ORM\Column(type="text", nullable=true)
      *
      * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
      */
     private $description;
 
@@ -72,6 +79,8 @@ class Event
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="100")
      * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
      */
     private $country;
 
@@ -83,6 +92,8 @@ class Event
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="100")
      * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
      */
     private $city;
 
@@ -92,6 +103,8 @@ class Event
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
      */
     private $address;
 
@@ -101,6 +114,8 @@ class Event
      * @ORM\Column(type="datetime", nullable=true)
      *
      * @Assert\DateTime()
+     *
+     * @Gedmo\Versioned
      */
     private $beginAt;
 
@@ -110,6 +125,8 @@ class Event
      * @ORM\Column(type="datetime", nullable=true)
      *
      * @Assert\DateTime()
+     *
+     * @Gedmo\Versioned
      */
     private $endAt;
 
@@ -119,6 +136,8 @@ class Event
      * @ORM\Column(type="float", nullable=true)
      *
      * @Assert\Type(type="float")
+     *
+     * @Gedmo\Versioned
      */
     private $duration;
 

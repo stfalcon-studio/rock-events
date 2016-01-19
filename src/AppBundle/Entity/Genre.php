@@ -1,14 +1,12 @@
 <?php
 
-
-namespace AppBundle\Entity;
-
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Genre Entity
@@ -17,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="genres")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GenreRepository")
+ *
+ * @Gedmo\Loggable
  */
 class Genre
 {
@@ -57,6 +57,8 @@ class Genre
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="100")
      * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
      */
     private $name;
 
