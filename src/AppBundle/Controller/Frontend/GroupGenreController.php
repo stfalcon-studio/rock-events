@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Frontend GroupGenreController
@@ -26,11 +27,12 @@ class GroupGenreController extends Controller
      * @throws NotFoundHttpException
      *
      * @Method("GET")
-     * @Route("/groups/{slug}")
+     * @Route("/genres/{slug}")
+     * @ParamConverter("genre", class="AppBundle:Genre")
      */
-    public function getGroupAction(Genre $slug)
+    public function getGroupAction(Genre $genre)
     {
-        $groupGenres = $this->getDoctrine()->getRepository('AppBundle:GroupGenre')->getGroupsForGenre($slug->getId());
+        $groupGenres = $this->getDoctrine()->getRepository('AppBundle:GroupGenre')->getGroupsForGenre($genre->getId());
 
         if ($groupGenres != null) {
 

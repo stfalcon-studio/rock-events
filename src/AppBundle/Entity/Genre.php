@@ -63,6 +63,13 @@ class Genre
     private $name;
 
     /**
+     * @var string $slug Slug
+     *
+     * @ORM\Column(type="string")
+     */
+    private $slug;
+
+    /**
      * Get ID
      *
      * @return int
@@ -94,6 +101,30 @@ class Genre
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug Slug
+     *
+     * @return Genre
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string Slug
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

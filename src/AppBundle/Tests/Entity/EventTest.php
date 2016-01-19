@@ -29,6 +29,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($event->getAddress());
         $this->assertNull($event->getBeginAt());
         $this->assertNull($event->getEndAt());
+        $this->assertNull($event->getSlug());
         $this->assertNull($event->getCreatedBy());
         $this->assertNull($event->getUpdatedBy());
     }
@@ -111,6 +112,16 @@ class EventTest extends \PHPUnit_Framework_TestCase
         $duration = 3.5;
         $event    = (new Event())->setDuration($duration);
         $this->assertEquals($duration, $event->getDuration());
+    }
+
+    /**
+     * Test setter and getter for Slug
+     */
+    public function testSetGetSlug()
+    {
+        $slug  = 'Slug';
+        $event = (new Event())->setSlug($slug);
+        $this->assertEquals($slug, $event->getSlug());
     }
 
     /**

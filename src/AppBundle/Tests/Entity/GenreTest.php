@@ -25,6 +25,7 @@ class GenreTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($genre->getName());
         $this->assertNull($genre->getCreatedBy());
         $this->assertNull($genre->getUpdatedBy());
+        $this->assertNull($genre->getSlug());
     }
 
     /**
@@ -35,6 +36,16 @@ class GenreTest extends \PHPUnit_Framework_TestCase
         $name  = 'Name';
         $genre = (new Genre())->setName($name);
         $this->assertEquals($name, $genre->getName());
+    }
+
+    /**
+     * Test setter and getter for Slug
+     */
+    public function testSetGetSlug()
+    {
+        $slug  = 'Slug';
+        $event = (new Genre())->setSlug($slug);
+        $this->assertEquals($slug, $event->getSlug());
     }
 
     /**

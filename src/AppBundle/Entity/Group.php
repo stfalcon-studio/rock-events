@@ -85,6 +85,13 @@ class Group
     private $foundedAt;
 
     /**
+     * @var string $slug Slug
+     *
+     * @ORM\Column(type="string")
+     */
+    private $slug;
+
+    /**
      * Get ID
      *
      * @return int
@@ -164,6 +171,30 @@ class Group
     public function getFoundedAt()
     {
         return $this->foundedAt;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug Slug
+     *
+     * @return Genre
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string Slug
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

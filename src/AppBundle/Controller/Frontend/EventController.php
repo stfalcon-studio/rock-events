@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Frontend EventController
@@ -42,14 +43,15 @@ class EventController extends Controller
      * @return Response
      *
      * @Method("GET")
-     * @Route("/{slug}", requirements={"slug" = "\d+"}, name="events_show")
+     * @Route("/{slug}", name="events_show")
+     * @ParamConverter("event", class="AppBundle:Event")
      */
-    public function showAction(Event $slug)
+    public function showAction(Event $event)
     {
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Event')->getGroups($slug->getId());
+        $groups = $this->getDoctrine()->getRepository('AppBundle:Event')->getGroups($event->getId());
 
         return $this->render('AppBundle:frontend\event:show.html.twig', [
-            'event'  => $slug,
+            'event'  => $event,
             'groups' => $groups
         ]);
     }

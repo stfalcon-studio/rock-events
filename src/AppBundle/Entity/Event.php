@@ -142,6 +142,13 @@ class Event
     private $duration;
 
     /**
+     * @var string $slug Slug
+     *
+     * @ORM\Column(type="string")
+     */
+    private $slug;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -350,6 +357,30 @@ class Event
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug Slug
+     *
+     * @return Genre
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string Slug
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

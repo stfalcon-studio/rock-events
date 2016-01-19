@@ -28,6 +28,7 @@ class GroupController extends Controller
     public function indexAction()
     {
         $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findAll();
+
         return $this->render('AppBundle:frontend\group:index.html.twig', [
             'groups' => $groups,
         ]);

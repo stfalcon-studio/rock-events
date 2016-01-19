@@ -26,6 +26,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($group->getDescription());
         $this->assertNull($group->getCreatedBy());
         $this->assertNull($group->getUpdatedBy());
+        $this->assertNull($group->getSlug());
     }
 
     /**
@@ -56,6 +57,16 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $foundedAt = 1997;
         $group     = (new Group())->setFoundedAt($foundedAt);
         $this->assertEquals($foundedAt, $group->getFoundedAt());
+    }
+
+    /**
+     * Test setter and getter for Slug
+     */
+    public function testSetGetSlug()
+    {
+        $slug  = 'Slug';
+        $event = (new Group())->setSlug($slug);
+        $this->assertEquals($slug, $event->getSlug());
     }
 
     /**
