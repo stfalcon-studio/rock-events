@@ -23,11 +23,9 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->select('e')
-                  ->where($qb->expr()->gt('e.beginAt', ':date_time_now'))
-                  ->setParameter('date_time_now', new \DateTime('now'), \Doctrine\DBAL\Types\Type::DATETIME)
+        return $qb->where($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
                   ->getQuery()
-                  ->getArrayResult();
+                  ->getResult();
     }
 
     /**
@@ -39,12 +37,9 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->select('e')
-                  ->where($qb->expr()->gt(7, (('DATE(e.beginAt)-DATE(:date_time_now)'))))
-                  ->andWhere($qb->expr()->gt('e.beginAt', ':date_time_now'))
-                  ->setParameter('date_time_now', new \DateTime('now'), \Doctrine\DBAL\Types\Type::DATETIME)
+        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''.')')))
                   ->getQuery()
-                  ->getArrayResult();
+                  ->getResult();
     }
 
     /**
@@ -68,6 +63,6 @@ class EventRepository extends EntityRepository
                   ->join('eg.group', 'g')
                   ->setParameter('event', $event)
                   ->getQuery()
-                  ->getArrayResult();
+                  ->getResult();
     }
 }

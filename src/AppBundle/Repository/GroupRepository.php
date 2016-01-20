@@ -2,11 +2,9 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Event;
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\Group;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Parameter;
 
 /**
  * Class GroupRepository
@@ -34,7 +32,7 @@ class GroupRepository extends EntityRepository
                   ->where($qb->expr()->eq('g', ':group'))
                   ->setParameter('group', $group)
                   ->getQuery()
-                  ->getArrayResult();
+                  ->getResult();
     }
 
     /**
@@ -53,7 +51,7 @@ class GroupRepository extends EntityRepository
                   ->join('g.groupGenres', 'gg')
                   ->setParameter('genre', $genre)
                   ->getQuery()
-                  ->getArrayResult();
+                  ->getResult();
     }
 
     /**

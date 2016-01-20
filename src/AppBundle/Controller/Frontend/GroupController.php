@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller\Frontend;
 
-use AppBundle\Entity\Genre;
 use AppBundle\Entity\Group;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,27 +51,6 @@ class GroupController extends Controller
         return $this->render('AppBundle:frontend\group:show.html.twig', [
             'group'  => $group,
             'genres' => $genres
-        ]);
-    }
-
-    /**
-     * Groups by genre
-     *
-     * @param Genre $slug Genre
-     *
-     * @return Response
-     *
-     * @Method("GET")
-     * @Route("/groups/genre/{slug}", name="group_genre")
-     * @ParamConverter("genre", class="AppBundle:Genre")
-     */
-    public function genreAction(Genre $genre)
-    {
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->getGroupsByGenre($genre);
-
-        return $this->render('AppBundle:frontend/group:genre.html.twig', [
-            'groups' => $groups,
-            'genre'  => $genre
         ]);
     }
 

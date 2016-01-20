@@ -33,6 +33,6 @@ class GenreRepository extends EntityRepository
                   ->join('gg.group', 'gr')
                   ->setParameter('genre', $genre)
                   ->getQuery()
-                  ->getArrayResult();
+                  ->getResult();
     }
 }
