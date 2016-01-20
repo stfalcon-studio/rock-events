@@ -149,7 +149,7 @@ class Event
     private $slug;
 
     /**
-     * @var boolean $active Active
+     * @var bool $active Active
      *
      * @ORM\Column(type="boolean")
      *
@@ -395,7 +395,7 @@ class Event
     /**
      * Get active
      *
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {
@@ -405,7 +405,7 @@ class Event
     /**
      * Set active
      *
-     * @param boolean $active Active
+     * @param bool $active Active
      *
      * @return $this
      */

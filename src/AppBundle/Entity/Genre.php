@@ -70,7 +70,7 @@ class Genre
     private $slug;
 
     /**
-     * @var boolean $active Active
+     * @var bool $active Active
      *
      * @ORM\Column(type="boolean")
      *
@@ -193,7 +193,7 @@ class Genre
     /**
      * Get active
      *
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {
@@ -203,7 +203,7 @@ class Genre
     /**
      * Set active
      *
-     * @param boolean $active Active
+     * @param bool $active Active
      *
      * @return $this
      */
