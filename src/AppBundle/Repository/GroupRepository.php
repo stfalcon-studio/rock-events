@@ -80,7 +80,6 @@ class GroupRepository extends EntityRepository
                   ->join('g.eventGroups', 'eg')
                   ->join('eg.event', 'e')
                   ->setParameter('group', $group)
-//                  ->setParameter('date_time_now', new \DateTime('now'), \Doctrine\DBAL\Types\Type::DATETIME)
                   ->getQuery()
                   ->getResult();
     }
