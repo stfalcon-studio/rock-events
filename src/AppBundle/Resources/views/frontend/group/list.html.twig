@@ -13,9 +13,9 @@
         <tbody>
         {% for group in groups %}
             <tr>
-                <td>{{ group.name }}</td>
+                <td><a href="{{ path('group_show',{ 'slug' : group.slug })}}">{{ group.name }}</a></td>
                 <td>{{ group.description }}</td>
-                <td>{{ group.foundedAt|date("m/d/Y") }}</td>
+                <td>{{ group.foundedAt|date("Y") }}</td>
             </tr>
         {% endfor %}
         </tbody>

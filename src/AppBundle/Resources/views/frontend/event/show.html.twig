@@ -1,48 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <table>
-        <tbody>
-        <tr>
-            <th>Назва</th>
-            <td>{{ event.name }}</td>
-        </tr>
-        <tr>
-            <th>Опис</th>
-            <td>{{ event.description }}</td>
-        </tr>
-        <tr>
-            <th>Країна</th>
-            <td>{{ event.country }}</td>
-        </tr>
-        <tr>
-            <th>Місто</th>
-            <td>{{ event.city }}</td>
-        </tr>
-        <tr>
-            <th>Адреса</th>
-            <td>{{ event.address }}</td>
-        </tr>
-        <tr>
-            <th>Початок</th>
-            <td>{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
-        </tr>
-        <tr>
-            <th>Кінець</th>
-            <td>{{ event.endAt|date('F jS \\a\\t g:ia') }}</td>
-        </tr>
-        <tr>
-            <th>Тривалість</th>
-            <td>{{ event.duration }}</td>
-        </tr>
-        <tr>
-            <th>Список гуртів</th>
-            <td>
+    <ul>
+        <li><b>Назва:</b> {{ event.name }}</li>
+        <li><b>Опис</b>: {{ event.description }}</li>
+        <li><b>Країна:</b> {{ event.country }}</li>
+        <li><b>Місто:</b> {{ event.city }}</li>
+        <li><b>Адреса:</b> {{ event.city }}</li>
+        <li><b>Початок:</b> {{ event.beginAt|date('F jS \\a\\t g:ia') }}</li>
+        <li><b>Кінець:</b> {{ event.endAt|date('F jS \\a\\t g:ia') }}</li>
+        <li><b>Тривалість:</b> {{ event.duration }}</li>
+        <li>
+            <b>Гурти:</b>
+            <ul>
                 {% for group in groups %}
-                    {{ group.name }},
+                    <li><a href="{{ path("group_show", { "slug":group.slug }) }}">{{ group.name }}</a></li>
                 {% endfor %}
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            </ul>
+        </li>
+    </ul>
 {% endblock %}

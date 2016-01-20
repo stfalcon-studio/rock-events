@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Event;
+use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -29,14 +30,16 @@ class LoadEventData extends AbstractFixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        /**
-         * @var \AppBundle\Entity\User $userAdmin
-         */
+        /** @var User $userAdmin */
         $userAdmin = $this->getReference('user-admin');
 
         $event1 = (new Event())
             ->setName('Захід Фест')
-            ->setDescription('Захід — український щорічний фестиваль сучасного мистецтва, що відбувається з 2009 року на Львівщині. З 2011 року проходить біля села Родатичі Городоцького району.')
+            ->setDescription(<<<TEXT
+Захід — український щорічний фестиваль сучасного мистецтва, що відбувається з 2009 року на Львівщині.
+З 2011 року проходить біля села Родатичі Городоцького району.
+TEXT
+            )
             ->setCountry('Україна')
             ->setCity('Львів')
             ->setAddress('Львівська область, Городоцький район, село Родатичі')

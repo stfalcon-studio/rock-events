@@ -2,6 +2,7 @@
 
 namespace AppBundle\Tests\Entity;
 
+use AppBundle\Entity\EventGroup;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\GroupGenre;
 use AppBundle\Entity\User;
@@ -54,7 +55,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetFoundedAt()
     {
-        $foundedAt = 1997;
+        $foundedAt = new \DateTime('2016-04-2 20:0:0');
         $group     = (new Group())->setFoundedAt($foundedAt);
         $this->assertEquals($foundedAt, $group->getFoundedAt());
     }
@@ -111,5 +112,17 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group = (new Group())->setGroupGenres($groupGenres);
         $this->assertEquals(1, $group->getGroupGenres()->count());
         $this->assertEquals($groupGenres, $group->getGroupGenres());
+    }
+
+    /**
+     * Test getter for Event Groups collection
+     */
+    public function testGetSetEventGroupsCollection()
+    {
+        $eventGroups = new ArrayCollection();
+        $eventGroups->add(new EventGroup());
+        $group = (new Group())->setEventGroups($eventGroups);
+        $this->assertEquals(1, $group->getEventGroups()->count());
+        $this->assertEquals($eventGroups, $group->getEventGroups());
     }
 }

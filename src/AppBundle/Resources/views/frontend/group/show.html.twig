@@ -1,28 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <table>
-        <tbody>
-        <tr>
-            <th>Назва</th>
-            <td>{{ group.name }}</td>
-        </tr>
-        <tr>
-            <th>Опис</th>
-            <td>{{ group.description }}</td>
-        </tr>
-        <tr>
-            <th>Рік створення</th>
-            <td>{{ group.foundedAt }}</td>
-        </tr>
-        <tr>
-            <th>Жанри</th>
-            <td>
+    <ul>
+        <li><b>Назва:</b> {{ group.name }}</li>
+        <li><b>Опис</b>: {{ group.description }}</li>
+        <li><b>Рік створення:</b> {{ group.foundedAt|date("Y") }}</li>
+        <li>
+            <b>Жанри:</b>
+            <ul>
                 {% for genre in genres %}
-                    {{ genre.name }},
+                    <li><a href="{{ path('genre_group',{ 'slug':genre.slug })}}">{{ genre.name }}</a></li>
                 {% endfor %}
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            </ul>
+        </li>
+    </ul>
+    <a href="{{ path('group_event',{ 'slug': group.slug }) }}">Майбутні концерти...</a>
 {% endblock %}

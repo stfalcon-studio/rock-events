@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Список подій</h1>
+    <h3>{{ group.name }}</h3>
     <table>
         <thead>
         <tr>
@@ -18,7 +18,7 @@
         <tbody>
         {% for event in events %}
             <tr>
-                <td>{{ event.name }}</td>
+                <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
                 <td>{{ event.description }}</td>
                 <td>{{ event.country }}</td>
                 <td>{{ event.city }}</td>

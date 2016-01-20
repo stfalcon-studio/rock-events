@@ -2,6 +2,8 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Genre;
+use AppBundle\Entity\User;
 use AppBundle\Entity\UserGenre;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -30,16 +32,13 @@ class LoadUserGenreData extends AbstractFixture implements DependentFixtureInter
      */
     public function load(ObjectManager $manager)
     {
-        /**
-         * @var \AppBundle\Entity\User $user
-         */
+        /** @var User $user */
         $user = $this->getReference('user-admin');
 
-        /**
-         * @var \AppBundle\Entity\Genre $postPunk
-         * @var \AppBundle\Entity\Genre $metalcore
-         * @var \AppBundle\Entity\Genre $alternative
-         */
+
+         /** @var Genre $postPunk */
+         /** @var Genre $metalcore */
+         /** @var Genre $alternative */
         $postPunk    = $this->getReference('genre-post-punk');
         $metalcore   = $this->getReference('genre-metalcore');
         $alternative = $this->getReference('genre-alternative');

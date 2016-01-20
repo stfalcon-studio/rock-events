@@ -37,7 +37,7 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
         $group1 = (new Group())
             ->setName('Enter Shikari')
             ->setDescription('Enter Shikari (стилизованно ΣΠΤΣR SHΦΚΔRΦ) — британская пост-хардкор группа, образованная в 2003 году, в городе Сент-Олбанс. Стиль коллектива сочетает пост-хардкор с элементами различных электронных жанров, таких как дабстеп, транс и иногда драм-н-бэйс.')
-            ->setFoundedAt(2003)
+            ->setFoundedAt(new \DateTime('2003-1-1 0:0:0'))
             ->setSlug('shikari')
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
@@ -47,7 +47,7 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
         $group2 = (new Group())
             ->setName('Bring me the horizon')
             ->setDescription('На данный момент группа имеет 5 выпущенных полноформатных альбомов и 1 мини-альбом, ставший их дебютным релизом. На протяжении карьеры участники старались экспериментировать со звучанием: ранние релизы имели более тяжелый звук и были классифицированы как дэткор, металкор и маткор, в настоящее же время в звучание группы добавились элементы мелодичного хардкора, альтернативного, электронного и пост-рока. Изначально, бессменный вокалист и фронтмен Оливер Сайкс владел лишь экстремальным вокалом, но позже освоил традиционный и значительно увеличил его присутствие в песнях. В 2013 году был выпущен альбом «Sempiternal», принесший группе новую волну популярности и открывший ей перспективы выступления на аренах в качестве хэдлайнера. На следующем альбоме That\'s the Spirit, вышедшем в 2015 году, группа продолжила творческие эксперименты, отказавшись от привычного металкор и пост-хардкор звучания в пользу альтернативного рока.[1]')
-            ->setFoundedAt(2004)
+            ->setFoundedAt(new \DateTime('2004-1-1 0:0:0'))
             ->setSlug('bmth')
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
@@ -57,7 +57,7 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
         $group3 = (new Group())
             ->setName('Jinjer')
             ->setDescription('Jinjer — украинская метал-группа, основанная в 2009 году в городе Горловка, Донецкой области. В их музыке сочетаются элементы прогрессивного металкора, грув-метала и прогрессивного дэт-метала. С момента существования группа выпустила один полноформатный альбом, два мини-альбома, пять синглов и 5 клипов. После издания полноформатного альбома стиль группы сместился более в сторону дэт-метала.')
-            ->setFoundedAt(2009)
+            ->setFoundedAt(new \DateTime('2009-1-1 0:0:0'))
             ->setSlug('jinjer')
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);

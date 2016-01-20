@@ -50,6 +50,14 @@ class Group
     private $userGroups;
 
     /**
+     *
+     * @var ArrayCollection|EventGroup[] $eventGroups Events Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="group")
+     */
+    private $eventGroups;
+
+    /**
      * @var string $name Name
      *
      * @ORM\Column(type="string", length=100, nullable=false)
@@ -74,11 +82,11 @@ class Group
     private $description;
 
     /**
-     * @var int $foundedAt founded at
+     * @var \Datetime $foundedAt founded at
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      *
-     * @Assert\Type(type="integer")
+     * @Assert\Type(type="datetime")
      *
      * @Gedmo\Versioned
      */
@@ -152,7 +160,7 @@ class Group
     /**
      * Set founded at
      *
-     * @param int $foundedAt founded at
+     * @param \DateTime $foundedAt founded at
      *
      * @return Group
      */
@@ -249,5 +257,32 @@ class Group
     public function getUserGroups()
     {
         return $this->userGroups;
+    }
+
+    /**
+     * Set event groups
+     *
+     * @param ArrayCollection|EventGroup[] $EventGroups Event Groups
+     *
+     * @return $this
+     */
+    public function setEventGroups(ArrayCollection $eventGroups)
+    {
+        foreach ($eventGroups as $eventGroup) {
+            $eventGroup->setGroup($this);
+        }
+        $this->eventGroups = $eventGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get event groups
+     *
+     * @return ArrayCollection|EventGroup[] Event Groups
+     */
+    public function getEventGroups()
+    {
+        return $this->eventGroups;
     }
 }
