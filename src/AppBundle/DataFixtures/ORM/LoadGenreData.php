@@ -38,6 +38,7 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
         $genre1 = (new Genre())
             ->setName('Пост-панк')
             ->setSlug('post-punk')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('genre-post-punk', $genre1);
@@ -46,6 +47,7 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
         $genre2 = (new Genre())
             ->setName('Металкор')
             ->setSlug('metalcore')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('genre-metalcore', $genre2);
@@ -54,6 +56,7 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
         $genre3 = (new Genre())
             ->setName('Психоделік')
             ->setSlug('psychedelic')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('genre-psychedelic', $genre3);
@@ -62,6 +65,7 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
         $genre4 = (new Genre())
             ->setName('Альтернатива')
             ->setSlug('alternative')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('genre-alternative', $genre4);
@@ -70,6 +74,7 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
         $genre5 = (new Genre())
             ->setName('Інді')
             ->setSlug('indi')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('genre-indi', $genre5);

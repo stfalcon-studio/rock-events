@@ -49,6 +49,16 @@ class GenreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test setter and getter for Active
+     */
+    public function testSetGetActive()
+    {
+        $slug  = 'Active';
+        $event = (new Genre())->setActive($slug);
+        $this->assertEquals($slug, $event->getActive());
+    }
+
+    /**
      * Test setter and getter for created by
      */
     public function testSetGetCreatedBy()

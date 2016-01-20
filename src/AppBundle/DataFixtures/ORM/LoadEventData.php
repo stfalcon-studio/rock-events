@@ -47,6 +47,7 @@ TEXT
             ->setEndAt(new \DateTime('2016-08-23 23:55:0'))
             ->setDuration(64)
             ->setSlug('zaxid')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('event-zaxid', $event1);
@@ -62,6 +63,7 @@ TEXT
             ->setEndAt(new \DateTime('2016-04-2 23:0:0'))
             ->setDuration(3)
             ->setSlug('concert-bmth')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('event-bmth', $event2);
@@ -77,6 +79,7 @@ TEXT
             ->setEndAt(new \DateTime('2016-04-15 22:0:0'))
             ->setDuration(3)
             ->setSlug('concert-torvald')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('event-torvald', $event3);

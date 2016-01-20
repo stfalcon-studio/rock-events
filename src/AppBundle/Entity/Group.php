@@ -100,6 +100,15 @@ class Group
     private $slug;
 
     /**
+     * @var boolean $active Active
+     *
+     * @ORM\Column(type="boolean")
+     *
+     * @Gedmo\Versioned
+     */
+    public $active = true;
+
+    /**
      * Get ID
      *
      * @return int
@@ -203,6 +212,29 @@ class Group
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+    /**
+     * Set active
+     *
+     * @param boolean $active Active
+     *
+     * @return $this
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
     }
 
     /**

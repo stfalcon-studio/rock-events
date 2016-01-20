@@ -71,6 +71,16 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test setter and getter for Active
+     */
+    public function testSetGetActive()
+    {
+        $slug  = 'Active';
+        $event = (new Group())->setActive($slug);
+        $this->assertEquals($slug, $event->getActive());
+    }
+
+    /**
      * Test setter and getter for Created By
      */
     public function testCreatedBy()
