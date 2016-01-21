@@ -46,7 +46,7 @@ class GroupController extends Controller
      */
     public function showAction(Group $group)
     {
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Group')->getGenres($group);
+        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
 
         return $this->render('AppBundle:frontend\group:show.html.twig', [
             'group'  => $group,
@@ -67,7 +67,7 @@ class GroupController extends Controller
      */
     public function eventAction(Group $group)
     {
-        $events = $this->getDoctrine()->getRepository('AppBundle:Group')->getEventsByGroup($group);
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByGroup($group);
 
         return $this->render('AppBundle:frontend/group:event.html.twig', [
             'events' => $events,

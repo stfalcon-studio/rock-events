@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Genre;
+use AppBundle\Entity\Group;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -13,25 +14,20 @@ use Doctrine\ORM\EntityRepository;
 class GenreRepository extends EntityRepository
 {
     /**
-     * Get all groups by genre
+     * Find Genres by group
      *
-     * @param Genre $genre Genre
+     * @param Group $group
      *
-     * @return array
+     * @return Genre[]
      */
-    public function getGroupsByGenre(Genre $genre)
+    public function findGenresByGroup(Group $group)
     {
         $qb = $this->createQueryBuilder('g');
 
-        return $qb->select('gr.id')
-                  ->addSelect('gr.name')
-                  ->addSelect('gr.description')
-                  ->addSelect('gr.foundedAt')
-                  ->addSelect('gr.slug')
-                  ->where($qb->expr()->eq('g', ':genre'))
+        return $qb->where($qb->expr()->eq('gr', ':group'))
                   ->join('g.groupGenres', 'gg')
                   ->join('gg.group', 'gr')
-                  ->setParameter('genre', $genre)
+                  ->setParameter('group', $group)
                   ->getQuery()
                   ->getResult();
     }

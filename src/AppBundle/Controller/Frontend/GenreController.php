@@ -39,7 +39,7 @@ class GenreController extends Controller
      */
     public function groupAction(Genre $genre)
     {
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Genre')->getGroupsByGenre($genre);
+        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByGenre($genre);
 
         return $this->render('AppBundle:frontend/genre:group.html.twig', [
             'groups' => $groups,

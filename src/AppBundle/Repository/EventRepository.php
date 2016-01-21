@@ -3,8 +3,8 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Event;
+use AppBundle\Entity\Group;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
 use DoctrineExtensions\Query\Mysql\Date;
 
 /**
@@ -15,11 +15,11 @@ use DoctrineExtensions\Query\Mysql\Date;
 class EventRepository extends EntityRepository
 {
     /**
-     * Get actual events
+     * Find actual events
      *
-     * @return array
+     * @return Event[]
      */
-    public function getActualEvents()
+    public function findActualEvents()
     {
         $qb = $this->createQueryBuilder('e');
 
@@ -29,11 +29,11 @@ class EventRepository extends EntityRepository
     }
 
     /**
-     * Get events for the week
+     * Find events for the week
      *
-     * @return array
+     * @return Event[]
      */
-    public function getEventsForWeek()
+    public function findEventsForWeek()
     {
         $qb = $this->createQueryBuilder('e');
 
@@ -43,26 +43,21 @@ class EventRepository extends EntityRepository
     }
 
     /**
-     * Get groups for event
+     * Find events by group
      *
-     * @param Event $event Event
+     * @param Group $event Group
      *
-     * @return array
+     * @return Event[]
      */
-    public function getGroups(Event $event)
+    public function findEventsByGroup(Group $group)
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->select('g.id')
-                  ->addSelect('g.name')
-                  ->addSelect('g.description')
-                  ->addSelect('g.foundedAt')
-                  ->addSelect('g.slug')
-                  ->where($qb->expr()->eq('e', ':event'))
-                  ->join('e.eventGroups', 'eg')
-                  ->join('eg.group', 'g')
-                  ->setParameter('event', $event)
-                  ->getQuery()
-                  ->getResult();
+        return $qb->where($qb->expr()->eq('g', ':group'))
+            ->join('e.eventGroups', 'eg')
+            ->join('eg.group', 'g')
+            ->setParameter('group', $group)
+            ->getQuery()
+            ->getResult();
     }
 }

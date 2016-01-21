@@ -26,7 +26,7 @@ class EventController extends Controller
      */
     public function indexAction()
     {
-        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->getEventsForWeek();
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsForWeek();
 
         return $this->render('AppBundle:frontend/event:index.html.twig', [
             'events' => $events
@@ -43,7 +43,7 @@ class EventController extends Controller
      */
     public function listAction()
     {
-        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->getActualEvents();
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEvents();
 
         return $this->render('AppBundle:frontend\event:list.html.twig', [
             'events' => $events,
@@ -63,7 +63,7 @@ class EventController extends Controller
      */
     public function showAction(Event $event)
     {
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Event')->getGroups($event);
+        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByEvent($event);
 
         return $this->render('AppBundle:frontend\event:show.html.twig', [
             'event'  => $event,

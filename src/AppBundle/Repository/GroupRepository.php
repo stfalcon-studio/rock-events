@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Event;
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\Group;
 use Doctrine\ORM\EntityRepository;
@@ -14,40 +15,17 @@ use Doctrine\ORM\EntityRepository;
 class GroupRepository extends EntityRepository
 {
     /**
-     * Get genres for group
-     *
-     * @param Group $group Group
-     *
-     * @return array
-     */
-    public function getGenres(Group $group)
-    {
-        $qb = $this->createQueryBuilder('g');
-
-        return $qb->select('ge.id')
-                  ->addSelect('ge.name')
-                  ->addSelect('ge.slug')
-                  ->join('g.groupGenres', 'gg')
-                  ->join('gg.genre', 'ge')
-                  ->where($qb->expr()->eq('g', ':group'))
-                  ->setParameter('group', $group)
-                  ->getQuery()
-                  ->getResult();
-    }
-
-    /**
-     * Get all groups by genre
+     * Find all groups by genre
      *
      * @param Genre $genre Genre
      *
-     * @return array
+     * @return Group[]
      */
-    public function getGroupsByGenre(Genre $genre)
+    public function findGroupsByGenre(Genre $genre)
     {
         $qb = $this->createQueryBuilder('g');
 
-        return $qb->select('g')
-                  ->where($qb->expr()->eq('gg.genre', ':genre'))
+        return $qb->where($qb->expr()->eq('gg.genre', ':genre'))
                   ->join('g.groupGenres', 'gg')
                   ->setParameter('genre', $genre)
                   ->getQuery()
@@ -55,32 +33,21 @@ class GroupRepository extends EntityRepository
     }
 
     /**
-     * Get all events by group
+     * Find Groups by event
      *
-     * @param Group $event Group
+     * @param Event $event
      *
-     * @return array
+     * @return Group[]
      */
-    public function getEventsByGroup(Group $group)
+    public function findGroupsByEvent(Event $event)
     {
         $qb = $this->createQueryBuilder('g');
 
-        return $qb->select('e.id')
-                  ->addSelect('e.name')
-                  ->addSelect('e.description')
-                  ->addSelect('e.address')
-                  ->addSelect('e.country')
-                  ->addSelect('e.city')
-                  ->addSelect('e.beginAt')
-                  ->addSelect('e.endAt')
-                  ->addSelect('e.duration')
-                  ->addSelect('e.slug')
-                  ->where($qb->expr()->eq('g', ':group'))
-                  ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
-                  ->join('g.eventGroups', 'eg')
-                  ->join('eg.event', 'e')
-                  ->setParameter('group', $group)
-                  ->getQuery()
-                  ->getResult();
+        return $qb->where($qb->expr()->eq('e', ':event'))
+                    ->join('g.eventGroups', 'eg')
+                    ->join('eg.event', 'e')
+                    ->setParameter('event', $event)
+                    ->getQuery()
+                    ->getResult();
     }
 }
