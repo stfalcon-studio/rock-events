@@ -8,6 +8,7 @@
             <th>Назва</th>
             <th>Опис</th>
             <th>Рік створення</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -16,6 +17,17 @@
                 <td><a href="{{ path('group_show',{ 'slug' : group.slug })}}">{{ group.name }}</a></td>
                 <td>{{ group.description }}</td>
                 <td>{{ group.foundedAt|date("Y") }}</td>
+                {% if app.user %}
+                    {% if group in userGroups %}
+                        <td>
+                            <a href="{{ path('group_delete_from_bookmark', { 'slug' : group.slug }) }}">-</a>
+                        </td>
+                    {% else %}
+                        <td>
+                            <a href="{{ path('group_add_to_bookmark',{ 'slug' : group.slug }) }}"><b>+</b></a>
+                        </td>
+                    {% endif %}
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
