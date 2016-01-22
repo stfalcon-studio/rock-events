@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Найближчі концерти за вибраними критеріями</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Країна</th>
+            <th>Місто</th>
+            <th>Адреса</th>
+            <th>Початок</th>
+            <th>Кінцеь</th>
+            <th>Тривалість</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
+                <td>{{ event.description }}</td>
+                <td>{{ event.country }}</td>
+                <td>{{ event.city }}</td>
+                <td>{{ event.address }}</td>
+                <td>{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
+                <td>{{ event.endAt|date('F jS \\a\\t g:ia') }}</td>
+                <td>{{ event.duration }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+    <ul>
+        <li><a href="{{ path("user_cabinet_group") }}">Гурти</a></li>
+        <li><a href="{{ path("user_cabinet_genre") }}">Жанри</a></li>
+    </ul>
+{% endblock %}

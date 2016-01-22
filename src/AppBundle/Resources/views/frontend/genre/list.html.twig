@@ -18,7 +18,7 @@
                 {% if genre in userGenres %}
                     <tr style="float: right">
                         <td>
-                            <a href="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug }) }}">-</a>
+                            <a href="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug, 'route' : 'genre_list' }) }}">-</a>
                         </td>
                     </tr>
                 {% else %}

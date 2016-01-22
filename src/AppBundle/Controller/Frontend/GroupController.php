@@ -6,6 +6,7 @@ use AppBundle\Entity\Group;
 use AppBundle\Entity\UserGroup;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,13 +25,13 @@ class GroupController extends Controller
      *
      * @return Response
      *
-     * @Method({"GET", "POST"})
+     * @Method("GET")
      * @Route("/groups", name="group_list")
      */
     public function listAction()
     {
         $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findAll();
-        if(null===$this->getUser()) {
+        if (null === $this->getUser()) {
             return $this->render('AppBundle:frontend\group:list.html.twig', [
                 'groups' => $groups
             ]);
@@ -87,17 +88,21 @@ class GroupController extends Controller
     }
 
     /**
-     * @param Group $group
+     * Add group to user bookmark
+     *
+     * @param Group $group Group
      *
      * @Route("/group/{slug}/bookmark", name="group_add_to_bookmark")
      * @ParamConverter("group", class="AppBundle:Group")
+     *
+     * @throws HttpException Forbidden 401 User not authorized
      *
      * @return RedirectResponse
      */
     public function addToBookmarkAction(Group $group)
     {
         if (null === $this->getUser()) {
-            throw new HttpException(401, "Forbidden");
+            throw new HttpException(401, 'Forbidden');
         }
 
         $user      = $this->getUser();
@@ -111,21 +116,31 @@ class GroupController extends Controller
     }
 
     /**
-     * @param Group $group
+     * Delete genre to user bookmark
+     *
+     * @param Group $group Group
+     * @param string $route Route to redirect after action
      *
      * @Route("/group/{slug}/bookmark/delete", name="group_delete_from_bookmark")
      * @ParamConverter("group", class="AppBundle:Group")
      *
+     * @throws HttpException Forbidden 401 User not authorized
+     * @throws HttpException Not Found 404 Route not found
+     *
      * @return RedirectResponse
      */
-    public function deleteFromBookmarkAction(Group $group)
+    public function deleteFromBookmarkAction(Group $group, Request $request)
     {
         if (null === $this->getUser()) {
-            throw new HttpException(401, "Forbidden");
+            throw new HttpException(401, 'Forbidden');
+        }
+
+        if (null === $request->get('route')) {
+            throw new HttpException(404, 'Route not found');
         }
 
         $userGroup = $this->getDoctrine()->getRepository('AppBundle:UserGroup')->findOneBy([
-            'user' => $this->getUser(),
+            'user'  => $this->getUser(),
             'group' => $group
         ]);
 
@@ -133,6 +148,6 @@ class GroupController extends Controller
         $em->remove($userGroup);
         $em->flush();
 
-        return $this->redirectToRoute("group_list");
+        return $this->redirectToRoute($request->get('route'));
     }
 }

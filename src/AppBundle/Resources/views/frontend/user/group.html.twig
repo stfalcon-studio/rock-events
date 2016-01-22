@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Список улюблених гуртів</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Рік створення</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for group in groups %}
+            <tr>
+                <td><a href="{{ path('group_show',{ 'slug' : group.slug })}}">{{ group.name }}</a></td>
+                <td>{{ group.description }}</td>
+                <td>{{ group.foundedAt|date("Y") }}</td>
+                <td>
+                    <a href="{{ path('group_delete_from_bookmark', { 'slug' : group.slug, 'route': 'user_cabinet_group' }) }}">-</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -6,6 +6,7 @@ use AppBundle\Entity\Genre;
 use AppBundle\Entity\UserGenre;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -60,12 +61,14 @@ class GenreController extends Controller
     }
 
     /**
-     * @param Genre $genre
+     * Add genre to user bookmark
+     *
+     * @param Genre $genre Genre
      *
      * @Route("/genre/{slug}/bookmark", name="genre_add_to_bookmark")
      * @ParamConverter("genre", class="AppBundle:Genre")
      *
-     * @throws HttpException
+     * @throws HttpException Forbidden 401 User not authorized
      *
      * @return RedirectResponse
      */
@@ -86,30 +89,38 @@ class GenreController extends Controller
     }
 
     /**
-     * @param Genre $genre
+     * Delete genre from user bookmark
+     *
+     * @param Genre $genre Genre
+     * @param string $route Route to redirect after action
      *
      * @Route("/genre/{slug}/bookmark/delete", name="genre_delete_from_bookmark")
      * @ParamConverter("genre", class="AppBundle:Genre")
      *
-     * @throws HttpException
+     * @throws HttpException Forbidden 401 User not authorized
+     * @throws HttpException Not Found 404 Route not found
      *
      * @return RedirectResponse
      */
-    public function deleteFromBookmarkAction(Genre $genre)
+    public function deleteFromBookmarkAction(Genre $genre, Request $request)
     {
         if (null === $this->getUser()) {
-            throw new HttpException(401, "Forbidden");
+            throw new HttpException(401, 'Forbidden');
+        }
+
+        if (null === $request->get('route')) {
+            throw new HttpException(404, 'Route not found');
         }
 
         $userGenre = $this->getDoctrine()->getRepository('AppBundle:UserGenre')->findOneBy([
-            'user' => $this->getUser(),
+            'user'  => $this->getUser(),
             'genre' => $genre
-        ]);
+       ]);
 
         $em = $this->getDoctrine()->getEntityManager();
         $em->remove($userGenre);
         $em->flush();
 
-        return $this->redirectToRoute("genre_list");
+        return $this->redirectToRoute($request->get('route'));
     }
 }
