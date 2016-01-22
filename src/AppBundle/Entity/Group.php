@@ -50,6 +50,14 @@ class Group
     private $userGroups;
 
     /**
+     *
+     * @var ArrayCollection|EventGroup[] $eventGroups Events Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="group")
+     */
+    private $eventGroups;
+
+    /**
      * @var string $name Name
      *
      * @ORM\Column(type="string", length=100, nullable=false)
@@ -74,15 +82,31 @@ class Group
     private $description;
 
     /**
-     * @var int $foundedAt founded at
+     * @var \Datetime $foundedAt founded at
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      *
-     * @Assert\Type(type="integer")
+     * @Assert\Type(type="datetime")
      *
      * @Gedmo\Versioned
      */
     private $foundedAt;
+
+    /**
+     * @var string $slug Slug
+     *
+     * @ORM\Column(type="string")
+     */
+    private $slug;
+
+    /**
+     * @var bool $active Active
+     *
+     * @ORM\Column(type="boolean")
+     *
+     * @Gedmo\Versioned
+     */
+    public $active = true;
 
     /**
      * Get ID
@@ -145,7 +169,7 @@ class Group
     /**
      * Set founded at
      *
-     * @param int $foundedAt founded at
+     * @param \DateTime $foundedAt founded at
      *
      * @return Group
      */
@@ -164,6 +188,53 @@ class Group
     public function getFoundedAt()
     {
         return $this->foundedAt;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug Slug
+     *
+     * @return Genre
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string Slug
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Get active
+     *
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+    /**
+     * Set active
+     *
+     * @param bool $active Active
+     *
+     * @return $this
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
     }
 
     /**
@@ -218,5 +289,32 @@ class Group
     public function getUserGroups()
     {
         return $this->userGroups;
+    }
+
+    /**
+     * Set event groups
+     *
+     * @param ArrayCollection|EventGroup[] $EventGroups Event Groups
+     *
+     * @return $this
+     */
+    public function setEventGroups(ArrayCollection $eventGroups)
+    {
+        foreach ($eventGroups as $eventGroup) {
+            $eventGroup->setGroup($this);
+        }
+        $this->eventGroups = $eventGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get event groups
+     *
+     * @return ArrayCollection|EventGroup[] Event Groups
+     */
+    public function getEventGroups()
+    {
+        return $this->eventGroups;
     }
 }

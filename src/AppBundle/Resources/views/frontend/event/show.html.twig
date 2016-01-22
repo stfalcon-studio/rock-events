@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        <li><b>Назва:</b> {{ event.name }}</li>
+        <li><b>Опис</b>: {{ event.description }}</li>
+        <li><b>Країна:</b> {{ event.country }}</li>
+        <li><b>Місто:</b> {{ event.city }}</li>
+        <li><b>Адреса:</b> {{ event.city }}</li>
+        <li><b>Початок:</b> {{ event.beginAt|date('F jS \\a\\t g:ia') }}</li>
+        <li><b>Кінець:</b> {{ event.endAt|date('F jS \\a\\t g:ia') }}</li>
+        <li><b>Тривалість:</b> {{ event.duration }}</li>
+        <li>
+            <b>Гурти:</b>
+            <ul>
+                {% for group in groups %}
+                    <li><a href="{{ path("group_show", { "slug":group.slug }) }}">{{ group.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

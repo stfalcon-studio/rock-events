@@ -2,6 +2,8 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Group;
 use AppBundle\Entity\EventGroup;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -30,18 +32,15 @@ class LoadEventGroupDate extends AbstractFixture implements DependentFixtureInte
      */
     public function load(ObjectManager $manager)
     {
-        /**
-         * @var \AppBundle\Entity\Event $eventZaxid
-         * @var \AppBundle\Entity\Event $eventBMTH
-         */
+        /** @var Event $eventZaxid */
+        /** @var Event $eventBMTH */
         $eventZaxid = $this->getReference('event-zaxid');
         $eventBMTH  = $this->getReference('event-bmth');
 
-        /**
-         * @var \AppBundle\Entity\Group $groupEnterShikari
-         * @var \AppBundle\Entity\Group $groupBMTH
-         * @var \AppBundle\Entity\Group $groupJinjer
-         */
+
+         /** @var Group $groupEnterShikari */
+         /** @var Group $groupBMTH */
+         /** @var Group $groupJinjer */
         $groupEnterShikari = $this->getReference('group-enter-shikari');
         $groupBMTH         = $this->getReference('group-bmth');
         $groupJinjer       = $this->getReference('group-jinjer');

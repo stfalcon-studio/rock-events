@@ -63,6 +63,22 @@ class Genre
     private $name;
 
     /**
+     * @var string $slug Slug
+     *
+     * @ORM\Column(type="string")
+     */
+    private $slug;
+
+    /**
+     * @var bool $active Active
+     *
+     * @ORM\Column(type="boolean")
+     *
+     * @Gedmo\Versioned
+     */
+    public $active = true;
+
+    /**
      * Get ID
      *
      * @return int
@@ -94,6 +110,30 @@ class Genre
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug Slug
+     *
+     * @return Genre
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string Slug
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -148,5 +188,29 @@ class Genre
     public function getUserGenres()
     {
         return $this->userGenres;
+    }
+
+    /**
+     * Get active
+     *
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set active
+     *
+     * @param bool $active Active
+     *
+     * @return $this
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
     }
 }

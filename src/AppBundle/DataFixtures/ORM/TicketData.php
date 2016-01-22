@@ -3,6 +3,8 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Ticket;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -31,14 +33,12 @@ class TicketData extends AbstractFixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         /**
-         * var \AppBundle\Entity\Event $user
+         * @var User $user
          */
         $user = $this->getReference('user-admin');
 
-        /**
-         * @var \AppBundle\Entity\Event $eventZaxid
-         * @var \AppBundle\Entity\Event $eventBMTH
-         */
+         /** @var Event $eventZaxid */
+         /** @var Event $eventBMTH */
         $eventZaxid = $this->getReference('event-zaxid');
         $eventBMTH  = $this->getReference('event-bmth');
 

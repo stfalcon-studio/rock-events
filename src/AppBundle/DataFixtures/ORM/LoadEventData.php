@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Event;
+use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -29,20 +30,24 @@ class LoadEventData extends AbstractFixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        /**
-         * @var \AppBundle\Entity\User $userAdmin
-         */
+        /** @var User $userAdmin */
         $userAdmin = $this->getReference('user-admin');
 
         $event1 = (new Event())
             ->setName('Захід Фест')
-            ->setDescription('Захід — український щорічний фестиваль сучасного мистецтва, що відбувається з 2009 року на Львівщині. З 2011 року проходить біля села Родатичі Городоцького району.')
+            ->setDescription(<<<TEXT
+Захід — український щорічний фестиваль сучасного мистецтва, що відбувається з 2009 року на Львівщині.
+З 2011 року проходить біля села Родатичі Городоцького району.
+TEXT
+            )
             ->setCountry('Україна')
             ->setCity('Львів')
             ->setAddress('Львівська область, Городоцький район, село Родатичі')
             ->setBeginAt(new \DateTime('2016-08-21 14:0:0'))
             ->setEndAt(new \DateTime('2016-08-23 23:55:0'))
             ->setDuration(64)
+            ->setSlug('zaxid')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('event-zaxid', $event1);
@@ -57,6 +62,8 @@ class LoadEventData extends AbstractFixture implements DependentFixtureInterface
             ->setBeginAt(new \DateTime('2016-04-2 20:0:0'))
             ->setEndAt(new \DateTime('2016-04-2 23:0:0'))
             ->setDuration(3)
+            ->setSlug('concert-bmth')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('event-bmth', $event2);
@@ -71,6 +78,8 @@ class LoadEventData extends AbstractFixture implements DependentFixtureInterface
             ->setBeginAt(new \DateTime('2016-04-15 19:0:0'))
             ->setEndAt(new \DateTime('2016-04-15 22:0:0'))
             ->setDuration(3)
+            ->setSlug('concert-torvald')
+            ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('event-torvald', $event3);

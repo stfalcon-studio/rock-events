@@ -2,6 +2,8 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Group;
+use AppBundle\Entity\User;
 use AppBundle\Entity\UserGroup;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -26,15 +28,14 @@ class LoadUserGroup extends AbstractFixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         /**
-         * @var \AppBundle\Entity\User $user
+         * @var User $user
          */
         $user = $this->getReference('user-admin');
 
-        /**
-         * @var \AppBundle\Entity\Group $groupEnterShikari
-         * @var \AppBundle\Entity\Group $groupBMTH
-         * @var \AppBundle\Entity\Group $groupJinjer
-         */
+
+         /** @var Group $groupEnterShikari */
+         /** @var Group $groupBMTH */
+         /** @var Group $groupJinjer */
         $groupEnterShikari = $this->getReference('group-enter-shikari');
         $groupBMTH         = $this->getReference('group-bmth');
         $groupJinjer       = $this->getReference('group-jinjer');

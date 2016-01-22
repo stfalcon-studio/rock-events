@@ -20,7 +20,8 @@
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "fresh/doctrine-enum-bundle": "v3.3",
         "stof/doctrine-extensions-bundle": "^1.2",
-        "ftrrtf/rollbar-bundle": "^0.14.0"
+        "ftrrtf/rollbar-bundle": "^0.14.0",
+        "beberlei/DoctrineExtensions": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
