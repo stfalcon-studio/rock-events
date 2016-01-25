@@ -71,7 +71,7 @@ class EventRepository extends EntityRepository
      */
     public function findEventsByUserBookMark(User $user)
     {
-        $sql            = '(SELECT DISTINCT e.name, e.description, e.country, e.city, e.address, e.begin_at as beginAt, e.end_at as endAt, e.duration, e.slug
+        $sql            = '(SELECT DISTINCT e.*
                             FROM events as e
                             INNER JOIN events_to_groups as eg
                             ON e.id = eg.group_id
@@ -79,7 +79,7 @@ class EventRepository extends EntityRepository
                             ON eg.id=ug.group_id
                             WHERE ug.user_id = :user)
                             UNION
-                            (SELECT DISTINCT e.name, e.description, e.country, e.city, e.address, e.begin_at as beginAt, e.end_at as endAt, e.duration, e.slug
+                            (SELECT DISTINCT e.*
                             FROM events as e
                             INNER JOIN events_to_groups as eg
                             ON e.id = eg.event_id

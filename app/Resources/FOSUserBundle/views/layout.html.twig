@@ -1,7 +1,7 @@
-{#{% extends "FOSUserBundle::layout.html.twig" %}#}
+{% extends "base.html.twig" %}
 
-{#{% block title %}Demo Application{% endblock %}#}
+{% block title %}Demo Application{% endblock %}
 
-{#{% block content %}#}
-    {#{% block fos_user_content %}{% endblock %}#}
-{#{% endblock %}#}
+{% block content %}
+    {% block fos_user_content %}{% endblock %}
+{% endblock %}

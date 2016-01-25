@@ -36,6 +36,15 @@ class LoadUserData extends AbstractFixture
         $this->setReference('user-user', $parserUser);
         $manager->persist($parserUser);
 
+        // Manager user
+        $managerUser = (new User())
+            ->setUsername('manager')
+            ->setEnabled(true)
+            ->setEmail('manager@stfalcon.com')
+            ->setPlainPassword('qwerty');
+        $this->setReference('user-manager', $managerUser);
+        $manager->persist($managerUser);
+
         $manager->flush();
     }
 }

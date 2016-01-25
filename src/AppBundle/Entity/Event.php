@@ -166,6 +166,11 @@ class Event
         $this->eventGroups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     /**
      * Get ID
      *
@@ -377,7 +382,7 @@ class Event
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        $this->slug = strtolower(str_replace(' ', '-', $slug));
 
         return $this;
     }

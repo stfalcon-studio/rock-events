@@ -2,33 +2,29 @@
 
 {% block body %}
     <h3>Жанри</h3>
-    <table style="width: 100%">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Назва</th>
             <th></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="table table-hover">
         {% for genre in genres %}
             <tr>
                 <td><a href="{{ path('genre_group',{ 'slug' : genre.slug })}}">{{ genre.name }}</a></td>
+                    {% if app.user %}
+                        {% if genre in userGenres %}
+                            <td>
+                                <a href="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug, 'route' : 'genre_list' }) }}">-</a>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a href="{{ path('genre_add_to_bookmark',{ 'slug' : genre.slug }) }}"><b>+</b></a>
+                            </td>
+                        {% endif %}
+                    {% endif %}
             </tr>
-            {% if app.user %}
-                {% if genre in userGenres %}
-                    <tr style="float: right">
-                        <td>
-                            <a href="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug, 'route' : 'genre_list' }) }}">-</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr style="float: right">
-                        <td>
-                            <a href="{{ path('genre_add_to_bookmark',{ 'slug' : genre.slug }) }}"><b>+</b></a>
-                        </td>
-                    </tr>
-                {% endif %}
-            {% endif %}
         {% endfor %}
         </tbody>
     </table>

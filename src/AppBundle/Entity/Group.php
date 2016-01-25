@@ -35,7 +35,7 @@ class Group
 
     /**
      *
-     * @var ArrayCollection|GroupGenre[] $groupGenres Users Genres
+     * @var ArrayCollection|GroupGenre[] $groupGenres Group Genres
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\GroupGenre", mappedBy="group")
      */
@@ -43,7 +43,7 @@ class Group
 
     /**
      *
-     * @var ArrayCollection|UserGroup[] $usersGroups Users Groups
+     * @var ArrayCollection|UserGroup[] $usersGroups User Groups
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="group")
      */
@@ -51,11 +51,19 @@ class Group
 
     /**
      *
-     * @var ArrayCollection|EventGroup[] $eventGroups Events Groups
+     * @var ArrayCollection|EventGroup[] $eventGroups Event Groups
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="group")
      */
     private $eventGroups;
+
+    /**
+     *
+     * @var ArrayCollection|ManagerGroup[] $managerGroups Manager Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ManagerGroup", mappedBy="group")
+     */
+    private $managerGroups;
 
     /**
      * @var string $name Name
@@ -107,6 +115,11 @@ class Group
      * @Gedmo\Versioned
      */
     public $active = true;
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Get ID
@@ -199,7 +212,7 @@ class Group
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        $this->slug = strtolower(str_replace(' ', '-', $slug));
 
         return $this;
     }
@@ -215,15 +228,7 @@ class Group
     }
 
     /**
-     * Get active
      *
-     * @return bool
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-    /**
      * Set active
      *
      * @param bool $active Active
@@ -235,6 +240,16 @@ class Group
         $this->active = $active;
 
         return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 
     /**
@@ -316,5 +331,37 @@ class Group
     public function getEventGroups()
     {
         return $this->eventGroups;
+    }
+
+    /**
+     * Set manager groups
+     *
+     * @param ArrayCollection|ManagerGroup[] $managerGroups Manager Group
+     *
+     * @return $this
+     */
+    public function setManagerGroups(ArrayCollection $managerGroups)
+    {
+        foreach ($managerGroups as $managerGroup) {
+            $managerGroup->setGroup($this);
+        }
+        $this->managerGroups = $managerGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get manager groups
+     *
+     * @return ArrayCollection|ManagerGroup[] Manager Groups
+     */
+    public function getManagerGroups()
+    {
+        return $this->managerGroups;
+    }
+
+    public function preFlush()
+    {
+
     }
 }

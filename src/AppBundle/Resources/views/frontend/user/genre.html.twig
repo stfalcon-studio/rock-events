@@ -2,19 +2,18 @@
 
 {% block body %}
     <h3>Жанри</h3>
-    <table style="width: 100%">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Назва</th>
             <th></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="table table-hover">
         {% for genre in genres %}
             <tr>
-                <td><a href="{{ path('genre_group',{ 'slug' : genre.slug })}}">{{ genre.name }}</a></td>
-            </tr>
-            <tr style="float: right">
+                <td>
+                    <a href="{{ path('genre_group',{ 'slug' : genre.slug })}}">{{ genre.name }}</a></td>
                 <td>
                     <a href="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug , 'route' : 'user_cabinet_genre' }) }}">-</a>
                 </td>

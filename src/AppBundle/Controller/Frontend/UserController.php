@@ -16,18 +16,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class UserController extends Controller
 {
     /**
-     * User index
+     * User future events
      *
      * @return Response
      *
      * @Method("GET")
-     * @Route("/cabinet", name="user_cabinet_index")
+     * @Route("/cabinet", name="user_cabinet_future_events")
      */
-    public function indexAction()
+    public function futureEventsAction()
     {
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByUserBookMark($this->getUser());
 
-        return $this->render('@App/frontend/user/index.html.twig', [
+        return $this->render('@App/frontend/user/future-events.html.twig', [
             'events' => $events
         ]);
     }
