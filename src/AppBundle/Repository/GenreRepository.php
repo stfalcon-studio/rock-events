@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\Group;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -28,6 +29,25 @@ class GenreRepository extends EntityRepository
                   ->join('g.groupGenres', 'gg')
                   ->join('gg.group', 'gr')
                   ->setParameter('group', $group)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find Genres by user
+     *
+     * @param User $user
+     *
+     * @return Genre[]
+     */
+    public function findGenresByUser(User $user)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->where($qb->expr()->eq('u', ':user'))
+                  ->join('g.userGenres', 'ug')
+                  ->join('ug.user', 'u')
+                  ->setParameter('user', $user)
                   ->getQuery()
                   ->getResult();
     }

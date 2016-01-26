@@ -14,7 +14,7 @@ use Doctrine\Common\Persistence\ObjectManager;
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  */
-class TicketData extends AbstractFixture implements DependentFixtureInterface
+class LoadTicketData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * {@inheritdoc}

@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Список подій</h1>
-    <table>
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Назва</th>
@@ -15,7 +15,7 @@
             <th>Тривалість</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="table table-hover">
         {% for event in events %}
             <tr>
                 <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>

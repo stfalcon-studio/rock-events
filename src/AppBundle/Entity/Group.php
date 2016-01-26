@@ -35,7 +35,7 @@ class Group
 
     /**
      *
-     * @var ArrayCollection|GroupGenre[] $groupGenres Users Genres
+     * @var ArrayCollection|GroupGenre[] $groupGenres Group Genres
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\GroupGenre", mappedBy="group")
      */
@@ -43,7 +43,7 @@ class Group
 
     /**
      *
-     * @var ArrayCollection|UserGroup[] $usersGroups Users Groups
+     * @var ArrayCollection|UserGroup[] $usersGroups User Groups
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="group")
      */
@@ -51,7 +51,7 @@ class Group
 
     /**
      *
-     * @var ArrayCollection|EventGroup[] $eventGroups Events Groups
+     * @var ArrayCollection|EventGroup[] $eventGroups Event Groups
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="group")
      */
@@ -107,6 +107,21 @@ class Group
      * @Gedmo\Versioned
      */
     public $active = true;
+
+    /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = $this->getName();
+        if (null === $result) {
+            return "New Group";
+        }
+
+        return $result;
+    }
 
     /**
      * Get ID
@@ -199,7 +214,7 @@ class Group
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        $this->slug = strtolower(str_replace(' ', '-', $slug));
 
         return $this;
     }
@@ -215,15 +230,7 @@ class Group
     }
 
     /**
-     * Get active
      *
-     * @return bool
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-    /**
      * Set active
      *
      * @param bool $active Active
@@ -235,6 +242,16 @@ class Group
         $this->active = $active;
 
         return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 
     /**

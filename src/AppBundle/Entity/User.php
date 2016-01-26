@@ -39,7 +39,7 @@ class User extends BaseUser
     private $userGenres;
 
     /**
-     * @var ArrayCollection|UserGroup[] $userGroups Users Groups
+     * @var ArrayCollection|UserGroup[] $userGroups User Groups
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserGroup", mappedBy="user")
      */

@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\Group;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -44,10 +45,29 @@ class GroupRepository extends EntityRepository
         $qb = $this->createQueryBuilder('g');
 
         return $qb->where($qb->expr()->eq('e', ':event'))
-                    ->join('g.eventGroups', 'eg')
-                    ->join('eg.event', 'e')
-                    ->setParameter('event', $event)
-                    ->getQuery()
-                    ->getResult();
+                  ->join('g.eventGroups', 'eg')
+                  ->join('eg.event', 'e')
+                  ->setParameter('event', $event)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find Groups by user
+     *
+     * @param User $user User
+     *
+     * @return Group[]
+     */
+    public function findGroupsByUser(User $user)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->where($qb->expr()->eq('u', ':user'))
+                  ->join('g.userGroups', 'ug')
+                  ->join('ug.user', 'u')
+                  ->setParameter('user', $user)
+                  ->getQuery()
+                  ->getResult();
     }
 }

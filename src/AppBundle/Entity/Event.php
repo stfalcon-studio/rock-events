@@ -167,6 +167,21 @@ class Event
     }
 
     /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = $this->getName();
+        if (null === $result) {
+            $result = 'New Event';
+        }
+
+        return $result;
+    }
+
+    /**
      * Get ID
      *
      * @return int
@@ -377,7 +392,7 @@ class Event
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        $this->slug = strtolower(str_replace(' ', '-', $slug));
 
         return $this;
     }

@@ -2,18 +2,54 @@
 
 {% block body %}
     <h3>Жанри</h3>
-    <table>
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Назва</th>
+            <th></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="table table-hover">
         {% for genre in genres %}
             <tr>
-                <td><a href="{{ path('genre_group',{ 'slug' : genre.slug })}}">{{ genre.name }}</a></td>
+                <td><a href="{{ path('genre_group',{ 'slug' : genre.slug }) }}">{{ genre.name }}</a></td>
+                {% if app.user %}
+                    {% if genre in userGenres %}
+                        <td>
+                            <button href="#" class="amend-minus"
+                                    data-genre-path="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug}) }}"
+                                    type="button">
+                                -
+                            </button>
+                            <button href="#" class="amend-plus"
+                                    data-genre-path="{{ path('genre_add_to_bookmark', { 'slug' : genre.slug}) }}"
+                                    type="button"
+                                    style="display: none;">
+                                +
+                            </button>
+                        </td>
+                    {% else %}
+                        <td>
+                            <button href="#" class="amend-plus"
+                                    data-genre-path="{{ path('genre_add_to_bookmark', { 'slug' : genre.slug}) }}"
+                                    type="button">
+                                +
+                            </button>
+                            <button href="#" class="amend-minus"
+                                    data-genre-path="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug}) }}"
+                                    type="button"
+                                    style="display: none;">
+                                -
+                            </button>
+                        </td>
+                    {% endif %}
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/genre.js') }}"></script>
 {% endblock %}
