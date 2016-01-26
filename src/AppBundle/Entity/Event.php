@@ -166,9 +166,19 @@ class Event
         $this->eventGroups = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * To string
+     *
+     * @return string
+     */
     public function __toString()
     {
-        return $this->getName();
+        $result = $this->getName();
+        if (null === $result) {
+            $result = 'New Event';
+        }
+
+        return $result;
     }
 
     /**

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 /**
  * Frontend UserController
@@ -28,12 +29,14 @@ class UserController extends Controller
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByUserBookMark($this->getUser());
 
         return $this->render('@App/frontend/user/future-events.html.twig', [
-            'events' => $events
+            'events' => $events,
         ]);
     }
 
     /**
      * Groups by user
+     *
+     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
      *
      * @return Response
      *
@@ -42,15 +45,20 @@ class UserController extends Controller
      */
     public function groupAction()
     {
+        if (null === $this->getUser()) {
+            throw new UnauthorizedHttpException('Не зареєстрований');
+        }
         $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
 
         return $this->render('@App/frontend/user/group.html.twig', [
-            'groups' => $groups
+            'groups' => $groups,
         ]);
     }
 
     /**
      * Genres by user
+     *
+     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
      *
      * @return Response
      *
@@ -59,10 +67,13 @@ class UserController extends Controller
      */
     public function genreAction()
     {
+        if (null === $this->getUser()) {
+            throw new UnauthorizedHttpException('Не зареєстрований');
+        }
         $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByUser($this->getUser());
 
         return $this->render('@App/frontend/user/genre.html.twig', [
-            'genres' => $genres
+            'genres' => $genres,
         ]);
     }
 }

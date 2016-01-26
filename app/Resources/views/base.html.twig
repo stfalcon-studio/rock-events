@@ -1,82 +1,77 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            {% stylesheets
-                'css/bootstrap.css'
-                'css/style.css'
-            %}
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {% stylesheets
+        'css/bootstrap.css'
+        'css/style.css' %}
 
-            <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block header %}
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="">Rock-events</a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="{{ path("event_index") }}">Головна</a></li>
-                            <li><a href="{{ path("event_list") }}">Коценрти</a></li>
-                            <li><a href="{{ path("group_list") }}">Гурти</a></li>
-                            <li><a href="{{ path("genre_list") }}">Жанри</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            {% if app.user %}
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle"
-                                       data-toggle="dropdown"
-                                       href="#">
-                                        Кабінет
-                                        <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="{{ path('fos_user_profile_show') }}">Профіль</a></li>
-                                        <li><a href="{{ path('user_cabinet_future_events') }}">Найближчі концерти</a></li>
-                                        <li><a href="{{ path('user_cabinet_group') }}">Гурти</a></li>
-                                        <li><a href="{{ path('user_cabinet_genre') }}">Жанри</a></li>
-                                        <li><a href="{{ path('fos_user_security_logout') }}">Вийти</a></li>
-                                    </ul>
-                                </li>
-                            {% else %}
-                                <li><a href="{{ path('fos_user_security_login') }}">Увійти</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-        {% endblock %}
-        <div class="indent">
-            <div class="container">
-                {% block body %}{% endblock %}
-                {% block fos_user_content %}
-                {% endblock fos_user_content %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+{% block header %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">Rock-events</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{ path("event_index") }}">Головна</a></li>
+                    <li><a href="{{ path("event_list") }}">Коценрти</a></li>
+                    <li><a href="{{ path("group_list") }}">Гурти</a></li>
+                    <li><a href="{{ path("genre_list") }}">Жанри</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if app.user %}
+                        <li class="dropdown">
+                            <a class="dropdown-toggle"
+                               data-toggle="dropdown"
+                               href="#">
+                                Кабінет
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('fos_user_profile_show') }}">Профіль</a></li>
+                                <li><a href="{{ path('user_cabinet_future_events') }}">Найближчі концерти</a></li>
+                                <li><a href="{{ path('user_cabinet_group') }}">Гурти</a></li>
+                                <li><a href="{{ path('user_cabinet_genre') }}">Жанри</a></li>
+                                <li><a href="{{ path('fos_user_security_logout') }}">Вийти</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ path('fos_user_security_login') }}">Увійти</a></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
+    </nav>
 
-        {% block javascripts %}
-            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-            <script src="{{ asset('js/jquery-2.2.0.min.js') }}"></script>
-            <script src="{{ asset('js/bootstrap-dropdown.js') }}"></script>
-            {#<script>#}
-                {#$(document).ready(function () {#}
-                    {#$('.dropdown-toggle').dropdown()#}
-                {#});#}
-            {#</script>#}
-        {% endblock %}
-    </body>
+{% endblock %}
+<div class="indent">
+    <div class="container">
+        {% block body %}{% endblock %}
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+    </div>
+</div>
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-2.2.0.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-dropdown.js') }}"></script>
+{% endblock %}
+</body>
 </html>
