@@ -1,52 +1,50 @@
 $(function () {
-    $('.delete').on('click', function () {
+    $('.delete-group').on('click', function () {
         var url = $(this).data('group-slug');
         var $parent = $(this).parent().parent();
         $.ajax({
             url: url,
             dataType: 'JSON',
-            success: function (data, textStatus, xhr) {
-                if (204 === xhr.status) {
+            success: function (response) {
+                if (true === response.status) {
                     $parent.remove();
                     console.log('success')
                 } else {
-                    console.log('error');
+                    alert('error');
                 }
             }
         })
     });
 
-    $('.amend-plus').on('click', function () {
-        var url = $(this).data('group-path');
+    $('.add').on('click', function () {
+        var url = $(this).data('bookmark-group-add');
         var element = this;
         $.ajax({
             url: url,
-            dataType: 'JSON',
-            success: function (data, textStatus, xhr) {
-                if (201 === xhr.status) {
-                    $(element).siblings().show();
-                    $(element).hide();
-                    console.log('success');
-                } else {
-                    console.log('error');
-                }
-            }
-        })
-    });
-
-    $('.amend-minus').on('click', function () {
-        var url = $(this).data('group-path');
-        var element = this;
-        $.ajax({
-            url: url,
-            dateType: 'JSON',
-            success: function (data, textStatus, xhr) {
-                if (204 === xhr.status) {
+            success: function (response) {
+                if (true === response.status) {
                     $(element).siblings().show();
                     $(element).hide();
                     console.log('success')
                 } else {
-                    console.log('error');
+                    alert('error');
+                }
+            }
+        })
+    });
+
+    $('.delete').on('click', function () {
+        var url = $(this).data('bookmark-group-delete');
+        var element = this;
+        $.ajax({
+            url: url,
+            success: function (response) {
+                if (true === response.status) {
+                    $(element).siblings().show();
+                    $(element).hide();
+                    console.log('success')
+                } else {
+                    alert('error');
                 }
             }
         });

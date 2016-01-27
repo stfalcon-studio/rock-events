@@ -18,7 +18,8 @@
                 <td>{{ group.description }}</td>
                 <td>{{ group.foundedAt|date("Y") }}</td>
                 <td>
-                    <button href="#" class="delete"
+                    <button href="#"
+                            class="delete-group"
                             data-group-slug="{{ path('group_delete_from_bookmark', { 'slug' : group.slug,}) }}">-
                     </button>
                 </td>

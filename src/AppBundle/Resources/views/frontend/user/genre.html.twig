@@ -15,7 +15,8 @@
                 <td>
                     <a href="{{ path('genre_group',{ 'slug' : genre.slug }) }}">{{ genre.name }}</a></td>
                 <td>
-                    <button href="#" class="delete"
+                    <button href="#"
+                            class="delete-genre"
                             data-genre-slug="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug,}) }}">-
                     </button>
                 </td>

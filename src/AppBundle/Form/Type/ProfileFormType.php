@@ -30,10 +30,10 @@ class ProfileFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('username', 'text', [
-            'attr' => [
-                'class' => 'form-control',
-            ],
-        ])
+                    'attr' => [
+                        'class' => 'form-control',
+                    ],
+                ])
                 ->add('email', 'email', [
                     'attr' => [
                         'class' => 'form-control',

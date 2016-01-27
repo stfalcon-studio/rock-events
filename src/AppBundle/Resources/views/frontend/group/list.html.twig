@@ -18,35 +18,9 @@
                 <td>{{ group.description }}</td>
                 <td>{{ group.foundedAt|date("Y") }}</td>
                 {% if app.user %}
-                    {% if group in userGroups %}
-                        <td>
-                            {#<a href="{{ path('group_delete_from_bookmark', { 'slug' : group.slug }) }}">-</a>#}
-                            <button href="#" class="amend-minus"
-                                    data-group-path="{{ path('group_delete_from_bookmark', { 'slug' : group.slug,}) }}"
-                                    type="button">
-                                -
-                            </button>
-                            <button href="#" class="amend-plus"
-                                    data-group-path="{{ path('group_add_to_bookmark', { 'slug' : group.slug}) }}"
-                                    type="button"
-                                    style="display: none;">
-                                +
-                            </button>
-                        </td>
-                    {% else %}
-                        <td>
-                            {#<a href="{{ path('group_add_to_bookmark',{ 'slug' : group.slug }) }}"><b>+</b></a>#}
-                            <button href="#" class="amend-plus"
-                                    data-group-path="{{ path('group_add_to_bookmark', { 'slug' : group.slug}) }}"
-                                    type="button">+
-                            </button>
-                            <button href="#" class="amend-minus"
-                                    data-group-path="{{ path('group_delete_from_bookmark', { 'slug' : group.slug,}) }}"
-                                    type="button"
-                                    style="display: none;">-
-                            </button>
-                        </td>
-                    {% endif %}
+                    <td>
+                        {% include '@App/frontend/group/bookmark_group.html.twig' with { 'group': group, 'userGroups': userGroups } %}
+                    </td>
                 {% endif %}
             </tr>
         {% endfor %}
