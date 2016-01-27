@@ -44,10 +44,10 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ path('fos_user_profile_show') }}">Профіль</a></li>
-                                <li><a href="{{ path('user_cabinet_future_events') }}">Найближчі концерти</a></li>
+                                <li><a href="{{ path('fos_user_profile_show') }}" class="li-seperator">Профіль</a></li>
+                                <li><a href="{{ path('user_cabinet_future_events') }}" class="li-seperator">Найближчі концерти</a></li>
                                 <li><a href="{{ path('user_cabinet_group') }}">Гурти</a></li>
-                                <li><a href="{{ path('user_cabinet_genre') }}">Жанри</a></li>
+                                <li><a href="{{ path('user_cabinet_genre') }}" class="li-seperator">Жанри</a></li>
                                 <li><a href="{{ path('fos_user_security_logout') }}">Вийти</a></li>
                             </ul>
                         </li>
@@ -66,11 +66,10 @@
         {% endblock fos_user_content %}
     </div>
 </div>
-
-{% block javascripts %}
-    <script src="{{ asset('js/jquery-2.2.0.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-dropdown.js') }}"></script>
-{% endblock %}
-</body>
+        {% block javascripts %}
+            <script src="{{ asset('js/jquery-2.2.0.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap-dropdown.js') }}"></script>
+        {% endblock %}
+    </body>
 </html>

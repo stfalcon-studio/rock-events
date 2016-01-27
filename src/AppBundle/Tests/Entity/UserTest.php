@@ -2,6 +2,7 @@
 
 namespace AppBundle\Tests\Entity;
 
+use AppBundle\Entity\ManagerGroup;
 use AppBundle\Entity\Ticket;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserGenre;
@@ -116,5 +117,17 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $user = (new User())->setTickets($tickets);
         $this->assertEquals(1, $user->getTickets()->count());
         $this->assertEquals($tickets, $user->getTickets());
+    }
+
+    /**
+     * Test getter for Manager Groups collection
+     */
+    public function testGetSetManagerGroupsCollection()
+    {
+        $managerGroups = new ArrayCollection();
+        $managerGroups->add(new ManagerGroup());
+        $user = (new User())->setManagerGroups($managerGroups);
+        $this->assertEquals(1, $user->getManagerGroups()->count());
+        $this->assertEquals($managerGroups, $user->getManagerGroups());
     }
 }

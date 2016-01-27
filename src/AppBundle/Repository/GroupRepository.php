@@ -70,4 +70,23 @@ class GroupRepository extends EntityRepository
                   ->getQuery()
                   ->getResult();
     }
+
+    /**
+     * Find Groups by manager
+     *
+     * @param User $user
+     *
+     * @return Group[]
+     */
+    public function findGroupsByManager(User $user)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->where($qb->expr()->eq('m', ':user'))
+                  ->join('g.managerGroups', 'mg')
+                  ->join('mg.manager', 'm')
+                  ->setParameter('user', $user)
+                  ->getQuery()
+                  ->getResult();
+    }
 }

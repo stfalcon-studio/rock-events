@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#<h3>Список доступних груп для адміністрування</h3>#}
+    {#<ul class="list-group">#}
+        {#{% for group in groups %}#}
+            {#<li class="list-group-item">{{ group.name }}</li>#}
+        {#{% endfor %}#}
+    {#</ul>#}
+    <ul class="list-group">
+        <li class="list-group-item"><a href="#">Додати новий концерт</a></li>
+        <li class="list-group-item"><a href="#">Додати новий гурт</a></li>
+        <li class="list-group-item"><a href="{{ path('manager_cabinet_groups') }}">Перегляд гуртів</a></li>
+        <li class="list-group-item"><a href="{{ path('manager_cabinet_events') }}">Перегляд концертів</a></li>
+    </ul>
+{% endblock %}

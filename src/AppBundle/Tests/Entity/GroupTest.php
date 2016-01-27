@@ -5,6 +5,7 @@ namespace AppBundle\Tests\Entity;
 use AppBundle\Entity\EventGroup;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\GroupGenre;
+use AppBundle\Entity\ManagerGroup;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserGroup;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -134,5 +135,17 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group = (new Group())->setEventGroups($eventGroups);
         $this->assertEquals(1, $group->getEventGroups()->count());
         $this->assertEquals($eventGroups, $group->getEventGroups());
+    }
+
+    /**
+     * Test getter for Manager Groups collection
+     */
+    public function testGetSetManagerGroupsCollection()
+    {
+        $managerGroups = new ArrayCollection();
+        $managerGroups->add(new ManagerGroup());
+        $group = (new Group())->setManagerGroups($managerGroups);
+        $this->assertEquals(1, $group->getManagerGroups()->count());
+        $this->assertEquals($managerGroups, $group->getManagerGroups());
     }
 }

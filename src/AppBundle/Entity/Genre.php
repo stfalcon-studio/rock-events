@@ -121,7 +121,7 @@ class Genre
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        $this->slug = strtolower(str_replace(' ', '-', $slug));
 
         return $this;
     }
@@ -166,7 +166,7 @@ class Genre
     /**
      * Set user genres
      *
-     * @param ArrayCollection|UserGenre[] $userGenre User Genres
+     * @param ArrayCollection|UserGenre[] $userGenres User Genres
      *
      * @return $this
      */

@@ -58,6 +58,13 @@ class Group
     private $eventGroups;
 
     /**
+     * @var ArrayCollection|ManagerGroup[] $managerGroups Manager Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ManagerGroup", mappedBy="group")
+     */
+    private $managerGroups;
+
+    /**
      * @var string $name Name
      *
      * @ORM\Column(type="string", length=100, nullable=false)
@@ -257,7 +264,7 @@ class Group
     /**
      * Set group genres
      *
-     * @param ArrayCollection|GroupGenre[] $groupGenre Group Genres
+     * @param ArrayCollection|GroupGenre[] $groupGenres Group Genres
      *
      * @return $this
      */
@@ -311,7 +318,7 @@ class Group
     /**
      * Set event groups
      *
-     * @param ArrayCollection|EventGroup[] $EventGroups Event Groups
+     * @param ArrayCollection|EventGroup[] $eventGroups Event Groups
      *
      * @return $this
      */
@@ -333,5 +340,32 @@ class Group
     public function getEventGroups()
     {
         return $this->eventGroups;
+    }
+
+    /**
+     * Set manager groups
+     *
+     * @param ArrayCollection|ManagerGroup[] $managerGroups Manager Group
+     *
+     * @return $this
+     */
+    public function setManagerGroups(ArrayCollection $managerGroups)
+    {
+        foreach ($managerGroups as $managerGroup) {
+            $managerGroup->setGroup($this);
+        }
+        $this->managerGroups = $managerGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get manager groups
+     *
+     * @return ArrayCollection|ManagerGroup[] Manager Groups
+     */
+    public function getManagerGroups()
+    {
+        return $this->managerGroups;
     }
 }

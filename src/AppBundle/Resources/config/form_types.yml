@@ -1,11 +1,27 @@
 services:
-    app.form.registration:
-        class: AppBundle\Form\Type\RegistrationType
+    app.form.event_groups:
+        class: AppBundle\Form\Type\EventGroupType
         tags:
-            - { name: form.type, alias: app_user_registration }
+            - { name: form.type, alias: event_groups }
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@security.token_storage"
+
+    app.form.group:
+        class: AppBundle\Form\Type\GroupType
+        tags:
+            - { name: form.type, alias: group }
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
     app.form.profile:
         class: AppBundle\Form\Type\ProfileFormType
         tags:
             - { name: form.type, alias: app_user_profile }
+
+    app.form.registration:
+        class: AppBundle\Form\Type\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
 
