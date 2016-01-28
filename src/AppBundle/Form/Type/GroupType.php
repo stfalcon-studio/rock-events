@@ -46,6 +46,7 @@ class GroupType extends AbstractType
                 'label' => 'Опис',
                 'attr'  => [
                     'class' => 'form-control',
+                    'rows'  => 7
                 ],
             ])
             ->add('foundedAt', 'integer', [
@@ -56,6 +57,9 @@ class GroupType extends AbstractType
             ])
             ->add('submit', 'submit', [
                 'label' => 'Зберегти',
+                'attr'  => [
+                    'class' => 'btn btn-success'
+                ]
             ]);
 
         $builder->get('foundedAt')

@@ -6,11 +6,14 @@ use AppBundle\Form\Entity\Event as EventForm;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventGroup;
 use AppBundle\Entity\Group;
+use AppBundle\Form\Entity\Group as GroupForm;
+use AppBundle\Form\Type\GroupType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Frontend ManagerController
@@ -75,9 +78,60 @@ class ManagerController extends Controller
     }
 
     /**
+     * Update group
+     *
+     * @param Group   $slug    Group
+     * @param Request $request $request
+     *
+     * @return Response
+     *
+     * @Route("/manager/group/{slug}/update", name="manager_cabinet_group_update")
+     * @ParamConverter("group", class="AppBundle:Group")
+     */
+    public function updateGroupAction(Group $group, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $groupForm = (new GroupForm())
+            ->setName($group->getName())
+            ->setDescription($group->getDescription())
+            ->setFoundedAt($group->getFoundedAt()->format('Y'));
+
+        $form = $this->createForm(new GroupType($em), $groupForm);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            /** @var \AppBundle\Form\Entity\Group $groupForm */
+            $groupForm = $form->getData();
+
+            $group->setName($groupForm->getName())
+                  ->setDescription($groupForm->getDescription())
+                  ->setSlug($groupForm->getName())
+                  ->setFoundedAt($groupForm->getFoundedAt())
+                  ->setCreatedBy($user)
+                  ->setUpdatedBy($user);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($group);
+            $em->flush();
+
+            return $this->redirectToRoute('manager_cabinet_groups_list');
+        }
+
+        return $this->render('AppBundle:frontend/manager:group_update.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * Manager list groups
      *
      * @Route("/manager/groups", name="manager_cabinet_groups_list")
+     *
+     * @return Response
      */
     public function groupsAction()
     {
@@ -121,8 +175,7 @@ class ManagerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $user   = $this->getUser();
-        $groups = $em->getRepository('AppBundle:Group')->findGroupsByManager($user);
+        $user = $this->getUser();
 
         $form = $this->createForm('event_groups');
         $form->handleRequest($request);
@@ -163,8 +216,7 @@ class ManagerController extends Controller
         }
 
         return $this->render('AppBundle:frontend/manager:event_create.html.twig', [
-            'form'   => $form->createView(),
-            'groups' => $groups,
+            'form' => $form->createView(),
         ]);
     }
 
