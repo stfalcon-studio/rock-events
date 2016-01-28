@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Список улюблених гуртів</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Рік створення</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody class="table table-hover">
+        {% for group in groups %}
+            <tr id="{{ group.slug }}">
+                <td><a href="{{ path('group_show',{ 'slug' : group.slug }) }}">{{ group.name }}</a></td>
+                <td>{{ group.description }}</td>
+                <td>{{ group.foundedAt|date("Y") }}</td>
+                <td>
+                    <button href="#"
+                            class="delete-group"
+                            data-group-slug="{{ path('group_delete_from_bookmark', { 'slug' : group.slug,}) }}">-
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/group.js') }}"></script>
+{% endblock %}

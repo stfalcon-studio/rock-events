@@ -1,0 +1,34 @@
+easy_admin:
+    entities:
+        User:
+            label: User
+            class: AppBundle\Entity\User
+            edit:
+                fields:
+                    - { property: 'username' }
+                    - { property: 'email' }
+                    - { property: 'enabled' }
+            list:
+                fields:
+                    - { property: 'username' }
+                    - { property: 'email' }
+                    - { property: 'enabled' }
+                    - { property: 'createdAt' }
+                    - { property: 'updatedAt' }
+            new:
+                fields:
+                    - { property: 'username' }
+                    - { property: 'email', type: 'email', label: 'E-mail address' }
+                    - { property: 'plainPassword', type: 'password' }
+                    - { property: 'enabled' }
+        Group:
+            label: Group
+            class: AppBundle\Entity\Group
+
+        Genre:
+            label: Genre
+            class: AppBundle\Entity\Genre
+
+        Event:
+            label: Event
+            class: AppBundle\Entity\Event

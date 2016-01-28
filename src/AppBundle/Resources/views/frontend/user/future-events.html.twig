@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Найближчі концерти за вибраними критеріями</h1>
+    {% if events is defined %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Назва</th>
+                <th>Опис</th>
+                <th>Країна</th>
+                <th>Місто</th>
+                <th>Адреса</th>
+                <th>Початок</th>
+                <th>Кінцеь</th>
+                <th>Тривалість</th>
+            </tr>
+            </thead>
+            <tbody class="table table-hover">
+            {% for event in events %}
+                <tr>
+                    <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
+                    <td>{{ event.description }}</td>
+                    <td>{{ event.country }}</td>
+                    <td>{{ event.city }}</td>
+                    <td>{{ event.address }}</td>
+                    <td>{{ event.begin_at|date('F jS \\a\\t g:ia') }}</td>
+                    <td>{{ event.end_at|date('F jS \\a\\t g:ia') }}</td>
+                    <td>{{ event.duration }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

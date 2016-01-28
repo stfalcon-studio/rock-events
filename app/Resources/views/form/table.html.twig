@@ -1,0 +1,15 @@
+{% block event_groups_groups_widget %}
+    <table class="table table-hover"
+           id="groups"
+           data-prototype="{% filter escape %}{% include 'form/fields.html.twig' %}{% endfilter %}"
+    >
+        <thead>
+            <tr>
+                <th>Назва гурту</th>
+                <th>Видалити</th>
+            </tr>
+        </thead>
+        <tbody class="table table-hover" id="groups_body">
+        </tbody>
+    </table>
+{% endblock event_groups_groups_widget %}

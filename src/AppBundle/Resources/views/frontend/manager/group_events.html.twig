@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>{{ group.name }}</h3>
+    <ul class="list-group">
+        {% for event in events %}
+            <li class="list-group-item">
+                <b>
+                    <a href="{{ path("event_show", { 'slug' : event.slug}) }}">
+                        {{ event.name }}
+                    </a>
+                </b> - {{ event.country }}, {{ event.city }}.
+                <b style="margin-left: 25%">
+                    Дата:
+                </b> {{ event.beginAt|date('F jS \\a\\t g:ia') }}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('manager_cabinet_event_create')}}">
+        <button class="btn btn-success">Створити подію</button>
+    </a>
+{% endblock %}

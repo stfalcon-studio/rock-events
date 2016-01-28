@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul class="list-group">
+        <li class="list-group-item"><b>Назва:</b> {{ group.name }}</li>
+        <li class="list-group-item"><b>Опис</b>: {{ group.description }}</li>
+        <li class="list-group-item"><b>Рік створення:</b> {{ group.foundedAt|date("Y") }}</li>
+        <li class="list-group-item">
+            <b>Жанри:</b>
+            <ul class="list-group">
+                {% for genre in genres %}
+                    <li class="list-group-item"><a href="{{ path('genre_group',{ 'slug':genre.slug })}}">{{ genre.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="list-group-item">
+            <a href="{{ path('group_event',{ 'slug': group.slug }) }}">Майбутні концерти...</a>
+        </li>
+    </ul>
+{% endblock %}
