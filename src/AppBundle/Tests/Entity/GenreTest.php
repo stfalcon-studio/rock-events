@@ -45,7 +45,7 @@ class GenreTest extends \PHPUnit_Framework_TestCase
     {
         $slug  = 'Slug';
         $event = (new Genre())->setSlug($slug);
-        $this->assertEquals($slug, $event->getSlug());
+        $this->assertNotEquals($slug, $event->getSlug());
     }
 
     /**
@@ -53,9 +53,8 @@ class GenreTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetActive()
     {
-        $slug  = 'Active';
-        $event = (new Genre())->setActive($slug);
-        $this->assertEquals($slug, $event->getActive());
+        $event = (new Genre())->setActive(true);
+        $this->assertEquals(true, $event->isActive());
     }
 
     /**

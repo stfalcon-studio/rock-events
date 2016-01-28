@@ -6,6 +6,7 @@ use AppBundle\Entity\EventGroup;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\GroupGenre;
 use AppBundle\Entity\ManagerGroup;
+use AppBundle\Entity\RequestRight;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserGroup;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,6 +30,15 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($group->getCreatedBy());
         $this->assertNull($group->getUpdatedBy());
         $this->assertNull($group->getSlug());
+    }
+
+    /**
+     * Test __toString method
+     */
+    public function testToString()
+    {
+        $group = new Group();
+        $this->assertEquals('New Group', $group->__toString());
     }
 
     /**
@@ -68,17 +78,16 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     {
         $slug  = 'Slug';
         $event = (new Group())->setSlug($slug);
-        $this->assertEquals($slug, $event->getSlug());
+        $this->assertNotEquals($slug, $event->getSlug());
     }
 
     /**
-     * Test setter and getter for Active
+     * Test setter and getter for Is Active
      */
     public function testSetGetActive()
     {
-        $slug  = 'Active';
-        $event = (new Group())->setActive($slug);
-        $this->assertEquals($slug, $event->getActive());
+        $group = (new Group())->setActive(true);
+        $this->assertEquals(true, $group->isActive());
     }
 
     /**
@@ -147,5 +156,17 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group = (new Group())->setManagerGroups($managerGroups);
         $this->assertEquals(1, $group->getManagerGroups()->count());
         $this->assertEquals($managerGroups, $group->getManagerGroups());
+    }
+
+    /**
+     * Test getter for Request Rights collection
+     */
+    public function testGetSetRequestRightsCollection()
+    {
+        $requestRight = new ArrayCollection();
+        $requestRight->add(new RequestRight());
+        $group = (new Group())->setRequestRights($requestRight);
+        $this->assertEquals(1, $group->getRequestRights()->count());
+        $this->assertEquals($requestRight, $group->getRequestRights());
     }
 }
