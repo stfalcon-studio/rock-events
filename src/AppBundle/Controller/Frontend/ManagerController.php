@@ -9,7 +9,6 @@ use AppBundle\Entity\Group;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -21,18 +20,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class ManagerController extends Controller
 {
     /**
-     * Manager index
+     * Manager dashboard
      *
      * @return Response
      *
-     * @Method("GET")
-     * @Route("/manager", name="manager_cabinet_index")
+     * @Route("/manager", name="manager_cabinet_dashboard")
      */
     public function dashboardAction()
     {
         $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByManager($this->getUser());
 
-        return $this->render('@App/frontend/manager/index.html.twig', [
+        return $this->render('AppBundle:frontend/manager:dashboard.html.twig', [
             'groups' => $groups,
         ]);
     }
@@ -44,7 +42,6 @@ class ManagerController extends Controller
      *
      * @return Response
      *
-     * @Method({"GET", "POST"})
      * @Route("/manager/group/create", name="manager_cabinet_group_create")
      */
     public function addGroupAction(Request $request)
@@ -66,13 +63,13 @@ class ManagerController extends Controller
                 ->setCreatedBy($user)
                 ->setUpdatedBy($user);
 
-            $em = $this->getDoctrine()
-                       ->getManager();
+            $em = $this->getDoctrine()->getManager();
+
             $em->persist($group);
             $em->flush();
         }
 
-        return $this->render('@App/frontend/manager/group-create.html.twig', [
+        return $this->render('AppBundle:frontend/manager:group_create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -80,14 +77,13 @@ class ManagerController extends Controller
     /**
      * Manager list groups
      *
-     * @Method("GET")
-     * @Route("/manager/groups", name="manager_cabinet_groups")
+     * @Route("/manager/groups", name="manager_cabinet_groups_list")
      */
     public function groupsAction()
     {
         $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByManager($this->getUser());
 
-        return $this->render('@App/frontend/manager/group.html.twig', [
+        return $this->render('AppBundle:frontend/manager:group_list.html.twig', [
             'groups' => $groups,
         ]);
     }
@@ -99,7 +95,6 @@ class ManagerController extends Controller
      *
      * @return Response
      *
-     * @Method("GET")
      * @Route("/manager/group/{slug}/events", name="manager_cabinet_group_events")
      * @ParamConverter("group", class="AppBundle:Group")
      */
@@ -120,15 +115,16 @@ class ManagerController extends Controller
      *
      * @return Response
      *
-     * @Method({"GET", "POST"})
      * @Route("/manager/event/create", name="manager_cabinet_event_create")
      */
     public function addEventAction(Request $request)
     {
-        $em     = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+
         $user   = $this->getUser();
         $groups = $em->getRepository('AppBundle:Group')->findGroupsByManager($user);
-        $form   = $this->createForm('event_groups');
+
+        $form = $this->createForm('event_groups');
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -147,24 +143,56 @@ class ManagerController extends Controller
                 ->setSlug($eventForm->getName())
                 ->setCreatedBy($user)
                 ->setUpdatedBy($user);
+
             $em->persist($event);
 
             /** @var Group $groupElement */
             foreach ($eventForm->getGroups() as $groupElement) {
-                $group       = $em->getRepository('AppBundle:Group')->findOneBy([
+                $group = $em->getRepository('AppBundle:Group')->findOneBy([
                     'slug' => $groupElement->getSlug(),
                 ]);
+
                 $eventGroups = (new EventGroup())
                     ->setEvent($event)
                     ->setGroup($group);
                 $em->persist($eventGroups);
             }
             $em->flush();
+
+            return $this->redirectToRoute('manager_cabinet_dashboard');
         }
 
         return $this->render('AppBundle:frontend/manager:event_create.html.twig', [
             'form'   => $form->createView(),
             'groups' => $groups,
+        ]);
+    }
+
+    /**
+     * Manager list all actual events
+     *
+     * @Route("/manager/events", name="manager_cabinet_events_list")
+     */
+    public function listEventsAction()
+    {
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByManager($this->getUser());
+
+        return $this->render('AppBundle:frontend/manager:event_list.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
+    /**
+     * Manager list all previous events
+     *
+     * @Route("manager/events/previous", name="manager_cabinet_events_list_previous")
+     */
+    public function listPreviousEventsAction()
+    {
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findPreviousEventsByManager($this->getUser());
+
+        return $this->render('AppBundle:frontend/manager:event_list_previous.html.twig', [
+            'events' => $events,
         ]);
     }
 }

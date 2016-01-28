@@ -38,7 +38,8 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''.')')))
+        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''
+                                              .')')))
                   ->getQuery()
                   ->getResult();
     }
@@ -65,7 +66,7 @@ class EventRepository extends EntityRepository
     /**
      * Find event by group and genre
      *
-     * @param User $user
+     * @param User $user User
      *
      * @return Event[]
      */
@@ -104,7 +105,7 @@ class EventRepository extends EntityRepository
     /**
      * Find events by manager
      *
-     * @param User $user
+     * @param User $user User
      *
      * @return Event[]
      */
@@ -113,6 +114,7 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
 
         $qb->where($qb->expr()->eq('m', ':user'))
+            ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
            ->join('e.eventGroups', 'eg')
            ->join('eg.group', 'g')
            ->join('g.managerGroups', 'mg')
@@ -126,6 +128,29 @@ class EventRepository extends EntityRepository
         }
 
         return $qb->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find previous events by manager
+     *
+     * @param User $user
+     *
+     * @return Event[]
+     */
+    public function findPreviousEventsByManager(User $user)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->where($qb->expr()->eq('m', ':user'))
+                  ->andWhere($qb->expr()->lt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->join('e.eventGroups', 'eg')
+                  ->join('eg.group', 'g')
+                  ->join('g.managerGroups', 'mg')
+                  ->join('mg.manager', 'm')
+                  ->setParameter('user', $user)
+                  ->orderBy('e.beginAt', 'DESC')
+                  ->getQuery()
                   ->getResult();
     }
 }

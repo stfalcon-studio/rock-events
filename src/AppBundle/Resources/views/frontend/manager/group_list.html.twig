@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Список доступних гуртів для адміністрування</h3>
+    <ul class="list-group">
+        {% for group in groups %}
+            <li class="list-group-item">
+                <a href="{{ path('manager_cabinet_group_events', { 'slug' : group.slug }) }}">{{ group.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

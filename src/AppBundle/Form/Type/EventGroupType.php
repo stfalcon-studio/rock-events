@@ -2,7 +2,6 @@
 
 namespace AppBundle\Form\Type;
 
-use AppBundle\Entity\User;
 use AppBundle\Form\Entity\Event;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\AbstractType;
@@ -32,7 +31,7 @@ class EventGroupType extends AbstractType
     /**
      * Constructor
      *
-     * @param ObjectManager $em Object Manager
+     * @param ObjectManager         $em    Object Manager
      * @param TokenStorageInterface $token Token Storage
      */
     public function __construct(ObjectManager $em, TokenStorageInterface $token)
@@ -77,10 +76,14 @@ class EventGroupType extends AbstractType
                     ],
                 ])
                 ->add('beginAt', 'datetime', [
-                    'label' => 'Час початку о',
+                    'label'       => 'Час початку о',
+                    'date_widget' => 'single_text',
+                    'time_widget' => 'single_text',
                 ])
                 ->add('endAt', 'datetime', [
-                    'label' => 'Кінець о',
+                    'label'       => 'Кінець о',
+                    'date_widget' => 'single_text',
+                    'time_widget' => 'single_text',
                 ])
                 ->add('groups', 'collection', [
                     'type'         => new ShortGroupType(),

@@ -41,7 +41,8 @@ class LoadUserData extends AbstractFixture
             ->setUsername('manager')
             ->setEnabled(true)
             ->setEmail('manager@stfalcon.com')
-            ->setPlainPassword('qwerty');
+            ->setPlainPassword('qwerty')
+            ->addRole('ROLE_MANAGER');
         $this->setReference('user-manager', $managerUser);
         $manager->persist($managerUser);
 

@@ -112,10 +112,11 @@ class GroupController extends Controller
         if (null === $this->getUser()) {
             throw new UnauthorizedHttpException('Не зареєстрований');
         }
+
         $user      = $this->getUser();
         $userGroup = (new UserGroup())->setUser($user)->setGroup($group);
 
-        $em        = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($userGroup);
         $em->flush();
 
@@ -148,11 +149,12 @@ class GroupController extends Controller
         if (null === $this->getUser()) {
             throw new UnauthorizedHttpException('Не зареєстрований');
         }
-        $em        = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $userGroup = $em->getRepository('AppBundle:UserGroup')->findOneBy([
             'user'  => $this->getUser(),
             'group' => $group,
         ]);
+
         $em->remove($userGroup);
         $em->flush();
 

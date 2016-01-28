@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{{ path('manager_cabinet_event_create') }}">Додати новий концерт</a></li>
+        <li class="list-group-item"><a href="{{ path('manager_cabinet_events_list') }}">Перегляд майбунтіх концертів</a></li>
+        <li class="list-group-item"><a href="{{ path('manager_cabinet_events_list_previous') }}">Перегляд минулих концертів</a></li>
+        <li class="list-group-item"><a href="{{ path('manager_cabinet_group_create') }}">Додати новий гурт</a></li>
+        <li class="list-group-item"><a href="{{ path('manager_cabinet_groups_list') }}">Перегляд гуртів</a></li>
+    </ul>
+{% endblock %}

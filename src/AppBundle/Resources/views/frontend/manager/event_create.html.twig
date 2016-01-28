@@ -3,19 +3,20 @@
 {% block body %}
     <h3>Створити подію</h3>
     {{ form_start(form) }}
+        {{ form_errors(form) }}
+
         {{ form_rest(form) }}
-    <select class="form-control" id="selected-group">
-        {% for group in form.vars.groups %}
-            <option id="{{ group.slug }}">{{ group.name }}</option>
-        {% endfor %}
-    </select>
-    <div>
-        <button type="button" class="btn btn-primary" id="add_button">Додати гурт</button>
-    </div>
-    <div id="div_table"
-        data-prototype="{% filter escape %}{% include 'form/table.html.twig' %}{% endfilter %}">
-    </div>
-    <button type="submit" class="btn btn-success">Створити подію</button>
+
+        <div id="div_table" data-prototype="{% filter escape %}{% include 'form/table.html.twig' %}{% endfilter %}"></div>
+        <select class="form-control" id="selected-group">
+            {% for group in form.vars.groups %}
+                <option id="{{ group.slug }}">{{ group.name }}</option>
+            {% endfor %}
+        </select>
+        <div>
+            <button type="button" class="btn btn-primary" id="add_button">Додати гурт</button>
+        </div>
+        <button type="submit" class="btn btn-success">Створити подію</button>
     {{ form_end(form) }}
 
 {% endblock %}
