@@ -38,8 +38,7 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''
-                                              .')')))
+        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''.')')))
                   ->getQuery()
                   ->getResult();
     }
@@ -105,30 +104,28 @@ class EventRepository extends EntityRepository
     /**
      * Find events by manager
      *
-     * @param User $user User
+     * @param User $user   User
+     * @param int  $limit  Limit
+     * @param int  $offset Offset
      *
      * @return Event[]
      */
-    public function findEventsByManager(User $user, $offset = 0, $limit = null)
+    public function findEventsByManager(User $user, $limit = 10, $offset = 0)
     {
         $qb = $this->createQueryBuilder('e');
 
         $qb->where($qb->expr()->eq('m', ':user'))
-            ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+           ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
            ->join('e.eventGroups', 'eg')
            ->join('eg.group', 'g')
            ->join('g.managerGroups', 'mg')
            ->join('mg.manager', 'm')
            ->setParameter('user', $user)
            ->orderBy('e.beginAt', 'ASC')
-           ->setFirstResult($offset);
-
-        if ($limit !== null) {
-            $qb->setMaxResults($limit);
-        }
-
-        return $qb->getQuery()
-                  ->getResult();
+           ->setFirstResult($offset)
+           ->setMaxResults($limit)
+           ->getQuery()
+           ->getResult();
     }
 
     /**

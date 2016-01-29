@@ -162,8 +162,8 @@ class Event
      */
     public function __construct()
     {
-        $this->tickets     = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->eventGroups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tickets     = new ArrayCollection();
+        $this->eventGroups = new ArrayCollection();
     }
 
     /**

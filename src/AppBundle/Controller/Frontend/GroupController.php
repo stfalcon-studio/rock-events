@@ -161,6 +161,6 @@ class GroupController extends Controller
         return new JsonResponse([
             'status'  => true,
             'message' => 'Success',
-        ], 200);
+        ]);
     }
 }

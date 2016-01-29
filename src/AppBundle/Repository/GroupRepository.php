@@ -36,7 +36,7 @@ class GroupRepository extends EntityRepository
     /**
      * Find Groups by event
      *
-     * @param Event $event
+     * @param Event $event Event
      *
      * @return Group[]
      */
@@ -74,7 +74,7 @@ class GroupRepository extends EntityRepository
     /**
      * Find Groups by manager
      *
-     * @param User $user
+     * @param User $user User
      *
      * @return Group[]
      */

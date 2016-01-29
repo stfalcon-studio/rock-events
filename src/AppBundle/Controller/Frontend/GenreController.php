@@ -128,6 +128,6 @@ class GenreController extends Controller
         return new JsonResponse([
             'status'  => true,
             'message' => 'Success',
-        ], 200);
+        ]);
     }
 }
