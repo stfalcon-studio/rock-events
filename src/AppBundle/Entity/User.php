@@ -60,11 +60,11 @@ class User extends BaseUser
     private $managerGroups;
 
     /**
-     * @var ArrayCollection|RequestRight[] $requestRights Request
+     * @var ArrayCollection|RequestManager[] $requestManagers Request Managers
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestRight", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestManager", mappedBy="user")
      */
-    private $requestRights;
+    private $requestManagers;
 
     /**
      * Constructor
@@ -206,29 +206,29 @@ class User extends BaseUser
     }
 
     /**
-     * Set requestRights
+     * Set Request managers
      *
-     * @param ArrayCollection|RequestRight[] $requestRights Request Rights
+     * @param ArrayCollection|RequestManager[] $requestManagers Request Managers
      *
      * @return $this
      */
-    public function setRequestRights(ArrayCollection $requestRights)
+    public function setRequestManagers(ArrayCollection $requestManagers)
     {
-        foreach ($requestRights as $requestRight) {
-            $requestRight->setUser($this);
+        foreach ($requestManagers as $requestManager) {
+            $requestManager->setUser($this);
         }
-        $this->requestRights = $requestRights;
+        $this->requestManagers = $requestManagers;
 
         return $this;
     }
 
     /**
-     * Get request rights
+     * Get request managers
      *
-     * @return ArrayCollection|RequestRight[] Request Right
+     * @return ArrayCollection|RequestManager[] Request Managers
      */
-    public function getRequestRights()
+    public function getRequestManagers()
     {
-        return $this->requestRights;
+        return $this->requestManagers;
     }
 }

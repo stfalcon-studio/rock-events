@@ -24,4 +24,11 @@ services:
         tags:
             - { name: form.type, alias: app_user_registration }
 
+    app.form.request_manager:
+        class: AppBundle\Form\Type\RequestManagerType
+        tags:
+            - { name: form.type, alias: request_manager }
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
 

@@ -37,7 +37,6 @@ class LoadEventGroupData extends AbstractFixture implements DependentFixtureInte
         $eventZaxid = $this->getReference('event-zaxid');
         $eventBMTH  = $this->getReference('event-bmth');
 
-
          /** @var Group $groupEnterShikari */
          /** @var Group $groupBMTH */
          /** @var Group $groupJinjer */

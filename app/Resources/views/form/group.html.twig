@@ -1,0 +1,10 @@
+<div id="div_table" data-prototype="{% filter escape %}{% include 'form/table.html.twig' with { 'action':action } %}{% endfilter %}"></div>
+<select class="form-control" id="selected-group">
+    {% for group in form.vars.groups %}
+        <option id="{{ group.slug }}">{{ group.name }}</option>
+    {% endfor %}
+</select>
+<div>
+    <button type="button" class="btn btn-primary" id="add_button">Додати гурт</button>
+</div>
+

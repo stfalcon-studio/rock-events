@@ -2,7 +2,7 @@
     <tr id="__slug__">
         <td>
             <span>__name__</span>
-            <input type="hidden" id="event_groups_groups" name="event_groups[groups][][slug]" value="__slug__">
+            <input type="hidden" id="{{ action }}_groups" name="{{ action }}[groups][][slug]" value="__slug__">
         </td>
         <td>
             <button type="button" class="btn btn-danger" onclick="removeTr($(this));" id="group_delete" name="__value__">delete</button>

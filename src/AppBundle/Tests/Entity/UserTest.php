@@ -3,7 +3,7 @@
 namespace AppBundle\Tests\Entity;
 
 use AppBundle\Entity\ManagerGroup;
-use AppBundle\Entity\RequestRight;
+use AppBundle\Entity\RequestManager;
 use AppBundle\Entity\Ticket;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserGenre;
@@ -133,14 +133,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test getter for Manager Groups collection
+     * Test getter for Request Manager collection
      */
-    public function testGetSetRequestRightCollection()
+    public function testGetSetRequestManagerCollection()
     {
-        $requestRights = new ArrayCollection();
-        $requestRights->add(new RequestRight());
-        $user = (new User())->setRequestRights($requestRights);
-        $this->assertEquals(1, $user->getRequestRights()->count());
-        $this->assertEquals($requestRights, $user->getRequestRights());
+        $requestManagers = new ArrayCollection();
+        $requestManagers->add(new RequestManager());
+        $user = (new User())->setRequestManagers($requestManagers);
+        $this->assertEquals(1, $user->getRequestManagers()->count());
+        $this->assertEquals($requestManagers, $user->getRequestManagers());
     }
 }

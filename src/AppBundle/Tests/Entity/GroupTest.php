@@ -6,7 +6,7 @@ use AppBundle\Entity\EventGroup;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\GroupGenre;
 use AppBundle\Entity\ManagerGroup;
-use AppBundle\Entity\RequestRight;
+use AppBundle\Entity\RequestManagerGroup;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserGroup;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -159,14 +159,14 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test getter for Request Rights collection
+     * Test getter for Request Managers collection
      */
-    public function testGetSetRequestRightsCollection()
+    public function testGetSetRequestManagerGroupsCollection()
     {
-        $requestRight = new ArrayCollection();
-        $requestRight->add(new RequestRight());
-        $group = (new Group())->setRequestRights($requestRight);
-        $this->assertEquals(1, $group->getRequestRights()->count());
-        $this->assertEquals($requestRight, $group->getRequestRights());
+        $requestManagerGroups = new ArrayCollection();
+        $requestManagerGroups->add(new RequestManagerGroup());
+        $group = (new Group())->setRequestManagerGroups($requestManagerGroups);
+        $this->assertEquals(1, $group->getRequestManagerGroups()->count());
+        $this->assertEquals($requestManagerGroups, $group->getRequestManagerGroups());
     }
 }

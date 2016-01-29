@@ -11,6 +11,8 @@ doctrine:
         charset:  UTF8
         mapping_types:
             enum: string
+        types:
+            RequestManagerStatusType: AppBundle\DBAL\Types\RequestManagerStatusType
 
     orm:
         dql:

@@ -65,11 +65,11 @@ class Group
     private $managerGroups;
 
     /**
-     * @var ArrayCollection|RequestRight[] $requestRights Request
+     * @var ArrayCollection|RequestManagerGroup[] $requestManagerGroups Request Manager Group
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestRight", mappedBy="group")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestManagerGroup", mappedBy="group")
      */
-    private $requestRights;
+    private $requestManagerGroups;
 
     /**
      * @var string $name Name
@@ -377,29 +377,29 @@ class Group
     }
 
     /**
-     * Set request rights
+     * Set request manager groups
      *
-     * @param ArrayCollection|RequestRight[] $requestRights Request Rights
+     * @param ArrayCollection|RequestManagerGroup[] $requestManagerGroups Request Manager Groups
      *
      * @return $this
      */
-    public function setRequestRights(ArrayCollection $requestRights)
+    public function setRequestManagerGroups(ArrayCollection $requestManagerGroups)
     {
-        foreach ($requestRights as $managerGroup) {
-            $managerGroup->setGroup($this);
+        foreach ($requestManagerGroups as $requestManagerGroup) {
+            $requestManagerGroup->setGroup($this);
         }
-        $this->requestRights = $requestRights;
+        $this->requestManagerGroups = $requestManagerGroups;
 
         return $this;
     }
 
     /**
-     * Get request rights
+     * Get request manager groups
      *
-     * @return ArrayCollection|RequestRight[] Request Right
+     * @return ArrayCollection|RequestManagerGroup[] Request Manager Groups
      */
-    public function getRequestRights()
+    public function getRequestManagerGroups()
     {
-        return $this->requestRights;
+        return $this->requestManagerGroups;
     }
 }

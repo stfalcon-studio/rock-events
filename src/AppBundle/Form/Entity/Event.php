@@ -2,7 +2,6 @@
 
 namespace AppBundle\Form\Entity;
 
-use AppBundle\Entity\Group;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

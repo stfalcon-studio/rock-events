@@ -5,10 +5,10 @@ namespace AppBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * RequestRightRepository class
+ * RequestManagerRepository class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  */
-class RequestRightRepository extends EntityRepository
+class RequestManagerRepository extends EntityRepository
 {
 }
