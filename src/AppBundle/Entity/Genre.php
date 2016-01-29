@@ -70,13 +70,13 @@ class Genre
     private $slug;
 
     /**
-     * @var bool $active Active
+     * @var bool $isActive Is active
      *
      * @ORM\Column(type="boolean")
      *
      * @Gedmo\Versioned
      */
-    public $active = true;
+    public $isActive = true;
 
     /**
      * Get ID
@@ -191,25 +191,25 @@ class Genre
     }
 
     /**
-     * Get active
+     * Is active?
      *
      * @return bool
      */
-    public function getActive()
+    public function isActive()
     {
-        return $this->active;
+        return $this->isActive;
     }
 
     /**
-     * Set active
+     * Set is Active
      *
-     * @param bool $active Active
+     * @param bool $isActive is Active
      *
      * @return $this
      */
-    public function setActive($active)
+    public function setActive($isActive)
     {
-        $this->active = $active;
+        $this->isActive = $isActive;
 
         return $this;
     }

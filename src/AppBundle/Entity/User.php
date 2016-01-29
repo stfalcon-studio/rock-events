@@ -60,6 +60,13 @@ class User extends BaseUser
     private $managerGroups;
 
     /**
+     * @var ArrayCollection|RequestRight[] $requestRights Request
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestRight", mappedBy="user")
+     */
+    private $requestRights;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -196,5 +203,32 @@ class User extends BaseUser
     public function getManagerGroups()
     {
         return $this->managerGroups;
+    }
+
+    /**
+     * Set requestRights
+     *
+     * @param ArrayCollection|RequestRight[] $requestRights Request Rights
+     *
+     * @return $this
+     */
+    public function setRequestRights(ArrayCollection $requestRights)
+    {
+        foreach ($requestRights as $requestRight) {
+            $requestRight->setUser($this);
+        }
+        $this->requestRights = $requestRights;
+
+        return $this;
+    }
+
+    /**
+     * Get request rights
+     *
+     * @return ArrayCollection|RequestRight[] Request Right
+     */
+    public function getRequestRights()
+    {
+        return $this->requestRights;
     }
 }

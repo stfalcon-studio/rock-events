@@ -65,6 +65,13 @@ class Group
     private $managerGroups;
 
     /**
+     * @var ArrayCollection|RequestRight[] $requestRights Request
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestRight", mappedBy="group")
+     */
+    private $requestRights;
+
+    /**
      * @var string $name Name
      *
      * @ORM\Column(type="string", length=100, nullable=false)
@@ -107,13 +114,13 @@ class Group
     private $slug;
 
     /**
-     * @var bool $active Active
+     * @var bool $isActive Is active
      *
      * @ORM\Column(type="boolean")
      *
      * @Gedmo\Versioned
      */
-    public $active = true;
+    public $isActive = true;
 
     /**
      * To string
@@ -240,25 +247,25 @@ class Group
      *
      * Set active
      *
-     * @param bool $active Active
+     * @param bool $isActive Is active
      *
      * @return $this
      */
-    public function setActive($active)
+    public function setActive($isActive)
     {
-        $this->active = $active;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
     /**
-     * Get active
+     * Is active?
      *
      * @return bool
      */
-    public function getActive()
+    public function isActive()
     {
-        return $this->active;
+        return $this->isActive;
     }
 
     /**
@@ -367,5 +374,32 @@ class Group
     public function getManagerGroups()
     {
         return $this->managerGroups;
+    }
+
+    /**
+     * Set request rights
+     *
+     * @param ArrayCollection|RequestRight[] $requestRights Request Rights
+     *
+     * @return $this
+     */
+    public function setRequestRights(ArrayCollection $requestRights)
+    {
+        foreach ($requestRights as $managerGroup) {
+            $managerGroup->setGroup($this);
+        }
+        $this->requestRights = $requestRights;
+
+        return $this;
+    }
+
+    /**
+     * Get request rights
+     *
+     * @return ArrayCollection|RequestRight[] Request Right
+     */
+    public function getRequestRights()
+    {
+        return $this->requestRights;
     }
 }
