@@ -36,3 +36,11 @@ easy_admin:
         RequestManager:
             label: RequestManager
             class: AppBundle\Entity\RequestManager
+            edit:
+                fields:
+                    - { property: 'user' }
+                    - { property: 'surname' }
+                    - { property: 'name' }
+                    - { property: 'phone' }
+                    - { property: 'text' }
+                    - { property: 'status', type: 'request_manager_status' }

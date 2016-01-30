@@ -90,6 +90,9 @@ class EventGroupType extends AbstractType
                     'allow_add'    => true,
                     'by_reference' => false,
                     'label'        => 'Гурти',
+                    'attr'         => [
+                        'style' => 'display:none',
+                    ],
                 ]);
     }
 

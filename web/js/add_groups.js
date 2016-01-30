@@ -4,14 +4,10 @@ var $elementTable;
 var $elementBody;
 
 $(function () {
+    updateTable();
     $addButton.on('click', function (e) {
         e.preventDefault();
-        if ($('#groups').length === 0) {
-            var prototypeTable = $divTable.data('prototype');
-            $divTable.append(prototypeTable);
-            $elementTable = $('#groups');
-            $elementBody = $('#groups_body');
-        }
+        checkTable();
         addTrTable($elementTable, $elementBody);
     });
 });
@@ -31,6 +27,29 @@ function addTrTable($elementTable, $elementBody) {
     if ($flagGroup === true) {
         return 0;
     }
-    var newElement = prototype.replace(/__name__/g, name).replace(/__slug__/g, slug);
-    $elementBody.append(newElement);
+    var $newElement = prototype.replace(/__name__/g, name).replace(/__slug__/g, slug);
+    $elementBody.append($newElement);
+}
+
+function updateTable() {
+    checkTable();
+    var prototype = $elementTable.data('prototype');
+    var $ulGroups = $('.save-groups li');
+    if ($ulGroups.length > 0) {
+        $ulGroups.each(function () {
+            var name = $(this).text();
+            var slug = $(this).attr('id');
+            var $newElement = prototype.replace(/__name__/g, name).replace(/__slug__/g, slug);
+            $elementBody.append($newElement);
+        });
+    }
+}
+
+function checkTable() {
+    if ($('#groups').length === 0) {
+        var prototypeTable = $divTable.data('prototype');
+        $divTable.append(prototypeTable);
+        $elementTable = $('#groups');
+        $elementBody = $('#groups_body');
+    }
 }

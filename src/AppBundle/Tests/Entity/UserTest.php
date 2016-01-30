@@ -131,16 +131,4 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $user->getManagerGroups()->count());
         $this->assertEquals($managerGroups, $user->getManagerGroups());
     }
-
-    /**
-     * Test getter for Request Manager collection
-     */
-    public function testGetSetRequestManagerCollection()
-    {
-        $requestManagers = new ArrayCollection();
-        $requestManagers->add(new RequestManager());
-        $user = (new User())->setRequestManagers($requestManagers);
-        $this->assertEquals(1, $user->getRequestManagers()->count());
-        $this->assertEquals($requestManagers, $user->getRequestManagers());
-    }
 }

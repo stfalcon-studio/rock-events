@@ -26,6 +26,11 @@
                     <td>{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
                     <td>{{ event.endAt|date('F jS \\a\\t g:ia') }}</td>
                     <td>{{ event.duration }}</td>
+                    <td>
+                        <a href="{{ path('manager_cabinet_event_update', { 'slug': event.slug }) }}">
+                            <button class="btn-primary">Редагувати подію</button>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

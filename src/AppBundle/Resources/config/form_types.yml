@@ -31,4 +31,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
 
-
+    app.form.request_manager_status:
+        class: AppBundle\Form\Type\RequestManagerStatusType
+        tags:
+            - { name: form.type, alias: request_manager_status }

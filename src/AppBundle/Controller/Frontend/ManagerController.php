@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Frontend ManagerController
@@ -165,7 +164,7 @@ class ManagerController extends Controller
     /**
      * Add new event
      *
-     * @param Request $request
+     * @param Request $request Request
      *
      * @return Response
      *
@@ -201,13 +200,13 @@ class ManagerController extends Controller
 
             /** @var Group $groupElement */
             foreach ($eventForm->getGroups() as $groupElement) {
-                $group = $em->getRepository('AppBundle:Group')->findOneBy([
+                $group       = $em->getRepository('AppBundle:Group')->findOneBy([
                     'slug' => $groupElement->getSlug(),
                 ]);
-
                 $eventGroups = (new EventGroup())
                     ->setEvent($event)
                     ->setGroup($group);
+
                 $em->persist($eventGroups);
             }
             $em->flush();
@@ -215,8 +214,84 @@ class ManagerController extends Controller
             return $this->redirectToRoute('manager_cabinet_dashboard');
         }
 
-        return $this->render('AppBundle:frontend/manager:event_create.html.twig', [
+        return $this->render('AppBundle:frontend/manager:event_list.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Update Event
+     *
+     * @param Event   $event Event
+     * @param Request $request Request
+     *
+     * @return Response
+     *
+     * @Route("/manager/event/{slug}/update", name="manager_cabinet_event_update")
+     * @ParamConverter("event", class="AppBundle:Event")
+     */
+    public function updateEvent(Event $event, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $groups    = $em->getRepository('AppBundle:Group')->findGroupsByEvent($event);
+        $eventForm = (new EventForm())
+            ->setName($event->getName())
+            ->setDescription($event->getDescription())
+            ->setCountry($event->getCountry())
+            ->setCity($event->getCity())
+            ->setAddress($event->getAddress())
+            ->setBeginAt($event->getBeginAt())
+            ->setEndAt($event->getEndAt())
+            ->setGroups($groups);
+
+        $form = $this->createForm('event_groups', $eventForm);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            /** @var EventForm $eventForm */
+            $eventFormData = $form->getData();
+
+            /** @var Event $event */
+            $event
+                ->setName($eventFormData->getName())
+                ->setDescription($eventFormData->getDescription())
+                ->setCountry($eventFormData->getCountry())
+                ->setCity($eventFormData->getCity())
+                ->setAddress($eventFormData->getAddress())
+                ->setBeginAt($eventFormData->getBeginAt())
+                ->setEndAt($eventFormData->getEndAt())
+                ->setSlug($eventFormData->getName())
+                ->setCreatedBy($event->getCreatedBy())
+                ->setUpdatedBy($user);
+
+            $em->persist($event);
+
+            $groups = $em->getRepository('AppBundle:Group')->findGroupsByEvent($event);
+
+            /** @var Group $groupElement */
+            foreach ($eventForm->getGroups() as $groupElement) {
+                $group = $em->getRepository('AppBundle:Group')->findOneBy([
+                    'slug' => $groupElement->getSlug(),
+                ]);
+
+                if (!in_array($group, $groups)) {
+                    $eventGroups = (new EventGroup())
+                        ->setEvent($event)
+                        ->setGroup($group);
+
+                    $em->persist($eventGroups);
+                }
+            }
+            $em->flush();
+
+            return $this->redirectToRoute('manager_cabinet_events_list');
+        }
+
+        return $this->render('AppBundle:frontend/manager:event_update.html.twig', [
+            'form'   => $form->createView(),
+            'groups' => $groups,
         ]);
     }
 

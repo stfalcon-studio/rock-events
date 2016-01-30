@@ -114,18 +114,18 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        $qb->where($qb->expr()->eq('m', ':user'))
-           ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
-           ->join('e.eventGroups', 'eg')
-           ->join('eg.group', 'g')
-           ->join('g.managerGroups', 'mg')
-           ->join('mg.manager', 'm')
-           ->setParameter('user', $user)
-           ->orderBy('e.beginAt', 'ASC')
-           ->setFirstResult($offset)
-           ->setMaxResults($limit)
-           ->getQuery()
-           ->getResult();
+        return $qb->where($qb->expr()->eq('m', ':user'))
+                  ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->join('e.eventGroups', 'eg')
+                  ->join('eg.group', 'g')
+                  ->join('g.managerGroups', 'mg')
+                  ->join('mg.manager', 'm')
+                  ->setParameter('user', $user)
+                  ->orderBy('e.beginAt', 'ASC')
+                  ->setFirstResult($offset)
+                  ->setMaxResults($limit)
+                  ->getQuery()
+                  ->getResult();
     }
 
     /**

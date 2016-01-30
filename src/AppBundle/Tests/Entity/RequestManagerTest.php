@@ -23,22 +23,10 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
     {
         $requestManager = new RequestManager();
         $this->assertNull($requestManager->getId());
-        $this->assertNull($requestManager->getUser());
         $this->assertNull($requestManager->getRequestManagerGroups());
-        $this->assertNull($requestManager->getUser());
         $this->assertNull($requestManager->getSurname());
         $this->assertNull($requestManager->getName());
         $this->assertNull($requestManager->getPhone());
-    }
-
-    /**
-     * Test setter and getter for User
-     */
-    public function testSetGetUser()
-    {
-        $user         = new User();
-        $requestManager = (new RequestManager())->setUser($user);
-        $this->assertEquals($user, $requestManager->getUser());
     }
 
     /**
@@ -86,7 +74,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetStatus()
     {
-        $status = RequestManagerStatusType::SENDED;
+        $status = RequestManagerStatusType::SENT;
         $requestManager = (new RequestManager())->setStatus($status);
         $this->assertEquals($status, $requestManager->getStatus());
     }

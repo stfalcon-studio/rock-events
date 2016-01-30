@@ -109,7 +109,8 @@ class UserController extends Controller
                 ->setSurname($requestManagerForm->getSurname())
                 ->setPhone($requestManagerForm->getPhone())
                 ->setText($requestManagerForm->getText())
-                ->setUser($user);
+                ->setCreatedBy($user)
+                ->setUpdatedBy($user);
 
             $em->persist($requestManager);
 

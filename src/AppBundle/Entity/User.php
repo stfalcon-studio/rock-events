@@ -60,13 +60,6 @@ class User extends BaseUser
     private $managerGroups;
 
     /**
-     * @var ArrayCollection|RequestManager[] $requestManagers Request Managers
-     *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestManager", mappedBy="user")
-     */
-    private $requestManagers;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -203,32 +196,5 @@ class User extends BaseUser
     public function getManagerGroups()
     {
         return $this->managerGroups;
-    }
-
-    /**
-     * Set Request managers
-     *
-     * @param ArrayCollection|RequestManager[] $requestManagers Request Managers
-     *
-     * @return $this
-     */
-    public function setRequestManagers(ArrayCollection $requestManagers)
-    {
-        foreach ($requestManagers as $requestManager) {
-            $requestManager->setUser($this);
-        }
-        $this->requestManagers = $requestManagers;
-
-        return $this;
-    }
-
-    /**
-     * Get request managers
-     *
-     * @return ArrayCollection|RequestManager[] Request Managers
-     */
-    public function getRequestManagers()
-    {
-        return $this->requestManagers;
     }
 }

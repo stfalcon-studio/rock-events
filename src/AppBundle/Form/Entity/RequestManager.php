@@ -32,7 +32,7 @@ class RequestManager
     private $groups;
 
     /** @var RequestManagerStatusType $status Status */
-    protected $status = RequestManagerStatusType::SENDED;
+    protected $status = RequestManagerStatusType::SENT;
 
     /**
      * Get ID

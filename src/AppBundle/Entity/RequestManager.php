@@ -21,7 +21,7 @@ use AppBundle\DBAL\Types\RequestManagerStatusType;
  */
 class RequestManager
 {
-    use TimestampableEntity;
+    use TimestampableEntity, BlameableEntityTrait;
 
     /**
      * @var int $id ID
@@ -38,16 +38,6 @@ class RequestManager
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestManagerGroup", mappedBy="requestManager")
      */
     private $requestManagerGroups;
-
-    /**
-     * @var User $user User
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="requestManagers")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     *
-     * @Gedmo\Versioned
-     */
-    private $user;
 
     /**
      * @var string $surname Surname
@@ -107,7 +97,7 @@ class RequestManager
      *
      * @Gedmo\Versioned
      */
-    protected $status = RequestManagerStatusType::SENDED;
+    protected $status = RequestManagerStatusType::SENT;
 
     /**
      * Get ID
@@ -237,30 +227,6 @@ class RequestManager
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * Set user
-     *
-     * @param User $user User
-     *
-     * @return RequestManager
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 
     /**
