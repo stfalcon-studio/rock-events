@@ -13,7 +13,7 @@
         </thead>
         <tbody class="table table-hover">
         {% for group in groups %}
-            <tr>
+            <tr id="groups">
                 <td><a href="{{ path('group_show',{ 'slug' : group.slug }) }}">{{ group.name }}</a></td>
                 <td>{{ group.description }}</td>
                 <td>{{ group.foundedAt|date("Y") }}</td>
