@@ -17,10 +17,7 @@ class RequestManager
     private $id;
 
     /** @var string $surname Surname */
-    private $surname;
-
-    /** @var string $name Name */
-    private $name;
+    private $fullName;
 
     /** @var string $phone Phone */
     private $phone;
@@ -45,51 +42,27 @@ class RequestManager
     }
 
     /**
-     * Set surname
+     * Set full name
      *
-     * @param string $surname Surname
+     * @param string $fullName FullName
      *
      * @return RequestManager
      */
-    public function setSurname($surname)
+    public function setFullName($fullName)
     {
-        $this->surname = $surname;
+        $this->fullName = $fullName;
 
         return $this;
     }
 
     /**
-     * Get surname
+     * Get full name
      *
-     * @return string Surname
+     * @return string Full Name
      */
-    public function getSurname()
+    public function getFullName()
     {
-        return $this->surname;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name Name
-     *
-     * @return RequestManager
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string Name
-     */
-    public function getName()
-    {
-        return $this->name;
+        return $this->fullName;
     }
 
     /**

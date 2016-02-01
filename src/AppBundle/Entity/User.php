@@ -7,6 +7,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User Entity
@@ -51,6 +52,29 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ManagerGroup", mappedBy="manager")
      */
     private $managerGroups;
+
+    /**
+     * @var string $fullName Full name
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @Assert\Length(min="5", max="100")
+     * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
+     */
+    private $fullName;
+
+    /**
+     * @var string $phone Phone
+     *
+     * @ORM\Column(type="string", length=50, nullable=true)
+     *
+     * @Assert\Length(min="5")
+     *
+     * @Gedmo\Versioned
+     */
+    private $phone;
 
     /**
      * Constructor
@@ -162,5 +186,53 @@ class User extends BaseUser
     public function getManagerGroups()
     {
         return $this->managerGroups;
+    }
+
+    /**
+     * Set full name
+     *
+     * @param string $fullName Full name
+     *
+     * @return User
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * Get full name
+     *
+     * @return string Full name
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone Phone
+     *
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string Phone
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 }

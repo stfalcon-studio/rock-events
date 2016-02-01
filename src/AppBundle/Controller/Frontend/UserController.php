@@ -105,8 +105,7 @@ class UserController extends Controller
             $requestManagerForm = $form->getData();
 
             $requestManager = (new RequestManager())
-                ->setName($requestManagerForm->getName())
-                ->setSurname($requestManagerForm->getSurname())
+                ->setFullName($requestManagerForm->getFullName())
                 ->setPhone($requestManagerForm->getPhone())
                 ->setText($requestManagerForm->getText())
                 ->setCreatedBy($user)
