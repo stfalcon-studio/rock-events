@@ -2,19 +2,14 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Event;
 use AppBundle\Entity\Group;
-use AppBundle\Entity\EventGroup;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserGroup;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-/**
- * LoadEventGroupData
- *
- * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
- */
-class LoadEventGroupDate extends AbstractFixture implements DependentFixtureInterface
+class LoadUserGroupData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * {@inheritdoc}
@@ -22,7 +17,7 @@ class LoadEventGroupDate extends AbstractFixture implements DependentFixtureInte
     public function getDependencies()
     {
         return [
-            'AppBundle\DataFixtures\ORM\LoadEventData',
+            'AppBundle\DataFixtures\ORM\LoadUserData',
             'AppBundle\DataFixtures\ORM\LoadGroupData'
         ];
     }
@@ -32,10 +27,10 @@ class LoadEventGroupDate extends AbstractFixture implements DependentFixtureInte
      */
     public function load(ObjectManager $manager)
     {
-        /** @var Event $eventZaxid */
-        /** @var Event $eventBMTH */
-        $eventZaxid = $this->getReference('event-zaxid');
-        $eventBMTH  = $this->getReference('event-bmth');
+        /**
+         * @var User $user
+         */
+        $user = $this->getReference('user-admin');
 
 
          /** @var Group $groupEnterShikari */
@@ -45,20 +40,20 @@ class LoadEventGroupDate extends AbstractFixture implements DependentFixtureInte
         $groupBMTH         = $this->getReference('group-bmth');
         $groupJinjer       = $this->getReference('group-jinjer');
 
-        $eventGroup1 = (new EventGroup())
-            ->setEvent($eventZaxid)
+        $userGroup1 = (new UserGroup())
+            ->setUser($user)
             ->setGroup($groupEnterShikari);
-        $manager->persist($eventGroup1);
+        $manager->persist($userGroup1);
 
-        $eventGroup2 = (new EventGroup())
-            ->setEvent($eventZaxid)
-            ->setGroup($groupJinjer);
-        $manager->persist($eventGroup2);
-
-        $eventGroup3 = (new EventGroup())
-            ->setEvent($eventBMTH)
+        $userGroup2 = (new UserGroup())
+            ->setUser($user)
             ->setGroup($groupBMTH);
-        $manager->persist($eventGroup3);
+        $manager->persist($userGroup2);
+
+        $userGroup3 = (new UserGroup())
+            ->setUser($user)
+            ->setGroup($groupJinjer);
+        $manager->persist($userGroup3);
 
         $manager->flush();
     }

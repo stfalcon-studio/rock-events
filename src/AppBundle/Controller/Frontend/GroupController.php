@@ -90,47 +90,20 @@ class GroupController extends Controller
     }
 
     /**
-     * Add group to user bookmark
+     * Ajax add group to user bookmark
      *
      * @param Group $group Group
+     * @param Request $request Request
      *
      * @Route("/group/{slug}/bookmark", name="group_add_to_bookmark")
-     * @ParamConverter("group", class="AppBundle:Group")
-     *
-     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
-     *
-     * @return RedirectResponse
-     */
-    public function addToBookmarkAction(Group $group)
-    {
-        if (null === $this->getUser()) {
-            throw new UnauthorizedHttpException('Не зареєстрований');
-        }
-
-        $user      = $this->getUser();
-        $userGroup = (new UserGroup())->setUser($user)->setGroup($group);
-        $em        = $this->getDoctrine()->getManager();
-        $em->persist($userGroup);
-        $em->flush();
-
-        return new JsonResponse('', 201);
-    }
-
-    /**
-     * Delete genre to user bookmark
-     *
-     * @param Group $group Group
-     * @param string $route Route to redirect after action
-     *
-     * @Route("/group/{slug}/bookmark/delete", name="group_delete_from_bookmark")
      * @ParamConverter("group", class="AppBundle:Group")
      *
      * @throws BadRequestHttpException Bab request 400 Request only AJAX
      * @throws UnauthorizedHttpException Forbidden 401 User not authorized
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function deleteFromBookmarkAction(Group $group, Request $request)
+    public function ajaxAddToBookmarkAction(Group $group, Request $request)
     {
         if (!$request->isXmlHttpRequest()) {
             throw new BadRequestHttpException('Не правильний запит');
@@ -139,14 +112,55 @@ class GroupController extends Controller
         if (null === $this->getUser()) {
             throw new UnauthorizedHttpException('Не зареєстрований');
         }
-        $em        = $this->getDoctrine()->getManager();
+
+        $user      = $this->getUser();
+        $userGroup = (new UserGroup())->setUser($user)->setGroup($group);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($userGroup);
+        $em->flush();
+
+        return new JsonResponse([
+            'status'  => true,
+            'message' => 'Success',
+        ], 201);
+    }
+
+    /**
+     * Ajax delete group from user bookmark
+     *
+     * @param Group $group Group
+     * @param Request $request Request
+     *
+     * @Route("/group/{slug}/bookmark/delete", name="group_delete_from_bookmark")
+     * @ParamConverter("group", class="AppBundle:Group")
+     *
+     * @throws BadRequestHttpException Bab request 400 Request only AJAX
+     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
+     *
+     * @return JsonResponse
+     */
+    public function ajaxDeleteFromBookmarkAction(Group $group, Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('Не правильний запит');
+        }
+
+        if (null === $this->getUser()) {
+            throw new UnauthorizedHttpException('Не зареєстрований');
+        }
+        $em = $this->getDoctrine()->getManager();
         $userGroup = $em->getRepository('AppBundle:UserGroup')->findOneBy([
             'user'  => $this->getUser(),
             'group' => $group,
         ]);
+
         $em->remove($userGroup);
         $em->flush();
 
-        return new JsonResponse('', 204);
+        return new JsonResponse([
+            'status'  => true,
+            'message' => 'Success',
+        ]);
     }
 }

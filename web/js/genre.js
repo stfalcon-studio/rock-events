@@ -1,12 +1,11 @@
 $(function () {
-    $('.delete').on('click', function () {
+    $('.delete-genre').on('click', function () {
         var url = $(this).data('genre-slug');
         var $parent = $(this).parent().parent();
         $.ajax({
             url: url,
-            dataType: 'JSON',
-            success: function (data, textStatus, xhr) {
-                if (204 === xhr.status) {
+            success: function (response) {
+                if (true === response.status) {
                     $parent.remove();
                     console.log('success')
                 } else {
@@ -16,14 +15,13 @@ $(function () {
         })
     });
 
-    $('.amend-plus').on('click', function () {
-        var url = $(this).data('genre-path');
+    $('.add').on('click', function () {
+        var url = $(this).data('bookmark-genre-add');
         var element = this;
         $.ajax({
             url: url,
-            dataType: 'JSON',
-            success: function (data, textStatus, xhr) {
-                if (201 === xhr.status) {
+            success: function (response) {
+                if (true === response.status) {
                     $(element).siblings().show();
                     $(element).hide();
                     console.log('success');
@@ -34,14 +32,13 @@ $(function () {
         })
     });
 
-    $('.amend-minus').on('click', function () {
-        var url = $(this).data('genre-path');
+    $('.delete').on('click', function () {
+        var url = $(this).data('bookmark-genre-delete');
         var element = this;
         $.ajax({
             url: url,
-            dateType: 'JSON',
-            success: function (data, textStatus, xhr) {
-                if (204 === xhr.status) {
+            success: function (response) {
+                if (true === response.status) {
                     $(element).siblings().show();
                     $(element).hide();
                     console.log('success')

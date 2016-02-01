@@ -32,3 +32,15 @@ easy_admin:
         Event:
             label: Event
             class: AppBundle\Entity\Event
+
+        RequestManager:
+            label: RequestManager
+            class: AppBundle\Entity\RequestManager
+            edit:
+                fields:
+                    - { property: 'user' }
+                    - { property: 'surname' }
+                    - { property: 'name' }
+                    - { property: 'phone' }
+                    - { property: 'text' }
+                    - { property: 'status', type: 'request_manager_status' }

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Список майбутніх концертів</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Назва</th>
+                <th>Опис</th>
+                <th>Країна</th>
+                <th>Місто</th>
+                <th>Адреса</th>
+                <th>Початок</th>
+                <th>Кінцеь</th>
+                <th>Тривалість</th>
+            </tr>
+        </thead>
+        <tbody class="table table-hover">
+            {% for event in events %}
+                <tr>
+                    <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
+                    <td>{{ event.description }}</td>
+                    <td>{{ event.country }}</td>
+                    <td>{{ event.city }}</td>
+                    <td>{{ event.address }}</td>
+                    <td>{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
+                    <td>{{ event.endAt|date('F jS \\a\\t g:ia') }}</td>
+                    <td>{{ event.duration }}</td>
+                    <td>
+                        <a href="{{ path('manager_cabinet_event_update', { 'slug': event.slug }) }}">
+                            <button class="btn-primary">Редагувати подію</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('manager_cabinet_event_create')}}">
+        <button class="btn btn-success">Створити подію</button>
+    </a>
+{% endblock %}

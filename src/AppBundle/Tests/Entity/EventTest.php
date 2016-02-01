@@ -35,6 +35,15 @@ class EventTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test __toString method
+     */
+    public function testToString()
+    {
+        $event = new Event();
+        $this->assertEquals('New Event', $event->__toString());
+    }
+
+    /**
      * Test setter and getter for Name
      */
     public function testSetGetName()
@@ -121,7 +130,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
     {
         $slug  = 'Slug';
         $event = (new Event())->setSlug($slug);
-        $this->assertEquals($slug, $event->getSlug());
+        $this->assertNotEquals($slug, $event->getSlug());
     }
 
     /**
@@ -129,9 +138,8 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetActive()
     {
-        $slug  = 'Active';
-        $event = (new Event())->setActive($slug);
-        $this->assertEquals($slug, $event->getActive());
+        $event = (new Event())->setActive(true);
+        $this->assertEquals(true, $event->isActive());
     }
 
     /**

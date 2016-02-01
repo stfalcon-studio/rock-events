@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Список доступних гуртів для адміністрування</h3>
+    <ul class="list-group">
+        {% for group in groups %}
+            <li class="list-group-item" style="height: 55px">
+                <p style="display: inline;">{{ group.name }}</p>
+                <a href="{{ path('manager_cabinet_group_update', { 'slug' : group.slug }) }}">
+                    <button style="float: right" class="btn btn-primary">Редагувати</button>
+                </a>
+                <a href="{{ path('manager_cabinet_group_events', { 'slug' : group.slug }) }}">
+                    <button style="float: right" class="btn btn-success">Майбунті виступи</button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

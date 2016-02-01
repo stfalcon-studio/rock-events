@@ -3,13 +3,18 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Group;
+use AppBundle\Entity\ManagerGroup;
 use AppBundle\Entity\User;
-use AppBundle\Entity\UserGroup;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadUserGroup extends AbstractFixture implements DependentFixtureInterface
+/**
+ * LoadManagerGroupData
+ *
+ * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ */
+class LoadManagerGroupData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * {@inheritdoc}
@@ -30,30 +35,30 @@ class LoadUserGroup extends AbstractFixture implements DependentFixtureInterface
         /**
          * @var User $user
          */
-        $user = $this->getReference('user-admin');
+        $user = $this->getReference('user-manager');
 
 
-         /** @var Group $groupEnterShikari */
-         /** @var Group $groupBMTH */
-         /** @var Group $groupJinjer */
+        /** @var Group $groupEnterShikari */
+        /** @var Group $groupBMTH */
+        /** @var Group $groupJinjer */
         $groupEnterShikari = $this->getReference('group-enter-shikari');
         $groupBMTH         = $this->getReference('group-bmth');
         $groupJinjer       = $this->getReference('group-jinjer');
 
-        $userGroup1 = (new UserGroup())
-            ->setUser($user)
+        $managerGroup1 = (new ManagerGroup())
+            ->setManager($user)
             ->setGroup($groupEnterShikari);
-        $manager->persist($userGroup1);
+        $manager->persist($managerGroup1);
 
-        $userGroup2 = (new UserGroup())
-            ->setUser($user)
+        $managerGroup2 = (new ManagerGroup())
+            ->setManager($user)
             ->setGroup($groupBMTH);
-        $manager->persist($userGroup2);
+        $manager->persist($managerGroup2);
 
-        $userGroup3 = (new UserGroup())
-            ->setUser($user)
+        $managerGroup3 = (new ManagerGroup())
+            ->setManager($user)
             ->setGroup($groupJinjer);
-        $manager->persist($userGroup3);
+        $manager->persist($managerGroup3);
 
         $manager->flush();
     }

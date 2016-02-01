@@ -5,6 +5,8 @@ namespace AppBundle\Tests\Entity;
 use AppBundle\Entity\EventGroup;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\GroupGenre;
+use AppBundle\Entity\ManagerGroup;
+use AppBundle\Entity\RequestManagerGroup;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserGroup;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,6 +30,15 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($group->getCreatedBy());
         $this->assertNull($group->getUpdatedBy());
         $this->assertNull($group->getSlug());
+    }
+
+    /**
+     * Test __toString method
+     */
+    public function testToString()
+    {
+        $group = new Group();
+        $this->assertEquals('New Group', $group->__toString());
     }
 
     /**
@@ -67,17 +78,16 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     {
         $slug  = 'Slug';
         $event = (new Group())->setSlug($slug);
-        $this->assertEquals($slug, $event->getSlug());
+        $this->assertNotEquals($slug, $event->getSlug());
     }
 
     /**
-     * Test setter and getter for Active
+     * Test setter and getter for Is Active
      */
     public function testSetGetActive()
     {
-        $slug  = 'Active';
-        $event = (new Group())->setActive($slug);
-        $this->assertEquals($slug, $event->getActive());
+        $group = (new Group())->setActive(true);
+        $this->assertEquals(true, $group->isActive());
     }
 
     /**
@@ -134,5 +144,29 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $group = (new Group())->setEventGroups($eventGroups);
         $this->assertEquals(1, $group->getEventGroups()->count());
         $this->assertEquals($eventGroups, $group->getEventGroups());
+    }
+
+    /**
+     * Test getter for Manager Groups collection
+     */
+    public function testGetSetManagerGroupsCollection()
+    {
+        $managerGroups = new ArrayCollection();
+        $managerGroups->add(new ManagerGroup());
+        $group = (new Group())->setManagerGroups($managerGroups);
+        $this->assertEquals(1, $group->getManagerGroups()->count());
+        $this->assertEquals($managerGroups, $group->getManagerGroups());
+    }
+
+    /**
+     * Test getter for Request Managers collection
+     */
+    public function testGetSetRequestManagerGroupsCollection()
+    {
+        $requestManagerGroups = new ArrayCollection();
+        $requestManagerGroups->add(new RequestManagerGroup());
+        $group = (new Group())->setRequestManagerGroups($requestManagerGroups);
+        $this->assertEquals(1, $group->getRequestManagerGroups()->count());
+        $this->assertEquals($requestManagerGroups, $group->getRequestManagerGroups());
     }
 }

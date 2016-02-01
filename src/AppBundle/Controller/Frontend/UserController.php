@@ -3,9 +3,12 @@
 namespace AppBundle\Controller\Frontend;
 
 use AppBundle\Entity\Group;
+use AppBundle\Entity\RequestManager;
+use AppBundle\Entity\RequestManagerGroup;
+use AppBundle\Form\Entity\RequestManager as RequestManagerForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
@@ -21,14 +24,13 @@ class UserController extends Controller
      *
      * @return Response
      *
-     * @Method("GET")
      * @Route("/cabinet", name="user_cabinet_future_events")
      */
     public function futureEventsAction()
     {
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByUserBookMark($this->getUser());
 
-        return $this->render('@App/frontend/user/future-events.html.twig', [
+        return $this->render('AppBundle:frontend/user:future-events.html.twig', [
             'events' => $events,
         ]);
     }
@@ -40,7 +42,6 @@ class UserController extends Controller
      *
      * @return Response
      *
-     * @Method("GET")
      * @Route("/cabinet/groups", name="user_cabinet_group")
      */
     public function groupAction()
@@ -50,7 +51,7 @@ class UserController extends Controller
         }
         $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
 
-        return $this->render('@App/frontend/user/group.html.twig', [
+        return $this->render('AppBundle:frontend/user:group.html.twig', [
             'groups' => $groups,
         ]);
     }
@@ -62,7 +63,6 @@ class UserController extends Controller
      *
      * @return Response
      *
-     * @Method("GET")
      * @Route("/cabinet/genres", name="user_cabinet_genre")
      */
     public function genreAction()
@@ -72,8 +72,65 @@ class UserController extends Controller
         }
         $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByUser($this->getUser());
 
-        return $this->render('@App/frontend/user/genre.html.twig', [
+        return $this->render('AppBundle:frontend/user:genre.html.twig', [
             'genres' => $genres,
+        ]);
+    }
+
+    /**
+     * Request on granting rights manager
+     *
+     * @param Request $request Request
+     *
+     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
+     *
+     * @return Response
+     *
+     * @Route("/cabinet/request-manager", name="user_request_manager")
+     */
+    public function requestRightManagerAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $form = $this->createForm('request_manager');
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            if (null === $user) {
+                throw new UnauthorizedHttpException('Не зареєстрований');
+            }
+            /** @var RequestManagerForm $requestManagerForm */
+            $requestManagerForm = $form->getData();
+
+            $requestManager = (new RequestManager())
+                ->setName($requestManagerForm->getName())
+                ->setSurname($requestManagerForm->getSurname())
+                ->setPhone($requestManagerForm->getPhone())
+                ->setText($requestManagerForm->getText())
+                ->setCreatedBy($user)
+                ->setUpdatedBy($user);
+
+            $em->persist($requestManager);
+
+            foreach($requestManagerForm->getGroups() as $group){
+                $group = $em->getRepository('AppBundle:Group')->findOneBy([
+                    'slug' => $group->getSlug(),
+                ]);
+
+                $requestManagerGroup = (new RequestManagerGroup())
+                    ->setGroup($group)
+                    ->setRequestManager($requestManager);
+                $em->persist($requestManagerGroup);
+            }
+            $em->flush();
+
+            return $this->redirectToRoute('user_request_manager');
+        }
+
+        return $this->render('AppBundle:frontend/user:request-manager.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

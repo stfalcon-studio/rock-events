@@ -58,6 +58,20 @@ class Group
     private $eventGroups;
 
     /**
+     * @var ArrayCollection|ManagerGroup[] $managerGroups Manager Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ManagerGroup", mappedBy="group")
+     */
+    private $managerGroups;
+
+    /**
+     * @var ArrayCollection|RequestManagerGroup[] $requestManagerGroups Request Manager Group
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestManagerGroup", mappedBy="group")
+     */
+    private $requestManagerGroups;
+
+    /**
      * @var string $name Name
      *
      * @ORM\Column(type="string", length=100, nullable=false)
@@ -100,13 +114,13 @@ class Group
     private $slug;
 
     /**
-     * @var bool $active Active
+     * @var bool $isActive Is active
      *
      * @ORM\Column(type="boolean")
      *
      * @Gedmo\Versioned
      */
-    public $active = true;
+    public $isActive = true;
 
     /**
      * To string
@@ -233,31 +247,31 @@ class Group
      *
      * Set active
      *
-     * @param bool $active Active
+     * @param bool $isActive Is active
      *
      * @return $this
      */
-    public function setActive($active)
+    public function setActive($isActive)
     {
-        $this->active = $active;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
     /**
-     * Get active
+     * Is active?
      *
      * @return bool
      */
-    public function getActive()
+    public function isActive()
     {
-        return $this->active;
+        return $this->isActive;
     }
 
     /**
      * Set group genres
      *
-     * @param ArrayCollection|GroupGenre[] $groupGenre Group Genres
+     * @param ArrayCollection|GroupGenre[] $groupGenres Group Genres
      *
      * @return $this
      */
@@ -311,7 +325,7 @@ class Group
     /**
      * Set event groups
      *
-     * @param ArrayCollection|EventGroup[] $EventGroups Event Groups
+     * @param ArrayCollection|EventGroup[] $eventGroups Event Groups
      *
      * @return $this
      */
@@ -333,5 +347,59 @@ class Group
     public function getEventGroups()
     {
         return $this->eventGroups;
+    }
+
+    /**
+     * Set manager groups
+     *
+     * @param ArrayCollection|ManagerGroup[] $managerGroups Manager Group
+     *
+     * @return $this
+     */
+    public function setManagerGroups(ArrayCollection $managerGroups)
+    {
+        foreach ($managerGroups as $managerGroup) {
+            $managerGroup->setGroup($this);
+        }
+        $this->managerGroups = $managerGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get manager groups
+     *
+     * @return ArrayCollection|ManagerGroup[] Manager Groups
+     */
+    public function getManagerGroups()
+    {
+        return $this->managerGroups;
+    }
+
+    /**
+     * Set request manager groups
+     *
+     * @param ArrayCollection|RequestManagerGroup[] $requestManagerGroups Request Manager Groups
+     *
+     * @return $this
+     */
+    public function setRequestManagerGroups(ArrayCollection $requestManagerGroups)
+    {
+        foreach ($requestManagerGroups as $requestManagerGroup) {
+            $requestManagerGroup->setGroup($this);
+        }
+        $this->requestManagerGroups = $requestManagerGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get request manager groups
+     *
+     * @return ArrayCollection|RequestManagerGroup[] Request Manager Groups
+     */
+    public function getRequestManagerGroups()
+    {
+        return $this->requestManagerGroups;
     }
 }

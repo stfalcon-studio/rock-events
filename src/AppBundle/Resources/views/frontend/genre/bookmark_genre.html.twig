@@ -1,0 +1,24 @@
+{% if genre in userGenres %}
+    {% set add_style = 'display: none;' %}
+    {% set delete_style = '' %}
+{% else %}
+    {% set add_style = '' %}
+    {% set delete_style = 'display: none;' %}
+{% endif %}
+
+<button
+    href="#"
+    class="add"
+    data-bookmark-genre-add="{{ path('genre_add_to_bookmark', { 'slug' : genre.slug }) }}"
+    type="button"
+    style="{{ add_style }}">
+    +
+</button>
+<button
+    href="#"
+    class="delete"
+    data-bookmark-genre-delete="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug }) }}"
+    type="button"
+    style="{{ delete_style }}">
+    -
+</button>

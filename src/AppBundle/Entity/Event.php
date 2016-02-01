@@ -149,21 +149,21 @@ class Event
     private $slug;
 
     /**
-     * @var bool $active Active
+     * @var bool $isActive Is active
      *
      * @ORM\Column(type="boolean")
      *
      * @Gedmo\Versioned
      */
-    public $active = true;
+    public $isActive = true;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tickets     = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->eventGroups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tickets     = new ArrayCollection();
+        $this->eventGroups = new ArrayCollection();
     }
 
     /**
@@ -408,25 +408,25 @@ class Event
     }
 
     /**
-     * Get active
+     * Is Active?
      *
      * @return bool
      */
-    public function getActive()
+    public function isActive()
     {
-        return $this->active;
+        return $this->isActive;
     }
 
     /**
-     * Set active
+     * Set isActive
      *
-     * @param bool $active Active
+     * @param bool $isActive Active
      *
      * @return $this
      */
-    public function setActive($active)
+    public function setActive($isActive)
     {
-        $this->active = $active;
+        $this->isActive = $isActive;
 
         return $this;
     }

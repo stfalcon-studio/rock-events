@@ -63,7 +63,7 @@ class GenreController extends Controller
     }
 
     /**
-     * Add genre to user bookmark
+     * Ajax add genre to user bookmark
      *
      * @param Genre $genre Genre
      *
@@ -72,9 +72,9 @@ class GenreController extends Controller
      *
      * @throws UnauthorizedHttpException Forbidden 401 User not authorized
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function addToBookmarkAction(Genre $genre)
+    public function ajaxAddToBookmarkAction(Genre $genre)
     {
         if (null === $this->getUser()) {
             throw new UnauthorizedHttpException('Не зареєстрований');
@@ -87,13 +87,16 @@ class GenreController extends Controller
         $em->persist($userGenre);
         $em->flush();
 
-        return new JsonResponse('', 201);
+        return new JsonResponse([
+            'status'  => true,
+            'message' => 'Success',
+        ], 201);
     }
 
     /**
-     * Delete genre from user bookmark
+     * Ajax delete genre from user bookmark
      *
-     * @param Genre $genre Genre
+     * @param Genre  $genre Genre
      * @param string $route Route to redirect after action
      *
      * @Route("/genre/{slug}/bookmark/delete", name="genre_delete_from_bookmark")
@@ -102,7 +105,7 @@ class GenreController extends Controller
      * @throws BadRequestHttpException Bab request 400 Request only AJAX
      * @throws UnauthorizedHttpException Forbidden 401 User not authorized
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
     public function ajaxDeleteFromBookmarkAction(Genre $genre, Request $request)
     {
@@ -122,6 +125,9 @@ class GenreController extends Controller
         $em->remove($userGenre);
         $em->flush();
 
-        return new JsonResponse('', 204);
+        return new JsonResponse([
+            'status'  => true,
+            'message' => 'Success',
+        ]);
     }
 }

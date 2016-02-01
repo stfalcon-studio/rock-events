@@ -36,7 +36,7 @@ class GroupRepository extends EntityRepository
     /**
      * Find Groups by event
      *
-     * @param Event $event
+     * @param Event $event Event
      *
      * @return Group[]
      */
@@ -66,6 +66,25 @@ class GroupRepository extends EntityRepository
         return $qb->where($qb->expr()->eq('u', ':user'))
                   ->join('g.userGroups', 'ug')
                   ->join('ug.user', 'u')
+                  ->setParameter('user', $user)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find Groups by manager
+     *
+     * @param User $user User
+     *
+     * @return Group[]
+     */
+    public function findGroupsByManager(User $user)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->where($qb->expr()->eq('m', ':user'))
+                  ->join('g.managerGroups', 'mg')
+                  ->join('mg.manager', 'm')
                   ->setParameter('user', $user)
                   ->getQuery()
                   ->getResult();

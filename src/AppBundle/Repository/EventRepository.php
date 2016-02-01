@@ -24,7 +24,7 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->where($qb->expr()->gt('e.beginAt', '\'' . (new \DateTime())->format('Y-m-d H:i:s') . '\''))
+        return $qb->where($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
                   ->getQuery()
                   ->getResult();
     }
@@ -38,7 +38,7 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE(' . '\'' . (new \DateTime())->format('Y-m-d H:i:s') . '\'' . ')')))
+        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''.')')))
                   ->getQuery()
                   ->getResult();
     }
@@ -65,7 +65,7 @@ class EventRepository extends EntityRepository
     /**
      * Find event by group and genre
      *
-     * @param User $user
+     * @param User $user User
      *
      * @return Event[]
      */
@@ -99,5 +99,55 @@ class EventRepository extends EntityRepository
         $stmt->execute($params);
 
         return $stmt->fetchAll();
+    }
+
+    /**
+     * Find events by manager
+     *
+     * @param User $user   User
+     * @param int  $limit  Limit
+     * @param int  $offset Offset
+     *
+     * @return Event[]
+     */
+    public function findEventsByManager(User $user, $limit = 10, $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->where($qb->expr()->eq('m', ':user'))
+                  ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->join('e.eventGroups', 'eg')
+                  ->join('eg.group', 'g')
+                  ->join('g.managerGroups', 'mg')
+                  ->join('mg.manager', 'm')
+                  ->setParameter('user', $user)
+                  ->orderBy('e.beginAt', 'ASC')
+                  ->setFirstResult($offset)
+                  ->setMaxResults($limit)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find previous events by manager
+     *
+     * @param User $user
+     *
+     * @return Event[]
+     */
+    public function findPreviousEventsByManager(User $user)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->where($qb->expr()->eq('m', ':user'))
+                  ->andWhere($qb->expr()->lt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->join('e.eventGroups', 'eg')
+                  ->join('eg.group', 'g')
+                  ->join('g.managerGroups', 'mg')
+                  ->join('mg.manager', 'm')
+                  ->setParameter('user', $user)
+                  ->orderBy('e.beginAt', 'DESC')
+                  ->getQuery()
+                  ->getResult();
     }
 }

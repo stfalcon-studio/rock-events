@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Створити подію</h3>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_rest(form) }}
+    {% include ':form:group.html.twig' with { action : 'event_groups' } %}
+    <button type="submit" class="btn btn-success">Оновити подію</button>
+    <ul class="save-groups" style="display: none">
+        {% for group in groups %}
+            <li id="{{ group.slug }}">{{ group.name}}</li>
+        {% endfor %}
+    </ul>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/add_groups.js') }}"></script>
+{% endblock %}

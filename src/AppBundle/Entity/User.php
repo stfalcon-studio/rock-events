@@ -53,6 +53,13 @@ class User extends BaseUser
     private $tickets;
 
     /**
+     * @var ArrayCollection|ManagerGroup[] $mangerGroups Manager Groups
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ManagerGroup", mappedBy="manager")
+     */
+    private $managerGroups;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -162,5 +169,32 @@ class User extends BaseUser
     public function getTickets()
     {
         return $this->tickets;
+    }
+
+    /**
+     * Set manager groups
+     *
+     * @param ArrayCollection|ManagerGroup[] $managerGroups Manager Groups
+     *
+     * @return $this
+     */
+    public function setManagerGroups(ArrayCollection $managerGroups)
+    {
+        foreach ($managerGroups as $managerGroup) {
+            $managerGroup->setManager($this);
+        }
+        $this->managerGroups = $managerGroups;
+
+        return $this;
+    }
+
+    /**
+     * Get manager groups
+     *
+     * @return ArrayCollection|ManagerGroup[] Manager Groups
+     */
+    public function getManagerGroups()
+    {
+        return $this->managerGroups;
     }
 }

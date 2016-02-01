@@ -1,0 +1,24 @@
+{% if group in userGroups %}
+    {% set add_style = 'display: none;' %}
+    {% set delete_style = '' %}
+{% else %}
+    {% set add_style = '' %}
+    {% set delete_style = 'display: none;' %}
+{% endif %}
+
+<button
+    href="#"
+    class="add"
+    data-bookmark-group-add="{{ path('group_add_to_bookmark', { 'slug' : group.slug }) }}"
+    type="button"
+    style="{{ add_style }}">
+    +
+</button>
+<button
+    href="#"
+    class="delete"
+    data-bookmark-group-delete="{{ path('group_delete_from_bookmark', { 'slug' : group.slug }) }}"
+    type="button"
+    style="{{ delete_style }}">
+    -
+</button>

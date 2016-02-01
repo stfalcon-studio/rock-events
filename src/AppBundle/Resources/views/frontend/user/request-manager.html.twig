@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_rest(form) }}
+        {% include ':form:group.html.twig' with { action: 'request_manager' } %}
+        <button type="submit" class="btn btn-success">Залишити заявку</button>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/add_groups.js') }}"></script>
+{% endblock %}
