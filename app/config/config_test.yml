@@ -4,7 +4,9 @@ imports:
 framework:
     test: ~
     session:
-        storage_id: session.storage.mock_file
+        handler_id:  ~
+        storage_id: session.storage.filesystem
+        name: MOCKSESSID
     profiler:
         collect: false
 
@@ -14,3 +16,5 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+liip_functional_test: ~
