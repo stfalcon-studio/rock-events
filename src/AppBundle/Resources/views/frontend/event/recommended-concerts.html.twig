@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul class="list-group" style="width: 200px; margin: 0">
+        {% for event in events %}
+            <li class="list-group-item">
+                <ul class="list-group">
+                    <h3>
+                        <a href="{{ path('event_show', { 'slug' : event.slug }) }}">{{ event.name }}</a>
+                    </h3>
+                    <p>{{ event.beginAt|date('F jS \\a\\t g:ia') }}</p>
+                    <p>{{ event.city }}, {{ event.address }}</p>
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
