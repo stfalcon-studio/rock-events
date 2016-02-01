@@ -32,11 +32,6 @@ class LoadTicketData extends AbstractFixture implements DependentFixtureInterfac
      */
     public function load(ObjectManager $manager)
     {
-        /**
-         * @var User $user
-         */
-        $user = $this->getReference('user-admin');
-
          /** @var Event $eventZaxid */
          /** @var Event $eventBMTH */
         $eventZaxid = $this->getReference('event-zaxid');
@@ -44,14 +39,14 @@ class LoadTicketData extends AbstractFixture implements DependentFixtureInterfac
 
         $ticket1 = (new Ticket())
             ->setEvent($eventZaxid)
-            ->setUser($user)
-            ->setPrice(880);
+            ->setPrice(880)
+            ->setLinkToBuyTicket('http://www.concert.ua/eventpage/zahidfest');
         $manager->persist($ticket1);
 
         $ticket2 = (new Ticket())
             ->setEvent($eventBMTH)
-            ->setUser($user)
-            ->setPrice(740);
+            ->setPrice(740)
+            ->setLinkToBuyTicket('http://www.concert.ua/eventpage/theprodigy');
         $manager->persist($ticket2);
 
         $manager->flush();

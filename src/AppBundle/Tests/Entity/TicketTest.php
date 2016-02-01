@@ -2,6 +2,7 @@
 
 namespace AppBundle\Tests\Entity;
 
+use AppBundle\Entity\Event;
 use AppBundle\Entity\Ticket;
 use AppBundle\Entity\User;
 
@@ -19,9 +20,9 @@ class TicketTest extends \PHPUnit_Framework_TestCase
     {
         $ticket = new Ticket();
         $this->assertNull($ticket->getId());
-        $this->assertNull($ticket->getUser());
         $this->assertNull($ticket->getEvent());
         $this->assertNull($ticket->getPrice());
+        $this->assertNull($ticket->getLinkToBuyTicket());
     }
 
     /**
@@ -34,13 +35,20 @@ class TicketTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($price, $ticket->getPrice());
     }
 
-    /**
-     * Test setter and getter for User
-     */
-    public function testSetGetUser()
+    public function testSetGetLinkToBuyTicket()
     {
-        $user   = new User();
-        $ticket = (new Ticket())->setUser($user);
-        $this->assertEquals($user, $ticket->getUser());
+        $linkToBuyTicket = 'Some link';
+        $ticket = (new Ticket())->setLinkToBuyTicket($linkToBuyTicket);
+        $this->assertEquals($linkToBuyTicket, $ticket->getLinkToBuyTicket());
+    }
+
+    /**
+     * Test setter and getter for Event
+     */
+    public function testSetGetEvent()
+    {
+        $event = new Event();
+        $ticket = (new Ticket())->setEvent($event);
+        $this->assertEquals($event, $ticket->getEvent());
     }
 }
