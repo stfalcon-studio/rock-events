@@ -33,6 +33,18 @@ class RequestManager
     private $id;
 
     /**
+     * @var User $user User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="requestManagers")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     *
+     * @Assert\NotBlank()
+     *
+     * @Gedmo\Versioned
+     */
+    private $user;
+
+    /**
      * @var ArrayCollection|RequestManagerGroup[] $requestManagerGroups Request Manager Group
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestManagerGroup", mappedBy="requestManager")
@@ -190,6 +202,30 @@ class RequestManager
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user User
+     *
+     * @return RequestManager
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**
