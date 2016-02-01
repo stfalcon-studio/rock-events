@@ -29,14 +29,8 @@ class RequestManagerType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', [
-                    'label' => 'Ім’я',
-                    'attr'  => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('surname', 'text', [
-                    'label' => 'Прізвище',
+        $builder->add('fullName', 'text', [
+                    'label' => 'ФІО',
                     'attr'  => [
                         'class' => 'form-control',
                     ],

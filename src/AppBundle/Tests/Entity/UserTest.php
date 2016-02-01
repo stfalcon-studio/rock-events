@@ -28,6 +28,28 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($user->isEnabled());
         $this->assertNull($user->getCreatedAt());
         $this->assertNull($user->getUpdatedAt());
+        $this->assertNull($user->getFullName());
+        $this->assertNull($user->getPhone());
+    }
+
+    /**
+     * Test setter and getter for fullName
+     */
+    public function testSetGetFullName()
+    {
+        $fullName = 'Some fullName';
+        $requestManager = (new RequestManager())->setFullName($fullName);
+        $this->assertEquals($fullName, $requestManager->getFullName());
+    }
+
+    /**
+     * Test setter and getter for Phone
+     */
+    public function testSetGetPhone()
+    {
+        $phone = 'Some phone';
+        $requestManager = (new RequestManager())->setPhone($phone);
+        $this->assertEquals($phone, $requestManager->getPhone());
     }
 
     /**

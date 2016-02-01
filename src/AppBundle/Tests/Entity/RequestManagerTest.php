@@ -3,10 +3,8 @@
 namespace AppBundle\Tests\Entity;
 
 use AppBundle\DBAL\Types\RequestManagerStatusType;
-use AppBundle\Entity\Group;
 use AppBundle\Entity\RequestManager;
 use AppBundle\Entity\RequestManagerGroup;
-use AppBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -24,8 +22,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
         $requestManager = new RequestManager();
         $this->assertNull($requestManager->getId());
         $this->assertNull($requestManager->getRequestManagerGroups());
-        $this->assertNull($requestManager->getSurname());
-        $this->assertNull($requestManager->getName());
+        $this->assertNull($requestManager->getFullName());
         $this->assertNull($requestManager->getPhone());
     }
 
@@ -40,23 +37,13 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test setter and getter for Surname
+     * Test setter and getter for fullName
      */
-    public function testSetGetSurname()
+    public function testSetGetFullName()
     {
-        $surname = 'Some surname';
-        $requestManager = (new RequestManager())->setSurname($surname);
-        $this->assertEquals($surname, $requestManager->getSurname());
-    }
-
-    /**
-     * Test setter and getter for Name
-     */
-    public function testSetGetName()
-    {
-        $name = 'Some name';
-        $requestManager = (new RequestManager())->setName($name);
-        $this->assertEquals($name, $requestManager->getName());
+        $fullName = 'Some fullName';
+        $requestManager = (new RequestManager())->setFullName($fullName);
+        $this->assertEquals($fullName, $requestManager->getFullName());
     }
 
     /**
