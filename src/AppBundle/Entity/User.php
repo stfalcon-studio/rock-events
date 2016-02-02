@@ -54,6 +54,13 @@ class User extends BaseUser
     private $managerGroups;
 
     /**
+     * @var ArrayCollection|RequestManager[] $requestManagers Request Managers
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestManager", mappedBy="user")
+     */
+    private $requestManagers;
+
+    /**
      * @var string $fullName Full name
      *
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -105,6 +112,54 @@ class User extends BaseUser
     public function getCredentialsExpireAt()
     {
         return $this->credentialsExpireAt;
+    }
+
+    /**
+     * Set full name
+     *
+     * @param string $fullName Full name
+     *
+     * @return User
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * Get full name
+     *
+     * @return string Full name
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone Phone
+     *
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string Phone
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
@@ -189,50 +244,29 @@ class User extends BaseUser
     }
 
     /**
-     * Set full name
+     * Set manager groups
      *
-     * @param string $fullName Full name
+     * @param ArrayCollection|RequestManager[] $requestManagers Request Manager
      *
-     * @return User
+     * @return $this
      */
-    public function setFullName($fullName)
+    public function setRequestManagers(ArrayCollection $requestManagers)
     {
-        $this->fullName = $fullName;
+        foreach ($requestManagers as $requestManager) {
+            $requestManager->setUser($this);
+        }
+        $this->requestManagers = $requestManagers;
 
         return $this;
     }
 
     /**
-     * Get full name
+     * Get manager groups
      *
-     * @return string Full name
+     * @return ArrayCollection|RequestManager[] Request Manager
      */
-    public function getFullName()
+    public function getRequestManager()
     {
-        return $this->fullName;
-    }
-
-    /**
-     * Set phone
-     *
-     * @param string $phone Phone
-     *
-     * @return User
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string Phone
-     */
-    public function getPhone()
-    {
-        return $this->phone;
+        return $this->requestManagers;
     }
 }
