@@ -131,18 +131,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test getter for Tickets collection
-     */
-    public function testGetTicketsCollection()
-    {
-        $tickets = new ArrayCollection();
-        $tickets->add(new Ticket());
-        $user = (new User())->setTickets($tickets);
-        $this->assertEquals(1, $user->getTickets()->count());
-        $this->assertEquals($tickets, $user->getTickets());
-    }
-
-    /**
      * Test getter for Manager Groups collection
      */
     public function testGetSetManagerGroupsCollection()

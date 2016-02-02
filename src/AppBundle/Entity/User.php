@@ -47,13 +47,6 @@ class User extends BaseUser
     private $userGroups;
 
     /**
-     * @var ArrayCollection|Ticket[] $tickets Ticket
-     *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="user")
-     */
-    private $tickets;
-
-    /**
      * @var ArrayCollection|ManagerGroup[] $mangerGroups Manager Groups
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ManagerGroup", mappedBy="manager")
@@ -221,33 +214,6 @@ class User extends BaseUser
     public function getUserGroups()
     {
         return $this->userGroups;
-    }
-
-    /**
-     * Set Ticket
-     *
-     * @param ArrayCollection|Ticket[] $tickets Ticket
-     *
-     * @return $this
-     */
-    public function setTickets(ArrayCollection $tickets)
-    {
-        foreach ($tickets as $ticket) {
-            $ticket->setUser($this);
-        }
-        $this->tickets = $tickets;
-
-        return $this;
-    }
-
-    /**
-     * Get tickets
-     *
-     * @return ArrayCollection|Ticket[] Tickets
-     */
-    public function getTickets()
-    {
-        return $this->tickets;
     }
 
     /**
