@@ -1,4 +1,13 @@
 services:
+    admin.event:
+        class: AppBundle\Admin\EventAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Контент", label: "Концерти" }
+        arguments:
+            - ~
+            - AppBundle\Entity\Event
+            - ~
+
     admin.group:
         class: AppBundle\Admin\GroupAdmin
         tags:
@@ -17,12 +26,21 @@ services:
             - AppBundle\Entity\Genre
             - ~
 
-    admin.event:
-        class: AppBundle\Admin\EventAdmin
+    admin.request_manager:
+        class: AppBundle\Admin\RequestManagerAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Контент", label: "Концерти" }
+            - { name: sonata.admin, manager_type: orm, group: "Адміністрування", label: "Заявки на менеджера" }
         arguments:
             - ~
-            - AppBundle\Entity\Event
+            - AppBundle\Entity\RequestManager
+            - ~
+
+    admin.user_admin:
+        class: AppBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Адміністрування", label: "Юзери" }
+        arguments:
+            - ~
+            - AppBundle\Entity\User
             - ~
 

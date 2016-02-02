@@ -20,15 +20,16 @@ class GroupAdmin extends Admin
      */
     protected function configureShowField(ShowMapper $showMapper)
     {
-        $showMapper->add('name', null, [
-            'label' => 'Назва',
-        ])
-                   ->add('description', null, [
-                       'label' => 'Опис',
-                   ])
-                   ->add('foundedAt', null, [
-                       'label' => 'Рік заснування',
-                   ]);
+        $showMapper
+            ->add('name', null, [
+                'label' => 'Назва',
+            ])
+            ->add('description', null, [
+                'label' => 'Опис',
+            ])
+            ->add('foundedAt', null, [
+                'label' => 'Рік заснування',
+            ]);
     }
 
     /**
@@ -36,15 +37,16 @@ class GroupAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', null, [
-            'label' => 'Назва',
-        ])
-                   ->add('description', null, [
-                       'label' => 'Опис',
-                   ])
-                   ->add('foundedAt', null, [
-                       'label' => 'Рік заснування',
-                   ]);
+        $formMapper
+            ->add('name', null, [
+                'label' => 'Назва',
+            ])
+            ->add('description', null, [
+                'label' => 'Опис',
+            ])
+            ->add('foundedAt', null, [
+                'label' => 'Рік заснування',
+            ]);
     }
 
     /**
@@ -61,6 +63,14 @@ class GroupAdmin extends Admin
             ])
             ->add('foundedAt', null, [
                 'label' => 'Рік заснування',
+            ])
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'show'   => [],
+                    'edit'   => [],
+                    'delete' => [],
+                ],
+                'label'   => 'Дії',
             ]);
     }
 
@@ -81,6 +91,9 @@ class GroupAdmin extends Admin
             ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParentAssociationMapping()
     {
         return 'group';

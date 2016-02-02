@@ -20,9 +20,10 @@ class GenreAdmin extends Admin
      */
     protected function configureShowField(ShowMapper $showMapper)
     {
-        $showMapper->add('name', null, [
-            'label' => 'Назва',
-        ]);
+        $showMapper
+            ->add('name', null, [
+                'label' => 'Назва',
+            ]);
     }
 
     /**
@@ -30,9 +31,10 @@ class GenreAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', null, [
-            'label' => 'Назва',
-        ]);
+        $formMapper
+            ->add('name', null, [
+                'label' => 'Назва',
+            ]);
     }
 
     /**
@@ -43,6 +45,14 @@ class GenreAdmin extends Admin
         $listMapper
             ->addIdentifier('name', null, [
                 'label' => 'Назва',
+            ])
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'show'   => [],
+                    'edit'   => [],
+                    'delete' => [],
+                ],
+                'label'   => 'Дії',
             ]);
     }
 
@@ -57,6 +67,9 @@ class GenreAdmin extends Admin
             ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParentAssociationMapping()
     {
         return 'genre';

@@ -20,30 +20,31 @@ class EventAdmin extends Admin
      */
     protected function configureShowField(ShowMapper $showMapper)
     {
-        $showMapper->add('name', null, [
-            'label' => 'Назва',
-        ])
-                   ->add('description', null, [
-                       'label' => 'Опис',
-                   ])
-                   ->add('country', null, [
-                       'label' => 'Країна',
-                   ])
-                   ->add('city', null, [
-                       'label' => 'Місто',
-                   ])
-                   ->add('address', null, [
-                       'label' => 'Адреса',
-                   ])
-                   ->add('beginAt', null, [
-                       'label' => 'Початок о',
-                   ])
-                   ->add('endAt', null, [
-                       'label' => 'Кінець о',
-                   ])
-                   ->add('isActive', null, [
-                       'label' => 'Публікувати',
-                   ]);
+        $showMapper
+            ->add('name', null, [
+                'label' => 'Назва',
+            ])
+            ->add('description', null, [
+                'label' => 'Опис',
+            ])
+            ->add('country', null, [
+                'label' => 'Країна',
+            ])
+            ->add('city', null, [
+                'label' => 'Місто',
+            ])
+            ->add('address', null, [
+                'label' => 'Адреса',
+            ])
+            ->add('beginAt', null, [
+                'label' => 'Початок о',
+            ])
+            ->add('endAt', null, [
+                'label' => 'Кінець о',
+            ])
+            ->add('isActive', null, [
+                'label' => 'Публікувати',
+            ]);
     }
 
     /**
@@ -51,34 +52,35 @@ class EventAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', null, [
-            'label' => 'Назва',
-        ])
-                   ->add('description', null, [
-                       'label' => 'Опис',
-                   ])
-                   ->add('country', null, [
-                       'label' => 'Країна',
-                   ])
-                   ->add('city', null, [
-                       'label' => 'Місто',
-                   ])
-                   ->add('address', null, [
-                       'label' => 'Адреса',
-                   ])
-                   ->add('beginAt', 'datetime', [
-                       'label'       => 'Початок о',
-                       'date_widget' => 'single_text',
-                       'time_widget' => 'single_text',
-                   ])
-                   ->add('endAt', 'datetime', [
-                       'label'       => 'Кінець о',
-                       'date_widget' => 'single_text',
-                       'time_widget' => 'single_text',
-                   ])
-                   ->add('isActive', null, [
-                       'label' => 'Публікувати',
-                   ]);
+        $formMapper
+            ->add('name', null, [
+                'label' => 'Назва',
+            ])
+            ->add('description', null, [
+                'label' => 'Опис',
+            ])
+            ->add('country', null, [
+                'label' => 'Країна',
+            ])
+            ->add('city', null, [
+                'label' => 'Місто',
+            ])
+            ->add('address', null, [
+                'label' => 'Адреса',
+            ])
+            ->add('beginAt', 'datetime', [
+                'label'       => 'Початок о',
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
+            ])
+            ->add('endAt', 'datetime', [
+                'label'       => 'Кінець о',
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
+            ])
+            ->add('isActive', null, [
+                'label' => 'Публікувати',
+            ]);
     }
 
     /**
@@ -110,6 +112,14 @@ class EventAdmin extends Admin
             ])
             ->add('isActive', null, [
                 'label' => 'Публікувати',
+            ])
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'show'   => [],
+                    'edit'   => [],
+                    'delete' => [],
+                ],
+                'label'   => 'Дії',
             ]);
     }
 
@@ -145,8 +155,11 @@ class EventAdmin extends Admin
             ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParentAssociationMapping()
     {
-        return 'group';
+        return 'event';
     }
 }

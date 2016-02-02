@@ -99,6 +99,21 @@ class RequestManager
     protected $status = RequestManagerStatusType::SENT;
 
     /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = $this->getFullName();
+        if (null === $result) {
+            $result = 'New Request Manager';
+        }
+
+        return $result;
+    }
+
+    /**
      * Get ID
      *
      * @return int ID
