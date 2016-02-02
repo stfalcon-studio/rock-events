@@ -40,30 +40,17 @@ class RequestManager
     private $requestManagerGroups;
 
     /**
-     * @var string $surname Surname
+     * @var string $fullName Full name
      *
      * @ORM\Column(type="string", length=100, nullable=false)
      *
      * @Assert\NotBlank()
-     * @Assert\Length(min="2", max="100")
+     * @Assert\Length(min="5", max="100")
      * @Assert\Type(type="string")
      *
      * @Gedmo\Versioned
      */
-    private $surname;
-
-    /**
-     * @var string $name Name
-     *
-     * @ORM\Column(type="string", length=100, nullable=false)
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min="2", max="100")
-     * @Assert\Type(type="string")
-     *
-     * @Gedmo\Versioned
-     */
-    private $name;
+    private $fullName;
 
     /**
      * @var string $phone Phone
@@ -110,51 +97,27 @@ class RequestManager
     }
 
     /**
-     * Set surname
+     * Set full name
      *
-     * @param string $surname Surname
+     * @param string $fullName Full name
      *
      * @return RequestManager
      */
-    public function setSurname($surname)
+    public function setFullName($fullName)
     {
-        $this->surname = $surname;
+        $this->fullName = $fullName;
 
         return $this;
     }
 
     /**
-     * Get surname
+     * Get full name
      *
-     * @return string Surname
+     * @return string Full name
      */
-    public function getSurname()
+    public function getFullName()
     {
-        return $this->surname;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name Name
-     *
-     * @return RequestManager
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string Name
-     */
-    public function getName()
-    {
-        return $this->name;
+        return $this->fullName;
     }
 
     /**

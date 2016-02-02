@@ -31,18 +31,6 @@ class Ticket
     private $id;
 
     /**
-     * @var User $user User
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tickets")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     *
-     * @Assert\NotBlank()
-     *
-     * @Gedmo\Versioned
-     */
-    private $user;
-
-    /**
      * @var Event $event Event
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="tickets")
@@ -65,6 +53,15 @@ class Ticket
      * @Gedmo\Versioned
      */
     private $price;
+
+    /**
+     * @var string $linkBuyTicket Link buy ticket
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Gedmo\Versioned
+     */
+    private $linkToBuyTicket;
 
     /**
      * Get ID
@@ -101,27 +98,27 @@ class Ticket
     }
 
     /**
-     * Set user
+     * Set link to buy ticket
      *
-     * @param User $user User
+     * @param string $linkToBuyTicket Link to buy ticket
      *
      * @return Ticket
      */
-    public function setUser(User $user)
+    public function setLinkToBuyTicket($linkToBuyTicket)
     {
-        $this->user = $user;
+        $this->linkToBuyTicket = $linkToBuyTicket;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get link to buy ticket
      *
-     * @return User User
+     * @return string Link to buy ticket
      */
-    public function getUser()
+    public function getLinkToBuyTicket()
     {
-        return $this->user;
+        return $this->linkToBuyTicket;
     }
 
     /**
