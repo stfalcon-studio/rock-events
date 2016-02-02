@@ -61,6 +61,7 @@ class ManagerController extends Controller
                 ->setName($groupForm->getName())
                 ->setDescription($groupForm->getDescription())
                 ->setSlug($groupForm->getName())
+                ->setImageName($groupForm->getImageName())
                 ->setFoundedAt($groupForm->getFoundedAt())
                 ->setCreatedBy($user)
                 ->setUpdatedBy($user);

@@ -46,6 +46,9 @@ class GroupAdmin extends Admin
             ])
             ->add('foundedAt', null, [
                 'label' => 'Рік заснування',
+            ])
+            ->add('imageFile', 'file', [
+                'required' => false,
             ]);
     }
 
