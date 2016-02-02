@@ -6,6 +6,7 @@ imports:
     - { resource: doctrine/extensions.yml }
     - { resource: easy_admin/admin.yml }
     - { resource: fos/user.yml }
+    - { resource: hwi_oauth.yml }
 
 parameters:
     locale: en

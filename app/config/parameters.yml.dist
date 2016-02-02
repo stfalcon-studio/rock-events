@@ -25,3 +25,9 @@ parameters:
     rollbar_environment:         development
     rollbar_server_access_token: RollbarServerAccessToken
     rollbar_client_access_token: RollbarClientAccessToken
+
+    facebook_app_id:     FacebookAppId
+    facebook_app_secret: FacebookAppSecret
+
+    google_app_id:       GoogleAppId
+    google_app_secret:   GoogleAppSecret
