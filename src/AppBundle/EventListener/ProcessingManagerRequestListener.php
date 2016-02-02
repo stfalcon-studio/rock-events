@@ -3,6 +3,7 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\DBAL\Types\RequestManagerStatusType;
+use AppBundle\Entity\ManagerGroup;
 use AppBundle\Entity\RequestManager;
 use AppBundle\Entity\User;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -34,6 +35,16 @@ class ProcessingManagerRequestListener
                      ->addRole('ROLE_MANAGER');
 
                 $em->persist($user);
+
+                $requestGroups = $entity->getRequestManagerGroups();
+                foreach ($requestGroups as $requestGroup) {
+                    $managerGroup = (new ManagerGroup())
+                        ->setGroup($requestGroup->getGroup())
+                        ->setManager($user);
+
+                    $em->persist($managerGroup);
+                }
+
                 $em->flush();
             }
         }
