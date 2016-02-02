@@ -88,10 +88,10 @@ class EventController extends Controller
 
         $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsBySimilarGenres($genres);
-        if (Event::number > count($events)) {
+        if (Event::NUMBER > count($events)) {
             $eventsByUserBookmark = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByUserBookMark($user);
             foreach ($events as $event) {
-                if (Event::number > count($events)) {
+                if (Event::NUMBER > count($events)) {
                     break;
                 }
                 foreach ($eventsByUserBookmark as $eventByUserBookmark) {
@@ -101,7 +101,7 @@ class EventController extends Controller
                 }
             }
 
-            if (Event::number > count($events)) {
+            if (Event::NUMBER > count($events)) {
                 $eventsForWeek = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsForWeek();
                 foreach ($eventsForWeek as $eventForWeek) {
                     if (!in_array($eventForWeek, $events)) {
