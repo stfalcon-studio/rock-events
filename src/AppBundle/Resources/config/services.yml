@@ -4,4 +4,4 @@ parameters:
 services:
     my_user_provider:
         class: "%my_user_provider.class%"
-        arguments: [@fos_user.user_manager,{ facebook: facebookId, google: googleId }]
+        arguments: [@fos_user.user_manager,{ facebook: facebookId, google: googleId, vk: vkId }]

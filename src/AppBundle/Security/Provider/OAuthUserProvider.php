@@ -48,20 +48,24 @@ class OAuthUserProvider extends BaseClass
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-        $username = $response->getUsername();
-        $user     = $this->userManager->findUserBy([$this->getProperty($response) => $username]);
-        if (null === $user) {
+        $username  = $response->getUsername();
+        $user      = $this->userManager->findUserBy([$this->getProperty($response) => $username]);
+        $userEmail = $this->userManager->findUserBy(['email' => $response->getEmail()]);
+        if (null === $user && null === $userEmail) {
             $service     = $response->getResourceOwner()->getName();
             $setter      = 'set'.ucfirst($service);
             $setterId    = $setter.'Id';
             $setterToken = $setter.'AccessToken';
-            $user        = (new User())
+
+            /** @var User $user */
+            $user = (new User())
                 ->$setterId($username)
                 ->$setterToken($response->getAccessToken())
                 ->setUsername($username)
-                ->setEmail($username)
+                ->setEmail($response->getEmail())
                 ->setPassword($username)
-                ->setEnabled(true);
+                ->setEnabled(true)
+                ->setFullName($response->getLastName().' '.$response->getFirstName());
 
             $this->userManager->updateUser($user);
 

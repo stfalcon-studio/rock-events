@@ -31,3 +31,6 @@ parameters:
 
     google_app_id:       GoogleAppId
     google_app_secret:   GoogleAppSecret
+
+    vk_app_id:           VkAppId
+    vk_app_secret:       VkAppSecret

@@ -37,7 +37,8 @@ security:
                 resource_owners:
                     facebook: "/login/check-facebook"
                     google:   "/login/check-google"
-                default_target_path: homepage
+                    vk:       "/login/check-vk"
+                default_target_path: event_index
             logout:       true
             anonymous:    true
 

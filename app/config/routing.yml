@@ -27,3 +27,6 @@ facebook_login:
 
 google_login:
     pattern: /login/check-google
+
+vk_login:
+    pattern: /login/check-vk

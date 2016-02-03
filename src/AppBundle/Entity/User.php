@@ -116,6 +116,23 @@ class User extends BaseUser
     protected $googleAccessToken;
 
     /**
+     * @var string $vkId ID of vk
+     *
+     * @ORM\Column(name="vk_id", type="string", length=255, nullable=true)
+     *
+     * @Gedmo\Versioned
+     */
+    protected $vkId;
+
+    /**
+     * @var string $vkAccessToken Access token of VK
+     *
+     * @ORM\Column(name="vk_access_token", type="string", length=255, nullable=true)
+     */
+    protected $vkAccessToken;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -396,5 +413,53 @@ class User extends BaseUser
     public function getGoogleAccessToken()
     {
         return $this->googleAccessToken;
+    }
+
+    /**
+     * Set vk ID
+     *
+     * @param string $vkId ID of vk
+     *
+     * @return User
+     */
+    public function setVkId($vkId)
+    {
+        $this->vkId = $vkId;
+
+        return $this;
+    }
+
+    /**
+     * Get vk ID
+     *
+     * @return string
+     */
+    public function getVkId()
+    {
+        return $this->vkId;
+    }
+
+    /**
+     * Set vk access token
+     *
+     * @param string $vkAccessToken Access token of vk
+     *
+     * @return User
+     */
+    public function setVkAccessToken($vkAccessToken)
+    {
+        $this->vkAccessToken = $vkAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get vk access token
+     *
+     * @return string
+     */
+    public function getVkAccessToken()
+    {
+        return $this->vkAccessToken;
     }
 }
