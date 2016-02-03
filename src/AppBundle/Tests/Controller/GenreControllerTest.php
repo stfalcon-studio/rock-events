@@ -6,11 +6,11 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
- * GroupControllerTest class
+ * GenreControllerTest class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  */
-class GroupControllerTest extends WebTestCase
+class GenreControllerTest extends WebTestCase
 {
     /** @var Client $client */
     private $client;
@@ -31,49 +31,32 @@ class GroupControllerTest extends WebTestCase
     public function testListAction()
     {
         $this->loadFixtures([
-            'AppBundle\DataFixtures\ORM\LoadGroupData',
+            'AppBundle\DataFixtures\ORM\LoadGenreData',
         ]);
 
-        $crawler = $this->client->request('GET', '/groups');
+        $crawler = $this->client->request('GET', '/genres');
 
         $this->assertStatusCode(200, $this->client);
         $this->assertCount(1, $crawler->filter('table'));
-        $this->assertCount(5, $crawler->filter('tr#groups'));
+        $this->assertCount(5, $crawler->filter('tr#genres'));
     }
 
     /**
-     * Test Show action
+     * Test group action
      */
-    public function testShowAction()
+    public function testGroupAction()
     {
         $this->loadFixtures([
             'AppBundle\DataFixtures\ORM\LoadGroupData',
             'AppBundle\DataFixtures\ORM\LoadGenreData',
+            'AppBundle\DataFixtures\ORM\LoadGroupGenreData',
         ]);
 
-        $crawler = $this->client->request('GET', '/group/jinjer');
-
-        $this->assertStatusCode(200, $this->client);
-        $this->assertCount(1, $crawler->filter('ul#groups'));
-        $this->assertCount(1, $crawler->filter('ul#genres'));
-    }
-
-    /**
-     * Test Event action
-     */
-    public function testEventAction()
-    {
-        $this->loadFixtures([
-            'AppBundle\DataFixtures\ORM\LoadEventData',
-            'AppBundle\DataFixtures\ORM\LoadGroupData',
-            'AppBundle\DataFixtures\ORM\LoadEventGroupData',
-        ]);
-
-        $crawler = $this->client->request('GET', '/group/jinjer/events');
+        $crawler = $this->client->request('GET', 'genre/alternative/groups');
 
         $this->assertStatusCode(200, $this->client);
         $this->assertCount(1, $crawler->filter('table'));
-        $this->assertCount(1, $crawler->filter('tr#groups'));
+        $this->assertCount(3, $crawler->filter('tr#groups'));
     }
 
     /**
@@ -83,15 +66,15 @@ class GroupControllerTest extends WebTestCase
     {
         $fixtures = $this->loadFixtures([
             'AppBundle\DataFixtures\ORM\LoadUserData',
-            'AppBundle\DataFixtures\ORM\LoadUserGroupData',
-            'AppBundle\DataFixtures\ORM\LoadGroupData',
+            'AppBundle\DataFixtures\ORM\LoadUserGenreData',
+            'AppBundle\DataFixtures\ORM\LoadGenreData',
         ])->getReferenceRepository();
 
         $this->loginAs($fixtures->getReference('user-admin'), 'main');
 
         $this->client = static::makeClient();
 
-        $this->client->request('GET', '/group/jinjer/bookmark', [], [], [
+        $this->client->request('GET', '/genre/alternative/bookmark', [], [], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);
 
@@ -105,15 +88,15 @@ class GroupControllerTest extends WebTestCase
     {
         $fixtures = $this->loadFixtures([
             'AppBundle\DataFixtures\ORM\LoadUserData',
-            'AppBundle\DataFixtures\ORM\LoadUserGroupData',
-            'AppBundle\DataFixtures\ORM\LoadGroupData',
+            'AppBundle\DataFixtures\ORM\LoadUserGenreData',
+            'AppBundle\DataFixtures\ORM\LoadGenreData',
         ])->getReferenceRepository();
 
         $this->loginAs($fixtures->getReference('user-admin'), 'main');
 
         $this->client = static::makeClient();
 
-        $this->client->request('GET', '/group/jinjer/bookmark/delete', [], [], [
+        $this->client->request('GET', '/genre/alternative/bookmark/delete', [], [], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);
 

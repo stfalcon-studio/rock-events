@@ -11,7 +11,7 @@
         </thead>
         <tbody class="table table-hover">
         {% for genre in genres %}
-            <tr>
+            <tr id="genres">
                 <td><a href="{{ path('genre_group',{ 'slug' : genre.slug }) }}">{{ genre.name }}</a></td>
                 {% if app.user %}
                     <td>

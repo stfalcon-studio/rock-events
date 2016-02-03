@@ -85,6 +85,20 @@ TEXT
         $this->setReference('event-torvald', $event3);
         $manager->persist($event3);
 
+        $event4 = (new Event())
+            ->setName('Вечір психоделіки з Somali Yacht Club')
+            ->setDescription('Вечір психоделіки з Somali Yacht Club у Арт-пабі')
+            ->setCountry('Україна')
+            ->setCity('Хмельницький')
+            ->setAddress('вулиця Проскурівська')
+            ->setBeginAt((new \DateTime())->modify('5 day'))
+            ->setEndAt((new \DateTime())->modify('5 day 3 hour'))
+            ->setSlug('concert-somali')
+            ->setActive(true)
+            ->setCreatedBy($userAdmin)
+            ->setUpdatedBy($userAdmin);
+        $manager->persist($event4);
+
         $manager->flush();
     }
 }

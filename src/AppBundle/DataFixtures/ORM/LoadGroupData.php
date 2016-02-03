@@ -67,6 +67,28 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
         $this->setReference('group-jinjer', $group3);
         $manager->persist($group3);
 
+        $group4 = (new Group())
+            ->setName('Somali Yacht Club')
+            ->setDescription('Somali Yacht Club — український рок-гурт, що працює в жанрах пост-хардкор, електро-рок, металкор (свій стиль члени групи визначають як синті-кор)')
+            ->setFoundedAt(new \DateTime('2008-1-1 0:0:0'))
+            ->setSlug('syc')
+            ->setActive(true)
+            ->setCreatedBy($userAdmin)
+            ->setUpdatedBy($userAdmin);
+        $this->setReference('group-somali', $group4);
+        $manager->persist($group4);
+
+        $group5 = (new Group())
+            ->setName('Карна')
+            ->setDescription('музичний гурт, родом із Івано-Франківська, створений у 1997 році. Грав у стилі «український альтернатив-ню метал» (згідно з інформацією на сайті гурту). Перший свій альбом гурт випустив у 2003 році під назвою «Летимо». Другий альбом гурт випустив через сім років у 2010 році під назвою «KARNA».')
+            ->setFoundedAt(new \DateTime('1997-1-1 0:0:0'))
+            ->setSlug('karna')
+            ->setActive(true)
+            ->setCreatedBy($userAdmin)
+            ->setUpdatedBy($userAdmin);
+        $this->setReference('group-karna', $group5);
+        $manager->persist($group5);
+
         $manager->flush();
     }
 }
