@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <ul class="list-group">
+    <ul class="list-group" id="events">
         <li class="list-group-item"><b>Назва:</b> {{ event.name }}</li>
         <li class="list-group-item"><b>Опис</b>: {{ event.description }}</li>
         <li class="list-group-item"><b>Країна:</b> {{ event.country }}</li>
@@ -12,7 +12,7 @@
         <li class="list-group-item"><b>Тривалість:</b> {{ event.duration }}</li>
         <li class="list-group-item">
             <b>Гурти:</b>
-            <ul class="list-group">
+            <ul class="list-group" id="groups">
                 {% for group in groups %}
                     <li class="list-group-item"><a href="{{ path("group_show", { "slug":group.slug }) }}">{{ group.name }}</a></li>
                 {% endfor %}

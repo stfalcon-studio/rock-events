@@ -17,7 +17,7 @@
         </thead>
         <tbody class="table table-hover">
         {% for event in events %}
-            <tr>
+            <tr id="event">
                 <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
                 <td>{{ event.description }}</td>
                 <td>{{ event.country }}</td>
