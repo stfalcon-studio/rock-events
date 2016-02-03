@@ -31,11 +31,7 @@ class ManagerController extends Controller
      */
     public function dashboardAction()
     {
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByManager($this->getUser());
-
-        return $this->render('AppBundle:frontend/manager:dashboard.html.twig', [
-            'groups' => $groups,
-        ]);
+        return $this->render('AppBundle:frontend/manager:dashboard.html.twig');
     }
 
     /**
