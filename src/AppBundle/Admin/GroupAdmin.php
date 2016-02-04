@@ -47,7 +47,11 @@ class GroupAdmin extends Admin
             ->add('foundedAt', null, [
                 'label' => 'Рік заснування',
             ])
+            ->add('slug', null, [
+                'label' => 'Slug'
+            ])
             ->add('imageFile', 'file', [
+                'label'    => 'Зображення',
                 'required' => false,
             ]);
     }
