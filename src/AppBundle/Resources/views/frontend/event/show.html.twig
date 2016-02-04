@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="recommended-concert" style="float: left; width: 20%;">
-        {{ render(controller('AppBundle:Frontend/Event:recommendedConcerts', { 'event' : event, 'group' : groups[0] } )) }}
+        {{ render(controller('AppBundle:Frontend/Event:recommendedConcerts', { 'group' : groups[0] } )) }}
     </div>
     <ul class="list-group" style="float: right; width: 80%;">
         <li class="list-group-item"><b>Назва:</b> {{ event.name }}</li>

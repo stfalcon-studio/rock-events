@@ -171,12 +171,12 @@ class EventRepository extends EntityRepository
 
         foreach ($genres as $item => $genre) {
             if (0 === $item) {
-                $events->where($qb->expr()->eq('ge', ':'.$genre->getSlug()))
-                       ->setParameter($genre->getSlug(), $genre);
+                $events->where($qb->expr()->eq('ge', ':genre'))
+                       ->setParameter('genre', $genre);
+            } else {
+                $events->orWhere($qb->expr()->eq('ge', ':genre'))
+                       ->setParameter('genre', $genre);
             }
-
-            $events->orWhere($qb->expr()->eq('ge', ':'.$genre->getSlug()))
-                   ->setParameter($genre->getSlug(), $genre);
         }
 
         return $events->getQuery()

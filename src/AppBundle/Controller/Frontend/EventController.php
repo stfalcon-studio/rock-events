@@ -70,12 +70,13 @@ class EventController extends Controller
     }
 
     /**
-     * @param Event $event
+     * Recommended concert widget
+     *
      * @param Group $group
      *
      * @return Response
      */
-    public function recommendedConcertsAction(Event $event, Group $group)
+    public function recommendedConcertsAction(Group $group)
     {
         $user = $this->getUser();
         if (null === $user) {
@@ -110,9 +111,6 @@ class EventController extends Controller
                 }
             }
         }
-
-        //For delete current event
-        unset($events[array_search($event, $events)]);
 
         return $this->render('AppBundle:frontend/event:recommended-concerts.html.twig', [
             'events' => $events,
