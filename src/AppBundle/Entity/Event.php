@@ -24,6 +24,8 @@ class Event
 
     use BlameableEntityTrait;
 
+    const NUMBER = 5;
+
     /**
      * @var int $id ID
      *
