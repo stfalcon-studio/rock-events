@@ -115,8 +115,6 @@ class Event
      *
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @Assert\DateTime()
-     *
      * @Gedmo\Versioned
      */
     private $beginAt;
@@ -125,8 +123,6 @@ class Event
      * @var \DateTime $endAt End At
      *
      * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @Assert\DateTime()
      *
      * @Gedmo\Versioned
      */
@@ -320,7 +316,7 @@ class Event
      *
      * @return Event
      */
-    public function setBeginAt($beginAt)
+    public function setBeginAt(\DateTime $beginAt)
     {
         $this->beginAt = $beginAt;
 
@@ -344,7 +340,7 @@ class Event
      *
      * @return Event
      */
-    public function setEndAt($endAt)
+    public function setEndAt(\DateTime $endAt)
     {
         $this->endAt = $endAt;
 

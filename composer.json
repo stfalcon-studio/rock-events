@@ -15,13 +15,14 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "javiereguiluz/easyadmin-bundle": "^1.10",
         "doctrine/migrations": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "fresh/doctrine-enum-bundle": "v3.3",
         "stof/doctrine-extensions-bundle": "^1.2",
         "ftrrtf/rollbar-bundle": "^0.14.0",
         "beberlei/DoctrineExtensions": "^1.0",
+        "sonata-project/admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "^2.3",
         "egeloen/ckeditor-bundle": "^4.0"
     },
     "require-dev": {
