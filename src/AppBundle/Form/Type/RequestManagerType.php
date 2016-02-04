@@ -41,7 +41,7 @@ class RequestManagerType extends AbstractType
                         'class' => 'form-control',
                     ],
                 ])
-                ->add('text', 'textarea', [
+                ->add('text', 'ckeditor', [
                     'label' => 'Заявка',
                     'attr'  => [
                         'class'       => 'form-control',

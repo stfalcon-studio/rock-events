@@ -42,7 +42,7 @@ class GroupType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('description', 'textarea', [
+            ->add('description', 'ckeditor', [
                 'label' => 'Опис',
                 'attr'  => [
                     'class' => 'form-control',

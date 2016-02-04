@@ -3,10 +3,12 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Event;
+use AppBundle\Entity\Genre;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use DoctrineExtensions\Query\Mysql\Date;
+use PDO;
 
 /**
  * Class EventRepository
@@ -98,7 +100,7 @@ class EventRepository extends EntityRepository
                                ->prepare($sql);
         $stmt->execute($params);
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'AppBundle\Entity\Event');
     }
 
     /**
@@ -149,5 +151,35 @@ class EventRepository extends EntityRepository
                   ->orderBy('e.beginAt', 'DESC')
                   ->getQuery()
                   ->getResult();
+    }
+
+    /**
+     * Find events by similar genres
+     *
+     * @param Genre[] $genres
+     *
+     * @return Event[]
+     */
+    public function findEventsBySimilarGenres(array $genres)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $events = $qb->join('e.eventGroups', 'eg')
+                     ->join('eg.group', 'gr')
+                     ->join('gr.groupGenres', 'gg')
+                     ->join('gg.genre', 'ge');
+
+        foreach ($genres as $item => $genre) {
+            if (0 === $item) {
+                $events->where($qb->expr()->eq('ge', ':genre'))
+                       ->setParameter('genre', $genre);
+            } else {
+                $events->orWhere($qb->expr()->eq('ge', ':genre'))
+                       ->setParameter('genre', $genre);
+            }
+        }
+
+        return $events->getQuery()
+                      ->getResult();
     }
 }
