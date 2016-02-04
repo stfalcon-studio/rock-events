@@ -4,6 +4,8 @@ namespace AppBundle\Security\Provider;
 
 use AppBundle\Entity\User;
 use FOS\UserBundle\Model\UserManagerInterface;
+use HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\VkontakteResourceOwner;
+use HWI\Bundle\OAuthBundle\OAuth\ResourceOwnerInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -17,31 +19,49 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class OAuthUserProvider extends BaseClass
 {
     /**
-     * {@inheritDoc}
+     * @param User                  $user
+     * @param UserResponseInterface $response
      */
     public function connect(UserInterface $user, UserResponseInterface $response)
     {
-        $property = $this->getProperty($response);
         $username = $response->getUsername();
+        $property = $this->getProperty($response);
 
-        //on connect - get the access token and the user ID
-        $service = $response->getResourceOwner()->getName();
-
-        $setter       = 'set'.ucfirst($service);
-        $setterId     = $setter.'Id';
-        $setterToken  = $setter.'AccessToken';
+        /** @var User $previousUser */
         $previousUser = $this->userManager->findUserBy([
             $property => $username,
         ]);
 
-        if (null !== $previousUser) {
-            $previousUser->$setterId(null);
-            $previousUser->$setterToken(null);
-            $this->userManager->updateUser($previousUser);
+        $service = $response->getResourceOwner()->getName();
+        switch ($service) {
+            case 'vkontakte':
+                if (null !== $previousUser) {
+                    $previousUser->setVkId(null);
+                    $previousUser->setVkAccessToken(null);
+                }
+                $user->setVkId($username);
+                $user->setVkAccessToken($response->getAccessToken());
+                $this->userManager->updateUser($previousUser);
+                break;
+            case 'facebook':
+                if (null !== $previousUser) {
+                    $previousUser->setFacebookId(null);
+                    $previousUser->setFacebookAccessToken(null);
+                }
+                $user->setFacebookId($username);
+                $user->setFacebookAccessToken($response->getAccessToken());
+                $this->userManager->updateUser($previousUser);
+                break;
+            case 'google':
+                if (null !== $previousUser) {
+                    $previousUser->setGoogleId(null);
+                    $previousUser->setGoogleAccessToken(null);
+                }
+                $user->setGoogleId($username);
+                $user->setGoogleAccessToken($response->getAccessToken());
+                $this->userManager->updateUser($previousUser);
+                break;
         }
-
-        $user->$setterId($username);
-        $user->$setterToken($response->getAccessToken());
 
         $this->userManager->updateUser($user);
     }
@@ -60,32 +80,50 @@ class OAuthUserProvider extends BaseClass
         ]);
 
         if (null === $user && null === $userEmail) {
-            $service     = $response->getResourceOwner()->getName();
-            $setter      = 'set'.ucfirst($service);
-            $setterId    = $setter.'Id';
-            $setterToken = $setter.'AccessToken';
-
             /** @var User $user */
             $user = (new User())
-                ->$setterId($username)
-                ->$setterToken($response->getAccessToken())
                 ->setUsername($username)
                 ->setEmail($response->getEmail())
                 ->setPassword($username)
-                ->setEnabled(true)
-                ->setFullName($response->getLastName().' '.$response->getFirstName());
+                ->setFullName($response->getLastName().' '.$response->getFirstName())
+                ->setEnabled(true);
+
+            $service = $response->getResourceOwner()->getName();
+            switch ($service) {
+                case 'vkontakte':
+                    $user->setVkId($username)
+                         ->setVkAccessToken($response->getAccessToken());
+                    break;
+                case 'facebook':
+                    $user->setFacebookId($username)
+                         ->setFacebookAccessToken($response->getAccessToken());
+                    break;
+                case 'google':
+                    $user->setGoogleId($username)
+                         ->setGoogleAccessToken($response->getAccessToken());
+                    break;
+            }
 
             $this->userManager->updateUser($user);
 
             return $user;
         }
 
+        /** @var User $user */
         $user = parent::loadUserByOAuthUserResponse($response);
 
         $serviceName = $response->getResourceOwner()->getName();
-        $setter      = 'set'.ucfirst($serviceName).'AccessToken';
-
-        $user->$setter($response->getAccessToken());
+        switch($serviceName){
+            case 'vkontakte':
+                $user->setVkAccessToken($response->getAccessToken());
+                break;
+            case 'facebook':
+                $user->setFacebookAccessToken($response->getAccessToken());
+                break;
+            case 'google':
+                $user->setGoogleAccessToken($response->getAccessToken());
+                break;
+        }
 
         return $user;
     }
