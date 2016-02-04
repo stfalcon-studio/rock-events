@@ -64,8 +64,9 @@ class EventController extends Controller
         $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByEvent($event);
 
         return $this->render('AppBundle:frontend\event:show.html.twig', [
-            'event'  => $event,
-            'groups' => $groups,
+            'event'             => $event,
+            'groups'            => $groups,
+            'recommended_group' => $groups[0], // @todo Change to many groups
         ]);
     }
 
@@ -89,6 +90,7 @@ class EventController extends Controller
 
         $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsBySimilarGenres($genres);
+        // @todo Refactoring
         if (Event::NUMBER > count($events)) {
             $eventsByUserBookmark = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByUserBookMark($user);
             foreach ($events as $event) {
