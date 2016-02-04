@@ -80,12 +80,4 @@ class GenreAdmin extends Admin
                 'label' => 'Назва',
             ]);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParentAssociationMapping()
-    {
-        return 'genre';
-    }
 }

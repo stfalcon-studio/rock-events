@@ -54,13 +54,13 @@ class GroupAdmin extends Admin
             ->add('name', null, [
                 'label' => 'Назва',
             ])
+            ->add('slug')
             ->add('description', null, [
                 'label' => 'Опис',
             ])
             ->add('foundedAt', null, [
                 'label' => 'Рік заснування',
-            ])
-            ->add('slug');
+            ]);
     }
 
     /**
@@ -103,13 +103,5 @@ class GroupAdmin extends Admin
             ->add('foundedAt', null, [
                 'label' => 'Рік заснування',
             ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParentAssociationMapping()
-    {
-        return 'group';
     }
 }

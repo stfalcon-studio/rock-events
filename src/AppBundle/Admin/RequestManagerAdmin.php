@@ -119,12 +119,4 @@ class RequestManagerAdmin extends Admin
                 'label' => 'Статус',
             ]);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParentAssociationMapping()
-    {
-        return 'request_manager';
-    }
 }
