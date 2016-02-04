@@ -1,0 +1,46 @@
+services:
+    admin.event:
+        class: AppBundle\Admin\EventAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Контент", label: "Концерти" }
+        arguments:
+            - ~
+            - AppBundle\Entity\Event
+            - ~
+
+    admin.group:
+        class: AppBundle\Admin\GroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Контент", label: "Гурти" }
+        arguments:
+            - ~
+            - AppBundle\Entity\Group
+            - ~
+
+    admin.genre:
+        class: AppBundle\Admin\GenreAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Контент", label: "Жанри" }
+        arguments:
+            - ~
+            - AppBundle\Entity\Genre
+            - ~
+
+    admin.request_manager:
+        class: AppBundle\Admin\RequestManagerAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Адміністрування", label: "Заявки на менеджера" }
+        arguments:
+            - ~
+            - AppBundle\Entity\RequestManager
+            - ~
+
+    admin.user_admin:
+        class: AppBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Адміністрування", label: "Юзери" }
+        arguments:
+            - ~
+            - AppBundle\Entity\User
+            - ~
+

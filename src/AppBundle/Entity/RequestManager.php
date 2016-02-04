@@ -42,7 +42,7 @@ class RequestManager
      *
      * @Gedmo\Versioned
      */
-    private $user;
+    private $requestedBy;
 
     /**
      * @var ArrayCollection|RequestManagerGroup[] $requestManagerGroups Request Manager Group
@@ -97,6 +97,21 @@ class RequestManager
      * @Gedmo\Versioned
      */
     protected $status = RequestManagerStatusType::SENT;
+
+    /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = $this->getFullName();
+        if (null === $result) {
+            $result = 'New Request Manager';
+        }
+
+        return $result;
+    }
 
     /**
      * Get ID
@@ -205,25 +220,25 @@ class RequestManager
     }
 
     /**
-     * Get user
+     * Get requestedBy
      *
      * @return User
      */
-    public function getUser()
+    public function getRequestedBy()
     {
-        return $this->user;
+        return $this->requestedBy;
     }
 
     /**
-     * Set user
+     * Set requestedBy
      *
-     * @param User $user User
+     * @param User $requestedBy User
      *
      * @return RequestManager
      */
-    public function setUser($user)
+    public function setRequestedBy($requestedBy)
     {
-        $this->user = $user;
+        $this->requestedBy = $requestedBy;
 
         return $this;
     }

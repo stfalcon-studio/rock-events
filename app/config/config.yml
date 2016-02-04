@@ -4,12 +4,13 @@ imports:
     - { resource: services.yml }
     - { resource: doctrine/doctrine.yml }
     - { resource: doctrine/extensions.yml }
-    - { resource: easy_admin/admin.yml }
     - { resource: fos/user.yml }
     - { resource: hwi_oauth.yml }
+    - { resource: sonata/block.yml }
+    - { resource: sonata/admin.yml }
 
 parameters:
-    locale: en
+    locale: uk
 
 framework:
     translator: ~
@@ -38,6 +39,9 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - 'form/fields.html.twig'
+    form:
+        resources:
+            - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 # Assetic Configuration
 assetic:

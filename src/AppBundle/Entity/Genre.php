@@ -79,6 +79,21 @@ class Genre
     public $isActive = true;
 
     /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = $this->getName();
+        if (null === $result) {
+            return "New Genre";
+        }
+
+        return $result;
+    }
+
+    /**
      * Get ID
      *
      * @return int

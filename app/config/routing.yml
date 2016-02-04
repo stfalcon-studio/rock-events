@@ -5,11 +5,6 @@ app_frontend:
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
-easy_admin_bundle:
-    resource: "@EasyAdminBundle/Controller/"
-    type:     annotation
-    prefix:   /admin
-
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /connect
@@ -30,3 +25,12 @@ google_login:
 
 vk_login:
     pattern: /login/check-vk
+
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
