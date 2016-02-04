@@ -27,11 +27,14 @@ class OAuthUserProvider extends BaseClass
         //on connect - get the access token and the user ID
         $service = $response->getResourceOwner()->getName();
 
-        $setter      = 'set'.ucfirst($service);
-        $setterId    = $setter.'Id';
-        $setterToken = $setter.'AccessToken';
+        $setter       = 'set'.ucfirst($service);
+        $setterId     = $setter.'Id';
+        $setterToken  = $setter.'AccessToken';
+        $previousUser = $this->userManager->findUserBy([
+            $property => $username,
+        ]);
 
-        if (null !== $previousUser = $this->userManager->findUserBy([$property => $username])) {
+        if (null !== $previousUser) {
             $previousUser->$setterId(null);
             $previousUser->$setterToken(null);
             $this->userManager->updateUser($previousUser);
@@ -49,8 +52,13 @@ class OAuthUserProvider extends BaseClass
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $username  = $response->getUsername();
-        $user      = $this->userManager->findUserBy([$this->getProperty($response) => $username]);
-        $userEmail = $this->userManager->findUserBy(['email' => $response->getEmail()]);
+        $user      = $this->userManager->findUserBy([
+            $this->getProperty($response) => $username,
+        ]);
+        $userEmail = $this->userManager->findUserBy([
+            'email' => $response->getEmail(),
+        ]);
+
         if (null === $user && null === $userEmail) {
             $service     = $response->getResourceOwner()->getName();
             $setter      = 'set'.ucfirst($service);
