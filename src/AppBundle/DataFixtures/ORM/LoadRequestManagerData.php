@@ -37,7 +37,7 @@ class LoadRequestManagerData extends AbstractFixture implements DependentFixture
         $userAdmin = $this->getReference('user-admin');
 
         $requestManager1 = (new RequestManager())
-            ->setUser($userAdmin)
+            ->setRequestedBy($userAdmin)
             ->setFullName('Іванов Іван Олександрович')
             ->setPhone('0984534222')
             ->setStatus(RequestManagerStatusType::SENT)
@@ -48,7 +48,7 @@ class LoadRequestManagerData extends AbstractFixture implements DependentFixture
         $manager->persist($requestManager1);
 
         $requestManager2 = (new RequestManager())
-            ->setUser($userAdmin)
+            ->setRequestedBy($userAdmin)
             ->setFullName('Cидоренко Марія Олександрівна')
             ->setPhone('0984534222')
             ->setStatus(RequestManagerStatusType::DENIED)
@@ -59,7 +59,7 @@ class LoadRequestManagerData extends AbstractFixture implements DependentFixture
         $manager->persist($requestManager2);
 
         $requestManager3 = (new RequestManager())
-            ->setUser($userAdmin)
+            ->setRequestedBy($userAdmin)
             ->setFullName('Петрекно Олена Юріївна')
             ->setPhone('0984534222')
             ->setStatus(RequestManagerStatusType::SENT)

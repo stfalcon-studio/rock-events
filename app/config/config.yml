@@ -39,6 +39,9 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - 'form/fields.html.twig'
+    form:
+        resources:
+            - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 # Assetic Configuration
 assetic:

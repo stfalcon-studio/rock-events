@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Genre;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -15,6 +16,18 @@ use Sonata\AdminBundle\Show\ShowMapper;
  */
 class GenreAdmin extends Admin
 {
+    use AdminHelperTrait;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($genre)
+    {
+        /** @var Genre $genre */
+        $genre->setCreatedBy($this->getUser())
+              ->setUpdatedBy($this->getUser());
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -34,7 +47,8 @@ class GenreAdmin extends Admin
         $formMapper
             ->add('name', null, [
                 'label' => 'Назва',
-            ]);
+            ])
+            ->add('slug');
     }
 
     /**

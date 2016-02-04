@@ -56,7 +56,7 @@ class User extends BaseUser
     /**
      * @var ArrayCollection|RequestManager[] $requestManagers Request Managers
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestManager", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RequestManager", mappedBy="requestedBy")
      */
     private $requestManagers;
 
@@ -253,7 +253,7 @@ class User extends BaseUser
     public function setRequestManagers(ArrayCollection $requestManagers)
     {
         foreach ($requestManagers as $requestManager) {
-            $requestManager->setUser($this);
+            $requestManager->setRequestedBy($this);
         }
         $this->requestManagers = $requestManagers;
 

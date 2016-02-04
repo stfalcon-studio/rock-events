@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Group;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -15,6 +16,18 @@ use Sonata\AdminBundle\Show\ShowMapper;
  */
 class GroupAdmin extends Admin
 {
+    use AdminHelperTrait;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($group)
+    {
+        /** @var Group $group */
+        $group->setCreatedBy($this->getUser())
+              ->setUpdatedBy($this->getUser());
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -46,7 +59,8 @@ class GroupAdmin extends Admin
             ])
             ->add('foundedAt', null, [
                 'label' => 'Рік заснування',
-            ]);
+            ])
+            ->add('slug');
     }
 
     /**
