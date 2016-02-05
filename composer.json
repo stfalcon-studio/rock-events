@@ -21,9 +21,10 @@
         "stof/doctrine-extensions-bundle": "^1.2",
         "ftrrtf/rollbar-bundle": "^0.14.0",
         "beberlei/DoctrineExtensions": "^1.0",
+        "egeloen/ckeditor-bundle": "^4.0",
+        "hwi/oauth-bundle": "^0.4.0",
         "sonata-project/admin-bundle": "dev-master",
-        "sonata-project/doctrine-orm-admin-bundle": "^2.3",
-        "egeloen/ckeditor-bundle": "^4.0"
+        "sonata-project/doctrine-orm-admin-bundle": "^2.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

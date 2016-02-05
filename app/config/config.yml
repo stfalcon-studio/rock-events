@@ -5,9 +5,9 @@ imports:
     - { resource: doctrine/doctrine.yml }
     - { resource: doctrine/extensions.yml }
     - { resource: fos/user.yml }
+    - { resource: hwi_oauth.yml }
     - { resource: sonata/block.yml }
     - { resource: sonata/admin.yml }
-
 
 parameters:
     locale: uk
