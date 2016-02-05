@@ -26,7 +26,7 @@ class EventController extends Controller
      */
     public function indexAction()
     {
-        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsForWeek();
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEvents();
 
         return $this->render('AppBundle:frontend/event:index.html.twig', [
             'events' => $events,
@@ -92,7 +92,8 @@ class EventController extends Controller
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsBySimilarGenres($genres);
         // @todo Refactoring
         if (Event::NUMBER > count($events)) {
-            $eventsByUserBookmark = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByUserBookMark($user);
+            $eventsByUserBookmark = $this->getDoctrine()->getRepository('AppBundle:Event')
+                                         ->findEventsByUserBookMark($user);
             foreach ($events as $event) {
                 if (Event::NUMBER > count($events)) {
                     break;
@@ -116,6 +117,20 @@ class EventController extends Controller
 
         return $this->render('AppBundle:frontend/event:recommended-concerts.html.twig', [
             'events' => $events,
+        ]);
+    }
+
+    /**
+     * Return last events
+     *
+     * @return Event[]
+     */
+    public function lastEventsAction()
+    {
+        $lastEvents = $this->getDoctrine()->getRepository('AppBundle:Event')->findPreviousEvents();
+
+        return $this->render('AppBundle:frontend/event:last_events.html.twig', [
+            'events' => $lastEvents,
         ]);
     }
 }

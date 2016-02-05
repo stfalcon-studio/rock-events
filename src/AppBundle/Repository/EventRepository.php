@@ -182,4 +182,22 @@ class EventRepository extends EntityRepository
         return $events->getQuery()
                       ->getResult();
     }
+
+    /**
+     * @param int $limit  Limit
+     * @param int $offset Offset
+     *
+     * @return Event[]
+     */
+    public function findPreviousEvents($limit = 5, $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->where($qb->expr()->lt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->orderBy('e.beginAt', 'ASC')
+                  ->setFirstResult($offset)
+                  ->setMaxResults($limit)
+                  ->getQuery()
+                  ->getResult();
+    }
 }

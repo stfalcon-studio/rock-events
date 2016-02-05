@@ -4,11 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< .merge_file_GeB0uS
     "hash": "41fc3b23123153429f77d8f96c6b1ab7",
-=======
     "hash": "555f3910e52c33f4e4809b6a3c1d6577",
->>>>>>> .merge_file_jcddwV
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -2427,21 +2424,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-<<<<<<< .merge_file_GeB0uS
                 "reference": "34a171da0686721eeab3f94cb2aa84533a2d777e"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/34a171da0686721eeab3f94cb2aa84533a2d777e",
                 "reference": "34a171da0686721eeab3f94cb2aa84533a2d777e",
-=======
                 "reference": "e01d962f8eadad5c7571ca52ba9f7815661c5496"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/e01d962f8eadad5c7571ca52ba9f7815661c5496",
                 "reference": "e01d962f8eadad5c7571ca52ba9f7815661c5496",
->>>>>>> .merge_file_jcddwV
                 "shasum": ""
             },
             "require": {
@@ -2514,11 +2508,7 @@
                 "bootstrap",
                 "sonata"
             ],
-<<<<<<< .merge_file_GeB0uS
             "time": "2016-02-02 12:46:53"
-=======
-            "time": "2016-02-04 09:07:18"
->>>>>>> .merge_file_jcddwV
         },
         {
             "name": "sonata-project/block-bundle",
