@@ -104,6 +104,10 @@ class EventAdmin extends Admin
             ])
             ->add('isActive', null, [
                 'label' => 'Публікувати',
+            ])
+            ->add('imageFile', 'file', [
+                'label'    => 'Зображення',
+                'required' => false,
             ]);
     }
 

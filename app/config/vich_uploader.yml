@@ -1,0 +1,19 @@
+vich_uploader:
+    db_driver: orm
+    mappings:
+        group_image:
+            uri_prefix:         /images/groups
+            upload_destination: %kernel.root_dir%/../web/images/groups
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
+            directory_namer:    app.vich_uploader_directory_namer
+        event_image:
+            uri_prefix:         /images/events
+            upload_destination: %kernel.root_dir%/../web/images/events
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+            namer:              vich_uploader.namer_uniqid
+            directory_namer:    app.vich_uploader_directory_namer

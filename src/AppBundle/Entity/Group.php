@@ -5,8 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Group Entity
@@ -17,6 +19,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
  *
  * @Gedmo\Loggable
+ *
+ * @Vich\Uploadable
  */
 class Group
 {
@@ -121,6 +125,20 @@ class Group
      * @Gedmo\Versioned
      */
     public $isActive = true;
+
+    /**
+     * @Vich\UploadableField(mapping="group_image", fileNameProperty="imageName", nullable=true)
+     *
+     * @var File $imageFile Image File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string $imageName Image name
+     */
+    private $imageName;
 
     /**
      * To string
@@ -401,5 +419,49 @@ class Group
     public function getRequestManagerGroups()
     {
         return $this->requestManagerGroups;
+    }
+
+    /*
+     * @param File|UploadedFile $image Image
+     *
+     * @return Group
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName Image name
+     *
+     * @return Group
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
     }
 }

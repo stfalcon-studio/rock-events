@@ -46,7 +46,7 @@ class GroupType extends AbstractType
                 'label' => 'Опис',
                 'attr'  => [
                     'class' => 'form-control',
-                    'rows'  => 7
+                    'rows'  => 7,
                 ],
             ])
             ->add('foundedAt', 'integer', [
@@ -55,11 +55,15 @@ class GroupType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
+            ->add('imageFile', 'file', [
+                'label'    => 'Зображення',
+                'required' => false,
+            ])
             ->add('submit', 'submit', [
                 'label' => 'Зберегти',
                 'attr'  => [
-                    'class' => 'btn btn-success'
-                ]
+                    'class' => 'btn btn-success',
+                ],
             ]);
 
         $builder->get('foundedAt')
