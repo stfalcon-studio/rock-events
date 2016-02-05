@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Event;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -15,6 +16,18 @@ use Sonata\AdminBundle\Show\ShowMapper;
  */
 class EventAdmin extends Admin
 {
+    use AdminHelperTrait;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($event)
+    {
+        /** @var Event $event */
+        $event->setCreatedBy($this->getUser())
+              ->setUpdatedBy($this->getUser());
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -56,6 +69,7 @@ class EventAdmin extends Admin
             ->add('name', null, [
                 'label' => 'Назва',
             ])
+            ->add('slug', null)
             ->add('description', null, [
                 'label' => 'Опис',
             ])
@@ -68,15 +82,25 @@ class EventAdmin extends Admin
             ->add('address', null, [
                 'label' => 'Адреса',
             ])
-            ->add('beginAt', 'datetime', [
-                'label'       => 'Початок о',
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
+            ->add('beginAt', null, [
+                'label' => 'Початок о',
+//                'read_only' => true,
+//                'dp_side_by_side' => true,
+//                'dp_use_current' => true,
+//                'dp_use_seconds' => true,
+//                'dp_minute_stepping' => 1,
+//                'date_format' => 'dd.MM.YYYY HH:mm',
+//                'format' => 'dd.MM.YYYY HH:mm',
             ])
-            ->add('endAt', 'datetime', [
-                'label'       => 'Кінець о',
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
+            ->add('endAt', null, [
+                'label' => 'Кінець о',
+//                'read_only' => true,
+//                'dp_side_by_side' => true,
+//                'dp_use_current' => true,
+//                'dp_use_seconds' => true,
+//                'dp_minute_stepping' => 1,
+//                'date_format' => 'dd.MM.YYYY HH:mm',
+//                'format' => 'dd.MM.YYYY HH:mm',
             ])
             ->add('isActive', null, [
                 'label' => 'Публікувати',
@@ -157,13 +181,5 @@ class EventAdmin extends Admin
             ->add('isActive', null, [
                 'label' => 'Публікувати',
             ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParentAssociationMapping()
-    {
-        return 'event';
     }
 }

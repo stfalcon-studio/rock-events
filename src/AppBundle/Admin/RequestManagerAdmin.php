@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\RequestManager;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -15,6 +16,18 @@ use Sonata\AdminBundle\Show\ShowMapper;
  */
 class RequestManagerAdmin extends Admin
 {
+    use AdminHelperTrait;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prePersist($requestManager)
+    {
+        /** @var RequestManager $requestManager */
+        $requestManager->setCreatedBy($this->getUser())
+                       ->setUpdatedBy($this->getUser());
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -83,7 +96,7 @@ class RequestManagerAdmin extends Admin
                     'edit'   => [],
                     'delete' => [],
                 ],
-                'label' => 'Дії'
+                'label'   => 'Дії',
             ]);
     }
 
@@ -105,13 +118,5 @@ class RequestManagerAdmin extends Admin
             ->add('status', null, [
                 'label' => 'Статус',
             ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParentAssociationMapping()
-    {
-        return 'request_manager';
     }
 }

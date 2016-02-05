@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <ul class="list-group">
+    <div class="recommended-concert" style="float: left; width: 20%;">
+        {{ render(controller('AppBundle:Frontend/Event:recommendedConcerts', { 'group' : recommended_group } )) }}
+    </div>
+    <ul class="list-group" style="float: right; width: 80%;">
         <li class="list-group-item"><b>Назва:</b> {{ event.name }}</li>
         <li class="list-group-item"><b>Опис</b>: {{ event.description }}</li>
         <li class="list-group-item"><b>Країна:</b> {{ event.country }}</li>
@@ -14,7 +17,8 @@
             <b>Гурти:</b>
             <ul class="list-group">
                 {% for group in groups %}
-                    <li class="list-group-item"><a href="{{ path("group_show", { "slug":group.slug }) }}">{{ group.name }}</a></li>
+                    <li class="list-group-item">
+                        <a href="{{ path("group_show", { "slug":group.slug }) }}">{{ group.name }}</a></li>
                 {% endfor %}
             </ul>
         </li>

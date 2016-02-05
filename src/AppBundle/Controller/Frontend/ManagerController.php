@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Frontend;
 
+use AppBundle\Entity\ManagerGroup;
 use AppBundle\Form\Entity\Event as EventForm;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventGroup;
@@ -48,6 +49,8 @@ class ManagerController extends Controller
      */
     public function addGroupAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $user = $this->getUser();
 
         $form = $this->createForm('group');
@@ -66,9 +69,13 @@ class ManagerController extends Controller
                 ->setCreatedBy($user)
                 ->setUpdatedBy($user);
 
-            $em = $this->getDoctrine()->getManager();
-
             $em->persist($group);
+
+            $managerGroup = (new ManagerGroup())
+                ->setGroup($group)
+                ->setManager($user);
+
+            $em->persist($managerGroup);
             $em->flush();
         }
 
@@ -106,6 +113,10 @@ class ManagerController extends Controller
             /** @var \AppBundle\Form\Entity\Group $groupForm */
             $groupForm = $form->getData();
 
+            $managerGroup = $em->getRepository('AppBundle:ManagerGroup')->findOneBy([
+                'group' => $group,
+            ]);
+
             $group->setName($groupForm->getName())
                   ->setDescription($groupForm->getDescription())
                   ->setSlug($groupForm->getName())
@@ -113,9 +124,11 @@ class ManagerController extends Controller
                   ->setCreatedBy($user)
                   ->setUpdatedBy($user);
 
-            $em = $this->getDoctrine()->getManager();
-
             $em->persist($group);
+
+            $managerGroup->setGroup($group);
+            $em->persist($managerGroup);
+
             $em->flush();
 
             return $this->redirectToRoute('manager_cabinet_groups_list');
@@ -215,7 +228,7 @@ class ManagerController extends Controller
             return $this->redirectToRoute('manager_cabinet_dashboard');
         }
 
-        return $this->render('AppBundle:frontend/manager:event_list.html.twig', [
+        return $this->render('AppBundle:frontend/manager:event_create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -223,7 +236,7 @@ class ManagerController extends Controller
     /**
      * Update Event
      *
-     * @param Event   $event Event
+     * @param Event   $event   Event
      * @param Request $request Request
      *
      * @return Response

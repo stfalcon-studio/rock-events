@@ -34,9 +34,7 @@ class UserAdmin extends Admin
                 'expanded' => false,
                 'multiple' => true,
                 'required' => false,
-            ])
-            ->add('lastLogin', 'sonata_type_date_picker')
-            ->end();
+            ]);
     }
 
     /**
@@ -91,13 +89,5 @@ class UserAdmin extends Admin
             ->add('email')
             ->add('enabled')
             ->add('lastLogin');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParentAssociationMapping()
-    {
-        return 'user';
     }
 }

@@ -1,0 +1,6 @@
+ivory_ck_editor:
+    default_config: default
+    plugins:
+        wordcount:
+            path:     "/web/ckeditor/plugins/"
+            filename: "plugin.js"
