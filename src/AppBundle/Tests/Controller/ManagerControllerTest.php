@@ -4,6 +4,7 @@ namespace AppBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * ManagerControllerTest
@@ -36,7 +37,7 @@ class ManagerControllerTest extends WebTestCase
         $this->client = static::makeClient();
         $this->client->request('GET', '/manager');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 
     /**
@@ -55,7 +56,7 @@ class ManagerControllerTest extends WebTestCase
 
         //GET
         $crawler = $this->client->request('GET', '/manager/group/create');
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
 
         //POST
         $token = $crawler->filter('[name="group[_token]"]')->attr('value');
@@ -69,7 +70,7 @@ class ManagerControllerTest extends WebTestCase
         ];
         $this->client->request('POST', '/manager/group/create', $data);
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 
     /**
@@ -88,7 +89,7 @@ class ManagerControllerTest extends WebTestCase
 
         //GET
         $crawler = $this->client->request('GET', '/manager/group/bmth/update');
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
 
         //PUT
         $token = $crawler->filter('[name="group[_token]"]')->attr('value');
@@ -100,7 +101,7 @@ class ManagerControllerTest extends WebTestCase
         ];
         $this->client->request('PUT', '/manager/group/bmth/update', $data);
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 
     /**
@@ -118,7 +119,7 @@ class ManagerControllerTest extends WebTestCase
         $this->client = static::makeClient();
         $this->client->request('GET', '/manager/groups');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 
     /**
@@ -138,7 +139,7 @@ class ManagerControllerTest extends WebTestCase
         $this->client = static::makeClient();
         $this->client->request('GET', '/manager/group/bmth/events');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 
     /**
@@ -181,9 +182,8 @@ class ManagerControllerTest extends WebTestCase
             ],
         ];
         $this->client->request('POST', '/manager/event/create', $data);
-        var_dump($this->client->getRequest()->request);
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 
     public function testListEventsAction()
@@ -200,7 +200,7 @@ class ManagerControllerTest extends WebTestCase
         $this->client = static::makeClient();
         $this->client->request('GET', '/manager/events');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 
     public function testListPreviousEventsAction()
@@ -217,6 +217,6 @@ class ManagerControllerTest extends WebTestCase
         $this->client = static::makeClient();
         $this->client->request('GET', '/manager/events/previous');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 }

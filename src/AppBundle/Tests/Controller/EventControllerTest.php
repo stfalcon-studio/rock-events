@@ -4,6 +4,7 @@ namespace AppBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * EventControllerTest class
@@ -36,7 +37,7 @@ class EventControllerTest extends WebTestCase
 
         $this->client->request('GET', '/');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 
     /**
@@ -50,7 +51,7 @@ class EventControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/events');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $this->assertCount(1, $crawler->filter('table'));
         $this->assertCount(4, $crawler->filter('tr#event'));
     }
@@ -73,9 +74,9 @@ class EventControllerTest extends WebTestCase
 
         $this->loginAs($fixtures->getReference('user-manager'), 'main');
         $this->client = static::makeClient();
-        $crawler = $this->client->request('GET', '/event/zaxid');
+        $crawler      = $this->client->request('GET', '/event/zaxid');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $this->assertCount(1, $crawler->filter('ul#events'));
         $this->assertCount(1, $crawler->filter('ul#groups'));
     }

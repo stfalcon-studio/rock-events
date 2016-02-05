@@ -4,6 +4,7 @@ namespace AppBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * UserControllerTest
@@ -45,7 +46,7 @@ class UserControllerTest extends WebTestCase
         $this->client = static::makeClient();
         $crawler      = $this->client->request('GET', '/cabinet');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $this->assertCount(1, $crawler->filter('table'));
         $this->assertCount(2, $crawler->filter('tr#events'));
     }
@@ -65,7 +66,7 @@ class UserControllerTest extends WebTestCase
         $this->client = static::makeClient();
         $crawler      = $this->client->request('GET', '/cabinet/groups');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $this->assertCount(1, $crawler->filter('table'));
     }
 
@@ -84,7 +85,7 @@ class UserControllerTest extends WebTestCase
         $this->client = static::makeClient();
         $crawler      = $this->client->request('GET', '/cabinet/genres');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $this->assertCount(1, $crawler->filter('table'));
     }
 
@@ -124,6 +125,6 @@ class UserControllerTest extends WebTestCase
         ];
         $this->client->request('POST', '/cabinet/request-manager', $data);
 
-        $this->assertStatusCode('302', $this->client);
+        $this->assertStatusCode(Response::HTTP_FOUND, $this->client);
     }
 }

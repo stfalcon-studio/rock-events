@@ -4,6 +4,7 @@ namespace AppBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * GenreControllerTest class
@@ -36,7 +37,7 @@ class GenreControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/genres');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $this->assertCount(1, $crawler->filter('table'));
         $this->assertCount(5, $crawler->filter('tr#genres'));
     }
@@ -54,7 +55,7 @@ class GenreControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', 'genre/alternative/groups');
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $this->assertCount(1, $crawler->filter('table'));
         $this->assertCount(3, $crawler->filter('tr#groups'));
     }
@@ -78,7 +79,7 @@ class GenreControllerTest extends WebTestCase
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);
 
-        $this->assertStatusCode(201, $this->client);
+        $this->assertStatusCode(Response::HTTP_CREATED, $this->client);
     }
 
     /**
@@ -100,6 +101,6 @@ class GenreControllerTest extends WebTestCase
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);
 
-        $this->assertStatusCode(200, $this->client);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 }
