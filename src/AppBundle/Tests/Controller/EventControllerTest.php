@@ -60,11 +60,20 @@ class EventControllerTest extends WebTestCase
      */
     public function testShowAction()
     {
-        $this->loadFixtures([
+        $fixtures = $this->loadFixtures([
+            'AppBundle\DataFixtures\ORM\LoadGroupData',
+            'AppBundle\DataFixtures\ORM\LoadGenreData',
             'AppBundle\DataFixtures\ORM\LoadEventData',
-        ]);
+            'AppBundle\DataFixtures\ORM\LoadGroupGenreData',
+            'AppBundle\DataFixtures\ORM\LoadUserData',
+            'AppBundle\DataFixtures\ORM\LoadUserGenreData',
+            'AppBundle\DataFixtures\ORM\LoadUserGroupData',
+            'AppBundle\DataFixtures\ORM\LoadEventGroupData',
+        ])->getReferenceRepository();
 
-        $crawler = $this->client->request('GET', '/event/concert-torvald');
+        $this->loginAs($fixtures->getReference('user-manager'), 'main');
+        $this->client = static::makeClient();
+        $crawler = $this->client->request('GET', '/event/zaxid');
 
         $this->assertStatusCode(200, $this->client);
         $this->assertCount(1, $crawler->filter('ul#events'));

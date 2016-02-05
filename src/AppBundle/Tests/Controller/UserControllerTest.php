@@ -124,6 +124,6 @@ class UserControllerTest extends WebTestCase
         ];
         $this->client->request('POST', '/cabinet/request-manager', $data);
 
-        $this->assertStatusCode('200', $this->client);
+        $this->assertStatusCode('302', $this->client);
     }
 }
