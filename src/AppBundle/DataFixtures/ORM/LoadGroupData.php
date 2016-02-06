@@ -134,7 +134,7 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
             ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
-        $this->setReference('group-gragons', $group9);
+        $this->setReference('group-gragon', $group9);
         $manager->persist($group9);
 
         $group10 = (new Group())
@@ -146,7 +146,18 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $manager->persist($group10);
-        $this->setReference('group-torvald', $group1);
+        $this->setReference('group-torvald', $group10);
+
+        $group11 = (new Group())
+            ->setName('Somali Yacht Club')
+            ->setDescription('Somali Yacht Club - український рок-гурт, який грає у стилі психоделік.')
+            ->setImageName('somali.jpg')
+            ->setSlug('somali')
+            ->setActive(true)
+            ->setCreatedBy($userAdmin)
+            ->setUpdatedBy($userAdmin);
+        $manager->persist($group11);
+        $this->setReference('group-somali', $group11);
 
         $manager->flush();
     }

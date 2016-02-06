@@ -80,6 +80,15 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
         $this->setReference('genre-indi', $genre5);
         $manager->persist($genre5);
 
+        $genre6 = (new Genre())
+            ->setName('Панк')
+            ->setSlug('punk')
+            ->setActive(true)
+            ->setCreatedBy($userAdmin)
+            ->setUpdatedBy($userAdmin);
+        $this->setReference('genre-punk', $genre6);
+        $manager->persist($genre6);
+
         $manager->flush();
     }
 }

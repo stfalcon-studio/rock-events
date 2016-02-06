@@ -213,6 +213,7 @@ TEXT
             ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
+        $this->setReference('event-anti-flag-old', $event11);
         $manager->persist($event11);
 
         $event12 = (new Event())
@@ -228,7 +229,7 @@ TEXT
             ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
-        $this->setReference('event-rhcp', $event12);
+        $this->setReference('event-rhcp-old', $event12);
         $manager->persist($event12);
 
         $event13 = (new Event())
@@ -244,7 +245,7 @@ TEXT
             ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
-        $this->setReference('event-dragon', $event13);
+        $this->setReference('event-dragon-old', $event13);
         $manager->persist($event13);
 
         $event14 = (new Event())
@@ -261,7 +262,7 @@ TEXT
             ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
-        $this->setReference('event-torvald', $event14);
+        $this->setReference('event-torvald-old', $event14);
         $manager->persist($event14);
 
         $event15 = (new Event())
@@ -278,7 +279,7 @@ TEXT
             ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
-        $this->setReference('event-bmth', $event15);
+        $this->setReference('event-bmth-old', $event15);
         $manager->persist($event15);
 
         $manager->flush();
