@@ -130,7 +130,7 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
             ->setName('Imagine Dragons')
             ->setDescription('Imagine Dragons — американская инди-рок-группа, образованная в Лас-Вегасе, штат Невада в 2008 году. Стали известны после выпуска их дебютного студийного альбома Night Visions в сентябре 2012 года. Американский журнал Billboard назвал их самыми яркими новыми звёздами 2013 года, а журнал Rolling Stone назвал их сингл «Radioactive» самым большим рок-хитом года')
             ->setImageName('imagine-dragons.jpg')
-            ->setSlug('onerepublic')
+            ->setSlug('imagine-dragons')
             ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
@@ -141,7 +141,7 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
             ->setName('O.Torvald')
             ->setDescription('O.Torvald (Оторвальд) — украинская рок-группа, исполняющая песни на украинском языке. Образована в 2005 году в Полтаве. В 2006 году музыканты переехали в Киев. В 2008 году вышел дебютный альбом «O.Torvald», вторая пластинка вышла в 2011 году, она получила название «В Тобі». Третий альбом получил название «Акустичний», выпустили его в 2012 году. Четвёртый альбом «Примат» вышел в конце 2012 года. Последний альбом «Ти є» вышел в конце 2014 года.')
             ->setImageName('torvald.jpg')
-            ->setSlug('onerepublic')
+            ->setSlug('torvald')
             ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);

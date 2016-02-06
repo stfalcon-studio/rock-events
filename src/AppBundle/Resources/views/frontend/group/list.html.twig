@@ -1,31 +1,63 @@
-{% extends 'base.html.twig' %}
+{% extends 'page.html.twig' %}
 
 {% block body %}
-    <h1>Список Гуртів</h1>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Назва</th>
-            <th>Опис</th>
-            <th>Рік створення</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody class="table table-hover">
+    <div class="l-filters">
+        <div class="content lp">
+            <ul class="l-filters__list">
+                <li class="l-filters__item"><label for="list1" class="l-filters__label">Country:</label>
+                    <select name="" id="list1" class="l-filters__select filer l-filters__select_country">
+                        <option value="1" class="l-filters__option">Ukraine</option>
+                        <option value="2" class="l-filters__option">Russia</option>
+                        <option value="3" class="l-filters__option">England</option>
+                        <option value="4" class="l-filters__option">Poland</option>
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="list2" class="l-filters__label">City:</label>
+                    <select name="" id="list2" class="l-filters__select l-filters__select_city filer">
+                        <option value="1" class="l-filters__option">Kharkov</option>
+                        <option value="2" class="l-filters__option">Ivano-Frankivsk</option>
+                        <option value="3" class="l-filters__option">Odessa</option>
+                        <option value="4" class="l-filters__option">Kiev</option>
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="list3" class="l-filters__label">Fans:</label>
+                    <select name="" id="list3" class="l-filters__select l-filters__select_fans filer">
+                        <option value="1" class="l-filters__option">Up</option>
+                        <option value="2" class="l-filters__option">Down</option>
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="list4" class="l-filters__label">Genre:</label>
+                    <select name="" id="list4" class="l-filters__select l-filters__select_genre filer">
+                        <option value="1" class="l-filters__option">Hard rock</option>
+                        <option value="2" class="l-filters__option">Alternative</option>
+                        <option value="3" class="l-filters__option">Folk</option>
+                        <option value="4" class="l-filters__option selected">All</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="l-filter-elements">
         {% for group in groups %}
-            <tr id="groups">
-                <td><a href="{{ path('group_show',{ 'slug' : group.slug }) }}">{{ group.name }}</a></td>
-                <td>{{ group.description }}</td>
-                <td>{{ group.foundedAt|date("Y") }}</td>
-                {% if app.user %}
-                    <td>
-                        {% include '@App/frontend/group/bookmark_group.html.twig' with { 'group': group, 'userGroups': userGroups } %}
-                    </td>
-                {% endif %}
-            </tr>
+            <div class="filtered-element">
+                <div class="about-header about-header_prev content cf">
+                    <img src="{{ vich_uploader_asset(group[0], 'imageFile') }}" alt="{{ group[0].name }}" class="about-header__img" width="272px" height="136px">
+                    <div class="style-list-wrapper">
+                        <h2 class="about-header__header"><a href="" class="about-header__group">{{ group[0].name }}</a></h2>
+                        {{ render(controller('AppBundle:Frontend/Group:genres', { 'group' : group[0] } )) }}
+                    </div>
+                    <ul class="group-statistic cf">
+                        {% if app.user %}
+                            {% include '@App/frontend/group/bookmark_group.html.twig' with { 'group': group[0], 'userGroups': userGroups } %}
+                        {% endif %}
+                        <li class="group-statistic__item"><p class="group-statistic__link group-statistic__link_fans">{{ group['likes'] }} fans</p></li>
+                        <li class="group-statistic__item f-r"><a href="{{ path('group_show', { 'slug': group[0].slug }) }}" class="group-statistic__link group-statistic__but">See more</a></li>
+                    </ul>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
+</div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

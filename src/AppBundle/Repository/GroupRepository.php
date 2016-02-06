@@ -89,4 +89,41 @@ class GroupRepository extends EntityRepository
                   ->getQuery()
                   ->getResult();
     }
+
+    /**
+     * Find Groups with count likes
+     *
+     * @return Group[]
+     */
+    public function findGroupsWithCountLike()
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->addSelect('COUNT(ug.group) as likes')
+                  ->leftJoin('g.userGroups', 'ug')
+                  ->groupBy('g.id')
+                  ->addGroupBy('ug.group')
+                  ->orderBy('likes', 'DESC')
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find count likes by group
+     *
+     * @param Group $group Group
+     *
+     * @return int
+     */
+    public function findCountLikesByGroup(Group $group)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->select('COUNT(ug.group) as likes')
+                  ->where($qb->expr()->eq('g', ':group'))
+                  ->leftJoin('g.userGroups', 'ug')
+                  ->setParameter('group', $group)
+                  ->getQuery()
+                  ->getResult();
+    }
 }

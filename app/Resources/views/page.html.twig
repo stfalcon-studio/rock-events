@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+<div class="main-wrapper gradient-bg gradient-bg_light">
+    <header class="l-header l-header_grad-bg">
+        <div class="content">
+            <nav class="navigation cf">
+                <ul class="navigation__items">
+                    <li class="logo f-l"><a href="{{ path('event_index') }}" class="logo__link logo-icon"></a></li>
+                    <li class="navigation__item navigation__link_upper"><a href="{{ path('event_list') }}" class="navigation__link ">Concerts</a></li>
+                    <li class="navigation__item navigation__link_upper"><a href="{{ path('group_list') }}" class="navigation__link active">Groups</a></li>
+                    <li class="navigation__item navigation__link_upper"><a href="{{ path('genre_list') }}" class="navigation__link">Genre</a></li>
+                    <li class="navigation__item navigation__link_upper"><a href="" class="navigation__link">Calendar</a></li>
+                    <li class="navigation__item f-r" id="userBut">
+                        <a href="{{ path('user_cabinet_future_events') }}" class="button button_list-item">My account</a>
+                        <ul class="user-cabinet">
+                            <li class="user-cabinet__item"><a href="" class="user-cabinet__link">Профіль</a></li>
+                            <li class="user-cabinet__item"><a href="" class="user-cabinet__link">Найближчі концерти</a></li>
+                            <li class="user-cabinet__item"><a href="" class="user-cabinet__link">Гурти</a>
+                                <a href="" class="user-cabinet__link">Жанри</a></li>
+                            <li class="user-cabinet__item"><a href="" class="user-cabinet__link">Кабінет менеджера</a></li>
+                            <li class="user-cabinet__item"><a href="" class="user-cabinet__link">Вийти</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+{% endblock %}
