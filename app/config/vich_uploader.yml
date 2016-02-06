@@ -8,7 +8,7 @@ vich_uploader:
             delete_on_update:   true
             delete_on_remove:   true
             namer:              vich_uploader.namer_uniqid
-            directory_namer:    app.vich_uploader_directory_namer
+#            directory_namer:    app.vich_uploader_directory_namer
         event_image:
             uri_prefix:         /images/events
             upload_destination: %kernel.root_dir%/../web/images/events
@@ -16,4 +16,4 @@ vich_uploader:
             delete_on_update:   true
             delete_on_remove:   true
             namer:              vich_uploader.namer_uniqid
-            directory_namer:    app.vich_uploader_directory_namer
+#            directory_namer:    app.vich_uploader_directory_namer
