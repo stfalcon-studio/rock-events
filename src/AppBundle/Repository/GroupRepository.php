@@ -126,4 +126,27 @@ class GroupRepository extends EntityRepository
                   ->getQuery()
                   ->getResult();
     }
+
+    /**
+     * Find groups by genre with count likes
+     *
+     * @param Genre $genre Genre
+     *
+     * @return array
+     */
+    public function findGroupsByGenreWithCountLikes(Genre $genre)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->addSelect('COUNT(ug.group) as likes')
+                  ->where($qb->expr()->eq('ge', ':genre'))
+                  ->leftJoin('g.userGroups', 'ug')
+                  ->join('g.groupGenres', 'gg')
+                  ->join('gg.genre', 'ge')
+                  ->groupBy('gg.id')
+                  ->orderBy('likes', 'DESC')
+                  ->setParameter('genre', $genre)
+                  ->getQuery()
+                  ->getResult();
+    }
 }

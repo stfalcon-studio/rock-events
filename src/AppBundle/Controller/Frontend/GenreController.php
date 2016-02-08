@@ -54,27 +54,29 @@ class GenreController extends Controller
      */
     public function groupAction(Genre $genre)
     {
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByGenre($genre);
+        $groups     = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByGenreWithCountLikes($genre);
+        $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
 
         return $this->render('AppBundle:frontend/genre:group.html.twig', [
-            'groups' => $groups,
-            'genre'  => $genre,
+            'groups'     => $groups,
+            'genre'      => $genre,
+            'userGroups' => $userGroups,
         ]);
     }
 
     /**
-     * Count likes by genre
+     * Count groups by genre
      *
      * @param Genre $genre Genre
      *
      * @return Response
      */
-    public function countLikesByGenreAction(Genre $genre)
+    public function countGroupsByGenreAction(Genre $genre)
     {
-        $likes = $this->getDoctrine()->getRepository('AppBundle:Genre')->findCountLikesByGenre($genre);
+        $likes = $this->getDoctrine()->getRepository('AppBundle:Genre')->findCountGroupsByGenre($genre);
 
-        return $this->render('AppBundle:frontend/genre:count_like.html.twig', [
-            'likes' => $likes[0]['likes'],
+        return $this->render('AppBundle:frontend/genre:count_groups.html.twig', [
+            'count_groups' => $likes[0]['count_groups'],
         ]);
     }
 

@@ -11,9 +11,8 @@
                             <section class="event-list__details">
                                 <h3 class="event-list__group">{{ genre[0].name }}</h3>
                                 <div class="al-left">
-                                    <p class="event-list__groups-count group-count-icon-t">{{ genre['group_count'] }}</p>
-                                    {{ render(controller('AppBundle:Frontend/Genre:countLikesByGenre', { 'genre' : genre[0]} )) }}
-                                </div>
+                                    {{ render(controller('AppBundle:Frontend/Genre:countGroupsByGenre', { 'genre' : genre[0] } )) }}
+                                    <p id="count_like" class="event-list__followers like-icon-t">{{ genre['genre_likes'] }}</p></div>
                             </section>
                         </a>
                         {% if app.user %}
