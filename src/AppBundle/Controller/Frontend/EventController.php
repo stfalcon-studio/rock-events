@@ -63,10 +63,15 @@ class EventController extends Controller
     {
         $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByEvent($event);
 
+        $timeToEvent = (new \DateTime())->diff($event->getBeginAt());
+
         return $this->render('AppBundle:frontend\event:show.html.twig', [
-            'event'             => $event,
-            'groups'            => $groups,
-            'recommended_group' => $groups[0], // @todo Change to many groups
+            'event'               => $event,
+            'groups'              => $groups,
+            'recommended_group'   => $groups[0], // @todo Change to many groups
+            'time_to_event_day'   => $timeToEvent->format('%d'),
+            'time_to_event_hour'  => $timeToEvent->format('%h'),
+            'time_to_event_minute' => $timeToEvent->format('%i'),
         ]);
     }
 
@@ -90,17 +95,18 @@ class EventController extends Controller
 
         $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsBySimilarGenres($genres);
+
         // @todo Refactoring
         if (Event::NUMBER > count($events)) {
             $eventsByUserBookmark = $this->getDoctrine()->getRepository('AppBundle:Event')
                                          ->findEventsByUserBookMark($user);
             foreach ($events as $event) {
-                if (Event::NUMBER > count($events)) {
-                    break;
-                }
                 foreach ($eventsByUserBookmark as $eventByUserBookmark) {
                     if ($event->getId() === $eventByUserBookmark->getId()) {
                         $events[] = $eventByUserBookmark;
+                        if (Event::NUMBER <= count($events)) {
+                            break;
+                        }
                     }
                 }
             }
@@ -110,6 +116,9 @@ class EventController extends Controller
                 foreach ($eventsForWeek as $eventForWeek) {
                     if (!in_array($eventForWeek, $events)) {
                         $events[] = $eventForWeek;
+                        if (Event::NUMBER <= count($events)) {
+                            break;
+                        }
                     }
                 }
             }

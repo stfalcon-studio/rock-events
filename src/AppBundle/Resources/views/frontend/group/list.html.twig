@@ -43,7 +43,7 @@
                 <div class="about-header about-header_prev content cf">
                     <img src="{{ vich_uploader_asset(group[0], 'imageFile') }}" alt="{{ group[0].name }}" class="about-header__img" width="272px" height="136px">
                     <div class="style-list-wrapper">
-                        <h2 class="about-header__header"><a href="" class="about-header__group">{{ group[0].name }}</a></h2>
+                        <h2 class="about-header__header"><a href="{{ path('group_show', { 'slug': group[0].slug }) }}" class="about-header__group">{{ group[0].name }}</a></h2>
                         {{ render(controller('AppBundle:Frontend/Group:genres', { 'group' : group[0] } )) }}
                     </div>
                     <ul class="group-statistic cf">

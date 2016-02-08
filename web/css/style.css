@@ -63,7 +63,7 @@ body {
 }
 .l-header_bg-style {
   background: url("/img/bg-image.jpg") top center no-repeat;
-  padding-top: 15px;
+  padding-top: 17px;
   padding-bottom: 40px;
   background-size: cover;
 }
@@ -112,18 +112,38 @@ body {
   position: static;
   z-index: 5;
 }
-#userBut .button {
-  -webkit-border-bottom-right-radius: 0;
-  border-bottom-right-radius: 0;
-  -webkit-border-bottom-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-#userBut .user-cabinet {
-  display: block;
-  z-index: 20;
-}
-#userBut .user-cabinet__item {
+#video1 {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  width: 100%;
   display: none;
+}
+.iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.fancybox-wrap.fancybox-desktop.fancybox-type-inline.fancybox-opened {
+  width: 65% !important;
+}
+.fancybox-skin {
+  padding: 2px !important;
+}
+.fancybox-inner {
+  width: 100% !important;
+}
+.fancybox-nav {
+  position: absolute;
+  width: 36px;
+  height: 32px;
+  top: 50%;
+}
+.fancybox-nav span {
+  visibility: visible;
 }
 .button {
   background: #2089f4;
@@ -157,6 +177,9 @@ body {
   padding: 18px 38px;
   font-size: 18px;
   text-transform: uppercase;
+}
+.button_big:hover {
+  background: #2e96ff;
 }
 .button_small {
   padding: 18px 40px;
@@ -231,15 +254,14 @@ body {
   background: url("/img/logo.png") center center no-repeat;
   width: 127px;
   height: 49px;
-  display: block;
+  display: inline-block;
   vertical-align: middle;
 }
 .icon_show-t:before {
-  background: url("/img/sprite_icon.png") left center no-repeat;
+  background: url("/img/show-but.png") left center no-repeat;
   width: 30px;
   height: 24px;
   margin-right: 15px;
-  background-position: -64px 0;
   vertical-align: bottom;
 }
 .pin-icon-t:before {
@@ -251,6 +273,15 @@ body {
   display: inline-block;
   vertical-align: bottom;
 }
+.pin-icon-t_big:before {
+  content: "";
+  width: 18px;
+  height: 26px;
+  margin-right: 13px;
+  background: url("/img/concerts_big.png") -8px center no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+}
 .time-icon-t:before {
   content: "";
   width: 20px;
@@ -261,21 +292,30 @@ body {
   margin-right: 8px;
   margin-left: -2px;
 }
-.price-icon-t:before {
+.time-icon-t_big:before {
   content: "";
-  width: 20px;
-  height: 22px;
+  width: 26px;
+  height: 25px;
   display: inline-block;
-  background: url("/img/time-icon.png") left center no-repeat;
-  vertical-align: bottom;
+  background: url("/img/concerts_big.png") -40px center no-repeat;
+  vertical-align: middle;
+  margin-right: 8px;
+  margin-left: -2px;
+}
+.price-icon-t_big:before {
+  content: "";
+  width: 34px;
+  height: 33px;
+  display: inline-block;
+  background: url("/img/concerts_big.png") -70px center no-repeat;
+  vertical-align: middle;
   margin-right: 8px;
   margin-left: -2px;
 }
 .arrow-icon {
   width: 30px;
   height: 20px;
-  background: url("/img/sprite_icon.png") center left no-repeat;
-  background-position: -147px 0;
+  background: url("/img/arrow.png") center left no-repeat;
   display: block;
   margin: auto;
   cursor: pointer;
@@ -321,6 +361,63 @@ body {
   background: url("/img/calendar-icon.png") center center no-repeat;
   vertical-align: middle;
   margin-right: 10px;
+}
+.profile-icon-t:before {
+  content: '';
+  width: 21px;
+  height: 18px;
+  background: url("/img/profile-sprite.png") 0 0 no-repeat;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 15px;
+}
+.concert-icon-t:before {
+  content: '';
+  width: 21px;
+  height: 18px;
+  background: url("/img/profile-sprite.png") -20px 0 no-repeat;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 15px;
+}
+.group-icon-t:before {
+  content: '';
+  width: 21px;
+  height: 18px;
+  background: url("/img/profile-sprite.png") -42px 0 no-repeat;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 15px;
+}
+.genre-icon-t:before {
+  content: '';
+  width: 21px;
+  height: 18px;
+  background: url("/img/profile-sprite.png") -63px 0 no-repeat;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 15px;
+}
+.cabinet-icon-t:before {
+  content: '';
+  width: 21px;
+  height: 18px;
+  background: url("/img/profile-sprite.png") -84px 0 no-repeat;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 15px;
+}
+.logout-icon-t:before {
+  content: '';
+  width: 21px;
+  height: 18px;
+  background: url("/img/profile-sprite.png") -105px 0 no-repeat;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 15px;
+}
+.navigation__items {
+  display: inline-block;
 }
 .navigation__item {
   display: inline-block;
@@ -404,6 +501,7 @@ body {
 }
 .l-sort__items.active .l-sort__header {
   color: #fff;
+  display: block;
 }
 .l-sort__items.active .l-sort__item {
   display: block;
@@ -448,7 +546,7 @@ body {
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
-  background-position: 0 -6px;
+  background-position: bottom center;
 }
 .l-sort__items.active .l-sort__but:checked + .l-sort__label {
   background: transparent;
@@ -1029,6 +1127,8 @@ body {
 .gallery__item_img-grad {
   position: relative;
   z-index: 1;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 .gallery__item_img-grad:after {
   content: '';
@@ -1048,6 +1148,8 @@ body {
   position: relative;
   z-index: 1;
   opacity: 0.8;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 .gallery__item_video-grad:after {
   content: '';
@@ -1229,6 +1331,7 @@ iframe {
   display: block;
   text-transform: capitalize;
 }
+.group-statistic__link.active:before,
 .group-statistic__link:hover:before {
   background-image: url("/img/band-sprite-icons-hover.png");
 }
@@ -1238,6 +1341,7 @@ iframe {
   border-radius: 32px;
   padding: 0 21px;
 }
+.group-statistic__link_border.active,
 .group-statistic__link_border:hover {
   color: #2089f4;
   border-color: #2089f4;
@@ -1482,16 +1586,16 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
   color: #fff;
 }
 .l-filters__select_country {
-  min-width: 150px;
+  min-width: 130px;
 }
 .l-filters__select_city {
-  min-width: 185px;
+  min-width: 165px;
 }
 .l-filters__select_fans {
-  min-width: 110px;
+  min-width: 90px;
 }
 .l-filters__select_genre {
-  min-width: 160px;
+  min-width: 140px;
 }
 .l-filters__item {
   display: inline-block;
@@ -1514,34 +1618,83 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
   background: rgba(255,255,255,0.03);
 }
 .user-cabinet {
-  position: absolute;
-  right: 0;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 20;
   text-align: left;
-  display: none;
-  width: 100%;
-  -webkit-border-bottom-left-radius: 32px;
-  border-bottom-left-radius: 32px;
-  -webkit-border-bottom-right-radius: 32px;
-  border-bottom-right-radius: 32px;
-  border: 1px solid #fff;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  background: rgba(255,255,255,0.1);
+  min-width: 220px;
+  position: relative;
   /* custom select */
 }
+.user-cabinet__img {
+  vertical-align: middle;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  width: 36px;
+  margin-right: 10px;
+}
+.user-cabinet__head {
+  color: #fff;
+  display: block;
+  font-size: 16px;
+  position: relative;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 7px 9px;
+  background: #2089f4;
+  padding-right: 35px;
+  -webkit-border-radius: 21px;
+  border-radius: 21px;
+}
+.user-cabinet__head.active {
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.user-cabinet__head:hover {
+  background-color: #2e96ff;
+}
+.user-cabinet__head:after {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  content: '';
+  background: url("/img/list_arrow.png") bottom center;
+  display: inline-block;
+  width: 9px;
+  height: 6px;
+  margin-top: -3px;
+}
+.user-cabinet__menu {
+  display: none;
+  position: absolute;
+  padding-bottom: 5px;
+  background: #2089f4;
+  -webkit-border-bottom-left-radius: 21px;
+  border-bottom-left-radius: 21px;
+  -webkit-border-bottom-right-radius: 21px;
+  border-bottom-right-radius: 21px;
+  width: 100%;
+}
 .user-cabinet__item {
-  border-top: 1px solid rgba(255,255,255,0.3);
-  padding-left: 16px;
+  border-top: 1px solid rgba(0,0,0,0.2);
 }
 .user-cabinet__link {
-  color: #fff;
-  padding: 3px 10px;
-  padding-right: 15px;
+  color: #bcd9f5;
   display: block;
   width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 14px;
+  padding: 8px 17px;
+}
+.user-cabinet__link:hover {
+  color: #fff;
+}
+.user-cabinet__link:hover:before {
+  background-image: url("/img/profile-sprite-hover.png");
 }
 .selectize-control .selectize-input > input {
   display: none !important;
@@ -1568,7 +1721,7 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
   -webkit-border-radius: 17px;
   border-radius: 17px;
   color: #9996c4;
-  padding: 10px 50px 10px 20px;
+  padding: 10px 30px 10px 20px;
   line-height: 1;
   font-size: 14px;
   background: rgba(255,255,255,0.1);
@@ -1596,4 +1749,78 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
   -webkit-border-bottom-left-radius: 17px;
   border-bottom-left-radius: 17px;
   width: 100% !important;
+}
+@media (max-width: 960px) {
+  .l-header__h {
+    margin-top: 80px;
+    font-size: 65px;
+  }
+  .user-cabinet {
+    float: none;
+  }
+  .logo {
+    float: none;
+    margin-bottom: 15px;
+  }
+  .l-header_bg-style {
+    padding-bottom: 20px;
+  }
+  .l-sort__items {
+    -webkit-border-radius: 28px;
+    border-radius: 28px;
+  }
+  #everywhere {
+    width: 49%;
+    float: right;
+  }
+  #everything {
+    width: 49%;
+  }
+  #everything .l-sort__header {
+    display: block;
+  }
+  .l-sort__everything {
+    display: none;
+  }
+  #allTime {
+    width: 100%;
+  }
+  .l-sort__items.active .l-sort__list {
+    max-height: 120px;
+  }
+  .event-list_normal .event-list__item {
+    width: 50%;
+  }
+  .l-events {
+    padding-bottom: 80px;
+  }
+  .latest-concert__item:first-child,
+  .latest-concert__item:nth-child(2) {
+    display: none;
+  }
+}
+@media (max-width: 800px) {
+  .l-header__h {
+    margin-top: 80px;
+    font-size: 50px;
+  }
+  .user-cabinet {
+    float: none;
+    min-width: 190px;
+  }
+  .user-cabinet__head {
+    padding: 4px 5px;
+    font-size: 15px;
+  }
+  .user-cabinet__link {
+    font-size: 12px;
+    padding: 6px 13px;
+  }
+  .user-cabinet__link:before {
+    margin-right: 20px;
+  }
+  .navigation__link {
+    padding: 12px 18px;
+    font-size: 12px;
+  }
 }

@@ -178,6 +178,7 @@ class EventRepository extends EntityRepository
                        ->setParameter('genre', $genre);
             }
         }
+        $qb->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''));
 
         return $events->getQuery()
                       ->getResult();

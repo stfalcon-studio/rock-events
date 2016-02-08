@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "41fc3b23123153429f77d8f96c6b1ab7",
-    "hash": "555f3910e52c33f4e4809b6a3c1d6577",
+    "hash": "9976c8b10a7f2cc091ad7af0eeedb980",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -1247,7 +1246,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/8f1fc2273b37c61ddcc1620abf4500320a23763e",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/140cc28026304d3023c880f441689986f99b913b",
                 "reference": "8f1fc2273b37c61ddcc1620abf4500320a23763e",
                 "shasum": ""
             },
@@ -2428,13 +2427,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/34a171da0686721eeab3f94cb2aa84533a2d777e",
-                "reference": "34a171da0686721eeab3f94cb2aa84533a2d777e",
-                "reference": "e01d962f8eadad5c7571ca52ba9f7815661c5496"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/e01d962f8eadad5c7571ca52ba9f7815661c5496",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/ceffa1321dff2be07568e8bef0f74dd1cfb36384",
                 "reference": "e01d962f8eadad5c7571ca52ba9f7815661c5496",
                 "shasum": ""
             },
