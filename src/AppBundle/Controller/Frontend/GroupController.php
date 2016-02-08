@@ -171,7 +171,7 @@ class GroupController extends Controller
     /**
      * Return genres by group
      *
-     * @param Group $group
+     * @param Group $group Group
      *
      * @return Response
      */

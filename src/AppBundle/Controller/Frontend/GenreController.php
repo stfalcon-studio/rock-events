@@ -25,7 +25,7 @@ class GenreController extends Controller
      */
     public function listAction()
     {
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findAll();
+        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresWithCountGroup();
 
         if (null === $this->getUser()) {
             return $this->render('AppBundle:frontend/genre:list.html.twig', [
@@ -59,6 +59,22 @@ class GenreController extends Controller
         return $this->render('AppBundle:frontend/genre:group.html.twig', [
             'groups' => $groups,
             'genre'  => $genre,
+        ]);
+    }
+
+    /**
+     * Count likes by genre
+     *
+     * @param Genre $genre Genre
+     *
+     * @return Response
+     */
+    public function countLikesByGenreAction(Genre $genre)
+    {
+        $likes = $this->getDoctrine()->getRepository('AppBundle:Genre')->findCountLikesByGenre($genre);
+
+        return $this->render('AppBundle:frontend/genre:count_like.html.twig', [
+            'likes' => $likes[0]['likes'],
         ]);
     }
 
@@ -128,6 +144,38 @@ class GenreController extends Controller
         return new JsonResponse([
             'status'  => true,
             'message' => 'Success',
+        ]);
+    }
+
+    /**
+     * Ajax return likes by genre
+     *
+     * @param Genre   $genre   Genre
+     * @param Request $request Request
+     *
+     * @Route("/genre/{slug}/likes", name="genre_count_likes")
+     * @ParamConverter("genre", class="AppBundle:Genre")
+     *
+     * @throws BadRequestHttpException Bab request 400 Request only AJAX
+     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
+     *
+     * @return Response
+     */
+    public function likesAction(Genre $genre, Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('Не правильний запит');
+        }
+
+        if (null === $this->getUser()) {
+            throw new UnauthorizedHttpException('Не зареєстрований');
+        }
+
+        $countLikes = $this->getDoctrine()->getRepository('AppBundle:Genre')->findCountLikesByGenre($genre);
+
+        return new JsonResponse([
+            'status'  => true,
+            'message' => $countLikes[0]['likes'],
         ]);
     }
 }

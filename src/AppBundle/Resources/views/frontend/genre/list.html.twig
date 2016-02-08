@@ -1,27 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends 'genre.html.twig' %}
 
 {% block body %}
-    <h3>Жанри</h3>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Назва</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody class="table table-hover">
-        {% for genre in genres %}
-            <tr>
-                <td><a href="{{ path('genre_group',{ 'slug' : genre.slug }) }}">{{ genre.name }}</a></td>
-                {% if app.user %}
-                    <td>
-                        {% include '@App/frontend/genre/bookmark_genre.html.twig' with { 'genre': genre, 'userGenres': userGenres } %}
-                    </td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="l-events">
+        <div class="content">
+            <ul class="event-list event-list_normal-big">
+                {% for genre in genres %}
+                    <li class="event-list__item">
+                        <a href="{{ path('genre_group', { 'slug': genre[0].slug }) }}" class="event-list__link">
+                            <img src="{{ vich_uploader_asset(genre[0], 'imageFile') }}" alt="{{ genre[0].name }}" class="event-list__img" height="385px" width="385px">
+                            <section class="event-list__details">
+                                <h3 class="event-list__group">{{ genre[0].name }}</h3>
+                                <div class="al-left">
+                                    <p class="event-list__groups-count group-count-icon-t">{{ genre['group_count'] }}</p>
+                                    {{ render(controller('AppBundle:Frontend/Genre:countLikesByGenre', { 'genre' : genre[0]} )) }}
+                                </div>
+                            </section>
+                        </a>
+                        {% if app.user %}
+                            <ul class="group-statistic">
+                                {% include '@App/frontend/genre/bookmark_genre.html.twig' with { 'genre': genre[0], 'userGenres': userGenres } %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

@@ -51,4 +51,40 @@ class GenreRepository extends EntityRepository
                   ->getQuery()
                   ->getResult();
     }
+
+    /**
+     * Find Genres with count group
+     *
+     * @return Genre[]
+     */
+    public function findGenresWithCountGroup()
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->addSelect('COUNT(gg.genre) as group_count')
+                  ->leftJoin('g.groupGenres', 'gg')
+                  ->groupBy('gg.genre')
+                  ->orderBy('group_count', 'DESC')
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find count likes by genre
+     *
+     * @param Genre $genre Genre
+     *
+     * @return int
+     */
+    public function findCountLikesByGenre(Genre $genre)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->select('COUNT(ug.genre) as likes')
+                  ->where($qb->expr()->eq('g', ':genre'))
+                  ->leftJoin('g.userGenres', 'ug')
+                  ->setParameter('genre', $genre)
+                  ->getQuery()
+                  ->getResult();
+    }
 }
