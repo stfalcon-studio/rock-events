@@ -66,11 +66,11 @@ class EventController extends Controller
         $timeToEvent = (new \DateTime())->diff($event->getBeginAt());
 
         return $this->render('AppBundle:frontend\event:show.html.twig', [
-            'event'               => $event,
-            'groups'              => $groups,
-            'recommended_group'   => $groups[0], // @todo Change to many groups
-            'time_to_event_day'   => $timeToEvent->format('%d'),
-            'time_to_event_hour'  => $timeToEvent->format('%h'),
+            'event'                => $event,
+            'groups'               => $groups,
+            'recommended_group'    => $groups[0], // @todo Change to many groups
+            'time_to_event_day'    => $timeToEvent->format('%d'),
+            'time_to_event_hour'   => $timeToEvent->format('%h'),
             'time_to_event_minute' => $timeToEvent->format('%i'),
         ]);
     }
@@ -87,6 +87,9 @@ class EventController extends Controller
         $user = $this->getUser();
         if (null === $user) {
             $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsForWeek();
+            if (Event::NUMBER < count($events)) {
+                $events = array_slice($events, 0, Event::NUMBER);
+            }
 
             return $this->render('AppBundle:frontend/event:recommended-concerts.html.twig', [
                 'events' => $events,
@@ -122,6 +125,8 @@ class EventController extends Controller
                     }
                 }
             }
+        } else {
+            $events = array_slice($events, 0, Event::NUMBER);
         }
 
         return $this->render('AppBundle:frontend/event:recommended-concerts.html.twig', [

@@ -201,4 +201,24 @@ class EventRepository extends EntityRepository
                   ->getQuery()
                   ->getResult();
     }
+
+    /**
+     * Find actual events by group
+     *
+     * @param Group $event Group
+     *
+     * @return Event[]
+     */
+    public function findActualEventsByGroup(Group $group)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->where($qb->expr()->eq('g', ':group'))
+                  ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->join('e.eventGroups', 'eg')
+                  ->join('eg.group', 'g')
+                  ->setParameter('group', $group)
+                  ->getQuery()
+                  ->getResult();
+    }
 }

@@ -1,33 +1,68 @@
 {% extends 'event.html.twig' %}
 
 {% block body %}
-    <h1>Список подій</h1>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Назва</th>
-            <th>Опис</th>
-            <th>Країна</th>
-            <th>Місто</th>
-            <th>Адреса</th>
-            <th>Початок</th>
-            <th>Кінцеь</th>
-            <th>Тривалість</th>
-        </tr>
-        </thead>
-        <tbody class="table table-hover">
-        {% for event in events %}
-            <tr>
-                <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
-                <td>{{ event.description }}</td>
-                <td>{{ event.country }}</td>
-                <td>{{ event.city }}</td>
-                <td>{{ event.address }}</td>
-                <td>{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
-                <td>{{ event.endAt|date('F jS \\a\\t g:ia') }}</td>
-                <td>{{ event.duration }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="l-filters">
+        <div class="content lp">
+            <ul class="l-filters__list">
+                <li class="l-filters__item"><label for="list1" class="l-filters__label">Country:</label>
+                    <select name="" id="list1" class="l-filters__select filer l-filters__select_country">
+                        <option value="1" class="l-filters__option">Ukraine</option>
+                        <option value="2" class="l-filters__option">Russia</option>
+                        <option value="3" class="l-filters__option">England</option>
+                        <option value="4" class="l-filters__option">Poland</option>
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="list2" class="l-filters__label">City:</label>
+                    <select name="" id="list2" class="l-filters__select l-filters__select_city filer">
+                        <option value="1" class="l-filters__option">Kharkov</option>
+                        <option value="2" class="l-filters__option">Ivano-Frankivsk</option>
+                        <option value="3" class="l-filters__option">Odessa</option>
+                        <option value="4" class="l-filters__option">Kiev</option>
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="list5" class="l-filters__label">Time:</label>
+                    <select name="" id="list5" class="l-filters__select l-filters__select_date filer">
+                        <option value="1" class="l-filters__option">Today</option>
+                        <option value="2" class="l-filters__option">This week</option>
+                        <option value="3" class="l-filters__option">This month</option>
+                        <option value="4" class="l-filters__option">This year</option>
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="list3" class="l-filters__label">Fans:</label>
+                    <select name="" id="list3" class="l-filters__select l-filters__select_fans filer">
+                        <option value="1" class="l-filters__option">Up</option>
+                        <option value="2" class="l-filters__option">Down</option>
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="list4" class="l-filters__label">Genre:</label>
+                    <select name="" id="list4" class="l-filters__select l-filters__select_genre filer">
+                        <option value="1" class="l-filters__option">Hard rock</option>
+                        <option value="2" class="l-filters__option">Alternative</option>
+                        <option value="3" class="l-filters__option">Folk</option>
+                        <option value="4" class="l-filters__option selected">All</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+<div class="l-events">
+    <div class="content cf">
+        <ul class="event-list event-list_normal-medium">
+            <li class="event-list__item">
+                <a href="" class="event-list__link event-list__link_concert">
+                    <img src="img/group-img-1.jpg" alt="" class="event-list__img">
+                    <section class="concert-header_preview">
+                        <h1 class="concert-header__h">Coldplay</h1>
+                        <div class="al-center">
+                            <p class="concert-header__country pin-icon-small-t ">Kyiv<span class="concert-header__place">Sport Palace</span></p>
+                            <time class="concert-header__date time-icon-small-t">12 May<span class="concert-header__time">, 19:00</span></time>
+                            <p class="concert-header__price ">$200-300</p>
+                            <p class="concert-header__followers like-icon-t">12323</p>
+                        </div>
+                    </section>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 {% endblock %}

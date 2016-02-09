@@ -10,15 +10,11 @@
     <a
        class="add group-statistic__link group-statistic__link_border like-icon-t"
        style="{{ add_style }}"
-       data-bookmark-group-add="{{ path('group_add_to_bookmark', { 'slug' : group.slug }) }}"
-       data-group-count-like="{{ path('group_count_likes', { 'slug' : group.slug}) }}">
-        add
+       data-bookmark-group-add="{{ path('group_add_to_bookmark', { 'slug' : group.slug }) }}">
     </a>
     <a
        class="active delete group-statistic__link group-statistic__link_border like-icon-t"
        style="{{ delete_style }}color: #2089f4; border-color: #2089f4; text-decoration: none;"
-       data-bookmark-group-delete="{{ path('group_delete_from_bookmark', { 'slug' : group.slug }) }}"
-       data-group-count-like="{{ path('group_count_likes', { 'slug' : group.slug}) }}">
-        add
+       data-bookmark-group-delete="{{ path('group_delete_from_bookmark', { 'slug' : group.slug }) }}">
     </a>
 </li>

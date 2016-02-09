@@ -85,6 +85,21 @@ class GenreRepository extends EntityRepository
                   ->leftJoin('g.groupGenres', 'gg')
                   ->setParameter('genre', $genre)
                   ->getQuery()
-                  ->getResult();
+                  ->getOneOrNullResult();
+    }
+
+    /**
+     * @param Genre $genre Genre
+     */
+    public function findCountLikesByGenre(Genre $genre)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->select('COUNT(ug.genre) as likes')
+                  ->where($qb->expr()->eq('g', ':genre'))
+                  ->leftJoin('g.userGenres', 'ug')
+                  ->setParameter('genre', $genre)
+                  ->getQuery()
+                  ->getOneOrNullResult();
     }
 }

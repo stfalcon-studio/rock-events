@@ -1,20 +1,111 @@
 {% extends 'group.html.twig' %}
 
 {% block body %}
-    <ul class="list-group" id="groups">
-        <li class="list-group-item"><b>Назва:</b> {{ group.name }}</li>
-        <li class="list-group-item"><b>Опис</b>: {{ group.description }}</li>
-        <li class="list-group-item"><b>Рік створення:</b> {{ group.foundedAt|date("Y") }}</li>
-        <li class="list-group-item">
-            <b>Жанри:</b>
-            <ul class="list-group" id="genres">
-                {% for genre in genres %}
-                    <li class="list-group-item"><a href="{{ path('genre_group',{ 'slug':genre.slug })}}">{{ genre.name }}</a></li>
-                {% endfor %}
+    <div class="l-breadcrumbs">
+        <div class="content">
+            <ul class="l-breadcrumbs__list">
+                <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">Groups</a></li>
+                <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">{{ group.name }}</a></li>
             </ul>
-        </li>
-        <li class="list-group-item">
-            <a href="{{ path('group_event',{ 'slug': group.slug }) }}">Майбутні концерти...</a>
-        </li>
-    </ul>
+        </div>
+    </div>
+
+<div class="l-about">
+    <article>
+        <header class="about-header about-header_head content">
+            <div class="style-wrapper">
+                <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="{{ group.name }}" class="about-header__img" height="219">
+                <div class="style-list-wrapper">
+                    <ul class="about-header__styles">
+                        {% for genre in genres %}
+                            <li class="about-header__style">
+                                <a href="{{ path('genre_group' , { 'slug': genre.slug }) }}" class="about-header__link">{{ genre.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <h1 class="about-header__header">{{ group.name }}</h1>
+            <ul class="group-statistic">
+                <li class="group-statistic__item"><a href="" class="group-statistic__link lfm-icon"></a></li>
+                <li class="group-statistic__item"><a href="" class="group-statistic__link music-icon"></a></li>
+                <li class="group-statistic__item"><a href="" class="group-statistic__link facebook-icon"></a></li>
+                {% if app.user %}
+                    {% include '@App/frontend/group/bookmark_group.html.twig' with { 'group': group, 'userGroups': userGroups } %}
+                {% endif %}
+                <li class="group-statistic__item"><p id="fans" class="group-statistic__link group-statistic__link_fans">{{ count_like }}</p></li>
+            </ul>
+        </header>
+
+
+        <div class="content-bg-white cf">
+            <div class="content-bg-white_margin-top cf content">
+                {{ render(controller('AppBundle:Frontend/Group:nextConcerts', { 'group' : group } )) }}
+                <div id="tabs-block" class="about-body">
+                    <ul  class="about-body__list">
+                        <li class="about-body__item"><a href="#tab-1" class="about-body__link active">About band</a></li>
+                        <li class="about-body__item"><a href="#tab-3" class="about-body__link"> Similar artists </a></li>
+                        <li class="about-body__item"><a href="#tab-4" class="about-body__link"> Comments </a></li>
+                    </ul>
+                    <div id="tab-1">
+                       <p>{{ group.description }}</p>
+                        <ul class="gallery">
+                            <li class="gallery__item  gallery__item_small">
+                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
+                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img">
+                                </a>
+                            </li>
+                            <li class="gallery__item  gallery__item_small">
+                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
+                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img" rel="gallery">
+                                </a>
+                            </li>
+                            <li class="gallery__item  gallery__item_small">
+                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
+                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img">
+                                </a>
+                            </li>
+                            <li class="gallery__item  gallery__item_small">
+                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
+                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img">
+                                </a>
+                            </li>
+                            <li class="gallery__item  gallery__item_big">
+                                <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
+                                    <video poster="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__video"></video>
+                                </a>
+                            </li>
+                            <li class="gallery__item  gallery__item_big">
+                                <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
+                                    <video poster="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__video"></video>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="tab-3">
+                        <ul class="gallery-group">
+                            {% for similar_group in similar_groups %}
+                                <li class="gallery-group__item">
+                                    <a href="#" class="gallery-group__link">
+                                        <img src="{{ vich_uploader_asset(similar_group, 'imageFile') }}" alt="{{ similar_group.name }}" class="gallery-group__img" height="288px">
+                                        <section class="gallery-group__description">
+                                            <h3 class="gallery-group__group-name">{{ similar_group.name }}</h3>
+                                        </section>
+
+                                    </a>
+                                    {{ render(controller('AppBundle:Frontend/Group:genreTags', { 'group' : similar_group } )) }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div id="tab-4"></div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/group.js') }}"></script>
 {% endblock %}

@@ -62,11 +62,32 @@ class GroupController extends Controller
      */
     public function showAction(Group $group)
     {
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
+        $genres          = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
+        $groupCountLikes = $this->getDoctrine()->getRepository('AppBundle:Group')->findCountLikesByGroup($group);
+        $similarGroups   = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByGenres($genres);
+
+        $user = $this->getUser();
+
+        //Delete selected group
+        unset($similarGroups[array_search($group, $similarGroups)]);
+
+        if (null === $user) {
+            return $this->render('AppBundle:frontend\group:show.html.twig', [
+                'group'          => $group,
+                'genres'         => $genres,
+                'count_like'     => $groupCountLikes['likes'],
+                'similar_groups' => $similarGroups,
+            ]);
+        }
+
+        $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
 
         return $this->render('AppBundle:frontend\group:show.html.twig', [
-            'group'  => $group,
-            'genres' => $genres,
+            'group'          => $group,
+            'genres'         => $genres,
+            'count_like'     => $groupCountLikes['likes'],
+            'similar_groups' => $similarGroups,
+            'userGroups'     => $userGroups,
         ]);
     }
 
@@ -92,9 +113,50 @@ class GroupController extends Controller
     }
 
     /**
-     * Ajax add group to user bookmark
+     * Return genres by group
      *
      * @param Group $group Group
+     *
+     * @return Response
+     */
+    public function genresAction(Group $group)
+    {
+        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
+
+        return $this->render('AppBundle:frontend/group:genres.html.twig', [
+            'genres' => $genres,
+        ]);
+    }
+
+    /**
+     * Return next concert by group
+     *
+     * @param Group $group Group
+     *
+     * @return Response
+     */
+    public function nextConcertsAction(Group $group)
+    {
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEventsByGroup($group);
+
+        return $this->render('AppBundle:frontend/group:next_concert.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
+    public function genreTagsAction(Group $group)
+    {
+        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
+
+        return $this->render('AppBundle:frontend/group:genre_tags.html.twig', [
+            'genres' => $genres,
+        ]);
+    }
+
+    /**
+     * Ajax add group to user bookmark
+     *
+     * @param Group   $group   Group
      * @param Request $request Request
      *
      * @Route("/group/{slug}/bookmark", name="group_add_to_bookmark")
@@ -122,16 +184,19 @@ class GroupController extends Controller
         $em->persist($userGroup);
         $em->flush();
 
+        $countLikes = $this->getDoctrine()->getRepository('AppBundle:Group')->findCountLikesByGroup($group);
+
         return new JsonResponse([
-            'status'  => true,
-            'message' => 'Success',
+            'status'     => true,
+            'message'    => 'Success',
+            'post_likes' => $countLikes['likes'],
         ], 201);
     }
 
     /**
      * Ajax delete group from user bookmark
      *
-     * @param Group $group Group
+     * @param Group   $group   Group
      * @param Request $request Request
      *
      * @Route("/group/{slug}/bookmark/delete", name="group_delete_from_bookmark")
@@ -162,57 +227,12 @@ class GroupController extends Controller
         $em->remove($userGroup);
         $em->flush();
 
-        return new JsonResponse([
-            'status'  => true,
-            'message' => 'Success',
-        ]);
-    }
-
-    /**
-     * Return genres by group
-     *
-     * @param Group $group Group
-     *
-     * @return Response
-     */
-    public function genresAction(Group $group)
-    {
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
-
-        return $this->render('AppBundle:frontend/group:genres.html.twig', [
-            'genres' => $genres
-        ]);
-    }
-
-    /**
-     * Ajax return likes by group
-     *
-     * @param Group $group Group
-     * @param Request $request Request
-     *
-     * @Route("/group/{slug}/likes", name="group_count_likes")
-     * @ParamConverter("group", class="AppBundle:Group")
-     *
-     * @throws BadRequestHttpException Bab request 400 Request only AJAX
-     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
-     *
-     * @return Response
-     */
-    public function likesAction(Group $group, Request $request)
-    {
-        if (!$request->isXmlHttpRequest()) {
-            throw new BadRequestHttpException('Не правильний запит');
-        }
-
-        if (null === $this->getUser()) {
-            throw new UnauthorizedHttpException('Не зареєстрований');
-        }
-
         $countLikes = $this->getDoctrine()->getRepository('AppBundle:Group')->findCountLikesByGroup($group);
 
         return new JsonResponse([
-            'status'  => true,
-            'message' => $countLikes[0]['likes'],
+            'status'     => true,
+            'message'    => 'Success',
+            'post_likes' => $countLikes['likes'],
         ]);
     }
 }

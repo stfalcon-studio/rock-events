@@ -7,6 +7,9 @@ var userCab = $('#userBut');
 var filter = $('.filer');
 var fancyBox = $('.fancybox');
 var tabs = $('#tabs-block');
+var selectize1 = $('.selectize-dropdown-content');
+
+
 
 var scrollInit = function(elem){
     if(!elem.length > 0) {
@@ -21,7 +24,7 @@ var scrollInit = function(elem){
     }
 };
 
-userCab.bind('click touchstart', function(){
+userCab.bind('click', function(){
 
     var  but = this;
     if(!$(but).find('.user-cabinet__head').hasClass('active')) {
@@ -35,7 +38,7 @@ userCab.bind('click touchstart', function(){
 
 });
 
-$(document).bind('mouseup touchend resize',function (e){
+$(document).bind('mouseup resize',function (e){
 
     if (everywhereDrop.is(e.target)) {
 
@@ -62,7 +65,7 @@ $(document).bind('mouseup touchend resize',function (e){
             everythingDrop.removeClass('active');
         }
     }
-    if($(window).width()<600) {
+    if($(window).width()<700) {
         if (allTimeDrop.is(e.target)) {
 
             allTimeDrop.toggleClass('active');
@@ -97,9 +100,11 @@ sortBut.bind('click',function(){
     if(!filter.length > 0) {
         return;
     } else {
+
         filter.selectize({
             create: true
         });
+        scrollInit(filter);
     }
 })();
 
@@ -114,7 +119,7 @@ $(window).bind('load resize', function(){
         everythingDrop.find('.l-sort__list').mCustomScrollbar('destroy');
     }
 
-    if($(window).width()<650) {
+    if($(window).width()<700) {
         scrollInit(allTimeDrop.find('.l-sort__list'));
     } else {
         allTimeDrop.find('.l-sort__list').mCustomScrollbar('destroy');
@@ -143,4 +148,5 @@ $(window).bind('load resize', function(){
         })
     }
 })();
+
 

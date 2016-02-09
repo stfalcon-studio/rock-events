@@ -9,70 +9,78 @@
             </ul>
         </div>
     </div>
-<div class="l-concert cf">
-    <article class="content">
-        <header class="concert-header">
-            <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.name }}" class="concert-header__img" height="200">
-            <main class="concert-header__info cf">
-                <h1 class="concert-header__h">{{ event.name }}</h1>
-                <p class="concert-header__description">The best concert in 2016. Tickets at face value by the organizer of the concert.</p>
-                <ul class="concert-header__list f-l">
-                    <li class="concert-header__item pin-icon-t">
-                        <p class="concert-header__country ">{{ event.city }}<span class="concert-header__place">{{ event.address }}</span></p>
+    <div class="l-concert cf">
+        <article class="content">
+            <header class="concert-header">
+                <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.name }}" class="concert-header__img" height="200">
+                <main class="concert-header__info cf">
+                    <h1 class="concert-header__h">{{ event.name }}</h1>
+                    <p class="concert-header__description">The best concert in 2016. Tickets at face value by the
+                                                           organizer of the concert.</p>
+                    <ul class="concert-header__list f-l">
+                        <li class="concert-header__item pin-icon-t">
+                            <p class="concert-header__country ">{{ event.city }}
+                                <span class="concert-header__place">{{ event.address }}</span></p>
+                        </li>
+                        <li class="concert-header__item time-icon-t">
+                            <time class="concert-header__date ">
+                                {{ event.beginAt|date('d F') }}
+                                <span class="concert-header__time">{{ event.beginAt|date('l, H:i') }}</span>
+                            </time>
+                        </li>
+                        <li class="concert-header__item price-icon-t">
+                            <p class="concert-header__price ">$200-300</p>
+                        </li>
+                    </ul>
+                    <div class="concert-header-button button button_small f-r">Buy ticket</div>
+                </main>
+            </header>
+            <section class="concert-body">
+                <p>{{ event.description }}</p>
+                <ul class="gallery">
+                    <li class="gallery__item  gallery__item_small">
+                        <a href="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
+                            <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="" class="gallery__img"></a>
                     </li>
-                    <li class="concert-header__item time-icon-t">
-                        <time class="concert-header__date ">
-                            {{ event.beginAt|date('d F') }}
-                            <span class="concert-header__time">{{ event.beginAt|date('l, H:i') }}</span>
-                        </time>
+                    <li class="gallery__item  gallery__item_small">
+                        <a href="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
+                            <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="" class="gallery__img" rel="gallery"></a>
                     </li>
-                    <li class="concert-header__item price-icon-t">
-                        <p class="concert-header__price ">$200-300</p>
+                    <li class="gallery__item  gallery__item_small">
+                        <a href="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery"><img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="" class="gallery__img"></a>
+                    </li>
+                    <li class="gallery__item  gallery__item_small">
+                        <a href="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery"><img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="" class="gallery__img"></a>
+                    </li>
+                    <li class="gallery__item  gallery__item_big">
+                        <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
+                            <video poster="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__video"></video>
+                        </a>
+                    </li>
+                    <li class="gallery__item  gallery__item_big">
+                        <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
+                            <video poster="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__video"></video>
+                        </a>
                     </li>
                 </ul>
-                <div class="concert-header-button button button_small f-r">Buy ticket</div>
-            </main>
-        </header>
-        <section class="concert-body">
-            <p>{{ event.description }}</p>
-            <ul class="gallery">
-                <li class="gallery__item  gallery__item_small">
-                    <a href="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery"> <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="" class="gallery__img"></a>
-                </li>
-                <li class="gallery__item  gallery__item_small">
-                    <a href="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery"> <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="" class="gallery__img" rel="gallery"></a>
-                </li>
-                <li class="gallery__item  gallery__item_small">
-                    <a href="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery"><img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="" class="gallery__img"></a>
-                </li>
-                <li class="gallery__item  gallery__item_small">
-                    <a href="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery"><img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="" class="gallery__img"></a>
-                </li>
-                <li class="gallery__item  gallery__item_big">
-                    <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
-                        <video poster="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__video"></video></a>
-                </li>
-                <li class="gallery__item  gallery__item_big">
-                    <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
-                        <video poster="{{ vich_uploader_asset(event, 'imageFile') }}" class="gallery__video"></video>
-                    </a>
-                </li>
-            </ul>
-        </section>
-        <aside class="concert-sidebar f-l">
-            <div class="concert-timer">
-                <h2 class="concert-timer__header">To event left:</h2>
-                <ul class="clock">
-                    <li class="clock__item clock__item_days"><span class="clock__number">{{ time_to_event_day }}</span></li>
-                    <li class="clock__item clock__colon"><span class="clock__colon">:</span></li>
-                    <li class="clock__item clock__item_hours"><span class="clock__number">{{ time_to_event_hour }}</span></li>
-                    <li class="clock__item "><span class="clock__colon">:</span></li>
-                    <li class="clock__item clock__item_minutes"><span class="clock__number">{{ time_to_event_minute }}</span></li>
-                </ul>
-            </div>
-            {{ render(controller('AppBundle:Frontend/Event:recommendedConcerts', { 'group' : recommended_group } )) }}
-        </aside>
-    </article>
+            </section>
+            <aside class="concert-sidebar f-l">
+                <div class="concert-timer">
+                    <h2 class="concert-timer__header">To event left:</h2>
+                    <ul class="clock">
+                        <li class="clock__item clock__item_days">
+                            <span class="clock__number">{{ time_to_event_day }}</span></li>
+                        <li class="clock__item clock__colon"><span class="clock__colon">:</span></li>
+                        <li class="clock__item clock__item_hours">
+                            <span class="clock__number">{{ time_to_event_hour }}</span></li>
+                        <li class="clock__item "><span class="clock__colon">:</span></li>
+                        <li class="clock__item clock__item_minutes">
+                            <span class="clock__number">{{ time_to_event_minute }}</span></li>
+                    </ul>
+                </div>
+                {{ render(controller('AppBundle:Frontend/Event:recommendedConcerts', { 'group' : recommended_group } )) }}
+            </aside>
+        </article>
     </div>
-</div>
+    </div>
 {% endblock %}

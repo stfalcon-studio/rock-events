@@ -50,10 +50,10 @@
                         {% if app.user %}
                             {% include '@App/frontend/group/bookmark_group.html.twig' with { 'group': group[0], 'userGroups': userGroups } %}
                         {% endif %}
-                        <li class="group-statistic__item"><p class="group-statistic__link group-statistic__link_fans">{{ group['likes'] }} fans</p></li>
+                        <li class="group-statistic__item"><p id="fans" class="group-statistic__link group-statistic__link_fans">{{ group['likes'] }}</p></li>
                         <li class="group-statistic__item f-r"><a href="{{ path('group_show', { 'slug': group[0].slug }) }}" class="group-statistic__link group-statistic__but">See more</a></li>
                     </ul>
-                </div>
+                </div>`
             </div>
         {% endfor %}
     </div>

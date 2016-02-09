@@ -20,6 +20,15 @@ a {
 .f-r {
   float: right;
 }
+.al-left {
+  text-align: left;
+  display: inline-block;
+}
+.al-center {
+  text-align: center;
+  display: inline-block;
+  white-space: pre;
+}
 body {
   font: 500 16px 'Roboto';
 }
@@ -186,6 +195,9 @@ body {
   font-size: 16px;
   font-weight: 500;
 }
+.button_small:hover {
+  background: #2e96ff;
+}
 .button__icon {
   display: block;
   margin: 0;
@@ -323,11 +335,10 @@ body {
 .like-icon-t:before {
   content: '';
   display: inline-block;
-  width: 16px;
+  width: 15px;
   height: 14px;
   background: url("/img/band-sprite-icons.png") -8px center no-repeat;
   vertical-align: middle;
-  margin-right: 10px;
 }
 .lfm-icon:before {
   content: '';
@@ -424,6 +435,65 @@ body {
   display: inline-block;
   vertical-align: middle;
   margin-right: 15px;
+}
+.pin-icon-small-t:before {
+  content: "";
+  width: 12px;
+  height: 15px;
+  margin-right: 8px;
+  background: url("/img/pin-icon-small.png") center center no-repeat;
+  display: inline-block;
+  background-size: contain;
+  vertical-align: top;
+}
+.time-icon-small-t:before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background: url("/img/time-icon-small.png") center center no-repeat;
+  vertical-align: top;
+  margin-right: 8px;
+  margin-left: -2px;
+  background-size: contain;
+}
+.top-icon-t:before {
+  content: "";
+  width: 26px;
+  height: 35px;
+  display: inline-block;
+  background: url("/img/top-icon.png") center center no-repeat;
+  vertical-align: middle;
+  margin-right: 20px;
+  background-size: contain;
+}
+.pin-icon-grey-t:before {
+  content: "";
+  width: 10px;
+  height: 15px;
+  display: inline-block;
+  background: url("/img/aside-grey-icons-sprite.png") 0 0 no-repeat;
+  vertical-align: middle;
+  margin-right: 7px;
+}
+.time-icon-grey-t:before {
+  content: "";
+  width: 14px;
+  height: 15px;
+  display: inline-block;
+  background: url("/img/aside-grey-icons-sprite.png") -10px 0 no-repeat;
+  vertical-align: middle;
+  margin-right: 5px;
+  margin-left: -2px;
+}
+.like-icon-grey-t:before {
+  content: "";
+  width: 12px;
+  height: 15px;
+  display: inline-block;
+  background: url("/img/aside-grey-icons-sprite.png") -24px 0 no-repeat;
+  vertical-align: bottom;
+  margin-right: 5px;
 }
 .navigation__items {
   display: inline-block;
@@ -654,6 +724,10 @@ body {
   font-size: 0;
   text-align: left;
 }
+.event-list__followers {
+  color: #fff;
+  margin-top: 10px;
+}
 .event-list_normal {
   margin: 0 -4px;
   margin-bottom: 55px;
@@ -786,6 +860,84 @@ body {
   content: ' Groups';
   text-transform: uppercase;
 }
+.event-list_normal-medium {
+  margin-bottom: 55px;
+  width: 68%;
+  display: inline-block;
+}
+.event-list_normal-medium:hover .concert-header_preview {
+  display: none;
+}
+.event-list_normal-medium .event-list__item {
+  padding-right: 30px;
+  margin-bottom: 15px;
+  width: 50%;
+  display: inline-block;
+  position: relative;
+}
+.event-list_normal-medium .event-list__item:hover .event-list__link:after {
+  opacity: 0.5;
+}
+.event-list_normal-medium .concert-header_preview {
+  display: none;
+}
+.event-list_normal-medium .event-list__group {
+  font-size: 35px;
+  width: 80%;
+  display: inline-block;
+  text-transform: uppercase;
+}
+.event-list_normal-medium .event-list__details {
+  position: absolute;
+  bottom: 38%;
+  left: 0;
+  right: 30px;
+  text-align: center;
+  max-width: 100%;
+}
+.event-list_normal-medium .event-list__link:after {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 30px;
+  background: none;
+  background: #003a76;
+  opacity: 0.7;
+  display: block;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.event-list_normal-medium .event-list__link__concert:after {
+  display: none;
+}
+.event-list_normal-medium .group-statistic {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  right: 30px;
+  z-index: 5;
+}
+.event-list_normal-medium .event-list__groups-count {
+  color: #fff;
+  font-weight: 700;
+  margin-top: 12px;
+}
+.event-list_normal-medium .event-list__groups-count:after {
+  content: ' Groups';
+  text-transform: uppercase;
+}
+.event-list_normal-medium .event-list__link_concert .concert-header__h {
+  text-transform: uppercase;
+}
+.event-list_normal-medium .event-list__link_concert:after {
+  display: none;
+}
+.event-list_normal-medium .event-list__link_concert:hover:after {
+  display: block;
+}
+.event-list_normal-medium .event-list__link_concert:hover .concert-header_preview {
+  display: block;
+}
 .event-list_aside .event-list__item {
   padding: 0;
   margin-top: 15px;
@@ -838,8 +990,6 @@ body {
   overflow: hidden;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
 }
 .event-list__img {
   width: 100%;
@@ -1008,20 +1158,71 @@ body {
 .concert-header {
   margin-bottom: 30px;
 }
+.concert-header__h {
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.concert-header .event-list__link {
+  position: relative;
+}
+.concert-header__followers {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+}
+.concert-header__followers:before {
+  background: url("/img/small-like.png") center center no-repeat;
+  width: 10px;
+  height: 10px;
+  background-size: contain;
+  vertical-align: middle;
+  margin-right: 5px;
+  margin-bottom: 1px;
+}
+.concert-header_preview {
+  position: absolute;
+  bottom: 15%;
+  left: 0;
+  right: 30px;
+  text-align: center;
+  max-width: 100%;
+  z-index: 5;
+}
+.concert-header_preview .concert-header__country,
+.concert-header_preview .concert-header__date,
+.concert-header_preview .concert-header__price {
+  color: #fff;
+  font-size: 15px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.concert-header_preview .concert-header__price {
+  border-top: 1px solid rgba(255,255,255,0.4);
+  padding-top: 10px;
+}
+.concert-header_preview .concert-header__place,
+.concert-header_preview .concert-header__time {
+  font-size: 15px;
+  display: inline-block;
+}
+.concert-header__groups-count {
+  color: #fff;
+}
 .concert-header-button {
   margin-top: 8px;
 }
 .concert-header__img {
   width: 31.6%;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
 .concert-header__info {
   width: 68.4%;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
   padding-left: 30px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -1040,10 +1241,11 @@ body {
 .concert-header__item {
   display: table-cell;
   vertical-align: middle;
-  padding: 0 5px;
+  padding: 0 10px;
   position: relative;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  width: 33.33333%;
 }
 .concert-header__item:not(:last-child) {
   border-right: 1px solid rgba(255,255,255,0.1);
@@ -1062,14 +1264,14 @@ body {
 .concert-header__date,
 .concert-header__price {
   color: #fff;
-  font-size: 18px;
+  font-size: 14px;
   display: inline-block;
   vertical-align: middle;
   text-align: left;
 }
 .concert-header__place,
 .concert-header__time {
-  font-size: 14px;
+  font-size: 12px;
   display: block;
 }
 .concert-sidebar {
@@ -1344,6 +1546,7 @@ iframe {
 }
 .about-header_prev .group-statistic__link_border {
   border-width: 1px;
+  cursor: pointer;
 }
 .about-header_prev .style-list-wrapper {
   display: inline-block;
@@ -1393,19 +1596,21 @@ iframe {
 .group-statistic {
   display: block;
   text-align: center;
+  cursor: pointer;
 }
 .group-statistic__item {
   display: inline-block;
+  vertical-align: middle;
 }
 .group-statistic__item:not(:last-child) {
   margin-right: 20px;
 }
 .group-statistic__link {
-  line-height: 38px;
+  line-height: 25px;
   font-size: 14px;
   color: #fff;
   display: block;
-  text-transform: capitalize;
+  cursor: pointer;
 }
 .group-statistic__link.active:before,
 .group-statistic__link:hover:before {
@@ -1415,7 +1620,7 @@ iframe {
   border: 2px solid #fff;
   -webkit-border-radius: 32px;
   border-radius: 32px;
-  padding: 0 21px;
+  padding: 0 5px;
 }
 .group-statistic__link_border.active,
 .group-statistic__link_border:hover {
@@ -1428,6 +1633,10 @@ iframe {
   color: #adacaf;
   font-size: 12px;
   padding-left: 16px;
+}
+
+.group-statistic__link_fans:after {
+  content: " Fans";
 }
 .group-statistic__but {
   border: 1px solid #9996c4;
@@ -1443,6 +1652,7 @@ iframe {
 }
 .group-concerts-list {
   width: 31.6%;
+  text-align: left;
   background: rgba(0,0,0,0.12);
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -1462,6 +1672,25 @@ iframe {
 }
 .group-concerts-list__item:not(:first-child) {
   border-top: 1px solid rgba(255,255,255,0.05);
+}
+.group-concerts-list__item_wider .group-concerts-list__group {
+  font-size: 18px;
+  display: block;
+}
+.group-concerts-list__item_wider .group-concerts-list__place {
+  font-size: 12px;
+  color: #adacaf;
+  margin-top: 8px;
+}
+.group-concerts-list__item_wider .group-concerts-list__date {
+  font-size: 12px;
+  color: #adacaf;
+  margin-top: 4px;
+}
+.group-concerts-list__item_wider .group-concerts-list__like {
+  color: #6a6a6a;
+  display: block;
+  margin-top: 5px;
 }
 .group-concerts-list__link {
   color: #fff;
@@ -1673,6 +1902,9 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
 .l-filters__select_genre {
   min-width: 140px;
 }
+.l-filters__select_date {
+  min-width: 140px;
+}
 .l-filters__item {
   display: inline-block;
 }
@@ -1755,7 +1987,7 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
   width: 100%;
 }
 .user-cabinet__item {
-  border-top: 1px solid rgba(0,0,0,0.2);
+  border-top: 1px solid #1e7fe2;
 }
 .user-cabinet__link {
   color: #bcd9f5;
@@ -1784,6 +2016,9 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
   -webkit-border-bottom-right-radius: 0;
   border-bottom-right-radius: 0;
   color: #fff;
+}
+.selectize-input.items.full.has-options.has-items.focus {
+  cursor: pointer;
 }
 .selectize-control.single .selectize-input.dropdown-active:after {
   border-color: transparent transparent #fff transparent;
@@ -1862,7 +2097,7 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
     width: 100%;
   }
   .l-sort__items.active .l-sort__list {
-    max-height: 120px;
+    max-height: 220px;
   }
   .event-list_normal .event-list__item {
     width: 50%;
@@ -1943,6 +2178,7 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
   .event-list_normal .event-list__item {
     width: 100%;
     max-width: 385px;
+    text-align: left;
   }
   .contacts {
     margin-top: 0;
@@ -1961,12 +2197,42 @@ li.about-body__item.r-tabs-tab.r-tabs-state-active .about-body__link {
   }
 }
 
-.al-left {
-  text-align: left;
-  display: inline-block;
+.like-wrapper {
+  position: absolute;
+  bottom: 25px;
+  z-index: 5;
+  left: 15px;
+  right: 15px;
+  text-align: center;
 }
-.event-list__followers {
-  margin-top: 10px;
-  margin-left: 1px;
-  color: #fff;
+.like-wrapper .group-statistic__link_border {
+  display: inline-block;
+  margin-top: 50px;
+  cursor: pointer;
+}
+
+.like-icon-t_marg:before {
+  margin-right: 15px;
+}
+
+@media (max-width: 400px) {
+  .l-header__h {
+    margin-top: 80px;
+    font-size: 25px;
+  }
+  .l-event-dated__h {
+    font-size: 25px;
+  }
+  .navigation {
+    float: none;
+  }
+  .l-footer {
+    text-align: center;
+  }
+  .contacts {
+    width: 100%;
+  }
+  .copyright {
+    display: inline-block;
+  }
 }

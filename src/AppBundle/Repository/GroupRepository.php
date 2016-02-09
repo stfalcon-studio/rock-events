@@ -124,7 +124,7 @@ class GroupRepository extends EntityRepository
                   ->leftJoin('g.userGroups', 'ug')
                   ->setParameter('group', $group)
                   ->getQuery()
-                  ->getResult();
+                  ->getOneOrNullResult();
     }
 
     /**
@@ -146,6 +146,60 @@ class GroupRepository extends EntityRepository
                   ->groupBy('gg.id')
                   ->orderBy('likes', 'DESC')
                   ->setParameter('genre', $genre)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find Check by user and group
+     *
+     * @param User  $user  User
+     * @param Group $group Group
+     *
+     * @return Group[]
+     */
+    public function findCheckByUserAndGroup(User $user, Group $group)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->where($qb->expr()->eq('u', ':user'))
+                  ->andWhere($qb->expr()->eq('g', ':group'))
+                  ->join('g.userGroups', 'ug')
+                  ->join('ug.user', 'u')
+                  ->setParameters([
+                      'user'  => $user,
+                      'group' => $group,
+                  ])
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find similar groups by genres
+     *
+     * @param Genre[] $genres Array of Genre
+     *
+     * @return Group[]
+     */
+    public function findGroupsByGenres(array $genres, $limit = 6, $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        $qb->join('g.groupGenres', 'gg')
+           ->join('gg.genre', 'ge');
+
+        foreach ($genres as $item => $genre) {
+            if (0 === $item) {
+                $qb->where($qb->expr()->eq('ge', ':genre'))
+                   ->setParameter('genre', $genre);
+            } else {
+                $qb->orWhere($qb->expr()->eq('ge', ':genre'))
+                   ->setParameter('genre', $genre);
+            }
+        }
+
+        return $qb->setFirstResult($offset)
+                  ->setMaxResults($limit)
                   ->getQuery()
                   ->getResult();
     }
