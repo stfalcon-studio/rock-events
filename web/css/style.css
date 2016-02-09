@@ -1205,6 +1205,7 @@ body {
 .concert-header_preview .concert-header__time {
   font-size: 15px;
   display: inline-block;
+  white-space: normal;
 }
 .concert-header__groups-count {
   color: #fff;
@@ -1228,7 +1229,7 @@ body {
   box-sizing: border-box;
 }
 .concert-header__h {
-  font-size: 42px;
+  font-size: 26px;
   color: #fff;
   font-weight: 700;
 }

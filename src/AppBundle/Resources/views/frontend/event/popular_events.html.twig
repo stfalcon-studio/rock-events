@@ -1,0 +1,22 @@
+<aside class="group-concerts-list f-r">
+    <h4 class="group-concerts-list__header top-icon-t">5 popular concerts</h4>
+    <ul class="group-concerts-list__items">
+        {% for event in events %}
+            <li class="group-concerts-list__item group-concerts-list__item_wider">
+                <a href="" class="group-concerts-list__link cf">
+                    <div class="f-l">
+                        <p class="group-concerts-list__group">{{ event.name }}</p>
+                        <p class="group-concerts-list__place pin-icon-grey-t">
+                            {{ event.country }}, {{ event.city }}
+                            <span class="group-concerts-list__date time-icon-grey-t">
+                                {{ event.beginAt|date('F jS \\a\\t g:ia') }}
+                            </span>
+                        </p>
+                    </div>
+                    <p class="group-concerts-list__price f-r">
+                        $120-500<span class="group-concerts-list__like like-icon-grey-t">123</span></p>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</aside>

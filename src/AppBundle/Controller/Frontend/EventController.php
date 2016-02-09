@@ -147,4 +147,18 @@ class EventController extends Controller
             'events' => $lastEvents,
         ]);
     }
+
+    /**
+     * Return popular events
+     *
+     * @return Event[]
+     */
+    public function popularEventsAction()
+    {
+        $popularEvents = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEvents(5);
+
+        return $this->render('AppBundle:frontend/event:popular_events.html.twig', [
+            'events' => $popularEvents,
+        ]);
+    }
 }

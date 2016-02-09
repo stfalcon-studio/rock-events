@@ -22,11 +22,13 @@ class EventRepository extends EntityRepository
      *
      * @return Event[]
      */
-    public function findActualEvents()
+    public function findActualEvents($limit = 10, $offset = 0)
     {
         $qb = $this->createQueryBuilder('e');
 
         return $qb->where($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->setFirstResult($offset)
+                  ->setMaxResults($limit)
                   ->getQuery()
                   ->getResult();
     }
@@ -40,7 +42,8 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''.')')))
+        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''
+                                              .')')))
                   ->getQuery()
                   ->getResult();
     }
