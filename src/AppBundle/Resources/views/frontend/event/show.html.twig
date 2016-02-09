@@ -4,8 +4,8 @@
     <div class="l-breadcrumbs">
         <div class="content">
             <ul class="l-breadcrumbs__list">
-                <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">Concerts</a></li>
-                <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">Red Hot Chili Peppers</a></li>
+                <li class="l-breadcrumbs__item"><a href="{{ path('event_list') }}" class="l-breadcrumbs__link">Concert</a></li>
+                <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">{{ event.name }}</a></li>
             </ul>
         </div>
     </div>
@@ -82,5 +82,5 @@
             </aside>
         </article>
     </div>
-    </div>
+</div>
 {% endblock %}

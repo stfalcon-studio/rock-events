@@ -3,7 +3,7 @@
     <ul class="group-concerts-list__items">
         {% for event in events %}
             <li class="group-concerts-list__item group-concerts-list__item_wider">
-                <a href="" class="group-concerts-list__link cf">
+                <a href="{{ path('event_show', { 'slug': event.slug }) }}" class="group-concerts-list__link cf">
                     <div class="f-l">
                         <p class="group-concerts-list__group">{{ event.name }}</p>
                         <p class="group-concerts-list__place pin-icon-grey-t">

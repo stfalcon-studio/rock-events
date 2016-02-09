@@ -50,7 +50,7 @@
         <ul class="event-list event-list_normal-medium">
             {% for event in events %}
                 <li class="event-list__item">
-                    <a href="" class="event-list__link event-list__link_concert">
+                    <a href="{{ path('event_show', { 'slug': event.slug}) }}" class="event-list__link event-list__link_concert">
                         <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.name }}" class="event-list__img" height="385px">
                         <section class="concert-header_preview">
                             <h1 class="concert-header__h">{{ event.name }}</h1>
