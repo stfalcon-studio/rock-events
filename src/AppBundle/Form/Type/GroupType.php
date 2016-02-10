@@ -49,6 +49,18 @@ class GroupType extends AbstractType
                     'rows'  => 7,
                 ],
             ])
+            ->add('country', 'text', [
+                'label' => 'Ім’я',
+                'attr'  => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('city', 'text', [
+                'label' => 'Ім’я',
+                'attr'  => [
+                    'class' => 'form-control',
+                ],
+            ])
             ->add('foundedAt', 'integer', [
                 'label' => 'Рік створення',
                 'attr'  => [

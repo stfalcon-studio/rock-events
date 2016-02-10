@@ -28,6 +28,16 @@ class Group
     private $description;
 
     /**
+     * @var string $country Country
+     */
+    private $country;
+
+    /**
+     * @var string $city City
+     */
+    private $city;
+
+    /**
      * @var int $foundedAt founded at
      */
     private $foundedAt;
@@ -104,6 +114,54 @@ class Group
         $this->foundedAt = $foundedAt;
 
         return $this;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country Country
+     *
+     * @return Group
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city City
+     *
+     * @return Group
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string City
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 
     /**
