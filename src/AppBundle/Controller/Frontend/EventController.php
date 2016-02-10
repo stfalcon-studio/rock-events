@@ -50,9 +50,13 @@ class EventController extends Controller
     public function listAction()
     {
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEvents();
+        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findAll();
+        $cities = $this->getDoctrine()->getRepository('AppBundle:Event')->findAllCityByEvents();
 
         return $this->render('AppBundle:frontend\event:list.html.twig', [
             'events' => $events,
+            'genres' => $genres,
+            'cities' => $cities,
         ]);
     }
 
@@ -170,6 +174,8 @@ class EventController extends Controller
     }
 
     /**
+     * List events for main page
+     *
      * @param array $events Array of events
      *
      * Return list event for main page
@@ -184,6 +190,22 @@ class EventController extends Controller
     }
 
     /**
+     * List events for concert page
+     *
+     * @param array $events Array of events
+     *
+     * Return list event for main page
+     *
+     * @return Response
+     */
+    public function listConcertEventAction($events)
+    {
+        return $this->render('AppBundle:frontend/event:list_concert_event.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
+    /**
      * Ajax filter for event
      *
      * @param Request $request Request
@@ -192,9 +214,43 @@ class EventController extends Controller
      *
      * @return Event[]
      *
-     * @Route("/event-filters", name="event_filters")
+     * @Route("/concert-filters", name="event_filters")
      */
-    public function ajaxFilterEvent(Request $request)
+    public function ajaxEventFilter(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('Не правильний запит');
+        }
+
+        $genre = $request->query->get('genre');
+        $city  = $request->query->get('city');
+        $date  = $request->query->get('date');
+
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByFilter($genre, $city, $date);
+
+        $template = $this->renderView('AppBundle:frontend/event:list_concert_event.html.twig', [
+            'events' => $events,
+        ]);
+
+        return new JsonResponse([
+            'status'   => true,
+            'message'  => 'Success',
+            'template' => $template,
+        ]);
+    }
+
+    /**
+     * Ajax filter for main page
+     *
+     * @param Request $request Request
+     *
+     * @throws BadRequestHttpException Bab request 400 Request only AJAX
+     *
+     * @return Event[]
+     *
+     * @Route("/main-filters", name="main_filters")
+     */
+    public function ajaxMainFilter(Request $request)
     {
         if (!$request->isXmlHttpRequest()) {
             throw new BadRequestHttpException('Не правильний запит');

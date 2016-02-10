@@ -4,68 +4,44 @@
     <div class="l-filters">
         <div class="content lp">
             <ul class="l-filters__list">
-                <li class="l-filters__item"><label for="list1" class="l-filters__label">Country:</label>
-                    <select name="" id="list1" class="l-filters__select filer l-filters__select_country">
-                        <option value="1" class="l-filters__option">Ukraine</option>
-                        <option value="2" class="l-filters__option">Russia</option>
-                        <option value="3" class="l-filters__option">England</option>
-                        <option value="4" class="l-filters__option">Poland</option>
+                <li class="l-filters__item"><label for="list4" class="l-filters__label">Жанр:</label>
+                    <select name="" id="genre" class="l-filters__select l-filters__select_genre filer">
+                        <option value="0" class="l-filters__option">Всі жанри</option>
+                        {% for genre in genres %}
+                            <option value="{{ genre.id }}" class="l-filters__option">{{ genre.name }}</option>
+                        {% endfor %}
                     </select>
                 </li>
-                <li class="l-filters__item"><label for="list2" class="l-filters__label">City:</label>
-                    <select name="" id="list2" class="l-filters__select l-filters__select_city filer">
-                        <option value="1" class="l-filters__option">Kharkov</option>
-                        <option value="2" class="l-filters__option">Ivano-Frankivsk</option>
-                        <option value="3" class="l-filters__option">Odessa</option>
-                        <option value="4" class="l-filters__option">Kiev</option>
+                <li class="l-filters__item"><label for="list2" class="l-filters__label">Місто:</label>
+                    <select name="" id="city" class="l-filters__select l-filters__select_city filer">
+                        <option value="0" class="l-filters__option">Всі міста</option>
+                        {% for city in cities %}
+                            <option value="{{ city.name }}" class="l-filters__option">{{ city.name }}</option>
+                        {% endfor %}
                     </select>
                 </li>
-                <li class="l-filters__item"><label for="list5" class="l-filters__label">Time:</label>
-                    <select name="" id="list5" class="l-filters__select l-filters__select_date filer">
-                        <option value="1" class="l-filters__option">Today</option>
-                        <option value="2" class="l-filters__option">This week</option>
-                        <option value="3" class="l-filters__option">This month</option>
-                        <option value="4" class="l-filters__option">This year</option>
-                    </select>
-                </li>
-                <li class="l-filters__item"><label for="list3" class="l-filters__label">Fans:</label>
-                    <select name="" id="list3" class="l-filters__select l-filters__select_fans filer">
-                        <option value="1" class="l-filters__option">Up</option>
-                        <option value="2" class="l-filters__option">Down</option>
-                    </select>
-                </li>
-                <li class="l-filters__item"><label for="list4" class="l-filters__label">Genre:</label>
-                    <select name="" id="list4" class="l-filters__select l-filters__select_genre filer">
-                        <option value="1" class="l-filters__option">Hard rock</option>
-                        <option value="2" class="l-filters__option">Alternative</option>
-                        <option value="3" class="l-filters__option">Folk</option>
-                        <option value="4" class="l-filters__option selected">All</option>
+                <li class="l-filters__item"><label for="list5" class="l-filters__label">За період:</label>
+                    <select name="" id="time" class="l-filters__select l-filters__select_date filer">
+                        <option value="0" class="l-filters__option">За весь період</option>
+                        <option value="today" class="l-filters__option">За сьогодні</option>
+                        <option value="week" class="l-filters__option">За тиждень</option>
+                        <option value="month" class="l-filters__option">За місяць</option>
+                        <option value="year" class="l-filters__option">За рік</option>
                     </select>
                 </li>
             </ul>
         </div>
     </div>
-<div class="l-events">
-    <div class="content cf">
-        <ul class="event-list event-list_normal-medium">
-            {% for event in events %}
-                <li class="event-list__item">
-                    <a href="{{ path('event_show', { 'slug': event.slug}) }}" class="event-list__link event-list__link_concert">
-                        <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.name }}" class="event-list__img" height="385px">
-                        <section class="concert-header_preview">
-                            <h1 class="concert-header__h">{{ event.name }}</h1>
-                            <div class="al-center">
-                                <p class="concert-header__country pin-icon-small-t ">{{ event.city }}<span class="concert-header__place">, {{ event.address }}</span></p>
-                                <time class="concert-header__date time-icon-small-t"><span class="concert-header__time">{{ event.beginAt|date('F jS \\a\\t g:ia') }}</span></time>
-                                <p class="concert-header__price ">$200-300</p>
-                                <p class="concert-header__followers like-icon-t">12323</p>
-                            </div>
-                        </section>
-                    </a>
-            </li>
-            {% endfor %}
-        </ul>
-        {{ render(controller('AppBundle:Frontend/Event:popularEvents' )) }}
+    <div class="l-events">
+        <div class="content cf">
+            <ul id="event-ul" class="event-list event-list_normal-medium">
+                {{ render(controller('AppBundle:Frontend/Event:listConcertEvent', { 'events': events } )) }}
+            </ul>
+            {{ render(controller('AppBundle:Frontend/Event:popularEvents' )) }}
+        </div>
     </div>
-</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/filter_concert_page.js') }}"></script>
 {% endblock %}

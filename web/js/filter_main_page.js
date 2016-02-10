@@ -20,11 +20,10 @@ function filter($ulElement) {
     var valDate  = $('input:radio[name=date]:checked').val();
 
     $.ajax({
-        url: 'event-filters',
+        url: 'main-filters',
         data: {'genre': valGenre, 'city': valCity, 'date': valDate},
         success: function (response) {
             if (true === response.status) {
-                console.log('1');
                 $ulElement.children().remove();
                 $ulElement.append(response.template);
             }
