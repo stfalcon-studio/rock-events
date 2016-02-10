@@ -5,10 +5,13 @@ namespace AppBundle\Controller\Frontend;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Group;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Frontend EventController
@@ -27,9 +30,13 @@ class EventController extends Controller
     public function indexAction()
     {
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEvents();
+        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findAll();
+        $cities = $this->getDoctrine()->getRepository('AppBundle:Event')->findAllCityByEvents();
 
         return $this->render('AppBundle:frontend/event:index.html.twig', [
             'events' => $events,
+            'genres' => $genres,
+            'cities' => $cities,
         ]);
     }
 
@@ -78,7 +85,7 @@ class EventController extends Controller
     /**
      * Recommended concert widget
      *
-     * @param Group $group
+     * @param Group $group Group
      *
      * @return Response
      */
@@ -137,7 +144,7 @@ class EventController extends Controller
     /**
      * Return last events
      *
-     * @return Event[]
+     * @return Response
      */
     public function lastEventsAction()
     {
@@ -151,7 +158,7 @@ class EventController extends Controller
     /**
      * Return popular events
      *
-     * @return Event[]
+     * @return Response
      */
     public function popularEventsAction()
     {
@@ -159,6 +166,54 @@ class EventController extends Controller
 
         return $this->render('AppBundle:frontend/event:popular_events.html.twig', [
             'events' => $popularEvents,
+        ]);
+    }
+
+    /**
+     * @param array $events Array of events
+     *
+     * Return list event for main page
+     *
+     * @return Response
+     */
+    public function listMainEventAction($events)
+    {
+        return $this->render('AppBundle:frontend/event:list_main_event.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
+    /**
+     * Ajax filter for event
+     *
+     * @param Request $request Request
+     *
+     * @throws BadRequestHttpException Bab request 400 Request only AJAX
+     *
+     * @return Event[]
+     *
+     * @Route("/event-filters", name="event_filters")
+     */
+    public function ajaxFilterEvent(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('Не правильний запит');
+        }
+
+        $genre = $request->query->get('genre');
+        $city  = $request->query->get('city');
+        $date  = $request->query->get('date');
+
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByFilter($genre, $city, $date);
+
+        $template = $this->renderView('AppBundle:frontend/event:list_main_event.html.twig', [
+            'events' => $events,
+        ]);
+
+        return new JsonResponse([
+            'status'   => true,
+            'message'  => 'Success',
+            'template' => $template,
         ]);
     }
 }
