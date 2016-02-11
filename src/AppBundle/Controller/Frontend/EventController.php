@@ -178,8 +178,6 @@ class EventController extends Controller
      *
      * @param array $events Array of events
      *
-     * Return list event for main page
-     *
      * @return Response
      */
     public function listMainEventAction($events)
@@ -193,8 +191,6 @@ class EventController extends Controller
      * List events for concert page
      *
      * @param array $events Array of events
-     *
-     * Return list event for main page
      *
      * @return Response
      */

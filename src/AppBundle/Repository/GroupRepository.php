@@ -203,4 +203,96 @@ class GroupRepository extends EntityRepository
                   ->getQuery()
                   ->getResult();
     }
+
+    /**
+     * Find all countries by groups
+     *
+     * @return Group[]
+     */
+    public function findAllCountiesByGroups()
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->select('g.id, g.country as name, COUNT(g.country) as count_country')
+                  ->groupBy('g.country')
+                  ->orderBy('count_country', 'DESC')
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find all cities by groups
+     *
+     * @return Group[]
+     */
+    public function findAllCitiesByGroups()
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->select('g.id, g.city as name, COUNT(g.city) as count_city')
+                  ->groupBy('g.city')
+                  ->orderBy('count_city', 'DESC')
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find groups by filter
+     *
+     * @param null|Genre  $genre
+     * @param null|string $country
+     * @param null|string $city
+     * @param null|string $like
+     *
+     * @return array
+     */
+    public function findGroupsByFilter($genre = null, $country = null, $city = null, $like = null)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        $parameters = [];
+
+        $qb->addSelect('COUNT(ug.group) as likes')
+           ->join('g.groupGenres', 'gg')
+           ->join('gg.genre', 'ge')
+           ->leftJoin('g.userGroups', 'ug')
+           ->groupBy('gg.id');
+
+        //Flag for check where
+        $flag = false;
+
+        if (!empty($genre)) {
+            $qb->where($qb->expr()->eq('ge', ':genre'));
+            $parameters['genre'] = $genre;
+            $flag                = true;
+        }
+
+        if (!empty($country)) {
+            if (false === $flag) {
+                $qb->where($qb->expr()->eq('g.country', ':country'));
+                $flag = true;
+            } else {
+                $qb->andWhere($qb->expr()->eq('g.country', ':country'));
+            }
+            $parameters['country'] = $country;
+        }
+
+        if (!empty($city)) {
+            if (false === $flag) {
+                $qb->where($qb->expr()->eq('g.city', ':city'));
+                $flag = true;
+            } else {
+                $qb->andWhere($qb->expr()->eq('g.city', ':city'));
+            }
+            $parameters['city'] = $city;
+        }
+
+        if (!empty($like)) {
+            $qb->orderBy('likes', $like);
+        }
+
+        return $qb->setParameters($parameters)
+                  ->getQuery()
+                  ->getResult();
+    }
 }

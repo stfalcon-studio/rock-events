@@ -33,11 +33,17 @@ class GroupController extends Controller
      */
     public function listAction()
     {
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsWithCountLike();
+        $groups   = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsWithCountLike();
+        $genres   = $this->getDoctrine()->getRepository('AppBundle:Genre')->findAll();
+        $counties = $this->getDoctrine()->getRepository('AppBundle:Group')->findAllCountiesByGroups();
+        $cities   = $this->getDoctrine()->getRepository('AppBundle:Group')->findAllCitiesByGroups();
 
         if (null === $this->getUser()) {
             return $this->render('AppBundle:frontend\group:list.html.twig', [
-                'groups' => $groups,
+                'groups'    => $groups,
+                'genres'    => $genres,
+                'countries' => $counties,
+                'cities'    => $cities,
             ]);
         }
 
@@ -46,6 +52,9 @@ class GroupController extends Controller
         return $this->render('AppBundle:frontend\group:list.html.twig', [
             'groups'     => $groups,
             'userGroups' => $userGroups,
+            'genres'     => $genres,
+            'countries'  => $counties,
+            'cities'     => $cities,
         ]);
     }
 
@@ -144,12 +153,35 @@ class GroupController extends Controller
         ]);
     }
 
+    /**
+     * List tags genres by group
+     *
+     * @param Group $group Group
+     *
+     * @return Response
+     */
     public function genreTagsAction(Group $group)
     {
         $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
 
         return $this->render('AppBundle:frontend/group:genre_tags.html.twig', [
             'genres' => $genres,
+        ]);
+    }
+
+    /**
+     * List groups for group page
+     *
+     * @param array $groups     Array of groups
+     * @param array $userGroups Array of user groups
+     *
+     * @return Response
+     */
+    public function listGroupWidgetAction(array $groups, array $userGroups)
+    {
+        return $this->render('AppBundle:frontend/group:list_group_widget.html.twig', [
+            'groups'     => $groups,
+            'userGroups' => $userGroups,
         ]);
     }
 
@@ -233,6 +265,48 @@ class GroupController extends Controller
             'status'     => true,
             'message'    => 'Success',
             'post_likes' => $countLikes['likes'],
+        ]);
+    }
+
+    /**
+     * Ajax filter for group
+     *
+     * @param Request $request Request
+     *
+     * @throws BadRequestHttpException Bab request 400 Request only AJAX
+     *
+     * @return Group[]
+     *
+     * @Route("/group-filters", name="group_filters")
+     */
+    public function ajaxEventFilter(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('Не правильний запит');
+        }
+
+        $genre   = $request->query->get('genre');
+        $country = $request->query->get('country');
+        $city    = $request->query->get('city');
+        $like    = $request->query->get('like');
+
+        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByFilter($genre, $country, $city, $like);
+        if (null === $this->getUser()) {
+            $template = $this->renderView('AppBundle:frontend/group:list_group_widget.html.twig', [
+                'groups' => $groups,
+            ]);
+        } else {
+            $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
+            $template   = $this->renderView('AppBundle:frontend/group:list_group_widget.html.twig', [
+                'groups'     => $groups,
+                'userGroups' => $userGroups,
+            ]);
+        }
+
+        return new JsonResponse([
+            'status'   => true,
+            'message'  => 'Success',
+            'template' => $template,
         ]);
     }
 }

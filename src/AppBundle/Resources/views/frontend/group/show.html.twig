@@ -86,7 +86,7 @@
                         <ul class="gallery-group">
                             {% for similar_group in similar_groups %}
                                 <li class="gallery-group__item">
-                                    <a href="#" class="gallery-group__link">
+                                    <a href="{{ path('group_show' , { 'slug':similar_group.slug }) }}" class="gallery-group__link">
                                         <img src="{{ vich_uploader_asset(similar_group, 'imageFile') }}" alt="{{ similar_group.name }}" class="gallery-group__img" height="288px">
                                         <section class="gallery-group__description">
                                             <h3 class="gallery-group__group-name">{{ similar_group.name }}</h3>
