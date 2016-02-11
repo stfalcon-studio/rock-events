@@ -41,7 +41,7 @@ class Group
      *
      * @var ArrayCollection|GroupGenre[] $groupGenres Group Genres
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\GroupGenre", mappedBy="group")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\GroupGenre", mappedBy="group", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $groupGenres;
 
@@ -165,6 +165,18 @@ class Group
      * @var string $imageName Image name
      */
     private $imageName;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groupGenres          = new ArrayCollection();
+        $this->userGroups           = new ArrayCollection();
+        $this->eventGroups          = new ArrayCollection();
+        $this->managerGroups        = new ArrayCollection();
+        $this->requestManagerGroups = new ArrayCollection();
+    }
 
     /**
      * To string
@@ -385,6 +397,34 @@ class Group
     public function getGroupGenres()
     {
         return $this->groupGenres;
+    }
+
+    /**
+     * Add group genre
+     *
+     * @param GroupGenre $groupGenre Group Genre
+     *
+     * @return $this
+     */
+    public function addGroupGenre(GroupGenre $groupGenre)
+    {
+        $this->groupGenres->add($groupGenre);
+
+        return $this;
+    }
+
+    /**
+     * Remove group genre
+     *
+     * @param GroupGenre $groupGenre GroupGenre
+     *
+     * @return $this
+     */
+    public function removeGroupGenre(GroupGenre $groupGenre)
+    {
+        $this->groupGenres->remove($groupGenre);
+
+        return $this;
     }
 
     /**

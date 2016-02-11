@@ -152,13 +152,13 @@ class EventAdmin extends Admin
                 'by_reference' => true,
                 'required'     => false,
             ],
-                [
-                    'edit'            => 'inline',
-                    'inline'          => 'table',
-                    'link_parameters' => [
-                        'context' => 'default',
-                    ],
-                ]);
+            [
+                'edit'            => 'inline',
+                'inline'          => 'table',
+                'link_parameters' => [
+                    'context' => 'default',
+                ],
+            ]);
     }
 
     /**
