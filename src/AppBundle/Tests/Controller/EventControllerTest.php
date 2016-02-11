@@ -52,8 +52,8 @@ class EventControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/events');
 
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('table'));
-        $this->assertCount(4, $crawler->filter('tr#event'));
+        $this->assertCount(1, $crawler->filter('ul#event-ul'));
+        $this->assertCount(10, $crawler->filter('li.event-list__item'));
     }
 
     /**
@@ -77,7 +77,7 @@ class EventControllerTest extends WebTestCase
         $crawler      = $this->client->request('GET', '/event/zaxid');
 
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('ul#events'));
-        $this->assertCount(1, $crawler->filter('ul#groups'));
+        $this->assertCount(1, $crawler->filter('header.concert-header'));
+        $this->assertCount(1, $crawler->filter('main.concert-header__info'));
     }
 }

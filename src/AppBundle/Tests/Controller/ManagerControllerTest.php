@@ -64,6 +64,8 @@ class ManagerControllerTest extends WebTestCase
             'group' => [
                 'name'        => 'On the Wange',
                 'description' => 'Психоделік гурт On the Wane',
+                'country'     => 'Україна',
+                'city'        => 'Хмельницький',
                 'foundedAt'   => 2012,
                 '_token'      => $token,
             ],

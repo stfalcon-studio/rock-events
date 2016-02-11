@@ -31,15 +31,22 @@ class GenreControllerTest extends WebTestCase
      */
     public function testListAction()
     {
-        $this->loadFixtures([
+        $fixtures = $this->loadFixtures([
+            'AppBundle\DataFixtures\ORM\LoadUserData',
             'AppBundle\DataFixtures\ORM\LoadGenreData',
-        ]);
+            'AppBundle\DataFixtures\ORM\LoadGroupData',
+            'AppBundle\DataFixtures\ORM\LoadGroupGenreData',
+            'AppBundle\DataFixtures\ORM\LoadUserGenreData',
+        ])->getReferenceRepository();
+
+        $this->loginAs($fixtures->getReference('user-manager'), 'main');
+        $this->client = static::makeClient();
 
         $crawler = $this->client->request('GET', '/genres');
 
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('table'));
-        $this->assertCount(5, $crawler->filter('tr#genres'));
+        $this->assertCount(1, $crawler->filter('ul.event-list'));
+        $this->assertCount(6, $crawler->filter('li.event-list__item'));
     }
 
     /**
@@ -56,8 +63,8 @@ class GenreControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', 'genre/alternative/groups');
 
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('table'));
-        $this->assertCount(3, $crawler->filter('tr#groups'));
+        $this->assertCount(1, $crawler->filter('div.l-filter-elements'));
+        $this->assertCount(5, $crawler->filter('div.filtered-element'));
     }
 
     /**

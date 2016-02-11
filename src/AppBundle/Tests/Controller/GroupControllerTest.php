@@ -31,15 +31,22 @@ class GroupControllerTest extends WebTestCase
      */
     public function testListAction()
     {
-        $this->loadFixtures([
+        $fixtures = $this->loadFixtures([
+            'AppBundle\DataFixtures\ORM\LoadUserData',
+            'AppBundle\DataFixtures\ORM\LoadGenreData',
             'AppBundle\DataFixtures\ORM\LoadGroupData',
-        ]);
+            'AppBundle\DataFixtures\ORM\LoadGroupGenreData',
+            'AppBundle\DataFixtures\ORM\LoadUserGroupData',
+        ])->getReferenceRepository();
+
+        $this->loginAs($fixtures->getReference('user-manager'), 'main');
+        $this->client = static::makeClient();
 
         $crawler = $this->client->request('GET', '/groups');
 
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('table'));
-        $this->assertCount(5, $crawler->filter('tr#groups'));
+        $this->assertCount(1, $crawler->filter('div.l-filter-elements'));
+        $this->assertCount(11, $crawler->filter('div.filtered-element'));
     }
 
     /**
@@ -55,8 +62,8 @@ class GroupControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/group/jinjer');
 
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('ul#groups'));
-        $this->assertCount(1, $crawler->filter('ul#genres'));
+        $this->assertCount(1, $crawler->filter('div.l-about'));
+        $this->assertCount(1, $crawler->filter('ul.about-header__styles'));
     }
 
     /**
