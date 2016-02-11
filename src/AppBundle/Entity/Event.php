@@ -49,7 +49,7 @@ class Event
     /**
      * @var ArrayCollection|EventGroup[] $eventGroups Event Groups
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="event", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $eventGroups;
 
@@ -499,6 +499,34 @@ class Event
     public function getEventGroups()
     {
         return $this->eventGroups;
+    }
+
+    /**
+     * Add event group
+     *
+     * @param EventGroup $eventGroup Event Group
+     *
+     * @return $this
+     */
+    public function addEventGroup(EventGroup $eventGroup)
+    {
+        $this->eventGroups->add($eventGroup);
+
+        return $this;
+    }
+
+    /**
+     * Remove event group
+     *
+     * @param EventGroup $eventGroup Event Group
+     *
+     * @return $this
+     */
+    public function removeEventGroup(EventGroup $eventGroup)
+    {
+        $this->eventGroups->remove($eventGroup);
+
+        return $this;
     }
 
     /*

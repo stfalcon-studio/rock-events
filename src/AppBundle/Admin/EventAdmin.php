@@ -3,6 +3,8 @@
 namespace AppBundle\Admin;
 
 use AppBundle\Entity\Event;
+use AppBundle\Entity\EventGroup;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -23,8 +25,38 @@ class EventAdmin extends Admin
      */
     public function prePersist($event)
     {
+        /** @var EventGroup[] $eventGroups */
+        $eventGroups = new ArrayCollection();
+
         /** @var Event $event */
-        $event->setCreatedBy($this->getUser())
+        /** @var EventGroup $eventGroup */
+        foreach ($event->getEventGroups() as $eventGroup) {
+            $eventGroups[] = $eventGroup->setEvent($event);
+        }
+
+        $event->setEventGroups($eventGroups)
+              ->setCreatedBy($this->getUser())
+              ->setUpdatedBy($this->getUser());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($event)
+    {
+        /** @var EventGroup[] $eventGroups */
+        $eventGroups = new ArrayCollection();
+
+        /** @var Event $event */
+        /** @var EventGroup $eventGroup */
+        foreach ($event->getEventGroups() as $eventGroup) {
+            if (null === $eventGroup->getEvent()) {
+                $eventGroup->setEvent($event);
+            }
+            $eventGroups[] = $eventGroup;
+        }
+
+        $event->setEventGroups($eventGroups)
               ->setUpdatedBy($this->getUser());
     }
 
@@ -82,25 +114,31 @@ class EventAdmin extends Admin
             ->add('address', null, [
                 'label' => 'Адреса',
             ])
-            ->add('beginAt', null, [
-                'label' => 'Початок о',
-//                'read_only' => true,
-//                'dp_side_by_side' => true,
-//                'dp_use_current' => true,
-//                'dp_use_seconds' => true,
-//                'dp_minute_stepping' => 1,
-//                'date_format' => 'dd.MM.YYYY HH:mm',
-//                'format' => 'dd.MM.YYYY HH:mm',
+            ->add('beginAt', 'sonata_type_datetime_picker', [
+                'label'              => 'Початок о',
+                'data'               => new \DateTime(),
+                'read_only'          => true,
+                'dp_side_by_side'    => true,
+                'dp_use_current'     => true,
+                'dp_use_seconds'     => true,
+                'dp_minute_stepping' => 1,
+                'format'             => 'dd.MM.yyyy, HH:mm',
+                'attr'               => [
+                    'data-date-format' => 'DD.MM.YYYY, HH:mm',
+                ],
             ])
-            ->add('endAt', null, [
-                'label' => 'Кінець о',
-//                'read_only' => true,
-//                'dp_side_by_side' => true,
-//                'dp_use_current' => true,
-//                'dp_use_seconds' => true,
-//                'dp_minute_stepping' => 1,
-//                'date_format' => 'dd.MM.YYYY HH:mm',
-//                'format' => 'dd.MM.YYYY HH:mm',
+            ->add('endAt', 'sonata_type_datetime_picker', [
+                'label'              => 'Кінець о',
+                'data'               => new \DateTime(),
+                'read_only'          => true,
+                'dp_side_by_side'    => true,
+                'dp_use_current'     => true,
+                'dp_use_seconds'     => true,
+                'dp_minute_stepping' => 1,
+                'format'             => 'dd.MM.yyyy, HH:mm',
+                'attr'               => [
+                    'data-date-format' => 'DD.MM.YYYY, HH:mm',
+                ],
             ])
             ->add('isActive', null, [
                 'label' => 'Публікувати',
@@ -108,7 +146,19 @@ class EventAdmin extends Admin
             ->add('imageFile', 'file', [
                 'label'    => 'Зображення',
                 'required' => false,
-            ]);
+            ])
+            ->add('eventGroups', 'sonata_type_collection', [
+                'label'        => 'Гурти',
+                'by_reference' => true,
+                'required'     => false,
+            ],
+                [
+                    'edit'            => 'inline',
+                    'inline'          => 'table',
+                    'link_parameters' => [
+                        'context' => 'default',
+                    ],
+                ]);
     }
 
     /**
