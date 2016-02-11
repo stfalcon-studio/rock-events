@@ -25,7 +25,7 @@ class GenreController extends Controller
      */
     public function listAction()
     {
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findAll();
+        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresWithCountGroup();
 
         if (null === $this->getUser()) {
             return $this->render('AppBundle:frontend/genre:list.html.twig', [
@@ -54,11 +54,39 @@ class GenreController extends Controller
      */
     public function groupAction(Genre $genre)
     {
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByGenre($genre);
+        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByGenreWithCountLikes($genre);
+
+        $user = $this->getUser();
+
+        if (null == $user) {
+            return $this->render('AppBundle:frontend/genre:group.html.twig', [
+                'groups' => $groups,
+                'genre'  => $genre,
+            ]);
+        }
+
+        $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
 
         return $this->render('AppBundle:frontend/genre:group.html.twig', [
-            'groups' => $groups,
-            'genre'  => $genre,
+            'groups'     => $groups,
+            'genre'      => $genre,
+            'userGroups' => $userGroups,
+        ]);
+    }
+
+    /**
+     * Count groups by genre
+     *
+     * @param Genre $genre Genre
+     *
+     * @return Response
+     */
+    public function countGroupsByGenreAction(Genre $genre)
+    {
+        $likes = $this->getDoctrine()->getRepository('AppBundle:Genre')->findCountGroupsByGenre($genre);
+
+        return $this->render('AppBundle:frontend/genre:count_groups.html.twig', [
+            'count_groups' => $likes['count_groups'],
         ]);
     }
 
@@ -87,9 +115,12 @@ class GenreController extends Controller
         $em->persist($userGenre);
         $em->flush();
 
+        $countLikes = $this->getDoctrine()->getRepository('AppBundle:Genre')->findCountLikesByGenre($genre);
+
         return new JsonResponse([
-            'status'  => true,
-            'message' => 'Success',
+            'status'     => true,
+            'message'    => 'Success',
+            'post_likes' => $countLikes['likes'],
         ], 201);
     }
 
@@ -116,6 +147,7 @@ class GenreController extends Controller
         if (null === $this->getUser()) {
             throw new UnauthorizedHttpException('Не зареєстрований');
         }
+
         $em        = $this->getDoctrine()->getManager();
         $userGenre = $em->getRepository('AppBundle:UserGenre')->findOneBy([
             'user'  => $this->getUser(),
@@ -125,9 +157,12 @@ class GenreController extends Controller
         $em->remove($userGenre);
         $em->flush();
 
+        $countLikes = $this->getDoctrine()->getRepository('AppBundle:Genre')->findCountLikesByGenre($genre);
+
         return new JsonResponse([
-            'status'  => true,
-            'message' => 'Success',
+            'status'     => true,
+            'message'    => 'Success',
+            'post_likes' => $countLikes['likes'],
         ]);
     }
 }

@@ -37,6 +37,7 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
 
         $genre1 = (new Genre())
             ->setName('Пост-панк')
+            ->setImageName('post-punk.jpg')
             ->setSlug('post-punk')
             ->setActive(true)
             ->setCreatedBy($userAdmin)
@@ -46,6 +47,7 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
 
         $genre2 = (new Genre())
             ->setName('Металкор')
+            ->setImageName('metalcore.jpg')
             ->setSlug('metalcore')
             ->setActive(true)
             ->setCreatedBy($userAdmin)
@@ -55,6 +57,7 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
 
         $genre3 = (new Genre())
             ->setName('Психоделік')
+            ->setImageName('psychedelic.jpg')
             ->setSlug('psychedelic')
             ->setActive(true)
             ->setCreatedBy($userAdmin)
@@ -64,6 +67,7 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
 
         $genre4 = (new Genre())
             ->setName('Альтернатива')
+            ->setImageName('alternative.jpg')
             ->setSlug('alternative')
             ->setActive(true)
             ->setCreatedBy($userAdmin)
@@ -73,12 +77,23 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
 
         $genre5 = (new Genre())
             ->setName('Інді')
+            ->setImageName('indi.jpg')
             ->setSlug('indi')
             ->setActive(true)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('genre-indi', $genre5);
         $manager->persist($genre5);
+
+        $genre6 = (new Genre())
+            ->setName('Панк')
+            ->setImageName('punk.jpg')
+            ->setSlug('punk')
+            ->setActive(true)
+            ->setCreatedBy($userAdmin)
+            ->setUpdatedBy($userAdmin);
+        $this->setReference('genre-punk', $genre6);
+        $manager->persist($genre6);
 
         $manager->flush();
     }

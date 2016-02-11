@@ -100,6 +100,32 @@ class Group
     private $description;
 
     /**
+     * @var string $country Country
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="100")
+     * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
+     */
+    private $country;
+
+    /**
+     * @var string $city City
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="100")
+     * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
+     */
+    private $city;
+
+    /**
      * @var \Datetime $foundedAt founded at
      *
      * @ORM\Column(type="datetime", nullable=true)
@@ -211,6 +237,54 @@ class Group
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country Country
+     *
+     * @return Group
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city City
+     *
+     * @return Group
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string City
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 
     /**

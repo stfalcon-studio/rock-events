@@ -1,0 +1,7 @@
+<ul class="about-header__styles">
+    {% for genre in genres %}
+        <li class="about-header__style">
+            <a href="{{ path('genre_group', { 'slug': genre.slug }) }}" class="about-header__link">{{ genre.name }}</a>
+        </li>
+    {% endfor %}
+</ul>

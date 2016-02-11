@@ -1,65 +1,82 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8"/>
-    <title>{% block title %}Rock events{% endblock %}</title>
-    {% block stylesheets %}
-        {% stylesheets
-        'css/reset.css'
-        'css/bootstrap.min.css'
-        'css/main.css'
-        'css/jquery.mCustomScrollbar.min.css'
-        'css/style.css'
-        %}
-        <link href='https://fonts.googleapis.com/css?family=Roboto:700,500,400,300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{{ asset_url }}"/>
-        {% endstylesheets %}
-    {% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
-</head>
-<body>
-{% block header %}
-    <header class="l-header l-header_bg-style">
-        <div class="content">
-            <nav class="navigation cf">
-                <ul class="navigation__items">
-                    <li class="logo f-l"><a href="{{ path('event_index') }}" class="logo__link logo-icon"></a></li>
-                    <li class="navigation__item navigation__link_upper"><a href="" class="navigation__link">Concerts</a></li>
-                    <li class="navigation__item navigation__link_upper"><a href="{{ path('group_list') }}" class="navigation__link">Groups</a></li>
-                    <li class="navigation__item navigation__link_upper"><a href="{{ path('genre_list') }}" class="navigation__link">Genre</a></li>
-                    <li class="navigation__item navigation__link_upper"><a href="" class="navigation__link">Calendar</a></li>
-                    <li class="navigation__item f-r"><a href="{{ path('user_cabinet_group') }}" class=" button button_list-item">My account</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-{% endblock %}
-    <div class="container">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Rock events{% endblock %}</title>
+        {% block stylesheets %}
+            {% stylesheets
+            'css/reset.css'
+            'css/main.css'
+            'css/jquery.mCustomScrollbar.min.css'
+            'css/selectize.css'
+            'css/jquery.fancybox.min.css'
+            'css/responsive-tabs.css'
+            'css/style.css' %}
+            <link href='https://fonts.googleapis.com/css?family=Roboto:700,500,400,300' rel='stylesheet' type='text/css'>
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block header %}
+            <header class="l-header l-header_bg-style">
+                <div class="content">
+                    <nav class="navigation cf">
+                        <div class="logo f-l"><a href="{{ path('event_index') }}" class="logo__link logo-icon"></a></div>
+                        <ul class="navigation__items">
+                            <li class="navigation__item navigation__link_upper"><a href="{{ path('event_list') }}" class="navigation__link">Concerts</a></li>
+                            <li class="navigation__item navigation__link_upper"><a href="{{ path('group_list') }}" class="navigation__link">Groups</a></li>
+                            <li class="navigation__item navigation__link_upper"><a href="{{ path('genre_list') }}" class="navigation__link">Genre</a></li>
+                            <li class="navigation__item navigation__link_upper"><a href="" class="navigation__link">Calendar</a></li>
+                        </ul>
+                        <div class="user-cabinet f-r" id="userBut">
+                            <div class="user-cabinet__head">
+                                <img src="/img/user_img.jpg" alt="" class="user-cabinet__img">
+                                <span class="user-cabinet__name">Roma</span>
+                            </div>
+                            <ul class="user-cabinet__menu">
+                                <li class="user-cabinet__item"><a href="" class="user-cabinet__link profile-icon-t">Профіль</a></li>
+                                <li class="user-cabinet__item">
+                                    <a href="" class="user-cabinet__link concert-icon-t">Найближчі концерти</a>
+                                    <a href="" class="user-cabinet__link group-icon-t">Гурти</a>
+                                    <a href="" class="user-cabinet__link genre-icon-t">Жанри</a></li>
+                                <li class="user-cabinet__item"><a href="" class="user-cabinet__link cabinet-icon-t">Кабінет менеджера</a></li>
+                                <li class="user-cabinet__item"><a href="" class="user-cabinet__link logout-icon-t">Вийти</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+        {% endblock %}
         {% block body %}{% endblock %}
         {% block fos_user_content %}
         {% endblock fos_user_content %}
-    </div>
-{% block footer %}
-    <footer class="l-footer">
-        <div class="content cf">
-            <nav class="navigation navigation_dark f-l">
-                <ul class="navigation__items">
-                    <li class="navigation__item"><a href="" class="navigation__link active">Home</a></li>
-                    <li class="navigation__item"><a href="" class="navigation__link">Concerts</a></li>
-                    <li class="navigation__item"><a href="" class="navigation__link">Groups</a></li>
-                    <li class="navigation__item"><a href="" class="navigation__link">Genre</a></li>
-                    <li class="navigation__item"><a href="" class="navigation__link">Calendar</a></li>
-                </ul>
-                <p class="copyright">&copy; RockEvents 2016</p>
-            </nav>
-            <ul class="contacts f-r">
-                <li class="contacts__item"><a href="" class="contacts__link "><i class="contacts__icon fb-icon"></i></a></li>
-                <li class="contacts__item"><a href="" class="contacts__link "><i class="contacts__icon be-icon"></i></a></li>
-                <li class="contacts__item"><a href="" class="contacts__link "><i class="contacts__icon gh-icon"></i></a></li>
-            </ul>
-        </div>
-    </footer>
-{% endblock footer %}
+        {% block footer %}
+            {{ render(controller('AppBundle:Frontend/Event:lastEvents' )) }}
+            <footer class="l-footer">
+                <div class="content cf">
+                    <nav class="navigation navigation_dark f-l">
+                        <ul class="navigation__items">
+                            <li class="navigation__item"><a href="" class="navigation__link active">Home</a></li>
+                            <li class="navigation__item"><a href="" class="navigation__link">Concerts</a></li>
+                            <li class="navigation__item"><a href="" class="navigation__link">Groups</a></li>
+                            <li class="navigation__item"><a href="" class="navigation__link">Genre</a></li>
+                            <li class="navigation__item"><a href="" class="navigation__link">Calendar</a></li>
+                        </ul>
+                        <p class="copyright">&copy; RockEvents 2016</p>
+                    </nav>
+                    <ul class="contacts f-r">
+                        <li class="contacts__item">
+                            <a href="" class="contacts__link "><i class="contacts__icon fb-icon"></i></a></li>
+                        <li class="contacts__item">
+                            <a href="" class="contacts__link "><i class="contacts__icon be-icon"></i></a></li>
+                        <li class="contacts__item">
+                            <a href="" class="contacts__link "><i class="contacts__icon gh-icon"></i></a></li>
+                    </ul>
+                </div>
+            </footer>
+        {% endblock footer %}
 
         {% block javascripts %}
             <script src="{{ asset('js/jquery-2.2.0.min.js') }}"></script>
@@ -68,6 +85,12 @@
             <script src="{{ asset('js/bootstrap-dropdown.js') }}"></script>
             <script src="{{ asset('js/jquery.mCustomScrollbar.min.js') }}"></script>
             <script src="{{ asset('js/jquery.mousewheel.min.js') }}"></script>
+            <script src="{{ asset('js/microplugin.min.js') }}"></script>
+            <script src="{{ asset('js/sifter.min.js') }}"></script>
+            <script src="{{ asset('js/selectize.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.fancybox.pack-min.js') }}"></script>
+            <script src="{{ asset('js/jquery_responsiveTabs-min.js') }}"></script>
             <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
     </body>

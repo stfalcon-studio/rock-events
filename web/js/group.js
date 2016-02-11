@@ -4,7 +4,6 @@ $(function () {
         var $parent = $(this).parent().parent();
         $.ajax({
             url: url,
-            dataType: 'JSON',
             success: function (response) {
                 if (true === response.status) {
                     $parent.remove();
@@ -25,7 +24,7 @@ $(function () {
                 if (true === response.status) {
                     $(element).siblings().show();
                     $(element).hide();
-                    console.log('success')
+                    $(element).parent().parent().find('p#fans').text(response.post_likes);
                 } else {
                     alert('error');
                 }
@@ -42,7 +41,7 @@ $(function () {
                 if (true === response.status) {
                     $(element).siblings().show();
                     $(element).hide();
-                    console.log('success')
+                    $(element).parent().parent().find('p#fans').text(response.post_likes);
                 } else {
                     alert('error');
                 }

@@ -1,33 +1,76 @@
 {% extends 'main.html.twig' %}
 
 {% block body %}
-    <h1>Список подій</h1>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Назва</th>
-            <th>Опис</th>
-            <th>Країна</th>
-            <th>Місто</th>
-            <th>Адреса</th>
-            <th>Початок</th>
-            <th>Кінцеь</th>
-            <th>Тривалість</th>
-        </tr>
-        </thead>
-        <tbody class="table table-hover">
-        {% for event in events %}
-            <tr>
-                <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
-                <td>{{ event.description }}</td>
-                <td>{{ event.country }}</td>
-                <td>{{ event.city }}</td>
-                <td>{{ event.address }}</td>
-                <td>{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
-                <td>{{ event.endAt|date('F jS \\a\\t g:ia') }}</td>
-                <td>{{ event.duration }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div id="sort" class="l-sort gradient-bg gradient-bg_medium cf">
+        <div class="content cf">
+            <div id="everything" class="l-sort__items_big l-sort__items">
+                <div class="l-sort__header"></div>
+                <ul class="l-sort__list ">
+                    <li class="l-sort__item">
+                        <input type="radio" name="music-style" class="l-sort__but" value="" id="styleAll" checked>
+                        <label for="styleAll" class="l-sort__label">Всі категорії</label>
+                    </li>
+                    {% for genre in genres %}
+                        <li class="l-sort__item">
+                            <input type="radio" name="music-style" class="l-sort__but" value="{{ genre.id }}" id="style{{ genre.id }}">
+                            <label for="style{{ genre.id }}" class="l-sort__label">{{ genre.name }}</label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="everywhere" class="l-sort__items_small l-sort__items  f-l">
+                <div class="l-sort__header l-sort__header_spec">Всі міста</div>
+                <ul class="l-sort__list l-sort__list_spec setScroll">
+                    <li class="l-sort__item">
+                        <input type="radio" name="city" class="l-sort__but" value="" id="cityAll" checked>
+                        <label for="cityAll" class="l-sort__label">Всі міста</label>
+                    </li>
+                    {% for city in cities %}
+                        <li class="l-sort__item">
+                            <input type="radio" name="city" class="l-sort__but" value="{{ city.name }}" id="city{{ city.id }}">
+                            <label for="city{{ city.id }}" class="l-sort__label">{{ city.name }}</label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="allTime" class="l-sort__items_medium l-sort__items f-r">
+                <div class="l-sort__header">За весь час</div>
+                <ul class="l-sort__list">
+                    <li class="l-sort__item">
+                        <input type="radio" name="date" class="l-sort__but" value="" id="timeAll" checked>
+                        <label for="timeAll" class="l-sort__label">Всі концерти</label>
+                    </li>
+                    <li class="l-sort__item">
+                        <input type="radio" name="date" class="l-sort__but" value="today" id="timeTo">
+                        <label for="timeTo" class="l-sort__label">За сьогодні</label>
+                    </li>
+                    <li class="l-sort__item">
+                        <input type="radio" name="date" class="l-sort__but" value="week" id="timeWe">
+                        <label for="timeWe" class="l-sort__label">За тиждень</label>
+                    </li>
+                    <li class="l-sort__item">
+                        <input type="radio" name="date" class="l-sort__but" value="month" id="timeMo">
+                        <label for="timeMo" class="l-sort__label">За місяць</label>
+                    </li>
+                    <li class="l-sort__item">
+                        <input type="radio" name="date" class="l-sort__but" value="year" id="timeYe">
+                        <label for="timeYe" class="l-sort__label">За рік</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="l-events">
+        <div class="content">
+            <ul id="event-ul" class="event-list event-list_normal">
+                {{ render(controller('AppBundle:Frontend/Event:listMainEvent', { 'events': events } )) }}
+            </ul>
+        </div>
+        <div class="button button_big"><p class="button__icon icon_show-t">Show 20</p></div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/filter_main_page.js') }}"></script>
 {% endblock %}
