@@ -59,7 +59,10 @@ class ManagerController extends Controller
             $group = (new Group())
                 ->setName($groupForm->getName())
                 ->setDescription($groupForm->getDescription())
+                ->setCountry($groupForm->getCountry())
+                ->setCity($groupForm->getCity())
                 ->setSlug($groupForm->getName())
+                ->setImageName($groupForm->getImageName())
                 ->setFoundedAt($groupForm->getFoundedAt())
                 ->setCreatedBy($user)
                 ->setUpdatedBy($user);
@@ -114,6 +117,8 @@ class ManagerController extends Controller
 
             $group->setName($groupForm->getName())
                   ->setDescription($groupForm->getDescription())
+                  ->setCountry($groupForm->getCountry())
+                  ->setCity($groupForm->getCity())
                   ->setSlug($groupForm->getName())
                   ->setFoundedAt($groupForm->getFoundedAt())
                   ->setCreatedBy($user)

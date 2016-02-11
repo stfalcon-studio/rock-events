@@ -1,33 +1,47 @@
-{% extends 'base.html.twig' %}
+{% extends 'event.html.twig' %}
 
 {% block body %}
-    <h1>Список подій</h1>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Назва</th>
-            <th>Опис</th>
-            <th>Країна</th>
-            <th>Місто</th>
-            <th>Адреса</th>
-            <th>Початок</th>
-            <th>Кінцеь</th>
-            <th>Тривалість</th>
-        </tr>
-        </thead>
-        <tbody class="table table-hover">
-        {% for event in events %}
-            <tr id="event">
-                <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
-                <td>{{ event.description }}</td>
-                <td>{{ event.country }}</td>
-                <td>{{ event.city }}</td>
-                <td>{{ event.address }}</td>
-                <td>{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
-                <td>{{ event.endAt|date('F jS \\a\\t g:ia') }}</td>
-                <td>{{ event.duration }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="l-filters">
+        <div class="content lp">
+            <ul class="l-filters__list">
+                <li class="l-filters__item"><label for="genre" class="l-filters__label">Жанр:</label>
+                    <select name="" id="genre" class="l-filters__select l-filters__select_genre filer">
+                        <option value="0" class="l-filters__option">Всі жанри</option>
+                        {% for genre in genres %}
+                            <option value="{{ genre.id }}" class="l-filters__option">{{ genre.name }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="city" class="l-filters__label">Місто:</label>
+                    <select name="" id="city" class="l-filters__select l-filters__select_city filer">
+                        <option value="0" class="l-filters__option">Всі міста</option>
+                        {% for city in cities %}
+                            <option value="{{ city.name }}" class="l-filters__option">{{ city.name }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="time" class="l-filters__label">За період:</label>
+                    <select name="" id="time" class="l-filters__select l-filters__select_date filer">
+                        <option value="0" class="l-filters__option">За весь період</option>
+                        <option value="today" class="l-filters__option">За сьогодні</option>
+                        <option value="week" class="l-filters__option">За тиждень</option>
+                        <option value="month" class="l-filters__option">За місяць</option>
+                        <option value="year" class="l-filters__option">За рік</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="l-events">
+        <div class="content cf">
+            <ul id="event-ul" class="event-list event-list_normal-medium">
+                {{ render(controller('AppBundle:Frontend/Event:listConcertEvent', { 'events': events } )) }}
+            </ul>
+            {{ render(controller('AppBundle:Frontend/Event:popularEvents' )) }}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/filter_concert_page.js') }}"></script>
 {% endblock %}

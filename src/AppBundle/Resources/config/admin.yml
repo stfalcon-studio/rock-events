@@ -7,6 +7,14 @@ services:
             - ~
             - AppBundle\Entity\Event
             - ~
+    admin.event_group:
+        class: AppBundle\Admin\EventGroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Event group", label: "Event group" }
+        arguments:
+            - ~
+            - AppBundle\Entity\EventGroup
+            - ~
 
     admin.group:
         class: AppBundle\Admin\GroupAdmin

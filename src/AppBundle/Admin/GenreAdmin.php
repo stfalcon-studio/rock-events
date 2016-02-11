@@ -48,7 +48,11 @@ class GenreAdmin extends Admin
             ->add('name', null, [
                 'label' => 'Назва',
             ])
-            ->add('slug');
+            ->add('slug')
+            ->add('imageFile', 'file', [
+                'label'    => 'Зображення',
+                'required' => false,
+            ]);
     }
 
     /**

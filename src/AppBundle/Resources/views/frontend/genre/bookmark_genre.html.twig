@@ -6,19 +6,13 @@
     {% set delete_style = 'display: none;' %}
 {% endif %}
 
-<button
-    href="#"
-    class="add"
-    data-bookmark-genre-add="{{ path('genre_add_to_bookmark', { 'slug' : genre.slug }) }}"
-    type="button"
-    style="{{ add_style }}">
-    +
-</button>
-<button
-    href="#"
-    class="delete"
-    data-bookmark-genre-delete="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug }) }}"
-    type="button"
-    style="{{ delete_style }}">
-    -
-</button>
+<a
+    class="add group-statistic__link group-statistic__link_border like-icon-t"
+    style="{{ add_style }}"
+    data-bookmark-genre-add="{{ path('genre_add_to_bookmark', { 'slug' : genre.slug }) }}">
+    </a>
+<a
+    class="active delete group-statistic__link group-statistic__link_border like-icon-t"
+    style="{{ delete_style }}; color: #2089f4; border-color: #2089f4; text-decoration: none;"
+    data-bookmark-genre-delete="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug }) }}">
+    </a>

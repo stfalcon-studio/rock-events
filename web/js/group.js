@@ -4,7 +4,6 @@ $(function () {
         var $parent = $(this).parent().parent();
         $.ajax({
             url: url,
-            dataType: 'JSON',
             success: function (response) {
                 if (true === response.status) {
                     $parent.remove();
@@ -16,7 +15,7 @@ $(function () {
         })
     });
 
-    $('.add').on('click', function () {
+    $(document).on('click', '.add', function () {
         var url = $(this).data('bookmark-group-add');
         var element = this;
         $.ajax({
@@ -25,7 +24,7 @@ $(function () {
                 if (true === response.status) {
                     $(element).siblings().show();
                     $(element).hide();
-                    console.log('success')
+                    $(element).parent().parent().find('p#fans').text(response.post_likes);
                 } else {
                     alert('error');
                 }
@@ -33,7 +32,7 @@ $(function () {
         })
     });
 
-    $('.delete').on('click', function () {
+    $(document).on('click', '.delete', function () {
         var url = $(this).data('bookmark-group-delete');
         var element = this;
         $.ajax({
@@ -42,7 +41,7 @@ $(function () {
                 if (true === response.status) {
                     $(element).siblings().show();
                     $(element).hide();
-                    console.log('success')
+                    $(element).parent().parent().find('p#fans').text(response.post_likes);
                 } else {
                     alert('error');
                 }

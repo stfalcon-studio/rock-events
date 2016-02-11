@@ -1,0 +1,14 @@
+{% for event in events %}
+    <li class="event-list__item">
+        <a href="{{ path('event_show', { slug: event.slug }) }}" class="event-list__link">
+            <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.name }}" class="event-list__img" height="385px" width="385">
+            <div class="event-list__price">$100 - $150</div>
+            <section class="event-list__details">
+                <h3 class="event-list__group">{{ event.name }}</h3>
+                <p class="event-list__place pin-icon-t">{{ event.city }}, {{ event.address }}</p>
+                <p class="event-list__time time-icon-t">{{ event.beginAt|date('F jS \\a\\t g:ia') }}</p>
+            </section>
+            <div class="event-list__but">See more</div>
+        </a>
+    </li>
+{% endfor %}

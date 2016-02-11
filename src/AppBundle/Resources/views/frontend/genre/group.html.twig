@@ -1,23 +1,37 @@
-{% extends 'base.html.twig' %}
+{% extends 'genre.html.twig' %}
 
 {% block body %}
-    <h3>{{ genre.name }}</h3>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Назва</th>
-            <th>Опис</th>
-            <th>Рік створення</th>
-        </tr>
-        </thead>
-        <tbody class="table table-hover">
+    <div class="l-breadcrumbs">
+        <div class="content">
+            <ul class="l-breadcrumbs__list">
+                <li class="l-breadcrumbs__item"><a href="{{ path('genre_list') }}" class="l-breadcrumbs__link">Genres</a></li>
+                <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">{{ genre.name }}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="l-filter-elements">
         {% for group in groups %}
-            <tr id="groups">
-                <td><a href="{{ path('group_show',{ 'slug' : group.slug })}}">{{ group.name }}</a></td>
-                <td>{{ group.description }}</td>
-                <td>{{ group.foundedAt|date("Y") }}</td>
-            </tr>
+            <div class="filtered-element">
+                <div class="about-header about-header_prev content cf">
+                    <img src="{{ vich_uploader_asset(group[0], 'imageFile') }}" alt="{{ group[0].name }}" class="about-header__img" width="272px" height="136px">
+                    <div class="style-list-wrapper">
+                        <h2 class="about-header__header"><a href="{{ path('group_show', { 'slug': group[0].slug }) }}" class="about-header__group">{{ group[0].name }}</a></h2>
+                        {{ render(controller('AppBundle:Frontend/Group:genres', { 'group' : group[0] } )) }}
+                    </div>
+                    <ul class="group-statistic cf">
+                        {% if app.user %}
+                            {% include '@App/frontend/group/bookmark_group.html.twig' with { 'group': group[0], 'userGroups': userGroups } %}
+                        {% endif %}
+                        <li class="group-statistic__item"><p id="fans" class="group-statistic__link group-statistic__link_fans">{{ group['likes'] }}</p></li>
+                        <li class="group-statistic__item f-r"><a href="{{ path('group_show', { 'slug': group[0].slug }) }}" class="group-statistic__link group-statistic__but">See more</a></li>
+                    </ul>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/group.js') }}"></script>
+{% endblock %}
+

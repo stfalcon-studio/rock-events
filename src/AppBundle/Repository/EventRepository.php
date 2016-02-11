@@ -22,11 +22,13 @@ class EventRepository extends EntityRepository
      *
      * @return Event[]
      */
-    public function findActualEvents()
+    public function findActualEvents($limit = 10, $offset = 0)
     {
         $qb = $this->createQueryBuilder('e');
 
         return $qb->where($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->setFirstResult($offset)
+                  ->setMaxResults($limit)
                   ->getQuery()
                   ->getResult();
     }
@@ -178,8 +180,119 @@ class EventRepository extends EntityRepository
                        ->setParameter('genre', $genre);
             }
         }
+        $qb->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''));
 
         return $events->getQuery()
                       ->getResult();
+    }
+
+    /**
+     * @param int $limit  Limit
+     * @param int $offset Offset
+     *
+     * @return Event[]
+     */
+    public function findPreviousEvents($limit = 5, $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->where($qb->expr()->lt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->orderBy('e.beginAt', 'ASC')
+                  ->setFirstResult($offset)
+                  ->setMaxResults($limit)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find actual events by group
+     *
+     * @param Group $event Group
+     *
+     * @return Event[]
+     */
+    public function findActualEventsByGroup(Group $group)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->where($qb->expr()->eq('g', ':group'))
+                  ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->join('e.eventGroups', 'eg')
+                  ->join('eg.group', 'g')
+                  ->setParameter('group', $group)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find all city by events
+     *
+     * @return Event[]
+     */
+    public function findAllCityByEvents()
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->select('e.id, e.city as name, COUNT(e.city) as count_city')
+                  ->where($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->groupBy('e.city')
+                  ->orderBy('count_city', 'DESC')
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find events by filter
+     *
+     * @param null|Genre  $genre
+     * @param null|string $city
+     * @param null|string $date
+     *
+     * @return array
+     */
+    public function findEventsByFilter($genre = null, $city = null, $date = null)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $parameters = [];
+
+        $qb->where($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+           ->join('e.eventGroups', 'eg')
+           ->join('eg.group', 'gr')
+           ->join('gr.groupGenres', 'gg')
+           ->join('gg.genre', 'ge');
+
+        if (!empty($genre)) {
+            $qb->andWhere($qb->expr()->eq('ge', ':genre'));
+            $parameters['genre'] = $genre;
+        }
+
+        if (!empty($city)) {
+            $qb->andWhere($qb->expr()->eq('e.city', ':city'));
+            $parameters['city'] = $city;
+        }
+
+        if (!empty($date)) {
+            $differenceBetweenDates = 'DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''.')';
+
+            switch ($date) {
+                case 'today':
+                    $qb->andWhere($qb->expr()->gte(1, $differenceBetweenDates));
+                    break;
+                case 'week':
+                    $qb->andWhere($qb->expr()->gte(7, $differenceBetweenDates));
+                    break;
+                case 'month':
+                    $qb->andWhere($qb->expr()->gte(31, $differenceBetweenDates));
+                    break;
+                case 'year':
+                    $qb->andWhere($qb->expr()->gte(360, $differenceBetweenDates));
+                    break;
+            }
+        }
+
+        return $qb->setParameters($parameters)
+                  ->getQuery()
+                  ->getResult();
     }
 }

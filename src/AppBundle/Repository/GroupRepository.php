@@ -89,4 +89,210 @@ class GroupRepository extends EntityRepository
                   ->getQuery()
                   ->getResult();
     }
+
+    /**
+     * Find Groups with count likes
+     *
+     * @return Group[]
+     */
+    public function findGroupsWithCountLike()
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->addSelect('COUNT(ug.group) as likes')
+                  ->leftJoin('g.userGroups', 'ug')
+                  ->groupBy('g.id')
+                  ->addGroupBy('ug.group')
+                  ->orderBy('likes', 'DESC')
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find count likes by group
+     *
+     * @param Group $group Group
+     *
+     * @return int
+     */
+    public function findCountLikesByGroup(Group $group)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->select('COUNT(ug.group) as likes')
+                  ->where($qb->expr()->eq('g', ':group'))
+                  ->leftJoin('g.userGroups', 'ug')
+                  ->setParameter('group', $group)
+                  ->getQuery()
+                  ->getOneOrNullResult();
+    }
+
+    /**
+     * Find groups by genre with count likes
+     *
+     * @param Genre $genre Genre
+     *
+     * @return array
+     */
+    public function findGroupsByGenreWithCountLikes(Genre $genre)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->addSelect('COUNT(ug.group) as likes')
+                  ->where($qb->expr()->eq('ge', ':genre'))
+                  ->leftJoin('g.userGroups', 'ug')
+                  ->join('g.groupGenres', 'gg')
+                  ->join('gg.genre', 'ge')
+                  ->groupBy('gg.id')
+                  ->orderBy('likes', 'DESC')
+                  ->setParameter('genre', $genre)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find Check by user and group
+     *
+     * @param User  $user  User
+     * @param Group $group Group
+     *
+     * @return Group[]
+     */
+    public function findCheckByUserAndGroup(User $user, Group $group)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->where($qb->expr()->eq('u', ':user'))
+                  ->andWhere($qb->expr()->eq('g', ':group'))
+                  ->join('g.userGroups', 'ug')
+                  ->join('ug.user', 'u')
+                  ->setParameters([
+                      'user'  => $user,
+                      'group' => $group,
+                  ])
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find similar groups by genres
+     *
+     * @param Genre[] $genres Array of Genre
+     *
+     * @return Group[]
+     */
+    public function findGroupsByGenres(array $genres, $limit = 6, $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        $qb->join('g.groupGenres', 'gg')
+           ->join('gg.genre', 'ge');
+
+        foreach ($genres as $item => $genre) {
+            if (0 === $item) {
+                $qb->where($qb->expr()->eq('ge', ':genre'))
+                   ->setParameter('genre', $genre);
+            } else {
+                $qb->orWhere($qb->expr()->eq('ge', ':genre'))
+                   ->setParameter('genre', $genre);
+            }
+        }
+
+        return $qb->setFirstResult($offset)
+                  ->setMaxResults($limit)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find all countries by groups
+     *
+     * @return Group[]
+     */
+    public function findAllCountiesByGroups()
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->select('g.id, g.country as name, COUNT(g.country) as count_country')
+                  ->groupBy('g.country')
+                  ->orderBy('count_country', 'DESC')
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find all cities by groups
+     *
+     * @return Group[]
+     */
+    public function findAllCitiesByGroups()
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->select('g.id, g.city as name, COUNT(g.city) as count_city')
+                  ->groupBy('g.city')
+                  ->orderBy('count_city', 'DESC')
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find groups by filter
+     *
+     * @param null|Genre  $genre
+     * @param null|string $country
+     * @param null|string $city
+     * @param null|string $like
+     *
+     * @return array
+     */
+    public function findGroupsByFilter($genre = null, $country = null, $city = null, $like = null)
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        $parameters = [];
+
+        $qb->addSelect('COUNT(ug.group) as likes')
+           ->join('g.groupGenres', 'gg')
+           ->join('gg.genre', 'ge')
+           ->leftJoin('g.userGroups', 'ug')
+           ->groupBy('gg.id');
+
+        //Flag for check where
+        $flag = false;
+
+        if (!empty($genre)) {
+            $qb->where($qb->expr()->eq('ge', ':genre'));
+            $parameters['genre'] = $genre;
+            $flag                = true;
+        }
+
+        if (!empty($country)) {
+            if (false === $flag) {
+                $qb->where($qb->expr()->eq('g.country', ':country'));
+                $flag = true;
+            } else {
+                $qb->andWhere($qb->expr()->eq('g.country', ':country'));
+            }
+            $parameters['country'] = $country;
+        }
+
+        if (!empty($city)) {
+            if (false === $flag) {
+                $qb->where($qb->expr()->eq('g.city', ':city'));
+                $flag = true;
+            } else {
+                $qb->andWhere($qb->expr()->eq('g.city', ':city'));
+            }
+            $parameters['city'] = $city;
+        }
+
+        if (!empty($like)) {
+            $qb->orderBy('likes', $like);
+        }
+
+        return $qb->setParameters($parameters)
+                  ->getQuery()
+                  ->getResult();
+    }
 }

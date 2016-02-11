@@ -84,6 +84,55 @@ class User extends BaseUser
     private $phone;
 
     /**
+     * @var string $facebookId ID of facebook
+     *
+     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     *
+     * @Gedmo\Versioned
+     */
+    protected $facebookId;
+
+    /**
+     * @var string $facebookAccessToken Access token of facebook
+     *
+     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+     */
+    protected $facebookAccessToken;
+
+    /**
+     * @var string $googleId ID of google
+     *
+     * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
+     *
+     * @Gedmo\Versioned
+     */
+    protected $googleId;
+
+    /**
+     * @var string $googleAccessToken Access token of Google
+     *
+     * @ORM\Column(name="google_access_token", type="string", length=255, nullable=true)
+     */
+    protected $googleAccessToken;
+
+    /**
+     * @var string $vkId ID of vk
+     *
+     * @ORM\Column(name="vk_id", type="string", length=255, nullable=true)
+     *
+     * @Gedmo\Versioned
+     */
+    protected $vkId;
+
+    /**
+     * @var string $vkAccessToken Access token of VK
+     *
+     * @ORM\Column(name="vk_access_token", type="string", length=255, nullable=true)
+     */
+    protected $vkAccessToken;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -268,5 +317,149 @@ class User extends BaseUser
     public function getRequestManager()
     {
         return $this->requestManagers;
+    }
+
+    /**
+     * Set facebookId
+     *
+     * @param string $facebookId ID of facebook
+     *
+     * @return User
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get facebook ID
+     *
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+
+    /**
+     * Set facebook access token
+     *
+     * @param string $facebookAccessToken Access token of facebook
+     *
+     * @return User
+     */
+    public function setFacebookAccessToken($facebookAccessToken)
+    {
+        $this->facebookAccessToken = $facebookAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get facebook access token
+     *
+     * @return string
+     */
+    public function getFacebookAccessToken()
+    {
+        return $this->facebookAccessToken;
+    }
+
+    /**
+     * Set google ID
+     *
+     * @param string $googleId ID of google
+     *
+     * @return User
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    /**
+     * Get google ID
+     *
+     * @return string
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * Set google access token
+     *
+     * @param string $googleAccessToken Access token of google
+     *
+     * @return User
+     */
+    public function setGoogleAccessToken($googleAccessToken)
+    {
+        $this->googleAccessToken = $googleAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get google access token
+     *
+     * @return string
+     */
+    public function getGoogleAccessToken()
+    {
+        return $this->googleAccessToken;
+    }
+
+    /**
+     * Set vk ID
+     *
+     * @param string $vkId ID of vk
+     *
+     * @return User
+     */
+    public function setVkId($vkId)
+    {
+        $this->vkId = $vkId;
+
+        return $this;
+    }
+
+    /**
+     * Get vk ID
+     *
+     * @return string
+     */
+    public function getVkId()
+    {
+        return $this->vkId;
+    }
+
+    /**
+     * Set vk access token
+     *
+     * @param string $vkAccessToken Access token of vk
+     *
+     * @return User
+     */
+    public function setVkAccessToken($vkAccessToken)
+    {
+        $this->vkAccessToken = $vkAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get vk access token
+     *
+     * @return string
+     */
+    public function getVkAccessToken()
+    {
+        return $this->vkAccessToken;
     }
 }

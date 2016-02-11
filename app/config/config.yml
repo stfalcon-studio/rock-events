@@ -5,9 +5,10 @@ imports:
     - { resource: doctrine/doctrine.yml }
     - { resource: doctrine/extensions.yml }
     - { resource: fos/user.yml }
+    - { resource: hwi_oauth.yml }
     - { resource: sonata/block.yml }
     - { resource: sonata/admin.yml }
-
+    - { resource: vich_uploader.yml }
 
 parameters:
     locale: uk
@@ -39,6 +40,7 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - 'form/fields.html.twig'
+        - 'VichUploaderBundle:Form:fields.html.twig'
     form:
         resources:
             - 'SonataCoreBundle:Form:datepicker.html.twig'

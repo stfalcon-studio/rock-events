@@ -24,6 +24,7 @@ $(function () {
                 if (true === response.status) {
                     $(element).siblings().show();
                     $(element).hide();
+                    $(element).parent().parent().find('p#count_like').text(response.post_likes);
                     console.log('success');
                 } else {
                     console.log('error');
@@ -41,6 +42,7 @@ $(function () {
                 if (true === response.status) {
                     $(element).siblings().show();
                     $(element).hide();
+                    $(element).parent().parent().find('p#count_like').text(response.post_likes);
                     console.log('success')
                 } else {
                     console.log('error');
@@ -49,3 +51,4 @@ $(function () {
         });
     });
 });
+

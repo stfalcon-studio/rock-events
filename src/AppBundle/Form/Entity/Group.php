@@ -3,13 +3,17 @@
 namespace AppBundle\Form\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Group Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ *
+ * @Vich\Uploadable
  */
 class Group
 {
@@ -24,9 +28,31 @@ class Group
     private $description;
 
     /**
+     * @var string $country Country
+     */
+    private $country;
+
+    /**
+     * @var string $city City
+     */
+    private $city;
+
+    /**
      * @var int $foundedAt founded at
      */
     private $foundedAt;
+
+    /**
+     * @Vich\UploadableField(mapping="group_image", fileNameProperty="imageName")
+     *
+     * @var File $imageFile Image File
+     */
+    private $imageFile;
+
+    /**
+     * @var string $imageName Image name
+     */
+    private $imageName;
 
     /**
      * Set name
@@ -91,6 +117,54 @@ class Group
     }
 
     /**
+     * Set country
+     *
+     * @param string $country Country
+     *
+     * @return Group
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city City
+     *
+     * @return Group
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string City
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
      * Get founded At
      *
      * @return int Founded At
@@ -98,5 +172,44 @@ class Group
     public function getFoundedAt()
     {
         return $this->foundedAt;
+    }
+    /*
+     * @param File|UploadedFile $image Image
+     *
+     * @return Group
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName Image name
+     *
+     * @return Group
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
     }
 }

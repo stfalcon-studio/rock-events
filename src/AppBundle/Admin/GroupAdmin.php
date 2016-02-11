@@ -40,6 +40,12 @@ class GroupAdmin extends Admin
             ->add('description', null, [
                 'label' => 'Опис',
             ])
+            ->add('country', null, [
+                'label' => 'Країна',
+            ])
+            ->add('city', null, [
+                'label' => 'Місто',
+            ])
             ->add('foundedAt', null, [
                 'label' => 'Рік заснування',
             ]);
@@ -58,8 +64,21 @@ class GroupAdmin extends Admin
             ->add('description', null, [
                 'label' => 'Опис',
             ])
+            ->add('country', null, [
+                'label' => 'Країна',
+            ])
+            ->add('city', null, [
+                'label' => 'Місто',
+            ])
             ->add('foundedAt', null, [
                 'label' => 'Рік заснування',
+            ])
+            ->add('slug', null, [
+                'label' => 'Slug',
+            ])
+            ->add('imageFile', 'file', [
+                'label'    => 'Зображення',
+                'required' => false,
             ]);
     }
 
@@ -74,6 +93,12 @@ class GroupAdmin extends Admin
             ])
             ->add('description', null, [
                 'label' => 'Опис',
+            ])
+            ->add('country', null, [
+                'label' => 'Країна',
+            ])
+            ->add('city', null, [
+                'label' => 'Місто',
             ])
             ->add('foundedAt', null, [
                 'label' => 'Рік заснування',
@@ -96,6 +121,12 @@ class GroupAdmin extends Admin
         $datagridMapper
             ->add('name', null, [
                 'label' => 'Назва',
+            ])
+            ->add('country', null, [
+                'label' => 'Країна',
+            ])
+            ->add('city', null, [
+                'label' => 'Місто',
             ])
             ->add('description', null, [
                 'label' => 'Опис',

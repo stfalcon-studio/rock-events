@@ -5,8 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Group Entity
@@ -17,6 +19,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
  *
  * @Gedmo\Loggable
+ *
+ * @Vich\Uploadable
  */
 class Group
 {
@@ -96,6 +100,32 @@ class Group
     private $description;
 
     /**
+     * @var string $country Country
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="100")
+     * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
+     */
+    private $country;
+
+    /**
+     * @var string $city City
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="100")
+     * @Assert\Type(type="string")
+     *
+     * @Gedmo\Versioned
+     */
+    private $city;
+
+    /**
      * @var \Datetime $foundedAt founded at
      *
      * @ORM\Column(type="datetime", nullable=true)
@@ -121,6 +151,20 @@ class Group
      * @Gedmo\Versioned
      */
     public $isActive = true;
+
+    /**
+     * @Vich\UploadableField(mapping="group_image", fileNameProperty="imageName", nullable=true)
+     *
+     * @var File $imageFile Image File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string $imageName Image name
+     */
+    private $imageName;
 
     /**
      * To string
@@ -193,6 +237,54 @@ class Group
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country Country
+     *
+     * @return Group
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city City
+     *
+     * @return Group
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string City
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 
     /**
@@ -401,5 +493,49 @@ class Group
     public function getRequestManagerGroups()
     {
         return $this->requestManagerGroups;
+    }
+
+    /*
+     * @param File|UploadedFile $image Image
+     *
+     * @return Group
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName Image name
+     *
+     * @return Group
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
     }
 }

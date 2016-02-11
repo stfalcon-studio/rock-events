@@ -5,8 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Event Entity
@@ -17,6 +19,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
  *
  * @Gedmo\Loggable
+ *
+ * @Vich\Uploadable
  */
 class Event
 {
@@ -154,6 +158,20 @@ class Event
      * @Gedmo\Versioned
      */
     public $isActive = true;
+
+    /**
+     * @Vich\UploadableField(mapping="event_image", fileNameProperty="imageName", nullable=true)
+     *
+     * @var File $imageFile Image File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string $imageName Image name
+     */
+    private $imageName;
 
     /**
      * Constructor
@@ -481,5 +499,49 @@ class Event
     public function getEventGroups()
     {
         return $this->eventGroups;
+    }
+
+    /*
+     * @param File|UploadedFile $image Image
+     *
+     * @return Event
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName Image name
+     *
+     * @return Event
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
     }
 }

@@ -1,33 +1,50 @@
-{% extends 'base.html.twig' %}
+{% extends 'group.html.twig' %}
 
 {% block body %}
-    <h1>Список Гуртів</h1>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Назва</th>
-            <th>Опис</th>
-            <th>Рік створення</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody class="table table-hover">
-        {% for group in groups %}
-            <tr id="groups">
-                <td><a href="{{ path('group_show',{ 'slug' : group.slug }) }}">{{ group.name }}</a></td>
-                <td>{{ group.description }}</td>
-                <td>{{ group.foundedAt|date("Y") }}</td>
-                {% if app.user %}
-                    <td>
-                        {% include '@App/frontend/group/bookmark_group.html.twig' with { 'group': group, 'userGroups': userGroups } %}
-                    </td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="l-filters">
+        <div class="content lp">
+            <ul class="l-filters__list">
+                <li class="l-filters__item"><label for="country" class="l-filters__label">Країна:</label>
+                    <select name="" id="country" class="l-filters__select l-filters__select_country filer">
+                        <option value="0" class="l-filters__option">Всі країни</option>
+                        {% for country in countries %}
+                            <option value="{{ country.name }}" class="l-filters__option">{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="city" class="l-filters__label">Місто:</label>
+                    <select name="" id="city" class="l-filters__select l-filters__select_city filer">
+                        <option value="0" class="l-filters__option">Всі міста</option>
+                        {% for city in cities %}
+                            <option value="{{ city.name }}" class="l-filters__option">{{ city.name }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="genre" class="l-filters__label">Жанр:</label>
+                    <select name="" id="genre" class="l-filters__select l-filters__select_genre filer">
+                        <option value="0" class="l-filters__option">Всі жанри</option>
+                        {% for genre in genres %}
+                            <option value="{{ genre.id }}" class="l-filters__option">{{ genre.name }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li class="l-filters__item"><label for="like" class="l-filters__label">Популярність:</label>
+                    <select name="" id="like" class="l-filters__select l-filters__select_fans filer">
+                        <option value="0" class="l-filters__option">Без фільтру</option>
+                        <option value="ASC" class="l-filters__option">По зростанню</option>
+                        <option value="DESC" class="l-filters__option">По спадванню</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="group-div" class="l-filter-elements">
+        {{ render(controller('AppBundle:Frontend/Group:listGroupWidget', { 'groups' : groups, 'userGroups': userGroups} )) }}
+    </div>
+</div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/group.js') }}"></script>
+    <script src="{{ asset('js/filter_group_page.js') }}"></script>
 {% endblock %}
