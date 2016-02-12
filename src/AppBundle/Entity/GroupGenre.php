@@ -61,9 +61,10 @@ class GroupGenre
      */
     public function __toString()
     {
-        $result = $this->group->getName().' - '.$this->genre->getName();
-        if (null === $result) {
-            $result = 'New GroupGenre';
+        $result = 'New GroupGenre';
+
+        if (null !== $this->group && null !== $this->genre) {
+            $result = $this->group->getName().' - '.$this->genre->getName();
         }
 
         return $result;

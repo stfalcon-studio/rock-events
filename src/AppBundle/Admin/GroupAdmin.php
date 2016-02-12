@@ -102,7 +102,7 @@ class GroupAdmin extends Admin
             ->add('city', null, [
                 'label' => 'Місто',
             ])
-            ->add('foundedAt', null, [
+            ->add('foundedAt', 'sonata_type_datetime_picker', [
                 'label' => 'Рік заснування',
                 'data'  => new \DateTime(),
             ])

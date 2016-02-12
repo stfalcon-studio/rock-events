@@ -4,6 +4,7 @@ namespace AppBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 /**
  * EventGroupAdmin class
@@ -21,5 +22,15 @@ class EventGroupAdmin extends Admin
             ->add('group', null, [
                 'label' => 'Гурт'
             ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('show')
+                   ->remove('list')
+                   ->remove('delete');
     }
 }

@@ -61,9 +61,10 @@ class EventGroup
      */
     public function __toString()
     {
-        $result = $this->event->getName().' - '.$this->group->getName();
-        if (null === $result) {
-            $result = 'New EventGroup';
+        $result = 'New EventGroup';
+
+        if (null !== $this->event && null !== $this->group) {
+            $result = $this->event->getName().' - '.$this->group->getName();
         }
 
         return $result;
