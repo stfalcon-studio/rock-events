@@ -113,7 +113,7 @@ class UserController extends Controller
 
             $em->persist($requestManager);
 
-            foreach($requestManagerForm->getGroups() as $group){
+            foreach ($requestManagerForm->getGroups() as $group) {
                 $group = $em->getRepository('AppBundle:Group')->findOneBy([
                     'slug' => $group->getSlug(),
                 ]);

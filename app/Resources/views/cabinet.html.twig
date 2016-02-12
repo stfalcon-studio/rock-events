@@ -1,11 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    {% stylesheets
-    filter='cssrewrite'
-    'css/bootstrap.min.css'
-    %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-    {{ parent() }}
+{% block body %}
+<div class="l-admin cf content">
+    <div id="tabs-block-admin" class="cf">
+        <ul  class="l-admin__list">
+            <li class="l-admin__item">
+                <a href="#tab-1" class="l-admin__link ">
+                    <p class="l-admin__icon profile-icon-big-t"></p><span class="l-admin__head">Profile</span></a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-2" class="l-admin__link">
+                    <p class="l-admin__icon concert-icon-big-t"></p><span class="l-admin__head">Next concerts</span>
+                </a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-3" class="l-admin__link ">
+                    <p class="l-admin__icon group-icon-big-t"></p> <span class="l-admin__head">Groups </span></a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-4" class="l-admin__link ">
+                    <p class="l-admin__icon genre-icon-big-t"></p><span class="l-admin__head"> Genre</span> </a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-5" class="l-admin__link  ">
+                    <p class="l-admin__icon cabinet-icon-big-t"></p><span class="l-admin__head"> Manager</span> </a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-6" class="l-admin__link l-admin__link_log-out ">
+                    <p class="l-admin__icon logout-icon-big-t"></p><span class="l-admin__head"> Log out</span> </a>
+            </li>
+        </ul>
 {% endblock %}
+
+{% block footer %}
+    </div>
+</div>
+    {{ parent() }}
+{% endblock footer %}
