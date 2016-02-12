@@ -1,12 +1,21 @@
 {% extends 'cabinet.html.twig' %}
 
 {% block body %}
-    {{ form_start(form) }}
-        {{ form_errors(form) }}
-        {{ form_rest(form) }}
-        {% include ':form:group.html.twig' with { action: 'request_manager' } %}
-        <button type="submit" class="btn btn-success">Залишити заявку</button>
-    {{ form_end(form) }}
+    {{ parent() }}
+<div id="tab-5" class="scroll">
+    <section class="l-profile ">
+        <span class="profile-form__list">
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+                {{ form_rest(form) }}
+                {% include ':form:group.html.twig' with { action: 'request_manager' } %}
+            <div class="center-align">
+                <button type="submit" class="profile-form__submit">Залишити заявку</button>
+            </div>
+            {{ form_end(form) }}
+        </span>
+    </section>
+</div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

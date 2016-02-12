@@ -24,6 +24,17 @@ a {
   text-align: left;
   display: inline-block;
 }
+
+.left-align {
+  text-align: right;
+  display: block;
+}
+
+.center-align {
+  text-align: center;
+  display: block;
+  margin-top: 30px;
+}
 .al-center {
   text-align: center;
   display: inline-block;
@@ -2321,6 +2332,11 @@ iframe {
   display: block;
   margin-left: 15px;
 }
+.profile-form__input_small {
+  width: 50% !important;
+  margin-top: 15px;
+  display: inline-block !important;
+}
 .profile-form__input,
 .profile-form__button,
 .profile-form__submit {
@@ -2332,6 +2348,24 @@ iframe {
   -webkit-box-shadow: none;
   box-shadow: none;
   outline: none;
+}
+.profile-form__submit_small {
+  padding: 10px 30px;
+  font-size: 16px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  color: #fff;
+  background: #2089f4;
+  border-radius: 25px;
+  margin-left: 25px;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 .profile-form__input {
   margin-bottom: 30px;

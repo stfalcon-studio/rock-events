@@ -1,11 +1,11 @@
 {% block event_groups_group_slug_widget %}
-    <tr id="__slug__">
-        <td>
+    <tr id="__slug__" class="tabs-list__row">
+        <td class="tabs-list__td">
             <span>__name__</span>
             <input type="hidden" id="{{ action }}_groups" name="{{ action }}[groups][][slug]" value="__slug__">
         </td>
         <td>
-            <button type="button" class="btn btn-danger" onclick="removeTr($(this));" id="group_delete" name="__value__">delete</button>
+            <a type="button" class="delete-icon" onclick="removeTr($(this));" id="group_delete" name="__value__"></a>
         </td>
     </tr>
 {% endblock event_groups_group_slug_widget %}

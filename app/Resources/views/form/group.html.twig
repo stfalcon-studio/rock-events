@@ -1,10 +1,10 @@
+<label class="profile-form__label">Список гуртів</label>
 <div id="div_table" data-prototype="{% filter escape %}{% include 'form/table.html.twig' with { 'action':action } %}{% endfilter %}"></div>
-<select class="form-control" id="selected-group">
+<select class="form-control profile-form__input profile-form__input_small" id="selected-group">
     {% for group in form.vars.groups %}
         <option id="{{ group.slug }}">{{ group.name }}</option>
     {% endfor %}
 </select>
-<div>
-    <button type="button" class="btn btn-primary" id="add_button">Додати гурт</button>
-</div>
+
+    <button type="button" class="profile-form__submit_small" id="add_button">Додати гурт</button>
 
