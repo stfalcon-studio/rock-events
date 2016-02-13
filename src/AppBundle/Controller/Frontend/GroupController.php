@@ -177,7 +177,7 @@ class GroupController extends Controller
      *
      * @return Response
      */
-    public function listGroupWidgetAction(array $groups, array $userGroups)
+    public function listGroupWidgetAction(array $groups, array $userGroups = null)
     {
         return $this->render('AppBundle:frontend/group:list_group_widget.html.twig', [
             'groups'     => $groups,

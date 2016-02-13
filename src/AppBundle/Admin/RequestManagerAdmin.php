@@ -31,6 +31,15 @@ class RequestManagerAdmin extends Admin
     /**
      * {@inheritdoc}
      */
+    public function preUpdate($requestManager)
+    {
+        /** var RequestManager $requestManager */
+        $requestManager->setUpdatedBy($this->getUser());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function configureShowField(ShowMapper $showMapper)
     {
         $showMapper

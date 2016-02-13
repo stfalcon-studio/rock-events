@@ -55,6 +55,22 @@ class EventGroup
     private $group;
 
     /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = 'New EventGroup';
+
+        if (null !== $this->event && null !== $this->group) {
+            $result = $this->event->getName().' - '.$this->group->getName();
+        }
+
+        return $result;
+    }
+
+    /**
      * Get ID
      *
      * @return int
