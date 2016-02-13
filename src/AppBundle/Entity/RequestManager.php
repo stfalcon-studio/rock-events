@@ -13,9 +13,11 @@ use AppBundle\DBAL\Types\RequestManagerStatusType;
  * Request Right Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  *
  * @ORM\Table(name="request_managers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RequestManagerRepository")
+ * @ORM\EntityListeners({"AppBundle\EntityListener\RequestManagerListener"})
  *
  * @Gedmo\Loggable
  */
@@ -105,9 +107,10 @@ class RequestManager
      */
     public function __toString()
     {
-        $result = $this->getFullName();
-        if (null === $result) {
-            $result = 'New Request Manager';
+        $result = 'New Request Manager';
+
+        if (null !== $this->getFullName()) {
+            $result = $this->getFullName();
         }
 
         return $result;

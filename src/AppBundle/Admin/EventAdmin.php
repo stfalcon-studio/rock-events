@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
  * EventAdmin class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class EventAdmin extends Admin
 {
@@ -151,8 +152,7 @@ class EventAdmin extends Admin
                 'label'        => 'Гурти',
                 'by_reference' => true,
                 'required'     => false,
-            ],
-            [
+            ], [
                 'edit'            => 'inline',
                 'inline'          => 'table',
                 'link_parameters' => [

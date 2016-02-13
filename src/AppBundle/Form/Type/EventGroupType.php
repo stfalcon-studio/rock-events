@@ -45,55 +45,56 @@ class EventGroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', [
-                    'label' => 'Назва',
-                    'attr'  => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('description', 'ckeditor', [
-                    'label' => 'Опис',
-                    'attr'  => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('country', 'text', [
-                    'label' => 'Країна',
-                    'attr'  => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('city', 'text', [
-                    'label' => 'Місто',
-                    'attr'  => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('address', 'text', [
-                    'label' => 'Адреса',
-                    'attr'  => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('beginAt', 'datetime', [
-                    'label'       => 'Час початку о',
-                    'date_widget' => 'single_text',
-                    'time_widget' => 'single_text',
-                ])
-                ->add('endAt', 'datetime', [
-                    'label'       => 'Кінець о',
-                    'date_widget' => 'single_text',
-                    'time_widget' => 'single_text',
-                ])
-                ->add('groups', 'collection', [
-                    'type'         => new ShortGroupType(),
-                    'allow_add'    => true,
-                    'by_reference' => false,
-                    'label'        => 'Гурти',
-                    'attr'         => [
-                        'style' => 'display:none',
-                    ],
-                ]);
+        $builder
+            ->add('name', 'text', [
+                'label' => 'Назва',
+                'attr'  => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('description', 'ckeditor', [
+                'label' => 'Опис',
+                'attr'  => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('country', 'text', [
+                'label' => 'Країна',
+                'attr'  => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('city', 'text', [
+                'label' => 'Місто',
+                'attr'  => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('address', 'text', [
+                'label' => 'Адреса',
+                'attr'  => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('beginAt', 'datetime', [
+                'label'       => 'Час початку о',
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
+            ])
+            ->add('endAt', 'datetime', [
+                'label'       => 'Кінець о',
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
+            ])
+            ->add('groups', 'collection', [
+                'type'         => new ShortGroupType(),
+                'allow_add'    => true,
+                'by_reference' => false,
+                'label'        => 'Гурти',
+                'attr'         => [
+                    'style' => 'display:none',
+                ],
+            ]);
     }
 
     /**
@@ -101,7 +102,11 @@ class EventGroupType extends AbstractType
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['groups'] = $this->em->getRepository('AppBundle:Group')->findGroupsByManager($this->token->getToken()->getUser());
+        $user = $this->token->getToken()->getUser();
+
+        $groupRepository = $this->em->getRepository('AppBundle:Group');
+
+        $view->vars['groups'] = $groupRepository->findGroupsByManager($user);
     }
 
     /**

@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * RequestManagerGroup class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  *
  * @ORM\Table(name="request_managers_to_groups")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RequestManagerGroupRepository")
@@ -65,9 +66,9 @@ class RequestManagerGroup
     }
 
     /**
-     * Set requestManger
+     * Set request manger
      *
-     * @param RequestManager $requestManger Request manager
+     * @param RequestManager $requestManager Request manager
      *
      * @return RequestManagerGroup
      */
@@ -79,7 +80,7 @@ class RequestManagerGroup
     }
 
     /**
-     * Get requestManger
+     * Get request manger
      *
      * @return RequestManager
      */

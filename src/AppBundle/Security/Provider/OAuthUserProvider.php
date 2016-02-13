@@ -15,12 +15,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * OAuthUserProvider class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class OAuthUserProvider extends BaseClass
 {
     /**
-     * @param User                  $user
-     * @param UserResponseInterface $response
+     * @param User                  $user     User
+     * @param UserResponseInterface $response User response interface
      */
     public function connect(UserInterface $user, UserResponseInterface $response)
     {
@@ -113,7 +114,7 @@ class OAuthUserProvider extends BaseClass
         $user = parent::loadUserByOAuthUserResponse($response);
 
         $serviceName = $response->getResourceOwner()->getName();
-        switch($serviceName){
+        switch ($serviceName) {
             case 'vkontakte':
                 $user->setVkAccessToken($response->getAccessToken());
                 break;

@@ -5,7 +5,7 @@
             <ul class="latest-concert">
                 {% for event in events %}
                     <li class="latest-concert__item">
-                        <a href="" class="latest-concert__link">
+                        <a href="{{ path('event_show', { 'slug': event.slug }) }}" class="latest-concert__link">
                             <time class="latest-concert__time">{{ event.beginAt|date('F jS \\a\\t g:ia') }}</time>
                             <h3 class="latest-concert__group">{{ event.name }}</h3>
                         </a>

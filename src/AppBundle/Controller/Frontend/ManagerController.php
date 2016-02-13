@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  * Frontend ManagerController
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class ManagerController extends Controller
 {
@@ -45,8 +46,7 @@ class ManagerController extends Controller
      */
     public function addGroupAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         $form = $this->createForm('group');
@@ -63,16 +63,15 @@ class ManagerController extends Controller
                 ->setCity($groupForm->getCity())
                 ->setSlug($groupForm->getName())
                 ->setImageName($groupForm->getImageName())
-                ->setFoundedAt($groupForm->getFoundedAt())
+                ->setFoundedAt((new \DateTime())->setDate($groupForm->getFoundedAt(), 1, 1))
                 ->setCreatedBy($user)
                 ->setUpdatedBy($user);
-
-            $em->persist($group);
 
             $managerGroup = (new ManagerGroup())
                 ->setGroup($group)
                 ->setManager($user);
 
+            $em->persist($group);
             $em->persist($managerGroup);
             $em->flush();
         }
@@ -85,18 +84,17 @@ class ManagerController extends Controller
     /**
      * Update group
      *
-     * @param Group   $slug    Group
      * @param Request $request $request
+     * @param Group   $group   Group
      *
      * @return Response
      *
      * @Route("/manager/group/{slug}/update", name="manager_cabinet_group_update")
      * @ParamConverter("group", class="AppBundle:Group")
      */
-    public function updateGroupAction(Group $group, Request $request)
+    public function updateGroupAction(Request $request, Group $group)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         $groupForm = (new GroupForm())
@@ -120,13 +118,13 @@ class ManagerController extends Controller
                   ->setCountry($groupForm->getCountry())
                   ->setCity($groupForm->getCity())
                   ->setSlug($groupForm->getName())
-                  ->setFoundedAt($groupForm->getFoundedAt())
+                  ->setFoundedAt((new \DateTime())->setDate($groupForm->getFoundedAt(), 1, 1))
                   ->setCreatedBy($user)
                   ->setUpdatedBy($user);
 
-            $em->persist($group);
-
             $managerGroup->setGroup($group);
+
+            $em->persist($group);
             $em->persist($managerGroup);
 
             $em->flush();
@@ -158,7 +156,7 @@ class ManagerController extends Controller
     /**
      * Manager list events for group
      *
-     * @param Group $slug Group
+     * @param Group $group Group
      *
      * @return Response
      *
@@ -186,8 +184,7 @@ class ManagerController extends Controller
      */
     public function addEventAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         $form = $this->createForm('event_groups');
@@ -197,7 +194,6 @@ class ManagerController extends Controller
             /** @var EventForm $eventForm */
             $eventForm = $form->getData();
 
-            /** @var Event $event */
             $event = (new Event())
                 ->setName($eventForm->getName())
                 ->setDescription($eventForm->getDescription())
@@ -214,15 +210,17 @@ class ManagerController extends Controller
 
             /** @var Group $groupElement */
             foreach ($eventForm->getGroups() as $groupElement) {
-                $group       = $em->getRepository('AppBundle:Group')->findOneBy([
+                $group = $em->getRepository('AppBundle:Group')->findOneBy([
                     'slug' => $groupElement->getSlug(),
                 ]);
+
                 $eventGroups = (new EventGroup())
                     ->setEvent($event)
                     ->setGroup($group);
 
                 $em->persist($eventGroups);
             }
+
             $em->flush();
 
             return $this->redirectToRoute('manager_cabinet_dashboard');
@@ -246,11 +244,13 @@ class ManagerController extends Controller
      */
     public function updateEvent(Event $event, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        $groups    = $em->getRepository('AppBundle:Group')->findGroupsByEvent($event);
+        $groupRepository = $em->getRepository('AppBundle:Group');
+
+        $groups = $groupRepository->findGroupsByEvent($event);
+
         $eventForm = (new EventForm())
             ->setName($event->getName())
             ->setDescription($event->getDescription())
@@ -282,11 +282,11 @@ class ManagerController extends Controller
 
             $em->persist($event);
 
-            $groups = $em->getRepository('AppBundle:Group')->findGroupsByEvent($event);
+            $groups = $groupRepository->findGroupsByEvent($event);
 
             /** @var Group $groupElement */
             foreach ($eventForm->getGroups() as $groupElement) {
-                $group = $em->getRepository('AppBundle:Group')->findOneBy([
+                $group = $groupRepository->findOneBy([
                     'slug' => $groupElement->getSlug(),
                 ]);
 
@@ -312,6 +312,8 @@ class ManagerController extends Controller
     /**
      * Manager list all actual events
      *
+     * @return Response
+     *
      * @Route("/manager/events", name="manager_cabinet_events_list")
      */
     public function listEventsAction()
@@ -325,6 +327,8 @@ class ManagerController extends Controller
 
     /**
      * Manager list all previous events
+     *
+     * @return Response
      *
      * @Route("manager/events/previous", name="manager_cabinet_events_list_previous")
      */

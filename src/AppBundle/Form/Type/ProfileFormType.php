@@ -1,6 +1,5 @@
 <?php
 
-
 namespace AppBundle\Form\Type;
 
 use FOS\UserBundle\Util\LegacyFormHelper;
@@ -13,6 +12,7 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
  * ProfileFormType
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class ProfileFormType extends AbstractType
 {
@@ -21,25 +21,26 @@ class ProfileFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username', 'text', [
-                    'attr' => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('email', 'email', [
-                    'attr' => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('current_password', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\PasswordType'), [
-                    'label'              => 'form.current_password',
-                    'translation_domain' => 'FOSUserBundle',
-                    'mapped'             => false,
-                    'constraints'        => new UserPassword(),
-                    'attr'               => [
-                        'class' => 'form-control',
-                    ],
-                ]);
+        $builder
+            ->add('username', 'text', [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('email', 'email', [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('current_password', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\PasswordType'), [
+                'label'              => 'form.current_password',
+                'translation_domain' => 'FOSUserBundle',
+                'mapped'             => false,
+                'constraints'        => new UserPassword(),
+                'attr'               => [
+                    'class' => 'form-control',
+                ],
+            ]);
     }
 
     /**

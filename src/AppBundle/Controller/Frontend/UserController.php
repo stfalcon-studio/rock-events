@@ -16,6 +16,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
  * Frontend UserController
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class UserController extends Controller
 {
@@ -49,6 +50,7 @@ class UserController extends Controller
         if (null === $this->getUser()) {
             throw new UnauthorizedHttpException('Не зареєстрований');
         }
+
         $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
 
         return $this->render('AppBundle:frontend/user:group.html.twig', [
@@ -70,6 +72,7 @@ class UserController extends Controller
         if (null === $this->getUser()) {
             throw new UnauthorizedHttpException('Не зареєстрований');
         }
+
         $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByUser($this->getUser());
 
         return $this->render('AppBundle:frontend/user:genre.html.twig', [
@@ -90,17 +93,18 @@ class UserController extends Controller
      */
     public function requestRightManagerAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
+        $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+
+        if (null === $user) {
+            throw new UnauthorizedHttpException('Не зареєстрований');
+        }
 
         $form = $this->createForm('request_manager');
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            if (null === $user) {
-                throw new UnauthorizedHttpException('Не зареєстрований');
-            }
+
             /** @var RequestManagerForm $requestManagerForm */
             $requestManagerForm = $form->getData();
 
@@ -114,7 +118,7 @@ class UserController extends Controller
 
             $em->persist($requestManager);
 
-            foreach($requestManagerForm->getGroups() as $group){
+            foreach ($requestManagerForm->getGroups() as $group) {
                 $group = $em->getRepository('AppBundle:Group')->findOneBy([
                     'slug' => $group->getSlug(),
                 ]);
@@ -124,6 +128,7 @@ class UserController extends Controller
                     ->setRequestManager($requestManager);
                 $em->persist($requestManagerGroup);
             }
+
             $em->flush();
 
             return $this->redirectToRoute('user_request_manager');

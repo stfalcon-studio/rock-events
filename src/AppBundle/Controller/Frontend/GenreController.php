@@ -6,34 +6,43 @@ use AppBundle\Entity\Genre;
 use AppBundle\Entity\UserGenre;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
+/**
+ * Class GenreController
+ *
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
+ * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ */
 class GenreController extends Controller
 {
     /**
      * List genre
      *
-     * @Method("GET")
+     * @return Response
+     *
      * @Route("/genres", name="genre_list")
      */
     public function listAction()
     {
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresWithCountGroup();
+        $user = $this->getUser();
 
-        if (null === $this->getUser()) {
+        $genreRepository = $this->getDoctrine()->getRepository('AppBundle:Genre');
+
+        $genres = $genreRepository->findGenresWithCountGroup();
+
+        if (null === $user) {
             return $this->render('AppBundle:frontend/genre:list.html.twig', [
                 'genres' => $genres,
             ]);
         }
 
-        $userGenres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByUser($this->getUser());
+        $userGenres = $genreRepository->findGenresByUser($user);
 
         return $this->render('AppBundle:frontend/genre:list.html.twig', [
             'genres'     => $genres,
@@ -44,19 +53,20 @@ class GenreController extends Controller
     /**
      * Groups by genre
      *
-     * @param Genre $slug Genre
+     * @param Genre $genre Genre
      *
      * @return Response
      *
-     * @Method("GET")
      * @Route("/genre/{slug}/groups", name="genre_group")
      * @ParamConverter("genre", class="AppBundle:Genre")
      */
     public function groupAction(Genre $genre)
     {
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByGenreWithCountLikes($genre);
-
         $user = $this->getUser();
+
+        $groupRepository = $this->getDoctrine()->getRepository('AppBundle:Group');
+
+        $groups = $groupRepository->findGroupsByGenreWithCountLikes($genre);
 
         if (null == $user) {
             return $this->render('AppBundle:frontend/genre:group.html.twig', [
@@ -65,7 +75,7 @@ class GenreController extends Controller
             ]);
         }
 
-        $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
+        $userGroups = $groupRepository->findGroupsByUser($user);
 
         return $this->render('AppBundle:frontend/genre:group.html.twig', [
             'groups'     => $groups,
@@ -95,12 +105,12 @@ class GenreController extends Controller
      *
      * @param Genre $genre Genre
      *
-     * @Route("/genre/{slug}/bookmark", name="genre_add_to_bookmark")
-     * @ParamConverter("genre", class="AppBundle:Genre")
-     *
-     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
+     * @throws UnauthorizedHttpException
      *
      * @return JsonResponse
+     *
+     * @Route("/genre/{slug}/bookmark", name="genre_add_to_bookmark")
+     * @ParamConverter("genre", class="AppBundle:Genre")
      */
     public function ajaxAddToBookmarkAction(Genre $genre)
     {
@@ -127,30 +137,32 @@ class GenreController extends Controller
     /**
      * Ajax delete genre from user bookmark
      *
-     * @param Genre  $genre Genre
-     * @param string $route Route to redirect after action
+     * @param Request $request Request
+     * @param Genre   $genre   Genre
+     *
+     * @throws BadRequestHttpException
+     * @throws UnauthorizedHttpException
+     *
+     * @return JsonResponse
      *
      * @Route("/genre/{slug}/bookmark/delete", name="genre_delete_from_bookmark")
      * @ParamConverter("genre", class="AppBundle:Genre")
-     *
-     * @throws BadRequestHttpException Bab request 400 Request only AJAX
-     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
-     *
-     * @return JsonResponse
      */
-    public function ajaxDeleteFromBookmarkAction(Genre $genre, Request $request)
+    public function ajaxDeleteFromBookmarkAction(Request $request, Genre $genre)
     {
+        $user = $this->getUser();
+
         if (!$request->isXmlHttpRequest()) {
             throw new BadRequestHttpException('Не правильний запит');
         }
 
-        if (null === $this->getUser()) {
+        if (null === $user) {
             throw new UnauthorizedHttpException('Не зареєстрований');
         }
 
         $em        = $this->getDoctrine()->getManager();
         $userGenre = $em->getRepository('AppBundle:UserGenre')->findOneBy([
-            'user'  => $this->getUser(),
+            'user'  => $user,
             'genre' => $genre,
         ]);
 

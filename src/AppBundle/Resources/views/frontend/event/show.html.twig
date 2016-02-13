@@ -4,7 +4,8 @@
     <div class="l-breadcrumbs">
         <div class="content">
             <ul class="l-breadcrumbs__list">
-                <li class="l-breadcrumbs__item"><a href="{{ path('event_list') }}" class="l-breadcrumbs__link">Concert</a></li>
+                <li class="l-breadcrumbs__item">
+                    <a href="{{ path('event_list') }}" class="l-breadcrumbs__link">Concert</a></li>
                 <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">{{ event.name }}</a></li>
             </ul>
         </div>
@@ -69,18 +70,24 @@
                     <h2 class="concert-timer__header">To event left:</h2>
                     <ul class="clock">
                         <li class="clock__item clock__item_days">
-                            <span class="clock__number">{{ time_to_event_day }}</span></li>
+                            <span class="clock__number">{{ time_to_event|date('%d') }}</span>
+                        </li>
+
                         <li class="clock__item clock__colon"><span class="clock__colon">:</span></li>
+
                         <li class="clock__item clock__item_hours">
-                            <span class="clock__number">{{ time_to_event_hour }}</span></li>
+                            <span class="clock__number">{{ time_to_event|date('%H') }}</span>
+                        </li>
+
                         <li class="clock__item "><span class="clock__colon">:</span></li>
+
                         <li class="clock__item clock__item_minutes">
-                            <span class="clock__number">{{ time_to_event_minute }}</span></li>
+                            <span class="clock__number">{{ time_to_event|date('%i') }}</span>
+                        </li>
                     </ul>
                 </div>
-                {{ render(controller('AppBundle:Frontend/Event:recommendedConcerts', { 'group' : recommended_group } )) }}
+                {{ render(controller('AppBundle:Frontend/Event:recommendedConcerts', { 'event' : event } )) }}
             </aside>
         </article>
     </div>
-</div>
 {% endblock %}
