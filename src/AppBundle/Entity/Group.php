@@ -14,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * Group Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  *
  * @ORM\Table(name="groups")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
@@ -24,9 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Group
 {
-    use TimestampableEntity;
-
-    use BlameableEntityTrait;
+    use TimestampableEntity, BlameableEntityTrait;
 
     /**
      * @var int $id ID
@@ -185,9 +184,10 @@ class Group
      */
     public function __toString()
     {
-        $result = $this->getName();
-        if (null === $result) {
-            return "New Group";
+        $result = 'New Group';
+
+        if (null !== $this->getName()) {
+            $result = $this->getName();
         }
 
         return $result;
@@ -306,7 +306,7 @@ class Group
      *
      * @return Group
      */
-    public function setFoundedAt($foundedAt)
+    public function setFoundedAt(\DateTime $foundedAt)
     {
         $this->foundedAt = $foundedAt;
 
@@ -328,7 +328,7 @@ class Group
      *
      * @param string $slug Slug
      *
-     * @return Genre
+     * @return $this
      */
     public function setSlug($slug)
     {

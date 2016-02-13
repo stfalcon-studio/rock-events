@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityRepository;
  * Class GroupRepository
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class GroupRepository extends EntityRepository
 {
@@ -27,6 +28,7 @@ class GroupRepository extends EntityRepository
         $qb = $this->createQueryBuilder('g');
 
         return $qb->where($qb->expr()->eq('gg.genre', ':genre'))
+                  ->andWhere($qb->expr()->eq('g.isActive', true))
                   ->join('g.groupGenres', 'gg')
                   ->setParameter('genre', $genre)
                   ->getQuery()
@@ -45,6 +47,7 @@ class GroupRepository extends EntityRepository
         $qb = $this->createQueryBuilder('g');
 
         return $qb->where($qb->expr()->eq('e', ':event'))
+                  ->andWhere($qb->expr()->eq('g.isActive', true))
                   ->join('g.eventGroups', 'eg')
                   ->join('eg.event', 'e')
                   ->setParameter('event', $event)
@@ -64,6 +67,7 @@ class GroupRepository extends EntityRepository
         $qb = $this->createQueryBuilder('g');
 
         return $qb->where($qb->expr()->eq('u', ':user'))
+                  ->andWhere($qb->expr()->eq('g.isActive', true))
                   ->join('g.userGroups', 'ug')
                   ->join('ug.user', 'u')
                   ->setParameter('user', $user)
@@ -83,6 +87,7 @@ class GroupRepository extends EntityRepository
         $qb = $this->createQueryBuilder('g');
 
         return $qb->where($qb->expr()->eq('m', ':user'))
+                  ->andWhere($qb->expr()->eq('g.isActive', true))
                   ->join('g.managerGroups', 'mg')
                   ->join('mg.manager', 'm')
                   ->setParameter('user', $user)
@@ -100,6 +105,7 @@ class GroupRepository extends EntityRepository
         $qb = $this->createQueryBuilder('g');
 
         return $qb->addSelect('COUNT(ug.group) as likes')
+                  ->andWhere($qb->expr()->eq('g.isActive', true))
                   ->leftJoin('g.userGroups', 'ug')
                   ->groupBy('g.id')
                   ->addGroupBy('ug.group')
@@ -121,6 +127,7 @@ class GroupRepository extends EntityRepository
 
         return $qb->select('COUNT(ug.group) as likes')
                   ->where($qb->expr()->eq('g', ':group'))
+                  ->andWhere($qb->expr()->eq('g.isActive', true))
                   ->leftJoin('g.userGroups', 'ug')
                   ->setParameter('group', $group)
                   ->getQuery()
@@ -140,6 +147,7 @@ class GroupRepository extends EntityRepository
 
         return $qb->addSelect('COUNT(ug.group) as likes')
                   ->where($qb->expr()->eq('ge', ':genre'))
+                  ->andWhere($qb->expr()->eq('g.isActive', true))
                   ->leftJoin('g.userGroups', 'ug')
                   ->join('g.groupGenres', 'gg')
                   ->join('gg.genre', 'ge')
@@ -164,6 +172,7 @@ class GroupRepository extends EntityRepository
 
         return $qb->where($qb->expr()->eq('u', ':user'))
                   ->andWhere($qb->expr()->eq('g', ':group'))
+                  ->andWhere($qb->expr()->eq('g.isActive', true))
                   ->join('g.userGroups', 'ug')
                   ->join('ug.user', 'u')
                   ->setParameters([
@@ -178,6 +187,8 @@ class GroupRepository extends EntityRepository
      * Find similar groups by genres
      *
      * @param Genre[] $genres Array of Genre
+     * @param int     $limit  Limit
+     * @param int     $offset Offset
      *
      * @return Group[]
      */
@@ -198,7 +209,8 @@ class GroupRepository extends EntityRepository
             }
         }
 
-        return $qb->setFirstResult($offset)
+        return $qb->andWhere($qb->expr()->eq('g.isActive', true))
+                  ->setFirstResult($offset)
                   ->setMaxResults($limit)
                   ->getQuery()
                   ->getResult();
@@ -209,11 +221,12 @@ class GroupRepository extends EntityRepository
      *
      * @return Group[]
      */
-    public function findAllCountiesByGroups()
+    public function findAllCountriesByGroups()
     {
         $qb = $this->createQueryBuilder('g');
 
         return $qb->select('g.id, g.country as name, COUNT(g.country) as count_country')
+                  ->where($qb->expr()->eq('g.isActive', true))
                   ->groupBy('g.country')
                   ->orderBy('count_country', 'DESC')
                   ->getQuery()
@@ -230,6 +243,7 @@ class GroupRepository extends EntityRepository
         $qb = $this->createQueryBuilder('g');
 
         return $qb->select('g.id, g.city as name, COUNT(g.city) as count_city')
+                  ->where($qb->expr()->eq('g.isActive', true))
                   ->groupBy('g.city')
                   ->orderBy('count_city', 'DESC')
                   ->getQuery()
@@ -264,7 +278,8 @@ class GroupRepository extends EntityRepository
         if (!empty($genre)) {
             $qb->where($qb->expr()->eq('ge', ':genre'));
             $parameters['genre'] = $genre;
-            $flag                = true;
+
+            $flag = true;
         }
 
         if (!empty($country)) {
@@ -291,7 +306,8 @@ class GroupRepository extends EntityRepository
             $qb->orderBy('likes', $like);
         }
 
-        return $qb->setParameters($parameters)
+        return $qb->andWhere($qb->expr()->eq('g.isActive', true))
+                  ->setParameters($parameters)
                   ->getQuery()
                   ->getResult();
     }

@@ -6,8 +6,3 @@ parameters:
 services:
     fos_user.doctrine_registry:
         alias: doctrine
-
-    doctrine.processing_manager_request_listener:
-        class: AppBundle\EventListener\ProcessingManagerRequestListener
-        tags:
-            - { name: doctrine.event_listener, event: postUpdate, method: postUpdate  }

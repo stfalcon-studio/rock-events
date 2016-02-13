@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * User Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -131,6 +132,21 @@ class User extends BaseUser
      */
     protected $vkAccessToken;
 
+    /**
+     * To String
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = 'New User';
+
+        if (null !== $this->getUsername()) {
+            $result = $this->getUsername();
+        }
+
+        return $result;
+    }
 
     /**
      * Constructor
@@ -168,7 +184,7 @@ class User extends BaseUser
      *
      * @param string $fullName Full name
      *
-     * @return User
+     * @return $this
      */
     public function setFullName($fullName)
     {
@@ -192,7 +208,7 @@ class User extends BaseUser
      *
      * @param string $phone Phone
      *
-     * @return User
+     * @return $this
      */
     public function setPhone($phone)
     {
@@ -348,7 +364,7 @@ class User extends BaseUser
      *
      * @param string $facebookAccessToken Access token of facebook
      *
-     * @return User
+     * @return $this
      */
     public function setFacebookAccessToken($facebookAccessToken)
     {
@@ -372,7 +388,7 @@ class User extends BaseUser
      *
      * @param string $googleId ID of google
      *
-     * @return User
+     * @return $this
      */
     public function setGoogleId($googleId)
     {
@@ -396,7 +412,7 @@ class User extends BaseUser
      *
      * @param string $googleAccessToken Access token of google
      *
-     * @return User
+     * @return $this
      */
     public function setGoogleAccessToken($googleAccessToken)
     {
@@ -420,7 +436,7 @@ class User extends BaseUser
      *
      * @param string $vkId ID of vk
      *
-     * @return User
+     * @return $this
      */
     public function setVkId($vkId)
     {
@@ -444,7 +460,7 @@ class User extends BaseUser
      *
      * @param string $vkAccessToken Access token of vk
      *
-     * @return User
+     * @return $this
      */
     public function setVkAccessToken($vkAccessToken)
     {

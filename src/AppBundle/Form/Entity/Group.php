@@ -4,6 +4,7 @@ namespace AppBundle\Form\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -12,6 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * Group Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  *
  * @Vich\Uploadable
  */
@@ -59,7 +61,7 @@ class Group
      *
      * @param string $name Name
      *
-     * @return Group
+     * @return $this
      */
     public function setName($name)
     {
@@ -83,7 +85,7 @@ class Group
      *
      * @param string $description Description
      *
-     * @return Group
+     * @return $this
      */
     public function setDescription($description)
     {
@@ -107,7 +109,7 @@ class Group
      *
      * @param int $foundedAt founded at
      *
-     * @return Group
+     * @return $this
      */
     public function setFoundedAt($foundedAt)
     {
@@ -121,7 +123,7 @@ class Group
      *
      * @param string $country Country
      *
-     * @return Group
+     * @return $this
      */
     public function setCountry($country)
     {
@@ -145,7 +147,7 @@ class Group
      *
      * @param string $city City
      *
-     * @return Group
+     * @return $this
      */
     public function setCity($city)
     {
@@ -173,10 +175,11 @@ class Group
     {
         return $this->foundedAt;
     }
-    /*
+
+    /**
      * @param File|UploadedFile $image Image
      *
-     * @return Group
+     * @return $this
      */
     public function setImageFile(File $image = null)
     {
@@ -194,9 +197,11 @@ class Group
     }
 
     /**
+     * Set image name
+     *
      * @param string $imageName Image name
      *
-     * @return Group
+     * @return $this
      */
     public function setImageName($imageName)
     {
@@ -206,6 +211,8 @@ class Group
     }
 
     /**
+     * Get image name
+     *
      * @return string
      */
     public function getImageName()

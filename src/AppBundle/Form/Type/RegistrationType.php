@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * RegistrationType
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class RegistrationType extends AbstractType
 {
@@ -18,17 +19,22 @@ class RegistrationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', 'email', [
-                    'attr' => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('username', 'text', [
-                    'attr' => [
-                        'class' => 'form-control',
-                    ],
-                ])
-                ->add('plainPassword', 'password', ['attr' => ['class' => 'form-control']]);
+        $builder
+            ->add('email', 'email', [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('username', 'text', [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('plainPassword', 'password', [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ]);
     }
 
     /**

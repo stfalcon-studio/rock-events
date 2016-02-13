@@ -7,18 +7,21 @@ use AppBundle\Entity\Genre;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
-use DoctrineExtensions\Query\Mysql\Date;
 use PDO;
 
 /**
  * Class EventRepository
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class EventRepository extends EntityRepository
 {
     /**
      * Find actual events
+     *
+     * @param int $limit  Limit
+     * @param int $offset Offset
      *
      * @return Event[]
      */
@@ -26,7 +29,9 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->where($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+        return $qb->where($qb->expr()->gt('e.beginAt', ':now'))
+                  ->andWhere($qb->expr()->eq('e.isActive', true))
+                  ->setParameter('now', (new \DateTime())->format('Y-m-d H:i:s'))
                   ->setFirstResult($offset)
                   ->setMaxResults($limit)
                   ->getQuery()
@@ -36,13 +41,20 @@ class EventRepository extends EntityRepository
     /**
      * Find events for the week
      *
+     * @param int $limit Limit
+     *
      * @return Event[]
      */
-    public function findEventsForWeek()
+    public function findEventsForWeek($limit = 5)
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->where($qb->expr()->gt(7, ('DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''.')')))
+        $dateCondition = 'DATE(e.beginAt)-DATE(:now)';
+
+        return $qb->where($qb->expr()->gt(7, $dateCondition))
+                  ->andWhere($qb->expr()->eq('e.isActive', true))
+                  ->setParameter('now', (new \DateTime())->format('Y-m-d H:i:s'))
+                  ->setMaxResults($limit)
                   ->getQuery()
                   ->getResult();
     }
@@ -50,7 +62,7 @@ class EventRepository extends EntityRepository
     /**
      * Find events by group
      *
-     * @param Group $event Group
+     * @param Group $group Group
      *
      * @return Event[]
      */
@@ -59,6 +71,7 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
 
         return $qb->where($qb->expr()->eq('g', ':group'))
+                  ->andWhere($qb->expr()->eq('e.isActive', true))
                   ->join('e.eventGroups', 'eg')
                   ->join('eg.group', 'g')
                   ->setParameter('group', $group)
@@ -97,9 +110,8 @@ class EventRepository extends EntityRepository
                             ON ge.id = us_ge.genre_id
                             WHERE us_ge.user_id = :user)';
         $params['user'] = $user->getId();
-        $stmt           = $this->getEntityManager()
-                               ->getConnection()
-                               ->prepare($sql);
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute($params);
 
         return $stmt->fetchAll(PDO::FETCH_CLASS, 'AppBundle\Entity\Event');
@@ -119,12 +131,16 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
 
         return $qb->where($qb->expr()->eq('m', ':user'))
-                  ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->andWhere($qb->expr()->gt('e.beginAt', ':now'))
+                  ->andWhere($qb->expr()->eq('e.isActive', true))
                   ->join('e.eventGroups', 'eg')
                   ->join('eg.group', 'g')
                   ->join('g.managerGroups', 'mg')
                   ->join('mg.manager', 'm')
-                  ->setParameter('user', $user)
+                  ->setParameters([
+                      'user' => $user,
+                      'now'  => (new \DateTime())->format('Y-m-d H:i:s'),
+                  ])
                   ->orderBy('e.beginAt', 'ASC')
                   ->setFirstResult($offset)
                   ->setMaxResults($limit)
@@ -144,12 +160,16 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
 
         return $qb->where($qb->expr()->eq('m', ':user'))
-                  ->andWhere($qb->expr()->lt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->andWhere($qb->expr()->lt('e.beginAt', ':now'))
+                  ->andWhere($qb->expr()->eq('e.isActive', true))
                   ->join('e.eventGroups', 'eg')
                   ->join('eg.group', 'g')
                   ->join('g.managerGroups', 'mg')
                   ->join('mg.manager', 'm')
-                  ->setParameter('user', $user)
+                  ->setParameters([
+                      'user' => $user,
+                      'now'  => (new \DateTime())->format('Y-m-d H:i:s'),
+                  ])
                   ->orderBy('e.beginAt', 'DESC')
                   ->getQuery()
                   ->getResult();
@@ -180,7 +200,9 @@ class EventRepository extends EntityRepository
                        ->setParameter('genre', $genre);
             }
         }
-        $qb->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''));
+        $qb->andWhere($qb->expr()->gt('e.beginAt', ':now'))
+           ->andWhere($qb->expr()->eq('e.isActive', true))
+           ->setParameter('now', (new \DateTime())->format('Y-m-d H:i:s'));
 
         return $events->getQuery()
                       ->getResult();
@@ -196,8 +218,10 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->where($qb->expr()->lt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+        return $qb->where($qb->expr()->lt('e.beginAt', ':now'))
+                  ->andWhere($qb->expr()->eq('e.isActive', true))
                   ->orderBy('e.beginAt', 'ASC')
+                  ->setParameter('now', (new \DateTime())->format('Y-m-d H:i:s'))
                   ->setFirstResult($offset)
                   ->setMaxResults($limit)
                   ->getQuery()
@@ -207,7 +231,7 @@ class EventRepository extends EntityRepository
     /**
      * Find actual events by group
      *
-     * @param Group $event Group
+     * @param Group $group Group
      *
      * @return Event[]
      */
@@ -216,10 +240,14 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
 
         return $qb->where($qb->expr()->eq('g', ':group'))
-                  ->andWhere($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->andWhere($qb->expr()->gt('e.beginAt', ':now'))
+                  ->andWhere($qb->expr()->eq('e.isActive', true))
                   ->join('e.eventGroups', 'eg')
                   ->join('eg.group', 'g')
-                  ->setParameter('group', $group)
+                  ->setParameters([
+                      'group' => $group,
+                      'now'   => (new \DateTime())->format('Y-m-d H:i:s'),
+                  ])
                   ->getQuery()
                   ->getResult();
     }
@@ -234,9 +262,11 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
 
         return $qb->select('e.id, e.city as name, COUNT(e.city) as count_city')
-                  ->where($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+                  ->where($qb->expr()->gt('e.beginAt', ':now'))
+                  ->andWhere($qb->expr()->eq('e.isActive', true))
                   ->groupBy('e.city')
                   ->orderBy('count_city', 'DESC')
+                  ->setParameter('now', (new \DateTime())->format('Y-m-d H:i:s'))
                   ->getQuery()
                   ->getResult();
     }
@@ -254,9 +284,12 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        $parameters = [];
+        $parameters = [
+            'now' => (new \DateTime())->format('Y-m-d H:i:s'),
+        ];
 
-        $qb->where($qb->expr()->gt('e.beginAt', '\''.(new \DateTime())->format('Y-m-d H:i:s').'\''))
+        $qb->where($qb->expr()->gt('e.beginAt', ':now'))
+           ->andWhere($qb->expr()->eq('e.isActive', true))
            ->join('e.eventGroups', 'eg')
            ->join('eg.group', 'gr')
            ->join('gr.groupGenres', 'gg')
@@ -273,7 +306,7 @@ class EventRepository extends EntityRepository
         }
 
         if (!empty($date)) {
-            $differenceBetweenDates = 'DATE(e.beginAt)-DATE('.'\''.(new \DateTime())->format('Y-m-d H:i:s').'\''.')';
+            $differenceBetweenDates = 'DATE(e.beginAt)-DATE(:now)';
 
             switch ($date) {
                 case 'today':
@@ -292,6 +325,35 @@ class EventRepository extends EntityRepository
         }
 
         return $qb->setParameters($parameters)
+                  ->getQuery()
+                  ->getResult();
+    }
+
+    /**
+     * Find all actual by genres and groups with limit
+     *
+     * @param Genre[] $genres Genres
+     * @param Group[] $groups Groups
+     * @param int     $limit  Limit
+     *
+     * @return array Active events
+     */
+    public function findAllActiveByGenresAndGroupsWithLimit($genres, $groups, $limit = 5)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->where($qb->expr()->in('ge', ':genres'))
+                  ->andWhere($qb->expr()->in('gr', ':groups'))
+                  ->andWhere($qb->expr()->eq('e.isActive', true))
+                  ->join('e.eventGroups', 'eg')
+                  ->join('eg.group', 'gr')
+                  ->join('gr.groupGenres', 'gg')
+                  ->join('gg.genre', 'ge')
+                  ->setParameters([
+                      'genres' => $genres,
+                      'groups' => $groups,
+                  ])
+                  ->setMaxResults($limit)
                   ->getQuery()
                   ->getResult();
     }

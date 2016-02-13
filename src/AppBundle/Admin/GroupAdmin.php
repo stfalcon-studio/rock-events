@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
  * GroupAdmin class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class GroupAdmin extends Admin
 {
@@ -117,8 +118,7 @@ class GroupAdmin extends Admin
                 'label'        => 'Жанри',
                 'by_reference' => true,
                 'required'     => false,
-            ],
-            [
+            ], [
                 'edit'            => 'inline',
                 'inline'          => 'table',
                 'link_parameters' => [

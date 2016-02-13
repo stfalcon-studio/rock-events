@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Event Group Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  *
  * @ORM\Table(name="events_to_groups")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventGroupRepository")

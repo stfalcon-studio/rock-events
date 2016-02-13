@@ -10,6 +10,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class RequestManagerType
+ *
+ * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
+ */
 class RequestManagerType extends AbstractType
 {
     /**
@@ -41,7 +47,7 @@ class RequestManagerType extends AbstractType
                         'class' => 'form-control',
                     ],
                 ])
-                ->add('text', 'ckeditor', [
+                ->add('text', 'textarea', [
                     'label' => 'Заявка',
                     'attr'  => [
                         'class'       => 'form-control',
