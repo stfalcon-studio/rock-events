@@ -2507,6 +2507,46 @@ iframe {
   margin-right: 10px;
 }
 
+.profile-header {
+  font-size: 24px;
+  color: #9996c4;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: 15px;
+}
+
+.buttons {
+  display: block;
+  width: 100%;
+  font-size: 0;
+}
+
+.buttons__item {
+  width: 50%;
+  height: 180px;
+  display: table;
+  font-size: 15px;
+  vertical-align: middle;
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.buttons__link {
+  font-size: 15px;
+  color: #fff;
+  background: #322e42;
+  display: table-cell;
+  height: 100%;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.buttons__link:hover {
+  background: #2089f4;
+}
+
 @media (max-width: 960px) {
   .l-header__h {
     margin-top: 80px;

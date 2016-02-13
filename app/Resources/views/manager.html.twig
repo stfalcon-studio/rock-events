@@ -5,25 +5,28 @@
     <div id="tabs-block-admin" class="cf">
         <ul  class="l-admin__list">
             <li class="l-admin__item">
-                <a href="#tab-manager-1" class="l-admin__link ">
+                <a href="#tab-1" class="l-admin__link ">
                     <p class="l-admin__icon profile-icon-big-t"></p><span class="l-admin__head">Додати новий концерт</span></a>
             </li>
             <li class="l-admin__item">
-                <a href="#tab-manager-2" class="l-admin__link">
+                <a href="#tab-2" class="l-admin__link">
                     <p class="l-admin__icon concert-icon-big-t"></p><span class="l-admin__head">Перегляд майбунтіх концертів</span>
                 </a>
             </li>
             <li class="l-admin__item">
-                <a href="#tab-manager-3" class="l-admin__link ">
+                <a href="#tab-3" class="l-admin__link ">
                     <p class="l-admin__icon group-icon-big-t"></p> <span class="l-admin__head">Перегляд минулих концертів</span></a>
             </li>
             <li class="l-admin__item">
-                <a href="#tab-manager-4" class="l-admin__link ">
+                <a href="#tab-4" class="l-admin__link ">
                     <p class="l-admin__icon genre-icon-big-t"></p><span class="l-admin__head">Додати новий гурт</span> </a>
             </li>
             <li class="l-admin__item">
-                <a href="#tab-manager-5" class="l-admin__link  ">
+                <a href="#tab-5" class="l-admin__link  ">
                     <p class="l-admin__icon cabinet-icon-big-t"></p><span class="l-admin__head">Перегляд гуртів</span> </a>
+            </li>
+            <li class="l-admin__item" style="display: none;">
+                <a href="#tab-6" class="l-admin__link  "></a>
             </li>
         </ul>
         {{ render(controller('AppBundle:Frontend/Manager:addEvent')) }}

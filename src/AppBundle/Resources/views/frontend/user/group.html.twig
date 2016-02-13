@@ -1,37 +1,28 @@
-{% extends 'cabinet.html.twig' %}
-
-{% block body %}
-    {{ parent() }}
-    <div id="tab-3" class=" scroll">
-        <table class="tabs-list">
-            <thead class="tabs-list__header">
+<div id="tab-3" class=" scroll">
+    <table class="tabs-list">
+        <thead class="tabs-list__header">
+            <tr class="tabs-list__row">
+                <td class="tabs-list__td">№</td>
+                <td class="tabs-list__td">Назва</td>
+                <td class="tabs-list__td">Країна, місто</td>
+                <td class="tabs-list__td">Рік створення</td>
+                <td class="tabs-list__td"></td>
+            </tr>
+        </thead>
+        <tbody class="tabs-list__body">
+            {% for group in groups %}
                 <tr class="tabs-list__row">
-                    <td class="tabs-list__td">№</td>
-                    <td class="tabs-list__td">Назва</td>
-                    <td class="tabs-list__td">Країна, місто</td>
-                    <td class="tabs-list__td">Рік створення</td>
-                    <td class="tabs-list__td"></td>
+                    <td class="tabs-list__td">{{ loop.index }}</td>
+                    <td class="tabs-list__td">
+                        <a href="{{ path('group_show', { 'slug': group.slug }) }}" class="tabs-list__link">{{ group.name }}</a>
+                    </td>
+                    <td class="tabs-list__td">{{ group.country }}, {{ group.city }}</td>
+                    <td class="tabs-list__td">{{ group.foundedAt|date('Y') }}</td>
+                    <td class="tabs-list__td">
+                        <a class="delete-icon delete-group" data-group-slug="{{ path('group_delete_from_bookmark', { 'slug' : group.slug,}) }}"></a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody class="tabs-list__body">
-                {% for group in groups %}
-                    <tr class="tabs-list__row">
-                        <td class="tabs-list__td">{{ loop.index }}</td>
-                        <td class="tabs-list__td">
-                            <a href="{{ path('group_show', { 'slug': group.slug }) }}" class="tabs-list__link">{{ group.name }}</a>
-                        </td>
-                        <td class="tabs-list__td">{{ group.country }}, {{ group.city }}</td>
-                        <td class="tabs-list__td">{{ group.foundedAt|date('Y') }}</td>
-                        <td class="tabs-list__td">
-                            <a class="delete-icon delete-group" data-group-slug="{{ path('group_delete_from_bookmark', { 'slug' : group.slug,}) }}"></a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/group.js') }}"></script>
-{% endblock %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

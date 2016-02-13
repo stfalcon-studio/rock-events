@@ -24,7 +24,19 @@ class UserController extends Controller
      *
      * @return Response
      *
-     * @Route("/cabinet", name="user_cabinet_future_events")
+     * @Route("/cabinet", name="user_cabinet")
+     */
+    public function userCabinetAction()
+    {
+        return $this->render('AppBundle:frontend/user:dashboard.html.twig');
+    }
+
+    /**
+     * User future events
+     *
+     * @return Response
+     *
+     * @Route("/cabinet/future-event", name="user_cabinet_future_events")
      */
     public function futureEventsAction()
     {

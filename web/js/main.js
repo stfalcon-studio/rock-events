@@ -195,7 +195,8 @@ $(window).bind('load resize', function(){
             scrollToAccordion: true,
             rotate: false,
             animation: 'slide',
-            enabled: 0
+            enabled: 0,
+            setHash: true
         })
     }
 })();

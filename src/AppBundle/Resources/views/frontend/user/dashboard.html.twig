@@ -6,7 +6,8 @@
         <ul  class="l-admin__list">
             <li class="l-admin__item">
                 <a href="#tab-1" class="l-admin__link ">
-                    <p class="l-admin__icon profile-icon-big-t"></p><span class="l-admin__head">Profile</span></a>
+                    <p class="l-admin__icon profile-icon-big-t"></p><span class="l-admin__head">Profile</span>
+                </a>
             </li>
             <li class="l-admin__item">
                 <a href="#tab-2" class="l-admin__link">
@@ -25,14 +26,14 @@
                 <a href="#tab-5" class="l-admin__link  ">
                     <p class="l-admin__icon cabinet-icon-big-t"></p><span class="l-admin__head">Manager</span> </a>
             </li>
-            <button><a href="{{ path('manager_cabinet_dashboard') }}">Кабінет менеджера</a></button>
+            {#<button><a href="{{ path('manager_cabinet_dashboard') }}">Кабінет менеджера</a></button>#}
         </ul>
         {{ render(controller('AppBundle:Frontend/User:futureEvents')) }}
         {{ render(controller('AppBundle:Frontend/User:group')) }}
         {{ render(controller('AppBundle:Frontend/User:genre')) }}
         {{ render(controller('AppBundle:Frontend/User:requestRightManager')) }}
         {{ render(controller('FOSUserBundle:Profile:edit')) }}
-        {{ render(controller('AppBundle:Frontend/Manager:addEvent')) }}
+        {#{{ render(controller('AppBundle:Frontend/Manager:addEvent')) }}#}
 {% endblock %}
 {% block footer %}
     </div>

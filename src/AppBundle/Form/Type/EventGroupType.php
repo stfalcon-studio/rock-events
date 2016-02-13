@@ -47,49 +47,76 @@ class EventGroupType extends AbstractType
     {
         $builder->add('name', 'text', [
                     'label' => 'Назва',
+                    'label_attr' => [
+                        'class' => 'profile-form__label'
+                    ],
                     'attr'  => [
-                        'class' => 'form-control',
+                        'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('description', 'ckeditor', [
                     'label' => 'Опис',
+                    'label_attr' => [
+                        'class' => 'profile-form__label'
+                    ],
                     'attr'  => [
-                        'class' => 'form-control',
+                        'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('country', 'text', [
                     'label' => 'Країна',
+                    'label_attr' => [
+                        'class' => 'profile-form__label'
+                    ],
                     'attr'  => [
-                        'class' => 'form-control',
+                        'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('city', 'text', [
                     'label' => 'Місто',
+                    'label_attr' => [
+                        'class' => 'profile-form__label'
+                    ],
                     'attr'  => [
-                        'class' => 'form-control',
+                        'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('address', 'text', [
                     'label' => 'Адреса',
+                    'label_attr' => [
+                        'class' => 'profile-form__label'
+                    ],
                     'attr'  => [
-                        'class' => 'form-control',
+                        'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('beginAt', 'datetime', [
                     'label'       => 'Час початку о',
+                    'label_attr' => [
+                        'class' => 'profile-form__label'
+                    ],
+                    'attr'  => [
+                        'class' => 'profile-form__input',
+                    ],
                     'date_widget' => 'single_text',
                     'time_widget' => 'single_text',
                 ])
                 ->add('endAt', 'datetime', [
                     'label'       => 'Кінець о',
+                    'label_attr' => [
+                        'class' => 'profile-form__label'
+                    ],
+                    'attr'  => [
+                        'class' => 'profile-form__input',
+                    ],
                     'date_widget' => 'single_text',
                     'time_widget' => 'single_text',
                 ])
                 ->add('groups', 'collection', [
+                    'label'        => false,
                     'type'         => new ShortGroupType(),
                     'allow_add'    => true,
                     'by_reference' => false,
-                    'label'        => 'Гурти',
                     'attr'         => [
                         'style' => 'display:none',
                     ],
