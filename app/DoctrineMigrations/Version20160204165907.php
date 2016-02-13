@@ -18,13 +18,11 @@ class Version20160204165907 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE events DROP image_name');
         $this->addSql('ALTER TABLE request_managers DROP FOREIGN KEY FK_5C6C0023A76ED395');
         $this->addSql('DROP INDEX IDX_5C6C0023A76ED395 ON request_managers');
         $this->addSql('ALTER TABLE request_managers CHANGE user_id requested_by_id INT NOT NULL');
         $this->addSql('ALTER TABLE request_managers ADD CONSTRAINT FK_5C6C00234DA1E751 FOREIGN KEY (requested_by_id) REFERENCES users (id) ON DELETE CASCADE');
         $this->addSql('CREATE INDEX IDX_5C6C00234DA1E751 ON request_managers (requested_by_id)');
-        $this->addSql('ALTER TABLE groups DROP image_name');
     }
 
     /**
@@ -35,8 +33,6 @@ class Version20160204165907 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE events ADD image_name VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci');
-        $this->addSql('ALTER TABLE groups ADD image_name VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci');
         $this->addSql('ALTER TABLE request_managers DROP FOREIGN KEY FK_5C6C00234DA1E751');
         $this->addSql('DROP INDEX IDX_5C6C00234DA1E751 ON request_managers');
         $this->addSql('ALTER TABLE request_managers CHANGE requested_by_id user_id INT NOT NULL');

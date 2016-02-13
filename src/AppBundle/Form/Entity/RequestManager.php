@@ -4,7 +4,7 @@ namespace AppBundle\Form\Entity;
 
 use AppBundle\DBAL\Types\RequestManagerStatusType;
 use Doctrine\Common\Collections\ArrayCollection;
-use AppBundle\Entity\Group;
+use AppBundle\Entity\Group as OriginalGroup;
 
 /**
  * RequestManager class
@@ -25,7 +25,7 @@ class RequestManager
     /** @var string $text Text */
     private $text;
 
-    /** @var ArrayCollection|Group[] $groups Groups */
+    /** @var ArrayCollection|OriginalGroup[] $groups Groups */
     private $groups;
 
     /** @var RequestManagerStatusType $status Status */

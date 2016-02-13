@@ -15,7 +15,7 @@ $(function () {
         })
     });
 
-    $('.add').on('click', function () {
+    $(document).on('click', '.add', function () {
         var url = $(this).data('bookmark-group-add');
         var element = this;
         $.ajax({
@@ -32,7 +32,7 @@ $(function () {
         })
     });
 
-    $('.delete').on('click', function () {
+    $(document).on('click', '.delete', function () {
         var url = $(this).data('bookmark-group-delete');
         var element = this;
         $.ajax({

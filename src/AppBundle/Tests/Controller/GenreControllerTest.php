@@ -7,11 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * GroupControllerTest class
+ * GenreControllerTest class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  */
-class GroupControllerTest extends WebTestCase
+class GenreControllerTest extends WebTestCase
 {
     /** @var Client $client */
     private $client;
@@ -36,52 +36,35 @@ class GroupControllerTest extends WebTestCase
             'AppBundle\DataFixtures\ORM\LoadGenreData',
             'AppBundle\DataFixtures\ORM\LoadGroupData',
             'AppBundle\DataFixtures\ORM\LoadGroupGenreData',
-            'AppBundle\DataFixtures\ORM\LoadUserGroupData',
+            'AppBundle\DataFixtures\ORM\LoadUserGenreData',
         ])->getReferenceRepository();
 
         $this->loginAs($fixtures->getReference('user-manager'), 'main');
         $this->client = static::makeClient();
 
-        $crawler = $this->client->request('GET', '/groups');
+        $crawler = $this->client->request('GET', '/genres');
 
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('div.l-filter-elements'));
-        $this->assertCount(11, $crawler->filter('div.filtered-element'));
+        $this->assertCount(1, $crawler->filter('ul.event-list'));
+        $this->assertCount(6, $crawler->filter('li.event-list__item'));
     }
 
     /**
-     * Test Show action
+     * Test group action
      */
-    public function testShowAction()
+    public function testGroupAction()
     {
         $this->loadFixtures([
             'AppBundle\DataFixtures\ORM\LoadGroupData',
             'AppBundle\DataFixtures\ORM\LoadGenreData',
+            'AppBundle\DataFixtures\ORM\LoadGroupGenreData',
         ]);
 
-        $crawler = $this->client->request('GET', '/group/jinjer');
+        $crawler = $this->client->request('GET', 'genre/alternative/groups');
 
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('div.l-about'));
-        $this->assertCount(1, $crawler->filter('ul.about-header__styles'));
-    }
-
-    /**
-     * Test Event action
-     */
-    public function testEventAction()
-    {
-        $this->loadFixtures([
-            'AppBundle\DataFixtures\ORM\LoadEventData',
-            'AppBundle\DataFixtures\ORM\LoadGroupData',
-            'AppBundle\DataFixtures\ORM\LoadEventGroupData',
-        ]);
-
-        $crawler = $this->client->request('GET', '/group/jinjer/events');
-
-        $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('table'));
-        $this->assertCount(1, $crawler->filter('tr#groups'));
+        $this->assertCount(1, $crawler->filter('div.l-filter-elements'));
+        $this->assertCount(5, $crawler->filter('div.filtered-element'));
     }
 
     /**
@@ -91,15 +74,15 @@ class GroupControllerTest extends WebTestCase
     {
         $fixtures = $this->loadFixtures([
             'AppBundle\DataFixtures\ORM\LoadUserData',
-            'AppBundle\DataFixtures\ORM\LoadUserGroupData',
-            'AppBundle\DataFixtures\ORM\LoadGroupData',
+            'AppBundle\DataFixtures\ORM\LoadUserGenreData',
+            'AppBundle\DataFixtures\ORM\LoadGenreData',
         ])->getReferenceRepository();
 
         $this->loginAs($fixtures->getReference('user-admin'), 'main');
 
         $this->client = static::makeClient();
 
-        $this->client->request('GET', '/group/jinjer/bookmark', [], [], [
+        $this->client->request('GET', '/genre/alternative/bookmark', [], [], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);
 
@@ -113,15 +96,15 @@ class GroupControllerTest extends WebTestCase
     {
         $fixtures = $this->loadFixtures([
             'AppBundle\DataFixtures\ORM\LoadUserData',
-            'AppBundle\DataFixtures\ORM\LoadUserGroupData',
-            'AppBundle\DataFixtures\ORM\LoadGroupData',
+            'AppBundle\DataFixtures\ORM\LoadUserGenreData',
+            'AppBundle\DataFixtures\ORM\LoadGenreData',
         ])->getReferenceRepository();
 
         $this->loginAs($fixtures->getReference('user-admin'), 'main');
 
         $this->client = static::makeClient();
 
-        $this->client->request('GET', '/group/jinjer/bookmark/delete', [], [], [
+        $this->client->request('GET', '/genre/alternative/bookmark/delete', [], [], [
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);
 

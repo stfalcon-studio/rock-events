@@ -42,6 +42,7 @@ class LoadRequestManagerData extends AbstractFixture implements DependentFixture
             ->setPhone('0984534222')
             ->setStatus(RequestManagerStatusType::SENT)
             ->setText('Вітаю, я адміністратор гурту Bring me the Horizon, телефон для зв"язку - 0974045670')
+            ->setRequestedBy($userAdmin)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('request-manager-1', $requestManager1);
@@ -53,6 +54,7 @@ class LoadRequestManagerData extends AbstractFixture implements DependentFixture
             ->setPhone('0984534222')
             ->setStatus(RequestManagerStatusType::DENIED)
             ->setText('Вітаю, я адміністратор гурту Enter Shikari, телефон для зв"язку - 0974045670')
+            ->setRequestedBy($userAdmin)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('request-manager-2', $requestManager2);
@@ -64,6 +66,7 @@ class LoadRequestManagerData extends AbstractFixture implements DependentFixture
             ->setPhone('0984534222')
             ->setStatus(RequestManagerStatusType::SENT)
             ->setText('Вітаю, я адміністратор гурту Enter Shikari, телефон для зв"язку - 0974045670')
+            ->setCreatedBy($userAdmin)
             ->setCreatedBy($userAdmin)
             ->setUpdatedBy($userAdmin);
         $this->setReference('request-manager-3', $requestManager3);
