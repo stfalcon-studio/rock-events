@@ -1,35 +1,26 @@
-{% extends 'cabinet.html.twig' %}
-
-{% block body %}
-    <h1>Найближчі концерти за вибраними критеріями</h1>
-    {% if events is defined %}
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Назва</th>
-                <th>Опис</th>
-                <th>Країна</th>
-                <th>Місто</th>
-                <th>Адреса</th>
-                <th>Початок</th>
-                <th>Кінцеь</th>
-                <th>Тривалість</th>
-            </tr>
-            </thead>
-            <tbody class="table table-hover">
-            {% for event in events %}
-                <tr id="events">
-                    <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
-                    <td>{{ event.description }}</td>
-                    <td>{{ event.country }}</td>
-                    <td>{{ event.city }}</td>
-                    <td>{{ event.address }}</td>
-                    <td>{{ event.begin_at|date('F jS \\a\\t g:ia') }}</td>
-                    <td>{{ event.end_at|date('F jS \\a\\t g:ia') }}</td>
-                    <td>{{ event.duration }}</td>
+{% if events is defined %}
+    <div id="tab-2" class=" scroll">
+        <table class="tabs-list">
+            <thead class="tabs-list__header">
+                <tr class="tabs-list__row">
+                    <td class="tabs-list__td">№</td>
+                    <td class="tabs-list__td">Назва</td>
+                    <td class="tabs-list__td">Місто</td>
+                    <td class="tabs-list__td">Адреса</td>
+                    <td class="tabs-list__td">Початок о</td>
                 </tr>
-            {% endfor %}
+            </thead>
+            <tbody class="tabs-list__body">
+                {% for event in events %}
+                    <tr class="tabs-list__row">
+                        <td class="tabs-list__td">{{ loop.index }}</td>
+                        <td class="tabs-list__td"><a href="{{ path('event_show', { 'slug': event.slug }) }}" class="tabs-list__link">{{ event.name }}</a></td>
+                        <td class="tabs-list__td">{{ event.city }}</td>
+                        <td class="tabs-list__td">{{ event.address }}</td>
+                        <td class="tabs-list__td">{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
-    {% endif %}
-{% endblock %}
+    </div>
+{% endif %}

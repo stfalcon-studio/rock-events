@@ -1,0 +1,21 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form action="{{ path("fos_user_security_check") }}" method="post" class="profile-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+
+        <label for="_username" class="profile-form__label">Логін</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required"
+               class="profile-form__input" placeholder="Введіть ваш логін"/>
+
+        <label for="password" class="profile-form__label">{{ 'security.login.password'|trans }}</label>
+        <input type="password" id="password" name="_password" required="required" class="profile-form__input"
+               placeholder="Введіть ваш пароль"/>
+
+        <input type="submit" id="_submit" class="profile-form__submit" name="_submit" value="{{ 'security.login.submit'|trans }}"/>
+    </form>
+{% endblock fos_user_content %}

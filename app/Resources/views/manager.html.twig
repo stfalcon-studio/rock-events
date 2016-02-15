@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="l-admin cf content">
+    <div id="tabs-block-admin" class="cf">
+        <ul  class="l-admin__list">
+            <li class="l-admin__item">
+                <a href="#tab-1" class="l-admin__link ">
+                    <p class="l-admin__icon profile-icon-big-t"></p><span class="l-admin__head">Додати новий концерт</span></a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-2" class="l-admin__link">
+                    <p class="l-admin__icon concert-icon-big-t"></p><span class="l-admin__head">Перегляд майбунтіх концертів</span>
+                </a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-3" class="l-admin__link ">
+                    <p class="l-admin__icon group-icon-big-t"></p> <span class="l-admin__head">Перегляд минулих концертів</span></a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-4" class="l-admin__link ">
+                    <p class="l-admin__icon genre-icon-big-t"></p><span class="l-admin__head">Додати новий гурт</span> </a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-5" class="l-admin__link  ">
+                    <p class="l-admin__icon cabinet-icon-big-t"></p><span class="l-admin__head">Перегляд гуртів</span> </a>
+            </li>
+            <li class="l-admin__item" style="display: none;">
+                <a href="#tab-6" class="l-admin__link  "></a>
+            </li>
+        </ul>
+        {{ render(controller('AppBundle:Frontend/Manager:addEvent')) }}
+        {{ render(controller('AppBundle:Frontend/Manager:listEvents')) }}
+        {{ render(controller('AppBundle:Frontend/Manager:listPreviousEvents')) }}
+        {{ render(controller('AppBundle:Frontend/Manager:addGroup')) }}
+        {{ render(controller('AppBundle:Frontend/Manager:groups')) }}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/add_groups.js') }}"></script>
+{% endblock %}
+

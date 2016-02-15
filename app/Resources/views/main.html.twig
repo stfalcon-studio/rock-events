@@ -11,21 +11,7 @@
                     <li class="navigation__item navigation__link_upper"><a href="{{ path('genre_list') }}" class="navigation__link">Genre</a></li>
                     <li class="navigation__item navigation__link_upper"><a href="" class="navigation__link">Calendar</a></li>
                 </ul>
-                <div class="user-cabinet f-r" id="userBut">
-                    <div class="user-cabinet__head">
-                        <img src="/img/user_img.jpg" alt="" class="user-cabinet__img">
-                        <span class="user-cabinet__name">Roma</span>
-                    </div>
-                    <ul class="user-cabinet__menu">
-                        <li class="user-cabinet__item"><a href="" class="user-cabinet__link profile-icon-t">Профіль</a></li>
-                        <li class="user-cabinet__item">
-                            <a href="" class="user-cabinet__link concert-icon-t">Найближчі концерти</a>
-                            <a href="" class="user-cabinet__link group-icon-t">Гурти</a>
-                            <a href="" class="user-cabinet__link genre-icon-t">Жанри</a></li>
-                        <li class="user-cabinet__item"><a href="" class="user-cabinet__link cabinet-icon-t">Кабінет менеджера</a></li>
-                        <li class="user-cabinet__item"><a href="" class="user-cabinet__link logout-icon-t">Вийти</a></li>
-                    </ul>
-                </div>
+                {% include 'cabinet_menu_item.html.twig' %}
             </nav>
             <h1 class="l-header__h">Rock concerts in your city.</h1>
             <span class="l-header__text">Find concerts</span>

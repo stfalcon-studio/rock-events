@@ -1,11 +1,42 @@
-{% extends 'cabinet.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    <ul class="list-group">
-        <li class="list-group-item"><a href="{{ path('manager_cabinet_event_create') }}">Додати новий концерт</a></li>
-        <li class="list-group-item"><a href="{{ path('manager_cabinet_events_list') }}">Перегляд майбунтіх концертів</a></li>
-        <li class="list-group-item"><a href="{{ path('manager_cabinet_events_list_previous') }}">Перегляд минулих концертів</a></li>
-        <li class="list-group-item"><a href="{{ path('manager_cabinet_group_create') }}">Додати новий гурт</a></li>
-        <li class="list-group-item"><a href="{{ path('manager_cabinet_groups_list') }}">Перегляд гуртів</a></li>
-    </ul>
+<div class="l-admin cf content">
+    <div id="tabs-block-admin" class="cf">
+        <ul  class="l-admin__list">
+            <li class="l-admin__item">
+                <a href="#tab-manager-1" class="l-admin__link ">
+                    <p class=""></p><span class="l-admin__head">Додати новий концерт</span></a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-manager-2" class="l-admin__link">
+                    <p class=""></p><span class="l-admin__head">Перегляд майбунтіх концертів</span>
+                </a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-manager-3" class="l-admin__link ">
+                    <p class=""></p> <span class="l-admin__head">Перегляд минулих концертів</span></a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-manager-4" class="l-admin__link ">
+                    <p class=""></p><span class="l-admin__head">Додати новий гурт</span> </a>
+            </li>
+            <li class="l-admin__item">
+                <a href="#tab-manager-5" class="l-admin__link  ">
+                    <p class=""></p><span class="l-admin__head">Перегляд гуртів</span> </a>
+            </li>
+        </ul>
+        {{ render(controller('AppBundle:Frontend/Manager:addEvent')) }}
+        {{ render(controller('AppBundle:Frontend/Manager:listEvents')) }}
+        {{ render(controller('AppBundle:Frontend/Manager:listPreviousEvents')) }}
+        {{ render(controller('AppBundle:Frontend/Manager:addGroup')) }}
+        {{ render(controller('AppBundle:Frontend/Manager:groups')) }}
+    </div>
+</div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/add_groups.js') }}"></script>
+{% endblock %}
+

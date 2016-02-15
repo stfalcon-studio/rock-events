@@ -19,22 +19,36 @@ class RegistrationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('email', 'email', [
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-            ])
-            ->add('username', 'text', [
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-            ])
-            ->add('plainPassword', 'password', [
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-            ]);
+        $builder->add('email', 'email', [
+                    'label'      => 'Email',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class'       => 'profile-form__input',
+                        'placeholder' => 'Введіть ваш email',
+                    ],
+                ])
+                ->add('username', 'text', [
+                    'label'      => 'Логін',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class'       => 'profile-form__input',
+                        'placeholder' => 'Введіть ваш логін',
+                    ],
+                ])
+                ->add('plainPassword', 'password', [
+                    'label'      => 'Пароль',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class'       => 'profile-form__input',
+                        'placeholder' => 'Введіть ваш пароль',
+                    ],
+                ]);
     }
 
     /**

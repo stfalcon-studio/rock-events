@@ -1,5 +1,21 @@
-{% extends "@FOSUser/layout.html.twig" %}
+{% extends 'base.html.twig' %}
 
-{% block fos_user_content %}
-    {% include "FOSUserBundle:Registration:register_content.html.twig" %}
-{% endblock fos_user_content %}
+{% block body %}
+    <div class="sign-tabs-wrapper" id="sign">
+        <div class="sign-tabs">
+            <div id="tabs-block" class="about-body">
+                <ul class="about-body__list">
+                    <li class="about-body__item"><a href="#tab-2" class="about-body__link">Реєстрація</a></li>
+                </ul>
+                <div id="tab-2">
+                    {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+                </div>
+                <div class="close-but">
+                    <a href="{{ path('event_index') }}">
+                        <span class="delete-icon" id="closeBut"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

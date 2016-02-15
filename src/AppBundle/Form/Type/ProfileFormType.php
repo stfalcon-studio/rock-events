@@ -21,26 +21,34 @@ class ProfileFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('username', 'text', [
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-            ])
-            ->add('email', 'email', [
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-            ])
-            ->add('current_password', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\PasswordType'), [
-                'label'              => 'form.current_password',
-                'translation_domain' => 'FOSUserBundle',
-                'mapped'             => false,
-                'constraints'        => new UserPassword(),
-                'attr'               => [
-                    'class' => 'form-control',
-                ],
-            ]);
+        $builder->add('username', 'text', [
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class' => 'profile-form__input',
+                    ],
+                ])
+                ->add('email', 'email', [
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class' => 'profile-form__input',
+                    ],
+                ])
+                ->add('current_password', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\PasswordType'), [
+                    'label_attr'         => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'label'              => 'form.current_password',
+                    'translation_domain' => 'FOSUserBundle',
+                    'mapped'             => false,
+                    'constraints'        => new UserPassword(),
+                    'attr'               => [
+                        'class' => 'profile-form__input',
+                    ],
+                ]);
     }
 
     /**

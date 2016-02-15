@@ -1,25 +1,31 @@
-{% extends "@FOSUser/layout.html.twig" %}
+{% extends 'main.html.twig' %}
 
-{% trans_default_domain 'FOSUserBundle' %}
+{% block body %}
+    {{ parent() }}
+    <div class="sign-tabs-wrapper" id="sign">
+        <div class="sign-tabs">
+            <div id="tabs-block" class="about-body">
+                <ul class="about-body__list">
+                    <li class="about-body__item"><a href="#tab-1" class="about-body__link active">Вхід</a></li>
+                </ul>
+                <div id="tab-1">
+                    <h3 class="sign-tabs__label">Через соціальні мережі</h3>
+                    <ul class="user-links">
+                        <li class="user-links__link"><a href="{{ path('hwi_oauth_connect_service', { 'service':'facebook' }) }}" class="user-links__link icon-f-big"></a></li>
+                        <li class="user-links__link"><a href="{{ path('vk_login') }}" class="user-links__link icon-b-big"></a></li>
+                        <li class="user-links__link"><a href="" class="user-links__link icon-g-big"></a></li>
+                    </ul>
+                    {% include "FOSUserBundle:Security:login_content.html.twig" %}
+                    <a href="{{ path('fos_user_registration_register') }}" style="color: #2089f4;">Зареєструватись</a>
+                </div>
+                <div class="close-but">
+                    <a href="{{ path('event_index') }}">
+                        <span class="delete-icon" id="closeBut"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
 
-{% block fos_user_content %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
-
-        <label for="username">{{ 'security.login.username'|trans }}</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required"
-               class="form-control"/>
-
-        <label for="password">{{ 'security.login.password'|trans }}</label>
-        <input type="password" id="password" name="_password" required="required" class="form-control"/>
-
-        <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
-        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-        <br>
-        <input type="submit" id="_submit" class="btn btn-primary" name="_submit" value="{{ 'security.login.submit'|trans }}"/>
-    </form>
-{% endblock fos_user_content %}

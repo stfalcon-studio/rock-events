@@ -36,21 +36,30 @@ class RequestManagerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('fullName', 'text', [
-                    'label' => 'ФІО',
-                    'attr'  => [
-                        'class' => 'form-control',
+                    'label'      => 'ФІО',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('phone', 'text', [
-                    'label' => 'Телефон',
-                    'attr'  => [
-                        'class' => 'form-control',
+                    'label'      => 'Телефон',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class' => 'profile-form__input',
                     ],
                 ])
-                ->add('text', 'textarea', [
-                    'label' => 'Заявка',
-                    'attr'  => [
-                        'class'       => 'form-control',
+                ->add('text', 'ckeditor', [
+                    'label'      => 'Заявка',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class'       => 'profile-form__input',
                         'rows'        => 7,
                         'placeholder' => 'Привіт! Я менеджер гурту Sinoptik, Валерія Донець.
 Мій контактний телефон - 0975645345.
@@ -58,10 +67,15 @@ class RequestManagerType extends AbstractType
                     ],
                 ])
                 ->add('groups', 'collection', [
+                    'label_attr'   => [
+                        'style' => 'display: none;',
+                    ],
                     'type'         => new ShortGroupType(),
                     'allow_add'    => true,
                     'by_reference' => false,
-                    'label'        => 'Гурти',
+                    'attr'         => [
+                        'class' => 'profile-form__input',
+                    ],
                 ]);
     }
 

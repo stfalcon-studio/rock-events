@@ -1,31 +1,24 @@
-{% extends 'cabinet.html.twig' %}
-
-{% block body %}
-    <h3>Жанри</h3>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Назва</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody class="table table-hover">
-        {% for genre in genres %}
-            <tr id="{{ genre.slug }}">
-                <td>
-                    <a href="{{ path('genre_group',{ 'slug' : genre.slug }) }}">{{ genre.name }}</a></td>
-                <td>
-                    <button href="#"
-                            class="delete-genre"
-                            data-genre-slug="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug,}) }}">-
-                    </button>
-                </td>
+<div id="tab-4" class=" scroll">
+    <table class="tabs-list">
+        <thead class="tabs-list__header">
+            <tr class="tabs-list__row">
+                <td class="tabs-list__td">№</td>
+                <td class="tabs-list__td">Назва</td>
+                <td class="tabs-list__td"></td>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody class="tabs-list__body">
+            {% for genre in genres %}
+                <tr class="tabs-list__row">
+                    <td class="tabs-list__td">{{ loop.index }}</td>
+                    <td class="tabs-list__td">
+                        <a href="{{ path('genre_group', { 'slug': genre.slug }) }}" class="tabs-list__link">{{ genre.name }}</a>
+                    </td>
+                    <td class="tabs-list__td">
+                        <a class="delete-icon delete-genre" data-genre-slug="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug,}) }}"></a>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/genre.js') }}"></script>
-{% endblock %}
+</div>

@@ -1,12 +1,12 @@
 {% block event_groups_groups_widget %}
-    <table class="table table-hover"
+    <table class="tabs-list"
            id="groups"
            data-prototype="{% filter escape %}{% include 'form/fields.html.twig' with { 'action': action } %}{% endfilter %}"
     >
-        <thead>
-            <tr>
-                <th>Назва гурту</th>
-                <th>Видалити</th>
+        <thead class="tabs-list__header">
+            <tr class="tabs-list__row">
+                <th class="tabs-list__td">Назва гурту</th>
+                <th class="tabs-list__td">Видалити</th>
             </tr>
         </thead>
         <tbody class="table table-hover" id="groups_body">

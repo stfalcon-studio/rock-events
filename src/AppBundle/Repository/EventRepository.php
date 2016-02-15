@@ -94,7 +94,7 @@ class EventRepository extends EntityRepository
                             ON e.id = eg.group_id
                             INNER JOIN users_to_groups as ug
                             ON eg.id=ug.group_id
-                            WHERE ug.user_id = :user)
+                            WHERE ug.user_id = :user AND e.begin_at > now())
                             UNION
                             (SELECT DISTINCT e.*
                             FROM events as e
@@ -108,7 +108,7 @@ class EventRepository extends EntityRepository
                             ON ge.id = gr_ge.genre_id
                             INNER JOIN users_to_genres as us_ge
                             ON ge.id = us_ge.genre_id
-                            WHERE us_ge.user_id = :user)';
+                            WHERE us_ge.user_id = :user AND e.begin_at > now())';
         $params['user'] = $user->getId();
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);

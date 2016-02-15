@@ -45,56 +45,83 @@ class EventGroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', 'text', [
-                'label' => 'Назва',
-                'attr'  => [
-                    'class' => 'form-control',
+        $builder->add('name', 'text', [
+            'label'      => 'Назва',
+            'label_attr' => [
+                    'class' =>
+                        'profile-form__label',
                 ],
-            ])
-            ->add('description', 'ckeditor', [
-                'label' => 'Опис',
-                'attr'  => [
-                    'class' => 'form-control',
-                ],
-            ])
-            ->add('country', 'text', [
-                'label' => 'Країна',
-                'attr'  => [
-                    'class' => 'form-control',
-                ],
-            ])
-            ->add('city', 'text', [
-                'label' => 'Місто',
-                'attr'  => [
-                    'class' => 'form-control',
-                ],
-            ])
-            ->add('address', 'text', [
-                'label' => 'Адреса',
-                'attr'  => [
-                    'class' => 'form-control',
-                ],
-            ])
-            ->add('beginAt', 'datetime', [
-                'label'       => 'Час початку о',
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
-            ])
-            ->add('endAt', 'datetime', [
-                'label'       => 'Кінець о',
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
-            ])
-            ->add('groups', 'collection', [
-                'type'         => new ShortGroupType(),
-                'allow_add'    => true,
-                'by_reference' => false,
-                'label'        => 'Гурти',
-                'attr'         => [
-                    'style' => 'display:none',
-                ],
-            ]);
+                    'attr'       => [
+                        'class' => 'profile-form__input',
+                    ],
+                ])
+                ->add('description', 'ckeditor', [
+                    'label'      => 'Опис',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class' => 'profile-form__input',
+                    ],
+                ])
+                ->add('country', 'text', [
+                    'label'      => 'Країна',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class' => 'profile-form__input',
+                    ],
+                ])
+                ->add('city', 'text', [
+                    'label'      => 'Місто',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class' => 'profile-form__input',
+                    ],
+                ])
+                ->add('address', 'text', [
+                    'label'      => 'Адреса',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class' => 'profile-form__input',
+                    ],
+                ])
+                ->add('beginAt', 'datetime', [
+                    'label'       => 'Час початку о',
+                    'label_attr'  => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'        => [
+                        'class' => 'profile-form__input',
+                    ],
+                    'date_widget' => 'single_text',
+                    'time_widget' => 'single_text',
+                ])
+                ->add('endAt', 'datetime', [
+                    'label'       => 'Кінець о',
+                    'label_attr'  => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'        => [
+                        'class' => 'profile-form__input',
+                    ],
+                    'date_widget' => 'single_text',
+                    'time_widget' => 'single_text',
+                ])
+                ->add('groups', 'collection', [
+                    'label'        => false,
+                    'type'         => new ShortGroupType(),
+                    'allow_add'    => true,
+                    'by_reference' => false,
+                    'attr'         => [
+                        'style' => 'display:none',
+                    ],
+                ]);
     }
 
     /**

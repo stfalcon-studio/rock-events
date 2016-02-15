@@ -38,44 +38,63 @@ class GroupType extends AbstractType
     {
         $builder
             ->add('name', 'text', [
-                'label' => 'Ім’я',
-                'attr'  => [
-                    'class' => 'form-control',
+                'label'      => 'Ім’я',
+                'label_attr' => [
+                    'class' => 'profile-form__label',
+                ],
+                'attr'       => [
+                    'class' => 'profile-form__input',
                 ],
             ])
             ->add('description', 'ckeditor', [
-                'label' => 'Опис',
-                'attr'  => [
+                'label'      => 'Опис',
+                'label_attr' => [
+                    'class' => 'profile-form__label',
+                ],
+                'attr'       => [
                     'class' => 'form-control',
                     'rows'  => 7,
                 ],
             ])
             ->add('country', 'text', [
-                'label' => 'Ім’я',
-                'attr'  => [
-                    'class' => 'form-control',
+                'label'      => 'Країна',
+                'label_attr' => [
+                    'class' => 'profile-form__label',
+                ],
+                'attr'       => [
+                    'class' => 'profile-form__input',
                 ],
             ])
             ->add('city', 'text', [
-                'label' => 'Ім’я',
-                'attr'  => [
-                    'class' => 'form-control',
+                'label'      => 'Місто',
+                'label_attr' => [
+                    'class' => 'profile-form__label',
+                ],
+                'attr'       => [
+                    'class' => 'profile-form__input',
                 ],
             ])
             ->add('foundedAt', 'integer', [
-                'label' => 'Рік створення',
-                'attr'  => [
-                    'class' => 'form-control',
+                'label'      => 'Рік створення',
+                'label_attr' => [
+                    'class' => 'profile-form__label',
+                ],
+                'attr'       => [
+                    'class' => 'profile-form__input',
                 ],
             ])
             ->add('imageFile', 'file', [
-                'label'    => 'Зображення',
-                'required' => false,
+                'label'      => 'Зображення',
+                'label_attr' => [
+                    'class' => 'profile-form__label',
+                ],
+                'required'   => false,
             ])
             ->add('submit', 'submit', [
                 'label' => 'Зберегти',
                 'attr'  => [
-                    'class' => 'btn btn-success',
+                    'style' => 'margin-top: 20px',
+                    'class' => 'profile-form__submit',
                 ],
             ]);
 
