@@ -31,6 +31,15 @@ class GenreAdmin extends Admin
     /**
      * {@inheritdoc}
      */
+    public function preUpdate($genre)
+    {
+        /** @var Genre $genre */
+        $genre->setUpdatedBy($this->getUser());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function configureShowField(ShowMapper $showMapper)
     {
         $showMapper

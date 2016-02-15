@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -14,6 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * Event Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  *
  * @ORM\Table(name="events")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
@@ -24,9 +26,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Event
 {
-    use TimestampableEntity;
-
-    use BlameableEntityTrait;
+    use TimestampableEntity, BlameableEntityTrait;
 
     const NUMBER = 5;
 
@@ -49,7 +49,7 @@ class Event
     /**
      * @var ArrayCollection|EventGroup[] $eventGroups Event Groups
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventGroup", mappedBy="event", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $eventGroups;
 
@@ -189,9 +189,10 @@ class Event
      */
     public function __toString()
     {
-        $result = $this->getName();
-        if (null === $result) {
-            $result = 'New Event';
+        $result = 'New Event';
+
+        if (null !== $this->getName()) {
+            $result = $this->getName();
         }
 
         return $result;
@@ -212,7 +213,7 @@ class Event
      *
      * @param string $name Name
      *
-     * @return Event
+     * @return $this
      */
     public function setName($name)
     {
@@ -236,7 +237,7 @@ class Event
      *
      * @param string $description Description
      *
-     * @return Event
+     * @return $this
      */
     public function setDescription($description)
     {
@@ -260,7 +261,7 @@ class Event
      *
      * @param string $country Country
      *
-     * @return Event
+     * @return $this
      */
     public function setCountry($country)
     {
@@ -284,7 +285,7 @@ class Event
      *
      * @param string $city City
      *
-     * @return Event
+     * @return $this
      */
     public function setCity($city)
     {
@@ -308,7 +309,7 @@ class Event
      *
      * @param string $address Address
      *
-     * @return Event
+     * @return $this
      */
     public function setAddress($address)
     {
@@ -332,7 +333,7 @@ class Event
      *
      * @param \DateTime $beginAt Begin at
      *
-     * @return Event
+     * @return $this
      */
     public function setBeginAt(\DateTime $beginAt)
     {
@@ -356,7 +357,7 @@ class Event
      *
      * @param \DateTime $endAt End at
      *
-     * @return Event
+     * @return $this
      */
     public function setEndAt(\DateTime $endAt)
     {
@@ -380,7 +381,7 @@ class Event
      *
      * @param string $duration Duration
      *
-     * @return Event
+     * @return $this
      */
     public function setDuration($duration)
     {
@@ -404,7 +405,7 @@ class Event
      *
      * @param string $slug Slug
      *
-     * @return Genre
+     * @return $this
      */
     public function setSlug($slug)
     {
@@ -424,16 +425,6 @@ class Event
     }
 
     /**
-     * Is Active?
-     *
-     * @return bool
-     */
-    public function isActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
      * Set isActive
      *
      * @param bool $isActive Active
@@ -445,6 +436,16 @@ class Event
         $this->isActive = $isActive;
 
         return $this;
+    }
+
+    /**
+     * Is Active?
+     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->isActive;
     }
 
     /**
@@ -501,7 +502,35 @@ class Event
         return $this->eventGroups;
     }
 
-    /*
+    /**
+     * Add event group
+     *
+     * @param EventGroup $eventGroup Event Group
+     *
+     * @return $this
+     */
+    public function addEventGroup(EventGroup $eventGroup)
+    {
+        $this->eventGroups->add($eventGroup);
+
+        return $this;
+    }
+
+    /**
+     * Remove event group
+     *
+     * @param EventGroup $eventGroup Event Group
+     *
+     * @return $this
+     */
+    public function removeEventGroup(EventGroup $eventGroup)
+    {
+        $this->eventGroups->remove($eventGroup);
+
+        return $this;
+    }
+
+    /**
      * @param File|UploadedFile $image Image
      *
      * @return Event
@@ -518,6 +547,8 @@ class Event
     }
 
     /**
+     * Get image file
+     *
      * @return File
      */
     public function getImageFile()
@@ -528,7 +559,7 @@ class Event
     /**
      * @param string $imageName Image name
      *
-     * @return Event
+     * @return $this
      */
     public function setImageName($imageName)
     {
@@ -538,6 +569,8 @@ class Event
     }
 
     /**
+     * Get image name
+     *
      * @return string
      */
     public function getImageName()

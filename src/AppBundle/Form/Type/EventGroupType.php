@@ -46,56 +46,57 @@ class EventGroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', 'text', [
-                    'label' => 'Назва',
-                    'label_attr' => [
-                        'class' => 'profile-form__label'
-                    ],
-                    'attr'  => [
+            'label'      => 'Назва',
+            'label_attr' => [
+                    'class' =>
+                        'profile-form__label',
+                ],
+                    'attr'       => [
                         'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('description', 'ckeditor', [
-                    'label' => 'Опис',
+                    'label'      => 'Опис',
                     'label_attr' => [
-                        'class' => 'profile-form__label'
+                        'class' => 'profile-form__label',
                     ],
-                    'attr'  => [
+                    'attr'       => [
                         'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('country', 'text', [
-                    'label' => 'Країна',
+                    'label'      => 'Країна',
                     'label_attr' => [
-                        'class' => 'profile-form__label'
+                        'class' => 'profile-form__label',
                     ],
-                    'attr'  => [
+                    'attr'       => [
                         'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('city', 'text', [
-                    'label' => 'Місто',
+                    'label'      => 'Місто',
                     'label_attr' => [
-                        'class' => 'profile-form__label'
+                        'class' => 'profile-form__label',
                     ],
-                    'attr'  => [
+                    'attr'       => [
                         'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('address', 'text', [
-                    'label' => 'Адреса',
+                    'label'      => 'Адреса',
                     'label_attr' => [
-                        'class' => 'profile-form__label'
+                        'class' => 'profile-form__label',
                     ],
-                    'attr'  => [
+                    'attr'       => [
                         'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('beginAt', 'datetime', [
                     'label'       => 'Час початку о',
-                    'label_attr' => [
-                        'class' => 'profile-form__label'
+                    'label_attr'  => [
+                        'class' => 'profile-form__label',
                     ],
-                    'attr'  => [
+                    'attr'        => [
                         'class' => 'profile-form__input',
                     ],
                     'date_widget' => 'single_text',
@@ -103,10 +104,10 @@ class EventGroupType extends AbstractType
                 ])
                 ->add('endAt', 'datetime', [
                     'label'       => 'Кінець о',
-                    'label_attr' => [
-                        'class' => 'profile-form__label'
+                    'label_attr'  => [
+                        'class' => 'profile-form__label',
                     ],
-                    'attr'  => [
+                    'attr'        => [
                         'class' => 'profile-form__input',
                     ],
                     'date_widget' => 'single_text',
@@ -128,7 +129,11 @@ class EventGroupType extends AbstractType
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['groups'] = $this->em->getRepository('AppBundle:Group')->findGroupsByManager($this->token->getToken()->getUser());
+        $user = $this->token->getToken()->getUser();
+
+        $groupRepository = $this->em->getRepository('AppBundle:Group');
+
+        $view->vars['groups'] = $groupRepository->findGroupsByManager($user);
     }
 
     /**

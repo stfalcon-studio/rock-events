@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
  * Frontend GroupController
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class GroupController extends Controller
 {
@@ -28,17 +29,21 @@ class GroupController extends Controller
      *
      * @return Response
      *
-     * @Method("GET")
      * @Route("/groups", name="group_list")
      */
     public function listAction()
     {
-        $groups   = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsWithCountLike();
-        $genres   = $this->getDoctrine()->getRepository('AppBundle:Genre')->findAll();
-        $counties = $this->getDoctrine()->getRepository('AppBundle:Group')->findAllCountiesByGroups();
-        $cities   = $this->getDoctrine()->getRepository('AppBundle:Group')->findAllCitiesByGroups();
+        $user = $this->getUser();
 
-        if (null === $this->getUser()) {
+        $groupRepository = $this->getDoctrine()->getRepository('AppBundle:Group');
+        $genreRepository = $this->getDoctrine()->getRepository('AppBundle:Genre');
+
+        $groups   = $groupRepository->findGroupsWithCountLike();
+        $genres   = $genreRepository->findAllActiveGenres();
+        $counties = $groupRepository->findAllCountriesByGroups();
+        $cities   = $groupRepository->findAllCitiesByGroups();
+
+        if (null === $user) {
             return $this->render('AppBundle:frontend\group:list.html.twig', [
                 'groups'    => $groups,
                 'genres'    => $genres,
@@ -47,7 +52,7 @@ class GroupController extends Controller
             ]);
         }
 
-        $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
+        $userGroups = $groupRepository->findGroupsByUser($user);
 
         return $this->render('AppBundle:frontend\group:list.html.twig', [
             'groups'     => $groups,
@@ -61,19 +66,21 @@ class GroupController extends Controller
     /**
      * Group show
      *
-     * @param Group $slug Group
+     * @param Group $group Group
      *
      * @return Response
      *
-     * @Method("GET")
      * @Route("/group/{slug}", name="group_show")
      * @ParamConverter("group", class="AppBundle:Group")
      */
     public function showAction(Group $group)
     {
-        $genres          = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
-        $groupCountLikes = $this->getDoctrine()->getRepository('AppBundle:Group')->findCountLikesByGroup($group);
-        $similarGroups   = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByGenres($genres);
+        $groupRepository = $this->getDoctrine()->getRepository('AppBundle:Group');
+        $genreRepository = $this->getDoctrine()->getRepository('AppBundle:Genre');
+
+        $genres          = $genreRepository->findGenresByGroup($group);
+        $groupCountLikes = $groupRepository->findCountLikesByGroup($group);
+        $similarGroups   = $groupRepository->findGroupsByGenres($genres);
 
         $user = $this->getUser();
 
@@ -89,7 +96,7 @@ class GroupController extends Controller
             ]);
         }
 
-        $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
+        $userGroups = $groupRepository->findGroupsByUser($this->getUser());
 
         return $this->render('AppBundle:frontend\group:show.html.twig', [
             'group'          => $group,
@@ -103,11 +110,10 @@ class GroupController extends Controller
     /**
      * Events by group
      *
-     * @param Group $slug Group
+     * @param Group $group Group
      *
      * @return Response
      *
-     * @Method("GET")
      * @Route("/group/{slug}/events", name="group_event")
      * @ParamConverter("group", class="AppBundle:Group")
      */
@@ -177,7 +183,7 @@ class GroupController extends Controller
      *
      * @return Response
      */
-    public function listGroupWidgetAction(array $groups, array $userGroups)
+    public function listGroupWidgetAction(array $groups, array $userGroups = null)
     {
         return $this->render('AppBundle:frontend/group:list_group_widget.html.twig', [
             'groups'     => $groups,
@@ -188,18 +194,18 @@ class GroupController extends Controller
     /**
      * Ajax add group to user bookmark
      *
-     * @param Group   $group   Group
      * @param Request $request Request
+     * @param Group   $group   Group
+     *
+     * @throws BadRequestHttpException
+     * @throws UnauthorizedHttpException
+     *
+     * @return JsonResponse
      *
      * @Route("/group/{slug}/bookmark", name="group_add_to_bookmark")
      * @ParamConverter("group", class="AppBundle:Group")
-     *
-     * @throws BadRequestHttpException Bab request 400 Request only AJAX
-     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
-     *
-     * @return JsonResponse
      */
-    public function ajaxAddToBookmarkAction(Group $group, Request $request)
+    public function ajaxAddToBookmarkAction(Request $request, Group $group)
     {
         if (!$request->isXmlHttpRequest()) {
             throw new BadRequestHttpException('Не правильний запит');
@@ -228,18 +234,18 @@ class GroupController extends Controller
     /**
      * Ajax delete group from user bookmark
      *
-     * @param Group   $group   Group
      * @param Request $request Request
+     * @param Group   $group   Group
+     *
+     * @throws BadRequestHttpException
+     * @throws UnauthorizedHttpException
+     *
+     * @return JsonResponse
      *
      * @Route("/group/{slug}/bookmark/delete", name="group_delete_from_bookmark")
      * @ParamConverter("group", class="AppBundle:Group")
-     *
-     * @throws BadRequestHttpException Bab request 400 Request only AJAX
-     * @throws UnauthorizedHttpException Forbidden 401 User not authorized
-     *
-     * @return JsonResponse
      */
-    public function ajaxDeleteFromBookmarkAction(Group $group, Request $request)
+    public function ajaxDeleteFromBookmarkAction(Request $request, Group $group)
     {
         if (!$request->isXmlHttpRequest()) {
             throw new BadRequestHttpException('Не правильний запит');
@@ -273,7 +279,7 @@ class GroupController extends Controller
      *
      * @param Request $request Request
      *
-     * @throws BadRequestHttpException Bab request 400 Request only AJAX
+     * @throws BadRequestHttpException
      *
      * @return Group[]
      *
@@ -285,18 +291,23 @@ class GroupController extends Controller
             throw new BadRequestHttpException('Не правильний запит');
         }
 
+        $user = $this->getUser();
+
+        $groupRepository = $this->getDoctrine()->getRepository('AppBundle:Group');
+
         $genre   = $request->query->get('genre');
         $country = $request->query->get('country');
         $city    = $request->query->get('city');
         $like    = $request->query->get('like');
 
-        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByFilter($genre, $country, $city, $like);
-        if (null === $this->getUser()) {
+        $groups = $groupRepository->findGroupsByFilter($genre, $country, $city, $like);
+
+        if (null === $user) {
             $template = $this->renderView('AppBundle:frontend/group:list_group_widget.html.twig', [
                 'groups' => $groups,
             ]);
         } else {
-            $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($this->getUser());
+            $userGroups = $groupRepository->findGroupsByUser($user);
             $template   = $this->renderView('AppBundle:frontend/group:list_group_widget.html.twig', [
                 'groups'     => $groups,
                 'userGroups' => $userGroups,

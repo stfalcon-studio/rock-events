@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Class GroupType
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class GroupType extends AbstractType
 {
@@ -97,8 +98,7 @@ class GroupType extends AbstractType
                 ],
             ]);
 
-        $builder->get('foundedAt')
-                ->addModelTransformer(new IntToDateTimeTransformer($this->manager));
+        $builder->get('foundedAt')->addModelTransformer(new IntToDateTimeTransformer($this->manager));
     }
 
     /**

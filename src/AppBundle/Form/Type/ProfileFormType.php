@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
  * ProfileFormType
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class ProfileFormType extends AbstractType
 {
@@ -22,7 +23,7 @@ class ProfileFormType extends AbstractType
     {
         $builder->add('username', 'text', [
                     'label_attr' => [
-                        'class' => 'profile-form__label'
+                        'class' => 'profile-form__label',
                     ],
                     'attr'       => [
                         'class' => 'profile-form__input',
@@ -30,15 +31,15 @@ class ProfileFormType extends AbstractType
                 ])
                 ->add('email', 'email', [
                     'label_attr' => [
-                        'class' => 'profile-form__label'
+                        'class' => 'profile-form__label',
                     ],
-                    'attr' => [
+                    'attr'       => [
                         'class' => 'profile-form__input',
                     ],
                 ])
                 ->add('current_password', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\PasswordType'), [
-                    'label_attr' => [
-                        'class' => 'profile-form__label'
+                    'label_attr'         => [
+                        'class' => 'profile-form__label',
                     ],
                     'label'              => 'form.current_password',
                     'translation_domain' => 'FOSUserBundle',

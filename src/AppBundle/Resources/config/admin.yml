@@ -8,6 +8,15 @@ services:
             - AppBundle\Entity\Event
             - ~
 
+    admin.event_group:
+        class: AppBundle\Admin\EventGroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Контент", label: "Концерти-гурти" }
+        arguments:
+            - ~
+            - AppBundle\Entity\EventGroup
+            - ~
+
     admin.group:
         class: AppBundle\Admin\GroupAdmin
         tags:
@@ -15,6 +24,15 @@ services:
         arguments:
             - ~
             - AppBundle\Entity\Group
+            - ~
+
+    admin.group_genre:
+        class: AppBundle\Admin\GroupGenreAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Контент", label: "Гурти-Жанри" }
+        arguments:
+            - ~
+            - AppBundle\Entity\GroupGenre
             - ~
 
     admin.genre:

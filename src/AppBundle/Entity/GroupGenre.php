@@ -55,6 +55,22 @@ class GroupGenre
     private $genre;
 
     /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = 'New GroupGenre';
+
+        if (null !== $this->group && null !== $this->genre) {
+            $result = $this->group->getName().' - '.$this->genre->getName();
+        }
+
+        return $result;
+    }
+
+    /**
      * Get ID
      *
      * @return int ID

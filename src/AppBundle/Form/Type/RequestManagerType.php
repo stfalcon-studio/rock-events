@@ -10,6 +10,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class RequestManagerType
+ *
+ * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
+ */
 class RequestManagerType extends AbstractType
 {
     /**
@@ -30,14 +36,14 @@ class RequestManagerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('fullName', 'text', [
-            'label'      => 'ФІО',
-            'label_attr' => [
-                'class' => 'profile-form__label',
-            ],
-            'attr'       => [
-                'class' => 'profile-form__input',
-            ],
-        ])
+                    'label'      => 'ФІО',
+                    'label_attr' => [
+                        'class' => 'profile-form__label',
+                    ],
+                    'attr'       => [
+                        'class' => 'profile-form__input',
+                    ],
+                ])
                 ->add('phone', 'text', [
                     'label'      => 'Телефон',
                     'label_attr' => [
@@ -62,7 +68,7 @@ class RequestManagerType extends AbstractType
                 ])
                 ->add('groups', 'collection', [
                     'label_attr'   => [
-                        'style' => 'display: none;'
+                        'style' => 'display: none;',
                     ],
                     'type'         => new ShortGroupType(),
                     'allow_add'    => true,

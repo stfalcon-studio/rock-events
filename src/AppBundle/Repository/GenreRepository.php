@@ -74,7 +74,7 @@ class GenreRepository extends EntityRepository
      *
      * @param Genre $genre Genre
      *
-     * @return int
+     * @return array
      */
     public function findCountGroupsByGenre(Genre $genre)
     {
@@ -89,7 +89,11 @@ class GenreRepository extends EntityRepository
     }
 
     /**
+     * Find count likes by genre
+     *
      * @param Genre $genre Genre
+     *
+     * @return array
      */
     public function findCountLikesByGenre(Genre $genre)
     {
@@ -101,5 +105,19 @@ class GenreRepository extends EntityRepository
                   ->setParameter('genre', $genre)
                   ->getQuery()
                   ->getOneOrNullResult();
+    }
+
+    /**
+     * Find all active genres
+     *
+     * @return array Genres
+     */
+    public function findAllActiveGenres()
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb->where($qb->expr()->eq('g.isActive', true))
+                  ->getQuery()
+                  ->getResult();
     }
 }

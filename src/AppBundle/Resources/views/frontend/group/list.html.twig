@@ -39,7 +39,11 @@
         </div>
     </div>
     <div id="group-div" class="l-filter-elements">
-        {{ render(controller('AppBundle:Frontend/Group:listGroupWidget', { 'groups' : groups, 'userGroups': userGroups} )) }}
+        {% if app.user %}
+            {{ render(controller('AppBundle:Frontend/Group:listGroupWidget', { 'groups' : groups, 'userGroups': userGroups} )) }}
+        {% else %}
+            {{ render(controller('AppBundle:Frontend/Group:listGroupWidget', { 'groups' : groups } )) }}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

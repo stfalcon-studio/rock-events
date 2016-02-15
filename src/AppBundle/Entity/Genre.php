@@ -14,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * Genre Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  *
  * @ORM\Table(name="genres")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GenreRepository")
@@ -24,9 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Genre
 {
-    use TimestampableEntity;
-
-    use BlameableEntityTrait;
+    use TimestampableEntity, BlameableEntityTrait;
 
     /**
      * @var int $id ID
@@ -103,9 +102,10 @@ class Genre
      */
     public function __toString()
     {
-        $result = $this->getName();
-        if (null === $result) {
-            return "New Genre";
+        $result = 'New Genre';
+
+        if (null !== $this->getName()) {
+            $result = $this->getName();
         }
 
         return $result;

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Event class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class Event
 {
@@ -64,7 +65,7 @@ class Event
      *
      * @param string $name Name
      *
-     * @return Event
+     * @return $this
      */
     public function setName($name)
     {
@@ -88,7 +89,7 @@ class Event
      *
      * @param string $description Description
      *
-     * @return Event
+     * @return $this
      */
     public function setDescription($description)
     {
@@ -112,7 +113,7 @@ class Event
      *
      * @param string $country Country
      *
-     * @return Event
+     * @return $this
      */
     public function setCountry($country)
     {
@@ -136,7 +137,7 @@ class Event
      *
      * @param string $city City
      *
-     * @return Event
+     * @return $this
      */
     public function setCity($city)
     {
@@ -160,7 +161,7 @@ class Event
      *
      * @param string $address Address
      *
-     * @return Event
+     * @return $this
      */
     public function setAddress($address)
     {
@@ -184,7 +185,7 @@ class Event
      *
      * @param \DateTime $beginAt Begin at
      *
-     * @return Event
+     * @return $this
      */
     public function setBeginAt($beginAt)
     {
@@ -208,7 +209,7 @@ class Event
      *
      * @param \DateTime $endAt End at
      *
-     * @return Event
+     * @return $this
      */
     public function setEndAt($endAt)
     {
@@ -242,7 +243,7 @@ class Event
      *
      * @param array $groups
      *
-     * @return Event
+     * @return $this
      */
     public function setGroups(array $groups)
     {
@@ -261,15 +262,21 @@ class Event
     public function addGroups(Group $group)
     {
         $this->groups->add($group);
+
+        return $this;
     }
 
     /**
      * Remove group
      *
      * @param Group $group
+     *
+     * @return $this
      */
     public function removeGroups(Group $group)
     {
         $this->groups->remove($group);
+
+        return $this;
     }
 }

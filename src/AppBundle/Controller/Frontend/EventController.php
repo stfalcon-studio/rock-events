@@ -3,12 +3,13 @@
 namespace AppBundle\Controller\Frontend;
 
 use AppBundle\Entity\Event;
+use AppBundle\Entity\EventGroup;
 use AppBundle\Entity\Group;
+use AppBundle\Entity\GroupGenre;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * Frontend EventController
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class EventController extends Controller
 {
@@ -29,9 +31,12 @@ class EventController extends Controller
      */
     public function indexAction()
     {
-        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEvents();
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findAll();
-        $cities = $this->getDoctrine()->getRepository('AppBundle:Event')->findAllCityByEvents();
+        $eventRepository = $this->getDoctrine()->getRepository('AppBundle:Event');
+        $genreRepository = $this->getDoctrine()->getRepository('AppBundle:Genre');
+
+        $events = $eventRepository->findActualEvents();
+        $genres = $genreRepository->findAllActiveGenres();
+        $cities = $eventRepository->findAllCityByEvents();
 
         return $this->render('AppBundle:frontend/event:index.html.twig', [
             'events' => $events,
@@ -49,9 +54,12 @@ class EventController extends Controller
      */
     public function listAction()
     {
-        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEvents();
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findAll();
-        $cities = $this->getDoctrine()->getRepository('AppBundle:Event')->findAllCityByEvents();
+        $eventRepository = $this->getDoctrine()->getRepository('AppBundle:Event');
+        $genreRepository = $this->getDoctrine()->getRepository('AppBundle:Genre');
+
+        $events = $eventRepository->findActualEvents();
+        $genres = $genreRepository->findAllActiveGenres();
+        $cities = $eventRepository->findAllCityByEvents();
 
         return $this->render('AppBundle:frontend\event:list.html.twig', [
             'events' => $events,
@@ -63,7 +71,7 @@ class EventController extends Controller
     /**
      * Event show
      *
-     * @param Event $slug Event
+     * @param Event $event Event
      *
      * @return Response
      *
@@ -77,68 +85,66 @@ class EventController extends Controller
         $timeToEvent = (new \DateTime())->diff($event->getBeginAt());
 
         return $this->render('AppBundle:frontend\event:show.html.twig', [
-            'event'                => $event,
-            'groups'               => $groups,
-            'recommended_group'    => $groups[0], // @todo Change to many groups
-            'time_to_event_day'    => $timeToEvent->format('%d'),
-            'time_to_event_hour'   => $timeToEvent->format('%h'),
-            'time_to_event_minute' => $timeToEvent->format('%i'),
+            'event'             => $event,
+            'groups'            => $groups,
+            // @todo Change to many groups
+            'recommended_group' => $groups[0],
+            'time_to_event'     => $timeToEvent,
         ]);
     }
 
     /**
-     * Recommended concert widget
+     * Recommended events widget
      *
-     * @param Group $group Group
+     * @param Event $event Event
      *
      * @return Response
      */
-    public function recommendedConcertsAction(Group $group)
+    public function recommendedConcertsAction(Event $event)
     {
+        $eventRepository = $this->getDoctrine()->getRepository('AppBundle:Event');
+        $genreRepository = $this->getDoctrine()->getRepository('AppBundle:Genre');
+        $groupRepository = $this->getDoctrine()->getRepository('AppBundle:Group');
+
         $user = $this->getUser();
         if (null === $user) {
-            $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsForWeek();
-            if (Event::NUMBER < count($events)) {
-                $events = array_slice($events, 0, Event::NUMBER);
-            }
+            $events = $eventRepository->findEventsForWeek(Event::NUMBER);
 
             return $this->render('AppBundle:frontend/event:recommended-concerts.html.twig', [
                 'events' => $events,
             ]);
         }
 
-        $genres = $this->getDoctrine()->getRepository('AppBundle:Genre')->findGenresByGroup($group);
-        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsBySimilarGenres($genres);
+        $eventGenres = [];
+        $eventGroups = [];
 
-        // @todo Refactoring
-        if (Event::NUMBER > count($events)) {
-            $eventsByUserBookmark = $this->getDoctrine()->getRepository('AppBundle:Event')
-                                         ->findEventsByUserBookMark($user);
-            foreach ($events as $event) {
-                foreach ($eventsByUserBookmark as $eventByUserBookmark) {
-                    if ($event->getId() === $eventByUserBookmark->getId()) {
-                        $events[] = $eventByUserBookmark;
-                        if (Event::NUMBER <= count($events)) {
-                            break;
-                        }
-                    }
-                }
-            }
+        /** @var EventGroup $eventGroup */
+        foreach ($event->getEventGroups()->getValues() as $eventGroup) {
+            $groupGenres = $eventGroup->getGroup()->getGroupGenres();
 
-            if (Event::NUMBER > count($events)) {
-                $eventsForWeek = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsForWeek();
-                foreach ($eventsForWeek as $eventForWeek) {
-                    if (!in_array($eventForWeek, $events)) {
-                        $events[] = $eventForWeek;
-                        if (Event::NUMBER <= count($events)) {
-                            break;
-                        }
-                    }
-                }
+            // Get groups from event
+            $eventGroups[] = $eventGroup->getGroup();
+
+            /** @var GroupGenre $groupGenre */
+            foreach ($groupGenres as $groupGenre) {
+                // Get genres from event
+                $eventGenres[] = $groupGenre->getGenre();
             }
-        } else {
-            $events = array_slice($events, 0, Event::NUMBER);
         }
+
+        // Get user bookmarked genres and groups
+        $userBookmarkedGenres = $genreRepository->findGenresByUser($user);
+        $userBookmarkedGroups = $groupRepository->findGroupsByUser($user);
+
+        // Combine event genres and groups with user bookmarked genres and groups
+        $recommendedGenres = array_merge($userBookmarkedGenres, $eventGenres);
+        $recommendedGroups = array_merge($userBookmarkedGroups, $eventGroups);
+
+        $events = $eventRepository->findAllActiveByGenresAndGroupsWithLimit(
+            $recommendedGenres,
+            $recommendedGroups,
+            Event::NUMBER
+        );
 
         return $this->render('AppBundle:frontend/event:recommended-concerts.html.twig', [
             'events' => $events,
@@ -206,7 +212,7 @@ class EventController extends Controller
      *
      * @param Request $request Request
      *
-     * @throws BadRequestHttpException Bab request 400 Request only AJAX
+     * @throws BadRequestHttpException
      *
      * @return Event[]
      *
@@ -240,7 +246,7 @@ class EventController extends Controller
      *
      * @param Request $request Request
      *
-     * @throws BadRequestHttpException Bab request 400 Request only AJAX
+     * @throws BadRequestHttpException
      *
      * @return Event[]
      *

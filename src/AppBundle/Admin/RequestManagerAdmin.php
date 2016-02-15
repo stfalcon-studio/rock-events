@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
  * RequestManagerAdmin class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class RequestManagerAdmin extends Admin
 {
@@ -26,6 +27,15 @@ class RequestManagerAdmin extends Admin
         /** @var RequestManager $requestManager */
         $requestManager->setCreatedBy($this->getUser())
                        ->setUpdatedBy($this->getUser());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($requestManager)
+    {
+        /** var RequestManager $requestManager */
+        $requestManager->setUpdatedBy($this->getUser());
     }
 
     /**
@@ -54,9 +64,8 @@ class RequestManagerAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('user', 'entity', [
+            ->add('requestedBy', null, [
                 'label' => 'Юзер',
-                'class' => 'AppBundle\Entity\User',
             ])
             ->add('fullName', null, [
                 'label' => 'ФІО',
@@ -80,6 +89,9 @@ class RequestManagerAdmin extends Admin
         $listMapper
             ->addIdentifier('fullName', null, [
                 'label' => 'ФІО',
+            ])
+            ->add('requestedBy', null, [
+                'label' => 'Юзер',
             ])
             ->add('phone', null, [
                 'label' => 'Телефон',

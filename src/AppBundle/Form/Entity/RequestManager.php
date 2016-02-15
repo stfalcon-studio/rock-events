@@ -4,12 +4,13 @@ namespace AppBundle\Form\Entity;
 
 use AppBundle\DBAL\Types\RequestManagerStatusType;
 use Doctrine\Common\Collections\ArrayCollection;
-use AppBundle\Entity\Group;
+use AppBundle\Entity\Group as OriginalGroup;
 
 /**
  * RequestManager class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class RequestManager
 {
@@ -25,7 +26,7 @@ class RequestManager
     /** @var string $text Text */
     private $text;
 
-    /** @var ArrayCollection|Group[] $groups Groups */
+    /** @var ArrayCollection|OriginalGroup[] $groups Groups */
     private $groups;
 
     /** @var RequestManagerStatusType $status Status */
@@ -44,9 +45,9 @@ class RequestManager
     /**
      * Set full name
      *
-     * @param string $fullName FullName
+     * @param string $fullName Full name
      *
-     * @return RequestManager
+     * @return $this
      */
     public function setFullName($fullName)
     {
@@ -70,7 +71,7 @@ class RequestManager
      *
      * @param string $phone Phone
      *
-     * @return RequestManager
+     * @return $this
      */
     public function setPhone($phone)
     {
@@ -94,7 +95,7 @@ class RequestManager
      *
      * @param string $text Text
      *
-     * @return RequestManager
+     * @return $this
      */
     public function setText($text)
     {
@@ -128,7 +129,7 @@ class RequestManager
      *
      * @param array $groups
      *
-     * @return Event
+     * @return $this
      */
     public function setGroups(array $groups)
     {
@@ -147,15 +148,21 @@ class RequestManager
     public function addGroups(Group $group)
     {
         $this->groups->add($group);
+
+        return $this;
     }
 
     /**
      * Remove group
      *
      * @param Group $group
+     *
+     * @return $this
      */
     public function removeGroups(Group $group)
     {
         $this->groups->remove($group);
+
+        return $this;
     }
 }

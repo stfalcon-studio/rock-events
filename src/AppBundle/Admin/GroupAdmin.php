@@ -3,6 +3,8 @@
 namespace AppBundle\Admin;
 
 use AppBundle\Entity\Group;
+use AppBundle\Entity\GroupGenre;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -13,6 +15,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
  * GroupAdmin class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class GroupAdmin extends Admin
 {
@@ -23,8 +26,38 @@ class GroupAdmin extends Admin
      */
     public function prePersist($group)
     {
+        /** @var GroupGenre[] $groupGenres */
+        $groupGenres = new ArrayCollection();
+
         /** @var Group $group */
-        $group->setCreatedBy($this->getUser())
+        /** @var GroupGenre $groupGenre */
+        foreach ($group->getGroupGenres() as $groupGenre) {
+            $groupGenres[] = $groupGenre->setGroup($group);
+        }
+
+        $group->setGroupGenres($groupGenres)
+              ->setCreatedBy($this->getUser())
+              ->setUpdatedBy($this->getUser());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($group)
+    {
+        /** @var GroupGenre[] $groupGenres */
+        $groupGenres = new ArrayCollection();
+
+        /** @var Group $group */
+        /** @var GroupGenre $groupGenre */
+        foreach ($group->getGroupGenres() as $groupGenre) {
+            if (null === $groupGenre->getGroup()) {
+                $groupGenre->setGroup($group);
+            }
+            $groupGenres[] = $groupGenre;
+        }
+
+        $group->setGroupGenres($groupGenres)
               ->setUpdatedBy($this->getUser());
     }
 
@@ -70,8 +103,9 @@ class GroupAdmin extends Admin
             ->add('city', null, [
                 'label' => 'Місто',
             ])
-            ->add('foundedAt', null, [
+            ->add('foundedAt', 'sonata_type_datetime_picker', [
                 'label' => 'Рік заснування',
+                'data'  => new \DateTime(),
             ])
             ->add('slug', null, [
                 'label' => 'Slug',
@@ -79,6 +113,17 @@ class GroupAdmin extends Admin
             ->add('imageFile', 'file', [
                 'label'    => 'Зображення',
                 'required' => false,
+            ])
+            ->add('groupGenres', 'sonata_type_collection', [
+                'label'        => 'Жанри',
+                'by_reference' => true,
+                'required'     => false,
+            ], [
+                'edit'            => 'inline',
+                'inline'          => 'table',
+                'link_parameters' => [
+                    'context' => 'default',
+                ],
             ]);
     }
 

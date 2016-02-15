@@ -11,6 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Event Group Entity
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  *
  * @ORM\Table(name="events_to_groups")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventGroupRepository")
@@ -53,6 +54,22 @@ class EventGroup
      * @Gedmo\Versioned
      */
     private $group;
+
+    /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $result = 'New EventGroup';
+
+        if (null !== $this->event && null !== $this->group) {
+            $result = $this->event->getName().' - '.$this->group->getName();
+        }
+
+        return $result;
+    }
 
     /**
      * Get ID
