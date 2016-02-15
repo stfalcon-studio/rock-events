@@ -1,0 +1,27 @@
+<div class="user-cabinet f-r" id="userBut">
+    {% if app.user %}
+        <div class="user-cabinet__head">
+            <img src="/img/user_img.jpg" alt="" class="user-cabinet__img">
+            <span class="user-cabinet__name">Roma</span>
+        </div>
+        <ul class="user-cabinet__menu">
+            <li class="user-cabinet__item">
+                <a href="{{ path('user_cabinet') }}#tab-1" class="user-cabinet__link profile-icon-t">Профіль</a></li>
+            <li class="user-cabinet__item">
+                <a href="{{ path('user_cabinet') }}#tab-2" class="user-cabinet__link concert-icon-t">Найближчі
+                                                                                                     концерти</a>
+                <a href="{{ path('user_cabinet') }}#tab-3" class="user-cabinet__link group-icon-t">Гурти</a>
+                <a href="{{ path('user_cabinet') }}#tab-4" class="user-cabinet__link genre-icon-t">Жанри</a></li>
+            {% if is_granted('ROLE_MANAGER') %}
+                <li class="user-cabinet__item"><a href="" class="user-cabinet__link cabinet-icon-t">Кабінет
+                                                                                                    менеджера</a></li>
+            {% endif %}
+            <li class="user-cabinet__item">
+                <a href="{{ path('fos_user_security_logout') }}" class="user-cabinet__link logout-icon-t">Вийти</a></li>
+        </ul>
+    {% else %}
+        <a href="{{ path('fos_user_security_login') }}">
+            <div class="button button_medium doors-icon-t">Війти</div>
+        </a>
+    {% endif %}
+</div>

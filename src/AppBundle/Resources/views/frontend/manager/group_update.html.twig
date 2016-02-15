@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="l-admin cf content">
+        <div id="tabs-block-admin" class="cf">
+            <div class="content">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

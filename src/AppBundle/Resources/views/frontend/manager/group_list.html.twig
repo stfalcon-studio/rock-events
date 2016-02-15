@@ -1,0 +1,30 @@
+<div id="tab-manager-5" class="scroll">
+    <table class="tabs-list">
+        <thead class="tabs-list__header">
+            <tr class="tabs-list__row">
+                <td class="tabs-list__td">Назва</td>
+                <td class="tabs-list__td"></td>
+                <td class="tabs-list__td"></td>
+            </tr>
+        </thead>
+        <tbody class="tabs-list__body">
+            {% for group in groups %}
+                <tr class="tabs-list__row">
+                    <td class="tabs-list__td">
+                        <a href="{{ path('group_show', { 'slug' : group.slug }) }}" class="tabs-list__link">{{ group.name }}</a>
+                    </td>
+                    <td class="tabs-list__td">
+                        <a href="{{ path('manager_cabinet_group_update', { 'slug' : group.slug }) }}" class="tabs-list__link">
+                            Редагувати
+                        </a>
+                    </td>
+                    <td class="tabs-list__td">
+                        <a href="{{ path('manager_cabinet_group_events', { 'slug' : group.slug }) }}" class="tabs-list__link">
+                            Майбунті виступи
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

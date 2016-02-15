@@ -1,0 +1,18 @@
+sonata_admin:
+    title: Rock events
+    title_logo: apple-touch-icon.png
+    dashboard:
+        blocks:
+            - { position: left, type: sonata.admin.block.admin_list }
+        groups:
+            Контент:
+                items:
+                    - admin.event
+                    - admin.group
+                    - admin.genre
+
+            Адміністрування:
+                items:
+                    - admin.user_admin
+                    - admin.request_manager
+

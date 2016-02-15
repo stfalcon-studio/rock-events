@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="l-admin cf content">
+        <div id="tabs-block-admin" class="cf">
+            <div class="content">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {{ form_rest(form) }}
+                {% include ':form:group.html.twig' with { action : 'event_groups' } %}
+                <button type="submit" class="profile-form__submit" style="display: block">Оновити подію</button>
+                <ul class="save-groups" style="display: none">
+                    {% for group in groups %}
+                        <li id="{{ group.slug }}">{{ group.name }}</li>
+                    {% endfor %}
+                </ul>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/add_groups.js') }}"></script>
+{% endblock %}

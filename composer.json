@@ -1,14 +1,10 @@
 {
-    "name": "root/rock.events",
-    "license": "proprietary",
+    "name": "stfalcon-studio/rock_events",
+    "description": "Web-service for rock events.",
+    "license": "MIT",
     "type": "project",
-    "autoload": {
-        "psr-4": {
-            "": "src/"
-        }
-    },
     "require": {
-        "php": ">=5.3.9",
+        "php": ">=5.4.0",
         "symfony/symfony": "2.7.*",
         "doctrine/orm": "^2.4.8",
         "doctrine/doctrine-bundle": "~1.4",
@@ -19,17 +15,29 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "javiereguiluz/easyadmin-bundle": "^1.10",
         "doctrine/migrations": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "fresh/doctrine-enum-bundle": "v3.3",
         "stof/doctrine-extensions-bundle": "^1.2",
-        "ftrrtf/rollbar-bundle": "^0.14.0"
+        "ftrrtf/rollbar-bundle": "^0.14.0",
+        "beberlei/DoctrineExtensions": "^1.0",
+        "egeloen/ckeditor-bundle": "^4.0",
+        "hwi/oauth-bundle": "^0.4.0",
+        "sonata-project/admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "^2.3",
+        "vich/uploader-bundle": "^0.14.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
         "symfony/phpunit-bridge": "~2.7",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "phpunit/phpunit": "~4.8",
+        "liip/functional-test-bundle": "^1.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
     },
     "scripts": {
         "post-install-cmd": [
@@ -51,9 +59,7 @@
     },
     "config": {
         "bin-dir": "bin",
-        "platform": {
-            "php": "5.4.0"
-        }
+        "optimize-autoloader": true
     },
     "extra": {
         "symfony-app-dir": "app",

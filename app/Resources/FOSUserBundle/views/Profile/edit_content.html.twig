@@ -1,0 +1,10 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'profile-form' }} ) }}
+<ul class="profile-form__list">
+    <li class="profile-form__item">
+        {{ form_widget(form) }}
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="profile-form__submit" />
+    </li>
+</ul>
+{{ form_end(form) }}

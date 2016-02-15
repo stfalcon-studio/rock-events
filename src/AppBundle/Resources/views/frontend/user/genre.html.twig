@@ -1,0 +1,24 @@
+<div id="tab-4" class=" scroll">
+    <table class="tabs-list">
+        <thead class="tabs-list__header">
+            <tr class="tabs-list__row">
+                <td class="tabs-list__td">№</td>
+                <td class="tabs-list__td">Назва</td>
+                <td class="tabs-list__td"></td>
+            </tr>
+        </thead>
+        <tbody class="tabs-list__body">
+            {% for genre in genres %}
+                <tr class="tabs-list__row">
+                    <td class="tabs-list__td">{{ loop.index }}</td>
+                    <td class="tabs-list__td">
+                        <a href="{{ path('genre_group', { 'slug': genre.slug }) }}" class="tabs-list__link">{{ genre.name }}</a>
+                    </td>
+                    <td class="tabs-list__td">
+                        <a class="delete-icon delete-genre" data-genre-slug="{{ path('genre_delete_from_bookmark', { 'slug' : genre.slug,}) }}"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

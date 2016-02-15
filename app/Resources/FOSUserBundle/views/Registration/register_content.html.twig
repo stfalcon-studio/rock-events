@@ -1,0 +1,8 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'form-signin'}}) }}
+    {{ form_widget(form) }}
+    <div>
+        <input type="submit" value="Зареєструватись" class="profile-form__submit"/>
+    </div>
+{{ form_end(form) }}

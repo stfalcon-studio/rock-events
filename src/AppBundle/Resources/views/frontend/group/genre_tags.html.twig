@@ -1,0 +1,7 @@
+<ul class="hash-list">
+    {% for genre in genres %}
+        <li class="hash-list__item">
+            <a href="{{ path('genre_group', { 'slug': genre.slug }) }}" class="hash-list__link">{{ genre.name }}</a>
+        </li>
+    {% endfor %}
+</ul>

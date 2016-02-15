@@ -1,0 +1,9 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="fos_user_user_show">
+    <p class="bg-success"><b>{{ 'profile.show.username'|trans }}</b>: {{ user.username }}</p>
+    <p class="bg-success"><b>{{ 'profile.show.email'|trans }}:</b> {{ user.email }}</p>
+    <a href="{{ path('fos_user_profile_edit') }}">
+        <button type="button" class="btn btn-primary">Редагувати інформацію</button>
+    </a>
+</div>

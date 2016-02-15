@@ -1,0 +1,31 @@
+{% extends 'main.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="sign-tabs-wrapper" id="sign">
+        <div class="sign-tabs">
+            <div id="tabs-block" class="about-body">
+                <ul class="about-body__list">
+                    <li class="about-body__item"><a href="#tab-1" class="about-body__link active">Вхід</a></li>
+                </ul>
+                <div id="tab-1">
+                    <h3 class="sign-tabs__label">Через соціальні мережі</h3>
+                    <ul class="user-links">
+                        <li class="user-links__link"><a href="{{ path('hwi_oauth_connect_service', { 'service':'facebook' }) }}" class="user-links__link icon-f-big"></a></li>
+                        <li class="user-links__link"><a href="{{ path('vk_login') }}" class="user-links__link icon-b-big"></a></li>
+                        <li class="user-links__link"><a href="" class="user-links__link icon-g-big"></a></li>
+                    </ul>
+                    {% include "FOSUserBundle:Security:login_content.html.twig" %}
+                    <a href="{{ path('fos_user_registration_register') }}" style="color: #2089f4;">Зареєструватись</a>
+                </div>
+                <div class="close-but">
+                    <a href="{{ path('event_index') }}">
+                        <span class="delete-icon" id="closeBut"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+

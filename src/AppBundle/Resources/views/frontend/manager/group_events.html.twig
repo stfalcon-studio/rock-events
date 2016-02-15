@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="l-admin cf content">
+        <div id="tabs-block-admin" class="cf">
+            <div class="content">
+                <h1 class="profile-header">
+                    <a href="{{ path('group_show', { 'slug':group.slug }) }}" style="color:beige">{{ group.name }}</a>
+                </h1>
+                <table class="tabs-list">
+                    <thead class="tabs-list__header">
+                        <tr class="tabs-list__row">
+                            <td class="tabs-list__td">№</td>
+                            <td class="tabs-list__td">Назва</td>
+                            <td class="tabs-list__td">Країна, місто</td>
+                            <td class="tabs-list__td">Початок о</td>
+                            <td class="tabs-list__td"></td>
+                        </tr>
+                    </thead>
+                    <tbody class="tabs-list__body">
+                        {% for event in events %}
+                            <tr class="tabs-list__row">
+                                <td class="tabs-list__td">{{ loop.index }}</td>
+                                <td class="tabs-list__td">
+                                    <a href="{{ path('event_show', { 'slug': event.slug }) }}" class="tabs-list__link">{{ event.name }}</a>
+                                </td>
+                                <td class="tabs-list__td">
+                                    {{ event.country }}, {{ event.city }}
+                                </td>
+                                <td class="tabs-list__td">
+                                    {{ event.beginAt|date('F jS \\a\\t g:ia') }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

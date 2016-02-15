@@ -1,0 +1,15 @@
+<div id="tab-5" class="scroll">
+    <h1 class="profile-form__label" style="font-size:24px">Подати заявку на менеджера</h1>
+    <section class="l-profile ">
+        <span class="profile-form__list">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_rest(form) }}
+            {% include ':form:group.html.twig' with { action: 'request_manager' } %}
+            <div class="center-align">
+                <button type="submit" class="profile-form__submit">Залишити заявку</button>
+            </div>
+            </span>
+        {{ form_end(form) }}
+    </section>
+</div>
