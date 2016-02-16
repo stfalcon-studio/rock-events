@@ -33,12 +33,9 @@
         {{ render(controller('AppBundle:Frontend/User:requestRightManager')) }}
         {{ render(controller('FOSUserBundle:Profile:edit')) }}
         {{ render(controller('AppBundle:Frontend/Manager:addEvent')) }}
-{% endblock %}
-{% block footer %}
     </div>
 </div>
-    {{ parent() }}
-{% endblock footer %}
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}

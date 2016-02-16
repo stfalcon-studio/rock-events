@@ -155,6 +155,7 @@ class GroupController extends Controller
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEventsByGroup($group);
 
         return $this->render('AppBundle:frontend/group:next_concert.html.twig', [
+            'group'  => $group,
             'events' => $events,
         ]);
     }

@@ -91,9 +91,9 @@ class EventRepository extends EntityRepository
         $sql            = '(SELECT DISTINCT e.*
                             FROM events as e
                             INNER JOIN events_to_groups as eg
-                            ON e.id = eg.group_id
+                            ON e.id = eg.event_id
                             INNER JOIN users_to_groups as ug
-                            ON eg.id=ug.group_id
+                            ON eg.group_id = ug.group_id
                             WHERE ug.user_id = :user AND e.begin_at > now())
                             UNION
                             (SELECT DISTINCT e.*
