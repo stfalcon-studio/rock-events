@@ -64,7 +64,7 @@ class GroupAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureShowField(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
             ->add('name', null, [
