@@ -41,7 +41,7 @@ class RequestManagerAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureShowField(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
             ->add('fullName', null, [
