@@ -34,7 +34,7 @@ class EventController extends Controller
         $eventRepository = $this->getDoctrine()->getRepository('AppBundle:Event');
         $genreRepository = $this->getDoctrine()->getRepository('AppBundle:Genre');
 
-        $events = $eventRepository->findActualEvents();
+        $events = $eventRepository->findActualEvents(9);
         $genres = $genreRepository->findAllActiveGenres();
         $cities = $eventRepository->findAllCityByEvents();
 
@@ -263,6 +263,38 @@ class EventController extends Controller
         $date  = $request->query->get('date');
 
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByFilter($genre, $city, $date);
+
+        $template = $this->renderView('AppBundle:frontend/event:list_main_event.html.twig', [
+            'events' => $events,
+        ]);
+
+        return new JsonResponse([
+            'status'   => true,
+            'message'  => 'Success',
+            'template' => $template,
+        ]);
+    }
+
+    /**
+     * Ajax loading additional event for main page
+     *
+     * @param Request $request Request
+     *
+     * @throws BadRequestHttpException
+     *
+     * @return Event[]
+     *
+     * @Route("/loading-concert", name="loading_concert")
+     */
+    public function ajaxLoadingConcert(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('Не правильний запит');
+        }
+
+        $countEvents = $request->query->get('count-events');
+
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEvents($countEvents + 3);
 
         $template = $this->renderView('AppBundle:frontend/event:list_main_event.html.twig', [
             'events' => $events,

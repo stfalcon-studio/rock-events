@@ -2547,6 +2547,12 @@ iframe {
   background: #2089f4;
 }
 
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1
+}
+
 @media (max-width: 960px) {
   .l-header__h {
     margin-top: 80px;
