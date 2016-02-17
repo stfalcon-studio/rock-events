@@ -10,7 +10,7 @@ $(function () {
                     $ulElement.children().remove();
                     $ulElement.append(response.template);
                 } else {
-                    alert('error');
+                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
                 }
             }
         })
