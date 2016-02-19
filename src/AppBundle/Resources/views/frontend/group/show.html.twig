@@ -48,39 +48,9 @@
                         <li class="about-body__item"><a href="#tab-4" class="about-body__link"> Comments </a></li>
                     </ul>
                     <div id="tab-1">
-                       <p>{{ group.description }}</p>
-                        <ul class="gallery">
-                            <li class="gallery__item  gallery__item_small">
-                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
-                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img">
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_small">
-                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
-                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img" rel="gallery">
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_small">
-                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
-                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img">
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_small">
-                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
-                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img">
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_big">
-                                <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
-                                    <video poster="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__video"></video>
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_big">
-                                <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
-                                    <video poster="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__video"></video>
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="ckeditor__div">
+                            {{ group.description | raw }}
+                        </div>
                     </div>
                     <div id="tab-3">
                         <ul class="gallery-group">

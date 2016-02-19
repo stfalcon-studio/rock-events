@@ -2556,6 +2556,11 @@ iframe {
   border-color: #ebccd1
 }
 
+.ckeditor__div{
+  color: #fff;
+  font-size: 14px;
+}
+
 @media (max-width: 960px) {
   .l-header__h {
     margin-top: 80px;
