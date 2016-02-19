@@ -10,7 +10,7 @@ $(function () {
                     $parent.remove();
                     console.log('success')
                 } else {
-                    alert('error');
+                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
                 }
             }
         })
@@ -29,7 +29,7 @@ $(function () {
                     $(element).parent().parent().find('p#fans span').text(response.post_likes);
                     $(element).prop('disabled', false);
                 } else {
-                    alert('error');
+                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
                 }
             }
         })
@@ -48,7 +48,7 @@ $(function () {
                     $(element).parent().parent().find('p#fans span').text(response.post_likes);
                     $(element).prop('disabled', false);
                 } else {
-                    alert('error');
+                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
                 }
             }
         });
