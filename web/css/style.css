@@ -133,7 +133,9 @@ body {
   z-index: 5;
 }
 .l-admin {
-  margin: 90px auto;
+  margin: 0 auto;
+  padding-bottom: 90px;
+  padding-top:90px;
   font-size: 0;
 }
 .l-profile {
@@ -1167,9 +1169,11 @@ body {
   padding-right: 0;
 }
 .latest-concert__link {
-  display: block;
   padding: 10px;
   background: rgba(255,255,255,0.1);
+  display: inline-block;
+  height: 100%;
+  vertical-align: top;
 }
 .latest-concert__link:hover {
   background: rgba(255,255,255,0.2);
@@ -2186,7 +2190,6 @@ iframe {
 }
 .l-admin__list {
   display: table-cell;
-  font-size: 15px;
   vertical-align: top;
   width: 170px;
 }
@@ -2551,6 +2554,11 @@ iframe {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1
+}
+
+.ckeditor__div{
+  color: #fff;
+  font-size: 14px;
 }
 
 @media (max-width: 960px) {

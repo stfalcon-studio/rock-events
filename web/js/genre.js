@@ -1,10 +1,10 @@
 $(function () {
-    $('.delete-genre').on('click', function () {
+    $(document).on('click', '.delete-genre', function () {
         var url = $(this).data('genre-slug');
         var $parent = $(this).parent().parent();
+        $(this).prop('disabled', true);
         $.ajax({
-            url: url,
-            success: function (response) {
+            url: url, success: function (response) {
                 if (true === response.status) {
                     $parent.remove();
                     console.log('success')
@@ -15,9 +15,10 @@ $(function () {
         })
     });
 
-    $('.add').on('click', function () {
+    $(document).on('click', '.add', function () {
         var url = $(this).data('bookmark-genre-add');
         var element = this;
+        $(element).prop('disabled', true);
         $.ajax({
             url: url,
             success: function (response) {
@@ -25,7 +26,7 @@ $(function () {
                     $(element).siblings().show();
                     $(element).hide();
                     $(element).parent().parent().find('p#count_like').text(response.post_likes);
-                    console.log('success');
+                    $(element).prop('disabled', false);
                 } else {
                     $('.errors').append('<p>Помилка, при обробці запиту</p>');
                 }
@@ -33,9 +34,10 @@ $(function () {
         })
     });
 
-    $('.delete').on('click', function () {
+    $(document).on('click', '.delete', function () {
         var url = $(this).data('bookmark-genre-delete');
         var element = this;
+        $(element).prop('disabled', true);
         $.ajax({
             url: url,
             success: function (response) {
@@ -43,7 +45,7 @@ $(function () {
                     $(element).siblings().show();
                     $(element).hide();
                     $(element).parent().parent().find('p#count_like').text(response.post_likes);
-                    console.log('success')
+                    $(element).prop('disabled', false);
                 } else {
                     $('.errors').append('<p>Помилка, при обробці запиту</p>');
                 }

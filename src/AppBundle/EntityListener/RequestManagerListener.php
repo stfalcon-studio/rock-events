@@ -5,10 +5,10 @@ namespace AppBundle\EntityListener;
 use AppBundle\DBAL\Types\RequestManagerStatusType;
 use AppBundle\Entity\ManagerGroup;
 use AppBundle\Entity\RequestManager;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 /**
- * ProcessingManagerListener class
+ * RequestManagerListener class
  *
  * @author Yevgeniy Zholkevskiy <blackbullet@i.ua>
  * @author Oleg Kachinsky <logansoleg@gmail.com>
@@ -16,14 +16,14 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 class RequestManagerListener
 {
     /**
-     * Pre persist
+     * Pre update
      *
      * @param RequestManager     $manager Request manager
-     * @param PreUpdateEventArgs $args    Arguments
+     * @param LifecycleEventArgs $args    Arguments
      *
-     * @todo Fix creating entities
+     * @todo fix revision to preUpdate
      */
-    public function preUpdate(RequestManager $manager, PreUpdateEventArgs $args)
+    public function postUpdate(RequestManager $manager, LifecycleEventArgs $args)
     {
         if ($manager instanceof RequestManager) {
             $em = $args->getEntityManager();
@@ -50,6 +50,8 @@ class RequestManagerListener
 
                     $em->persist($managerGroup);
                 }
+
+                $em->flush();
             }
         }
     }

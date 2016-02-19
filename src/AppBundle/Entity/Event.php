@@ -160,16 +160,21 @@ class Event
     public $isActive = true;
 
     /**
+     * @var File $imageFile Image File
+     *
      * @Vich\UploadableField(mapping="event_image", fileNameProperty="imageName", nullable=true)
      *
-     * @var File $imageFile Image File
+     * @Assert\Image(
+     *      minWidth = 500,
+     *      minHeight = 300
+     * )
      */
     private $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
      * @var string $imageName Image name
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imageName;
 

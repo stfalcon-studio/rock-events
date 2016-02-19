@@ -1,12 +1,14 @@
 <aside class="group-concerts-list f-r">
-    <h4 class="group-concerts-list__header calendar-icon-t">Next concerts</h4>
+    <h4 class="group-concerts-list__header calendar-icon-t">
+        <a href="{{ path('group_event', { 'slug': group.slug }) }}" style="color: white;">Next concerts</a>
+    </h4>
     <ul class="group-concerts-list__items">
         {% for event in events %}
             <li class="group-concerts-list__item ">
                 <a href="{{ path('event_show', { 'slug': event.slug }) }}" class="group-concerts-list__link cf">
                     <p class="group-concerts-list__place">
-                       {{ event.country }}, {{ event.city }}
-                            <span class="group-concerts-list__date ">
+                        {{ event.country }}, {{ event.city }}
+                        <span class="group-concerts-list__date ">
                                 {{ event.beginAt|date('F jS \\a\\t g:ia') }}
                             </span>
                     </p>

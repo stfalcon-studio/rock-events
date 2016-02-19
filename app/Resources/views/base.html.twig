@@ -20,36 +20,37 @@
     </head>
     <body>
         {% block header %}
-        <div class="main-wrapper gradient-bg gradient-bg_light">
-            <header class="l-header l-header_grad-bg">
-                <div class="content">
-                    <nav class="navigation cf">
-                        <div><li class="logo f-l"><a href="{{ path('event_index') }}" class="logo__link logo-icon"></a></li></div>
-                        <ul class="navigation__items">
-                            <li class="navigation__item navigation__link_upper"><a href="{{ path('event_list') }}" class="navigation__link ">Concerts</a></li>
-                            <li class="navigation__item navigation__link_upper"><a href="{{ path('group_list') }}" class="navigation__link ">Groups</a></li>
-                            <li class="navigation__item navigation__link_upper"><a href="{{ path('genre_list') }}" class="navigation__link">Genre</a></li>
-                            <li class="navigation__item navigation__link_upper"><a href="" class="navigation__link">Calendar</a></li>
-                        </ul>
-                        {% include 'cabinet_menu_item.html.twig' %}
-                    </nav>
-                </div>
-            </header>
+            <div class="main-wrapper gradient-bg gradient-bg_light">
+                <header class="l-header l-header_grad-bg">
+                    <div class="content">
+                        <nav class="navigation cf">
+                            <div><li class="logo f-l"><a href="{{ path('event_index') }}" class="logo__link logo-icon"></a></li></div>
+                            <ul class="navigation__items">
+                                <li class="navigation__item navigation__link_upper"><a href="{{ path('event_list') }}" class="navigation__link ">Concerts</a></li>
+                                <li class="navigation__item navigation__link_upper"><a href="{{ path('group_list') }}" class="navigation__link ">Groups</a></li>
+                                <li class="navigation__item navigation__link_upper"><a href="{{ path('genre_list') }}" class="navigation__link">Genre</a></li>
+                                <li class="navigation__item navigation__link_upper"><a href="" class="navigation__link">Calendar</a></li>
+                            </ul>
+                            {% include 'cabinet_menu_item.html.twig' %}
+                        </nav>
+                    </div>
+                </header>
         {% endblock %}
         {% include 'form_errors.html.twig' %}
         {% block body %}{% endblock %}
         {% block fos_user_content %}
         {% endblock fos_user_content %}
         {% block footer %}
+            </div>
             {{ render(controller('AppBundle:Frontend/Event:lastEvents' )) }}
             <footer class="l-footer">
                 <div class="content cf">
                     <nav class="navigation navigation_dark f-l">
                         <ul class="navigation__items">
-                            <li class="navigation__item"><a href="" class="navigation__link active">Home</a></li>
-                            <li class="navigation__item"><a href="" class="navigation__link">Concerts</a></li>
-                            <li class="navigation__item"><a href="" class="navigation__link">Groups</a></li>
-                            <li class="navigation__item"><a href="" class="navigation__link">Genre</a></li>
+                            <li class="navigation__item"><a href="{{ path('event_index') }}" class="navigation__link active">Home</a></li>
+                            <li class="navigation__item"><a href="{{ path('event_list') }}" class="navigation__link">Concerts</a></li>
+                            <li class="navigation__item"><a href="{{ path('group_list') }}" class="navigation__link">Groups</a></li>
+                            <li class="navigation__item"><a href="{{ path('genre_list') }}" class="navigation__link">Genre</a></li>
                             <li class="navigation__item"><a href="" class="navigation__link">Calendar</a></li>
                         </ul>
                         <p class="copyright">&copy; RockEvents 2016</p>
