@@ -103,8 +103,14 @@ class EventAdmin extends Admin
                 'label' => 'Назва',
             ])
             ->add('slug', null)
-            ->add('description', null, [
-                'label' => 'Опис',
+            ->add('description', 'ckeditor', [
+                'label'  => 'Опис',
+                'config' => [
+                    'filebrowserBrowseRoute'           => 'elfinder',
+                    'filebrowserBrowseRouteParameters' => [
+                        'instance' => 'default',
+                    ],
+                ],
             ])
             ->add('country', null, [
                 'label' => 'Країна',

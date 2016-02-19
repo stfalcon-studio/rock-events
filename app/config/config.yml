@@ -9,6 +9,7 @@ imports:
     - { resource: sonata/block.yml }
     - { resource: sonata/admin.yml }
     - { resource: vich_uploader.yml }
+    - { resource: fm/elfinder.yml }
 
 parameters:
     locale: uk
