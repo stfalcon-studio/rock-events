@@ -176,9 +176,6 @@ class EventAdmin extends Admin
             ->addIdentifier('name', null, [
                 'label' => 'Назва',
             ])
-            ->add('description', null, [
-                'label' => 'Опис',
-            ])
             ->add('country', null, [
                 'label' => 'Країна',
             ])
