@@ -8,9 +8,8 @@ $(function () {
             success: function (response) {
                 if (true === response.status) {
                     $parent.remove();
-                    console.log('success')
                 } else {
-                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
+                    $('.errors ul').append('<li>Помилка, при обробці запиту</li>');
                 }
             }
         })
@@ -29,7 +28,7 @@ $(function () {
                     $(element).parent().parent().find('p#fans span').text(response.post_likes);
                     $(element).prop('disabled', false);
                 } else {
-                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
+                    $('.errors ul').append('<li>Помилка, при обробці запиту</li>');
                 }
             }
         })
@@ -48,7 +47,7 @@ $(function () {
                     $(element).parent().parent().find('p#fans span').text(response.post_likes);
                     $(element).prop('disabled', false);
                 } else {
-                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
+                    $('.errors ul').append('<li>Помилка, при обробці запиту</li>');
                 }
             }
         });

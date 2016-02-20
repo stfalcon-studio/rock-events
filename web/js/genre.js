@@ -7,9 +7,8 @@ $(function () {
             url: url, success: function (response) {
                 if (true === response.status) {
                     $parent.remove();
-                    console.log('success')
                 } else {
-                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
+                    $('.errors ul').append('<li>Помилка, при обробці запиту</li>');
                 }
             }
         })
@@ -28,7 +27,7 @@ $(function () {
                     $(element).parent().parent().find('p#count_like').text(response.post_likes);
                     $(element).prop('disabled', false);
                 } else {
-                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
+                    $('.errors ul').append('<li>Помилка, при обробці запиту</li>');
                 }
             }
         })
@@ -47,7 +46,7 @@ $(function () {
                     $(element).parent().parent().find('p#count_like').text(response.post_likes);
                     $(element).prop('disabled', false);
                 } else {
-                    $('.errors').append('<p>Помилка, при обробці запиту</p>');
+                    $('.errors ul').append('<li>Помилка, при обробці запиту</li>');
                 }
             }
         });
