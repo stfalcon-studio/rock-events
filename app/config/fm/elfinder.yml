@@ -1,0 +1,15 @@
+fm_elfinder:
+    instances:
+        default:
+            locale: %locale%
+            editor: ckeditor
+            theme: smoothness
+            include_assets: true
+            connector:
+                roots:
+                    uploads:
+                        driver: LocalFileSystem
+                        path: images
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        upload_deny: ['all']
+                        upload_max_size: 4M

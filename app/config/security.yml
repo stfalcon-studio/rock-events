@@ -49,3 +49,5 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/cabinet, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/manager, role: ROLE_MANAGER }
+        - { path: ^/efconnect, role: ROLE_USER }
+        - { path: ^/elfinder, role: ROLE_USER }

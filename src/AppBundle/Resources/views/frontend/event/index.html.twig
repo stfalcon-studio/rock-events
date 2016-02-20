@@ -67,10 +67,11 @@
                 {{ render(controller('AppBundle:Frontend/Event:listMainEvent', { 'events': events } )) }}
             </ul>
         </div>
-        <div class="button button_big"><p class="button__icon icon_show-t">Show 20</p></div>
+        <div id="show_concert" class="button button_big"><p class="button__icon icon_show-t">Show 3</p></div>
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/filter_main_page.js') }}"></script>
+    <script src="{{ asset('js/loading_concert.js') }}"></script>
 {% endblock %}
