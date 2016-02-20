@@ -15,6 +15,22 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
+     * @var string $imageFixturesDirectory Image fixtures directory
+     */
+    private $imageFixturesDirectory = '';
+
+    /** @var string $imageWebDirectory Image Web directory */
+    private $imageWebDirectory = __DIR__.'/../../../../web/images/groups';
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->imageFixturesDirectory = __DIR__.'/../../Resources/fixtures/images/groups';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getDependencies()
@@ -33,6 +49,9 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
          * @var \AppBundle\Entity\User $userAdmin
          */
         $userAdmin = $this->getReference('user-admin');
+
+        $this->prepareDirectories();
+        $this->prepareImages();
 
         $group1 = (new Group())
             ->setName('Enter Shikari')
@@ -182,5 +201,48 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
         $this->setReference('group-somali', $group11);
 
         $manager->flush();
+    }
+
+    /**
+     * Prepare directories
+     */
+    private function prepareDirectories()
+    {
+        if (!file_exists($this->imageWebDirectory)) {
+            mkdir($this->imageWebDirectory, 0777, true);
+        }
+    }
+
+    /**
+     * Prepare images
+     */
+    private function prepareImages()
+    {
+        //Main images
+        copy($this->imageFixturesDirectory.'/shikari.jpg', $this->imageWebDirectory.'/shikari.jpg');
+        copy($this->imageFixturesDirectory.'/bring.jpg', $this->imageWebDirectory.'/bring.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer.jpg', $this->imageWebDirectory.'/jinjer.jpg');
+        copy($this->imageFixturesDirectory.'/anti-flag.jpg', $this->imageWebDirectory.'/anti-flag.jpg');
+        copy($this->imageFixturesDirectory.'/rhcp.jpg', $this->imageWebDirectory.'/rhcp.jpg');
+        copy($this->imageFixturesDirectory.'/ffdp.jpg', $this->imageWebDirectory.'/ffdp.jpg');
+        copy($this->imageFixturesDirectory.'/coldplay.jpg', $this->imageWebDirectory.'/coldplay.jpg');
+        copy($this->imageFixturesDirectory.'/onerepublic.jpg', $this->imageWebDirectory.'/onerepublic.jpg');
+        copy($this->imageFixturesDirectory.'/imagine-dragons.jpg', $this->imageWebDirectory.'/imagine-dragons.jpg');
+        copy($this->imageFixturesDirectory.'/torvald.jpg', $this->imageWebDirectory.'/torvald.jpg');
+        copy($this->imageFixturesDirectory.'/somali.jpg', $this->imageWebDirectory.'/somali.jpg');
+
+        //Additional images
+        copy($this->imageFixturesDirectory.'/bring1.jpg', $this->imageWebDirectory.'/bring1.jpg');
+        copy($this->imageFixturesDirectory.'/bring2.jpg', $this->imageWebDirectory.'/bring2.jpg');
+        copy($this->imageFixturesDirectory.'/bring3.jpg', $this->imageWebDirectory.'/bring3.jpg');
+        copy($this->imageFixturesDirectory.'/bring4.jpg', $this->imageWebDirectory.'/bring4.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer1.jpg', $this->imageWebDirectory.'/jinjer1.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer2.jpg', $this->imageWebDirectory.'/jinjer2.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer3.jpg', $this->imageWebDirectory.'/jinjer3.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer4.jpg', $this->imageWebDirectory.'/jinjer4.jpg');
+        copy($this->imageFixturesDirectory.'/shikari1.jpg', $this->imageWebDirectory.'/shikari1.jpg');
+        copy($this->imageFixturesDirectory.'/shikari2.jpg', $this->imageWebDirectory.'/shikari2.jpg');
+        copy($this->imageFixturesDirectory.'/shikari3.jpg', $this->imageWebDirectory.'/shikari3.jpg');
+        copy($this->imageFixturesDirectory.'/shikari4.jpg', $this->imageWebDirectory.'/shikari4.jpg');
     }
 }

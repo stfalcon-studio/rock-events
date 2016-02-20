@@ -16,6 +16,22 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
+     * @var string $imageFixturesDirectory Image fixtures directory
+     */
+    private $imageFixturesDirectory = '';
+
+    /** @var string $imageWebDirectory Image Web directory */
+    private $imageWebDirectory = __DIR__.'/../../../../web/images/genres';
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->imageFixturesDirectory = __DIR__.'/../../Resources/fixtures/images/genres';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getDependencies()
@@ -34,6 +50,9 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
          * @var User $userAdmin
          */
         $userAdmin = $this->getReference('user-admin');
+
+        $this->prepareDirectories();
+        $this->prepareImages();
 
         $genre1 = (new Genre())
             ->setName('Пост-панк')
@@ -96,5 +115,28 @@ class LoadGenreData extends AbstractFixture implements DependentFixtureInterface
         $manager->persist($genre6);
 
         $manager->flush();
+    }
+
+    /**
+     * Prepare directories
+     */
+    private function prepareDirectories()
+    {
+        if (!file_exists($this->imageWebDirectory)) {
+            mkdir($this->imageWebDirectory, 0777, true);
+        }
+    }
+
+    /**
+     * Prepare images
+     */
+    private function prepareImages()
+    {
+        copy($this->imageFixturesDirectory.'/alternative.jpg', $this->imageWebDirectory.'/alternative.jpg');
+        copy($this->imageFixturesDirectory.'/indi.jpg', $this->imageWebDirectory.'/indi.jpg');
+        copy($this->imageFixturesDirectory.'/metalcore.jpg', $this->imageWebDirectory.'/metalcore.jpg');
+        copy($this->imageFixturesDirectory.'/post-punk.jpg', $this->imageWebDirectory.'/post-punk.jpg');
+        copy($this->imageFixturesDirectory.'/psychedelic.jpg', $this->imageWebDirectory.'/psychedelic.jpg');
+        copy($this->imageFixturesDirectory.'/punk.jpg', $this->imageWebDirectory.'/punk.jpg');
     }
 }

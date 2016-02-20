@@ -16,6 +16,22 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadEventData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
+     * @var string $imageFixturesDirectory Image fixtures directory
+     */
+    private $imageFixturesDirectory = '';
+
+    /** @var string $imageWebDirectory Image Web directory */
+    private $imageWebDirectory = __DIR__.'/../../../../web/images/events';
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->imageFixturesDirectory = __DIR__.'/../../Resources/fixtures/images/events';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getDependencies()
@@ -32,6 +48,9 @@ class LoadEventData extends AbstractFixture implements DependentFixtureInterface
     {
         /** @var User $userAdmin */
         $userAdmin = $this->getReference('user-admin');
+
+        $this->prepareDirectories();
+        $this->prepareImages();
 
         $event1 = (new Event())
             ->setName('Захід Фест')
@@ -279,5 +298,44 @@ class LoadEventData extends AbstractFixture implements DependentFixtureInterface
         $manager->persist($event15);
 
         $manager->flush();
+    }
+
+    /**
+     * Prepare directories
+     */
+    private function prepareDirectories()
+    {
+        if (!file_exists($this->imageWebDirectory)) {
+            mkdir($this->imageWebDirectory, 0777, true);
+        }
+    }
+
+    /**
+     * Prepare images
+     */
+    private function prepareImages()
+    {
+        //Main images
+        copy($this->imageFixturesDirectory.'/zaxid.jpg', $this->imageWebDirectory.'/zaxid.jpg');
+        copy($this->imageFixturesDirectory.'/bring.jpg', $this->imageWebDirectory.'/bring.jpg');
+        copy($this->imageFixturesDirectory.'/torvald.jpg', $this->imageWebDirectory.'/torvald.jpg');
+        copy($this->imageFixturesDirectory.'/group-img-1.jpg', $this->imageWebDirectory.'/group-img-1.jpg');
+        copy($this->imageFixturesDirectory.'/group-img-2.jpg', $this->imageWebDirectory.'/group-img-2.jpg');
+        copy($this->imageFixturesDirectory.'/group-img-3.jpg', $this->imageWebDirectory.'/group-img-3.jpg');
+        copy($this->imageFixturesDirectory.'/somali.jpg', $this->imageWebDirectory.'/somali.jpg');
+        copy($this->imageFixturesDirectory.'/ffdp.jpg', $this->imageWebDirectory.'/ffdp.jpg');
+        copy($this->imageFixturesDirectory.'/rhcp.jpg', $this->imageWebDirectory.'/rhcp.jpg');
+        copy($this->imageFixturesDirectory.'/flag.jpg', $this->imageWebDirectory.'/flag.jpg');
+        copy($this->imageFixturesDirectory.'/bring.jpg', $this->imageWebDirectory.'/bring.jpg');
+
+        //Additional images
+        copy($this->imageFixturesDirectory.'/bring1.jpg', $this->imageWebDirectory.'/bring1.jpg');
+        copy($this->imageFixturesDirectory.'/bring2.jpg', $this->imageWebDirectory.'/bring2.jpg');
+        copy($this->imageFixturesDirectory.'/bring3.jpg', $this->imageWebDirectory.'/bring3.jpg');
+        copy($this->imageFixturesDirectory.'/bring4.jpg', $this->imageWebDirectory.'/bring4.jpg');
+        copy($this->imageFixturesDirectory.'/zaxid1.jpg', $this->imageWebDirectory.'/zaxid1.jpg');
+        copy($this->imageFixturesDirectory.'/zaxid2.jpg', $this->imageWebDirectory.'/zaxid2.jpg');
+        copy($this->imageFixturesDirectory.'/zaxid3.jpg', $this->imageWebDirectory.'/zaxid3.jpg');
+        copy($this->imageFixturesDirectory.'/zaxid4.jpg', $this->imageWebDirectory.'/zaxid4.jpg');
     }
 }

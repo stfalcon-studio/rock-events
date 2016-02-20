@@ -111,7 +111,6 @@ class GroupAdmin extends Admin
             ])
             ->add('foundedAt', 'sonata_type_datetime_picker', [
                 'label' => 'Рік заснування',
-                'data'  => new \DateTime(),
             ])
             ->add('slug', null, [
                 'label' => 'Slug',
@@ -131,6 +130,12 @@ class GroupAdmin extends Admin
                     'context' => 'default',
                 ],
             ]);
+
+        /** @var Group $group */
+        $group = $this->getSubject();
+        if (null === $group->getFoundedAt()) {
+            $group->setFoundedAt(new \DateTime());
+        }
     }
 
     /**
