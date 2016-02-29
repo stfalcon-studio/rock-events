@@ -2550,6 +2550,9 @@ iframe {
   background: #2089f4;
 }
 
+.cke_wysiwyg_frame, .cke_wysiwyg_div {
+  display: block;
+}
 .alert-danger {
   color: #a94442;
   background-color: #f2dede;
