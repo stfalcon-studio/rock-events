@@ -6,7 +6,7 @@
                 <h1 class="concert-header__h">{{ event.name }}</h1>
                 <div class="al-center">
                     <p class="concert-header__country pin-icon-small-t ">{{ event.city }}<span class="concert-header__place">, {{ event.address }}</span></p>
-                    <time class="concert-header__date time-icon-small-t"><span class="concert-header__time">{{ event.beginAt|date('F jS \\a\\t g:ia') }}</span></time>
+                    <time class="concert-header__date time-icon-small-t"><span class="concert-header__time">{{ event.beginAt|localizeddate('full', 'none', app.request.locale) }}</span></time>
                     <p class="concert-header__price ">$200-300</p>
                     <p class="concert-header__followers like-icon-t">12323</p>
                 </div>

@@ -4,7 +4,7 @@
     <div class="l-breadcrumbs">
         <div class="content">
             <ul class="l-breadcrumbs__list">
-                <li class="l-breadcrumbs__item"><a href="{{ path('group_list') }}" class="l-breadcrumbs__link">Groups</a></li>
+                <li class="l-breadcrumbs__item"><a href="{{ path('group_list') }}" class="l-breadcrumbs__link">Гурти</a></li>
                 <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">{{ group.name }}</a></li>
             </ul>
         </div>
@@ -43,9 +43,9 @@
                 {{ render(controller('AppBundle:Frontend/Group:nextConcerts', { 'group' : group } )) }}
                 <div id="tabs-block" class="about-body">
                     <ul  class="about-body__list">
-                        <li class="about-body__item"><a href="#tab-1" class="about-body__link active">About band</a></li>
-                        <li class="about-body__item"><a href="#tab-3" class="about-body__link"> Similar artists </a></li>
-                        <li class="about-body__item"><a href="#tab-4" class="about-body__link"> Comments </a></li>
+                        <li class="about-body__item"><a href="#tab-1" class="about-body__link active">Про гурт</a></li>
+                        <li class="about-body__item"><a href="#tab-3" class="about-body__link">Схожі гурти</a></li>
+                        <li class="about-body__item"><a href="#tab-4" class="about-body__link">Коментарі</a></li>
                     </ul>
                     <div id="tab-1">
                         <div class="ckeditor__div">

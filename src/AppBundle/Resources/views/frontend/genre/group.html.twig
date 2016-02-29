@@ -4,7 +4,7 @@
     <div class="l-breadcrumbs">
         <div class="content">
             <ul class="l-breadcrumbs__list">
-                <li class="l-breadcrumbs__item"><a href="{{ path('genre_list') }}" class="l-breadcrumbs__link">Genres</a></li>
+                <li class="l-breadcrumbs__item"><a href="{{ path('genre_list') }}" class="l-breadcrumbs__link">Жанри</a></li>
                 <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">{{ genre.name }}</a></li>
             </ul>
         </div>
@@ -23,7 +23,7 @@
                             {% include '@App/frontend/group/bookmark_group.html.twig' with { 'group': group[0], 'userGroups': userGroups } %}
                         {% endif %}
                         <li class="group-statistic__item"><p id="fans" class="group-statistic__link group-statistic__link_fans">{{ group['likes'] }}</p></li>
-                        <li class="group-statistic__item f-r"><a href="{{ path('group_show', { 'slug': group[0].slug }) }}" class="group-statistic__link group-statistic__but">See more</a></li>
+                        <li class="group-statistic__item f-r"><a href="{{ path('group_show', { 'slug': group[0].slug }) }}" class="group-statistic__link group-statistic__but">Детальніше</a></li>
                     </ul>
                 </div>
             </div>

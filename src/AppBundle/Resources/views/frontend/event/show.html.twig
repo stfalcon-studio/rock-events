@@ -5,7 +5,7 @@
         <div class="content">
             <ul class="l-breadcrumbs__list">
                 <li class="l-breadcrumbs__item">
-                    <a href="{{ path('event_list') }}" class="l-breadcrumbs__link">Concert</a></li>
+                    <a href="{{ path('event_list') }}" class="l-breadcrumbs__link">Концерти</a></li>
                 <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">{{ event.name }}</a></li>
             </ul>
         </div>
@@ -32,7 +32,7 @@
                             <p class="concert-header__price ">$200-300</p>
                         </li>
                     </ul>
-                    <div class="concert-header-button button button_small f-r">Buy ticket</div>
+                    <div class="concert-header-button button button_small f-r">Купити квиток</div>
                 </main>
             </header>
             <section class="concert-body">
@@ -42,7 +42,7 @@
             </section>
             <aside class="concert-sidebar f-l">
                 <div class="concert-timer">
-                    <h2 class="concert-timer__header">To event left:</h2>
+                    <h2 class="concert-timer__header">До події залишолось:</h2>
                     <ul class="clock">
                         <li class="clock__item clock__item_days">
                             <span class="clock__number">{{ time_to_event|date('%d') }}</span>
