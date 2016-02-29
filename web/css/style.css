@@ -644,13 +644,13 @@ body {
   font-weight: 700;
   margin-top: 250px;
   color: #fff;
-  font-size: 83px;
+  font-size: 75px;
 }
 .l-header__text {
   color: #fff;
   font-weight: 300;
   font-size: 22px;
-  margin-top: 10px;
+  margin-top: 50px;
   margin-bottom: 15px;
   display: inline-block;
 }
@@ -873,7 +873,7 @@ body {
   padding: 9px 19px;
 }
 .event-list_normal .event-list__details {
-  left: 22px;
+  left: 32px;
   bottom: 18px;
 }
 .event-list_normal .event-list__group {
@@ -921,7 +921,7 @@ body {
   opacity: 0.5;
 }
 .event-list_normal-big .event-list__group {
-  font-size: 26px;
+  font-size: 24px;
   width: 80%;
   display: inline-block;
   text-transform: uppercase;
@@ -958,7 +958,7 @@ body {
   margin-top: 12px;
 }
 .event-list_normal-big .event-list__groups-count:after {
-  content: ' Groups';
+  content: ' Гуртів';
   text-transform: uppercase;
 }
 .event-list_normal-medium {
@@ -1018,7 +1018,7 @@ body {
   margin-top: 12px;
 }
 .event-list_normal-medium .event-list__groups-count:after {
-  content: ' Groups';
+  content: ' Гуртів';
   text-transform: uppercase;
 }
 .event-list_normal-medium .event-list__link_concert .concert-header__h {
@@ -1107,6 +1107,7 @@ body {
   z-index: 3;
 }
 .event-list__details {
+  padding-right: 35%;
   position: absolute;
   font-size: 14px;
   color: #9996c4;
@@ -1185,7 +1186,7 @@ body {
   margin-top: 30px;
   margin-bottom: 16px;
   color: #9996c4;
-  font-size: 14px;
+  font-size: 11px;
   text-transform: uppercase;
 }
 .latest-concert__group {
@@ -1433,13 +1434,13 @@ body {
   margin-top: 12px;
 }
 .clock__item_days:after {
-  content: 'Days';
+  content: 'Днів';
 }
 .clock__item_hours:after {
-  content: 'Hour';
+  content: 'Годин';
 }
 .clock__item_minutes:after {
-  content: 'Min';
+  content: 'Хвилин';
 }
 .recommendations {
   padding-top: 25px;

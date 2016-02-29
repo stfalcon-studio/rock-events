@@ -17,7 +17,7 @@
                         <td class="tabs-list__td"><a href="{{ path('event_show', { 'slug': event.slug }) }}" class="tabs-list__link">{{ event.name }}</a></td>
                         <td class="tabs-list__td">{{ event.city }}</td>
                         <td class="tabs-list__td">{{ event.address }}</td>
-                        <td class="tabs-list__td">{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
+                        <td class="tabs-list__td">{{ event.beginAt|localizeddate('full', 'none', app.request.locale) }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
