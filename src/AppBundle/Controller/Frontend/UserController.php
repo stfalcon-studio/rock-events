@@ -112,7 +112,9 @@ class UserController extends Controller
             throw new UnauthorizedHttpException('Не зареєстрований');
         }
 
-        $form = $this->createForm('request_manager');
+        $form = $this->createForm('request_manager', null, [
+            'action' => $this->generateUrl('user_request_manager'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -143,7 +145,7 @@ class UserController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('user_request_manager');
+            return $this->redirectToRoute('user_cabinet');
         }
 
         return $this->render('AppBundle:frontend/user:request-manager.html.twig', [

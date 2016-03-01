@@ -89,13 +89,6 @@ class GroupType extends AbstractType
                     'class' => 'profile-form__label',
                 ],
                 'required'   => false,
-            ])
-            ->add('submit', 'submit', [
-                'label' => 'Зберегти',
-                'attr'  => [
-                    'style' => 'margin-top: 20px',
-                    'class' => 'profile-form__submit',
-                ],
             ]);
 
         $builder->get('foundedAt')->addModelTransformer(new IntToDateTimeTransformer($this->manager));

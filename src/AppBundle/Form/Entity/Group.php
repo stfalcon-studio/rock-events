@@ -21,6 +21,8 @@ class Group
 {
     /**
      * @var string $name Name
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -31,11 +33,15 @@ class Group
 
     /**
      * @var string $country Country
+     *
+     * @Assert\NotBlank()
      */
     private $country;
 
     /**
      * @var string $city City
+     *
+     * @Assert\NotBlank()
      */
     private $city;
 
@@ -119,6 +125,16 @@ class Group
     }
 
     /**
+     * Get founded At
+     *
+     * @return int Founded At
+     */
+    public function getFoundedAt()
+    {
+        return $this->foundedAt;
+    }
+
+    /**
      * Set country
      *
      * @param string $country Country
@@ -164,16 +180,6 @@ class Group
     public function getCity()
     {
         return $this->city;
-    }
-
-    /**
-     * Get founded At
-     *
-     * @return int Founded At
-     */
-    public function getFoundedAt()
-    {
-        return $this->foundedAt;
     }
 
     /**
