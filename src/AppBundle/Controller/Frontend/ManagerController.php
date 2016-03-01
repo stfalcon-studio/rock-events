@@ -49,7 +49,9 @@ class ManagerController extends Controller
         $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        $form = $this->createForm('group');
+        $form = $this->createForm('group', null, [
+            'action' => $this->generateUrl('manager_cabinet_group_create'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -63,7 +65,7 @@ class ManagerController extends Controller
                 ->setCity($groupForm->getCity())
                 ->setSlug($groupForm->getName())
                 ->setImageName($groupForm->getImageName())
-                ->setFoundedAt((new \DateTime())->setDate($groupForm->getFoundedAt(), 1, 1))
+                ->setFoundedAt($groupForm->getFoundedAt())
                 ->setCreatedBy($user)
                 ->setUpdatedBy($user);
 
@@ -74,6 +76,8 @@ class ManagerController extends Controller
             $em->persist($group);
             $em->persist($managerGroup);
             $em->flush();
+
+            return $this->redirectToRoute('manager_cabinet_dashboard');
         }
 
         return $this->render('AppBundle:frontend/manager:group_create.html.twig', [
@@ -100,6 +104,8 @@ class ManagerController extends Controller
         $groupForm = (new GroupForm())
             ->setName($group->getName())
             ->setDescription($group->getDescription())
+            ->setCountry($group->getCountry())
+            ->setCity($group->getCity())
             ->setFoundedAt($group->getFoundedAt()->format('Y'));
 
         $form = $this->createForm(new GroupType($em), $groupForm);
@@ -118,8 +124,7 @@ class ManagerController extends Controller
                   ->setCountry($groupForm->getCountry())
                   ->setCity($groupForm->getCity())
                   ->setSlug($groupForm->getName())
-                  ->setFoundedAt((new \DateTime())->setDate($groupForm->getFoundedAt(), 1, 1))
-                  ->setCreatedBy($user)
+                  ->setFoundedAt($groupForm->getFoundedAt())
                   ->setUpdatedBy($user);
 
             $managerGroup->setGroup($group);
@@ -129,7 +134,7 @@ class ManagerController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('manager_cabinet_groups_list');
+            return $this->redirectToRoute('manager_cabinet_dashboard');
         }
 
         return $this->render('AppBundle:frontend/manager:group_update.html.twig', [
@@ -187,7 +192,9 @@ class ManagerController extends Controller
         $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        $form = $this->createForm('event_groups');
+        $form = $this->createForm('event_groups', null, [
+            'action' => $this->generateUrl('manager_cabinet_event_create'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -261,7 +268,9 @@ class ManagerController extends Controller
             ->setEndAt($event->getEndAt())
             ->setGroups($groups);
 
-        $form = $this->createForm('event_groups', $eventForm);
+        $form = $this->createForm('event_groups', $eventForm, [
+            'action' => $this->generateUrl('manager_cabinet_event_update', ['slug' => $event->getSlug()]),
+        ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
             /** @var EventForm $eventForm */
@@ -277,7 +286,6 @@ class ManagerController extends Controller
                 ->setBeginAt($eventFormData->getBeginAt())
                 ->setEndAt($eventFormData->getEndAt())
                 ->setSlug($eventFormData->getName())
-                ->setCreatedBy($event->getCreatedBy())
                 ->setUpdatedBy($user);
 
             $em->persist($event);
@@ -300,7 +308,7 @@ class ManagerController extends Controller
             }
             $em->flush();
 
-            return $this->redirectToRoute('manager_cabinet_events_list');
+            return $this->redirectToRoute('manager_cabinet_dashboard');
         }
 
         return $this->render('AppBundle:frontend/manager:event_update.html.twig', [

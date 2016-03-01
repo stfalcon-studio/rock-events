@@ -16,7 +16,7 @@
                 </thead>
                 <tbody class="tabs-list__body">
                     {% for event in events %}
-                        <tr class="tabs-list__row">
+                        <tr class="tabs-list__row" id="groups">
                             <td class="tabs-list__td">{{ loop.index }}</td>
                             <td class="tabs-list__td">
                                 <a href="{{ path('event_show', { 'slug': event.slug }) }}" class="tabs-list__link">{{ event.name }}</a>

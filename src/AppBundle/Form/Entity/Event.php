@@ -3,6 +3,7 @@
 namespace AppBundle\Form\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Event class
@@ -19,6 +20,8 @@ class Event
 
     /**
      * @var string $name Name
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -29,11 +32,15 @@ class Event
 
     /**
      * @var string $country Country
+     *
+     * @Assert\NotBlank()
      */
     private $country;
 
     /**
      * @var string $city City
+     *
+     * @Assert\NotBlank()
      */
     private $city;
 
