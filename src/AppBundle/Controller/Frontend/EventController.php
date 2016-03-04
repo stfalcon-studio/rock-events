@@ -102,49 +102,18 @@ class EventController extends Controller
      */
     public function recommendedConcertsAction(Event $event)
     {
-        $eventRepository = $this->getDoctrine()->getRepository('AppBundle:Event');
-        $genreRepository = $this->getDoctrine()->getRepository('AppBundle:Genre');
-        $groupRepository = $this->getDoctrine()->getRepository('AppBundle:Group');
-
         $user = $this->getUser();
+
         if (null === $user) {
-            $events = $eventRepository->findEventsForWeek(Event::NUMBER);
+            $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsForWeek(Event::NUMBER);
 
             return $this->render('AppBundle:frontend/event:recommended-concerts.html.twig', [
                 'events' => $events,
             ]);
         }
 
-        $eventGenres = [];
-        $eventGroups = [];
-
-        /** @var EventGroup $eventGroup */
-        foreach ($event->getEventGroups()->getValues() as $eventGroup) {
-            $groupGenres = $eventGroup->getGroup()->getGroupGenres();
-
-            // Get groups from event
-            $eventGroups[] = $eventGroup->getGroup();
-
-            /** @var GroupGenre $groupGenre */
-            foreach ($groupGenres as $groupGenre) {
-                // Get genres from event
-                $eventGenres[] = $groupGenre->getGenre();
-            }
-        }
-
-        // Get user bookmarked genres and groups
-        $userBookmarkedGenres = $genreRepository->findGenresByUser($user);
-        $userBookmarkedGroups = $groupRepository->findGroupsByUser($user);
-
-        // Combine event genres and groups with user bookmarked genres and groups
-        $recommendedGenres = array_merge($userBookmarkedGenres, $eventGenres);
-        $recommendedGroups = array_merge($userBookmarkedGroups, $eventGroups);
-
-        $events = $eventRepository->findAllActiveByGenresAndGroupsWithLimit(
-            $recommendedGenres,
-            $recommendedGroups,
-            Event::NUMBER
-        );
+        $eventService = $this->get('app.event');
+        $events       = $eventService->findRecommendedConcerts($event, $user);
 
         return $this->render('AppBundle:frontend/event:recommended-concerts.html.twig', [
             'events' => $events,
@@ -224,11 +193,8 @@ class EventController extends Controller
             throw new BadRequestHttpException('Не правильний запит');
         }
 
-        $genre = $request->query->get('genre');
-        $city  = $request->query->get('city');
-        $date  = $request->query->get('date');
-
-        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByFilter($genre, $city, $date);
+        $eventService = $this->get('app.event');
+        $events       = $eventService->findEventsByFilter($request);
 
         $template = $this->renderView('AppBundle:frontend/event:list_concert_event.html.twig', [
             'events' => $events,
@@ -258,11 +224,8 @@ class EventController extends Controller
             throw new BadRequestHttpException('Не правильний запит');
         }
 
-        $genre = $request->query->get('genre');
-        $city  = $request->query->get('city');
-        $date  = $request->query->get('date');
-
-        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findEventsByFilter($genre, $city, $date);
+        $eventService = $this->get('app.event');
+        $events       = $eventService->findEventsByFilter($request);
 
         $template = $this->renderView('AppBundle:frontend/event:list_main_event.html.twig', [
             'events' => $events,

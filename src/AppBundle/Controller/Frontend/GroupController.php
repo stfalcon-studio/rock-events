@@ -294,21 +294,15 @@ class GroupController extends Controller
 
         $user = $this->getUser();
 
-        $groupRepository = $this->getDoctrine()->getRepository('AppBundle:Group');
-
-        $genre   = $request->query->get('genre');
-        $country = $request->query->get('country');
-        $city    = $request->query->get('city');
-        $like    = $request->query->get('like');
-
-        $groups = $groupRepository->findGroupsByFilter($genre, $country, $city, $like);
+        $groupService = $this->get('app.group');
+        $groups       = $groupService->findGroupsByFilter($request);
 
         if (null === $user) {
             $template = $this->renderView('AppBundle:frontend/group:list_group_widget.html.twig', [
                 'groups' => $groups,
             ]);
         } else {
-            $userGroups = $groupRepository->findGroupsByUser($user);
+            $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($user);
             $template   = $this->renderView('AppBundle:frontend/group:list_group_widget.html.twig', [
                 'groups'     => $groups,
                 'userGroups' => $userGroups,
