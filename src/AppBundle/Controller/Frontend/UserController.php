@@ -105,7 +105,6 @@ class UserController extends Controller
      */
     public function requestRightManagerAction(Request $request)
     {
-        $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         if (null === $user) {
@@ -122,28 +121,8 @@ class UserController extends Controller
             /** @var RequestManagerForm $requestManagerForm */
             $requestManagerForm = $form->getData();
 
-            $requestManager = (new RequestManager())
-                ->setFullName($requestManagerForm->getFullName())
-                ->setPhone($requestManagerForm->getPhone())
-                ->setText($requestManagerForm->getText())
-                ->setRequestedBy($user)
-                ->setCreatedBy($user)
-                ->setUpdatedBy($user);
-
-            $em->persist($requestManager);
-
-            foreach ($requestManagerForm->getGroups() as $group) {
-                $group = $em->getRepository('AppBundle:Group')->findOneBy([
-                    'slug' => $group->getSlug(),
-                ]);
-
-                $requestManagerGroup = (new RequestManagerGroup())
-                    ->setGroup($group)
-                    ->setRequestManager($requestManager);
-                $em->persist($requestManagerGroup);
-            }
-
-            $em->flush();
+            $userService = $this->get('app.user');
+            $userService->saveRequestRightManager($requestManagerForm, $user);
 
             return $this->redirectToRoute('user_cabinet');
         }

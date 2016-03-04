@@ -7,6 +7,7 @@ use AppBundle\Entity\Genre;
 use AppBundle\Entity\Group;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use PDO;
 
 /**
@@ -343,7 +344,8 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
 
         return $qb->where($qb->expr()->in('ge', ':genres'))
-                  ->andWhere($qb->expr()->in('gr', ':groups'))
+                  ->orWhere($qb->expr()->in('gr', ':groups'))
+                  ->andWhere($qb->expr()->gt('e.beginAt', ':now'))
                   ->andWhere($qb->expr()->eq('e.isActive', true))
                   ->join('e.eventGroups', 'eg')
                   ->join('eg.group', 'gr')
@@ -352,8 +354,10 @@ class EventRepository extends EntityRepository
                   ->setParameters([
                       'genres' => $genres,
                       'groups' => $groups,
+                      'now'    => (new \DateTime())->format('Y-m-d H:i:s'),
                   ])
-                  ->setMaxResults($limit)
+                  ->distinct('e')
+                  ->setMaxResults(5)
                   ->getQuery()
                   ->getResult();
     }
