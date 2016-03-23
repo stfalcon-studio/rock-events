@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Rock events{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% block stylesheets %}
             {% stylesheets
             'css/reset.css'
@@ -25,12 +26,13 @@
                     <div class="content">
                         <nav class="navigation cf">
                             <div><li class="logo f-l"><a href="{{ path('event_index') }}" class="logo__link logo-icon"></a></li></div>
+                            <div class="navigation__burger"></div>
+                            {% include 'cabinet_menu_item.html.twig' %}
                             <ul class="navigation__items">
                                 <li class="navigation__item navigation__link_upper"><a href="{{ path('event_list') }}" class="navigation__link ">Концерти</a></li>
                                 <li class="navigation__item navigation__link_upper"><a href="{{ path('group_list') }}" class="navigation__link ">Гурти</a></li>
                                 <li class="navigation__item navigation__link_upper"><a href="{{ path('genre_list') }}" class="navigation__link">Жанри</a></li>
                             </ul>
-                            {% include 'cabinet_menu_item.html.twig' %}
                         </nav>
                     </div>
                 </header>

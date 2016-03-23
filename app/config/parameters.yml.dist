@@ -34,3 +34,7 @@ parameters:
 
     vk_app_id:           VkAppId
     vk_app_secret:       VkAppSecret
+
+    last_fm_api_url:     http://ws.audioscrobbler.com/2.0
+    last_fm_key:         LastFmKey
+    last_fm_secret:      LastFmSecret

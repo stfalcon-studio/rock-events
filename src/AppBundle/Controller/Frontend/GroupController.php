@@ -87,12 +87,16 @@ class GroupController extends Controller
         //Delete selected group
         unset($similarGroups[array_search($group, $similarGroups)]);
 
+        $albums = $this->get('app.group')
+                       ->findAlbumsByGroup($this->getParameter('last_fm_api_url'), $this->getParameter('last_fm_key'), $group);
+
         if (null === $user) {
             return $this->render('AppBundle:frontend\group:show.html.twig', [
                 'group'          => $group,
                 'genres'         => $genres,
                 'count_like'     => $groupCountLikes['likes'],
                 'similar_groups' => $similarGroups,
+                'albums'         => $albums,
             ]);
         }
 
@@ -104,6 +108,7 @@ class GroupController extends Controller
             'count_like'     => $groupCountLikes['likes'],
             'similar_groups' => $similarGroups,
             'userGroups'     => $userGroups,
+            'albums'         => $albums,
         ]);
     }
 
