@@ -57,7 +57,7 @@
                         <ul class="gallery-group">
                             {% for album in albums %}
                                 <li class="gallery-group__item">
-                                    <a href="#" class="gallery-group__link">
+                                    <a href="{{ path('album_group_show', { slug: group.slug, album: album.name}) }}" class="gallery-group__link">
                                         <img src="{{ (attribute(album.image[3], '#text')) }}" alt="{{ album.name }}" class="gallery-group__img" height="288px">
                                         <section class="gallery-group__description">
                                             <h3 class="gallery-group__group-name">{{ album.name }}</h3>
@@ -77,7 +77,6 @@
                                         <section class="gallery-group__description">
                                             <h3 class="gallery-group__group-name">{{ similar_group.name }}</h3>
                                         </section>
-
                                     </a>
                                     {{ render(controller('AppBundle:Frontend/Group:genreTags', { 'group' : similar_group } )) }}
                                 </li>

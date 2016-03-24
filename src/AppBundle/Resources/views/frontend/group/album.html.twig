@@ -1,0 +1,42 @@
+{% extends 'group.html.twig' %}
+
+{% block body %}
+    <div class="l-about">
+        <article>
+            <div class="content-bg-white_margin-top cf content">
+                <div class="album-img">
+                    <img src="{{ (attribute(album.image[3], '#text')) }}">
+                </div>
+                <div class="album-description">
+                    <h3 class="album-artist"><a href="{{ path('group_show', { 'slug': album.groupSlug }) }}">{{ album.artist }}</a></h3>
+                    <h2 class="album-name">{{ album.name }}</h2>
+                    <p class="album-about">Дата виходу: <strong>{{ album.wiki.published }}</strong></p>
+                    <p class="album-about">К-сть композицій: <strong>{{ album.tracks.track|length }}</strong></p>
+                    <p class="album-about">Тривалість: <strong>{{ album.duration['hour'] }}
+                            :{{ album.duration['minute'] }}</strong></p>
+                    <p class="album-about">К-сть прослуховувань на Last.fm: <strong>{{ album.listeners }}</strong></p>
+                </div>
+                <table class="tabs-list">
+                    <thead class="tabs-list__header">
+                        <tr class="tabs-list__row">
+                            <td class="tabs-list__td">№</td>
+                            <td class="tabs-list__td">Назва</td>
+                            <td class="tabs-list__td">Альбом</td>
+                            <td class="tabs-list__td">Тривалість</td>
+                        </tr>
+                    </thead>
+                    <tbody class="tabs-list__body">
+                        {% for track in album.tracks.track %}
+                            <tr class="tabs-list__row">
+                                <td class="tabs-list__td">{{ loop.index }}</td>
+                                <td class="tabs-list__td">{{ track.name }}</td>
+                                <td class="tabs-list__td">{{ album.name }}</td>
+                                <td class="tabs-list__td">{{ track.duration // 60 }}:{{ track.duration % 60 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+{% endblock %}

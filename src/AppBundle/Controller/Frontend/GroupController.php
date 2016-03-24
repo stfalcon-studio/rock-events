@@ -87,8 +87,7 @@ class GroupController extends Controller
         //Delete selected group
         unset($similarGroups[array_search($group, $similarGroups)]);
 
-        $albums = $this->get('app.group')
-                       ->findAlbumsByGroup($this->getParameter('last_fm_api_url'), $this->getParameter('last_fm_key'), $group);
+        $albums = $this->get('app.group_api')->findAlbumsByGroup($group);
 
         if (null === $user) {
             return $this->render('AppBundle:frontend\group:show.html.twig', [
@@ -109,6 +108,26 @@ class GroupController extends Controller
             'similar_groups' => $similarGroups,
             'userGroups'     => $userGroups,
             'albums'         => $albums,
+        ]);
+    }
+
+    /**
+     * Album group show
+     *
+     * @param Group  $group Group
+     * @param string $album Album
+     *
+     * @return Response
+     *
+     * @Route("/album/{slug}/{album}", name="album_group_show")
+     * @ParamConverter("group", class="AppBundle:Group")
+     */
+    public function albumGroupAction($group, $album)
+    {
+        $album = $this->get('app.group_api')->findAlbumGroup($group, $album);
+
+        return $this->render('AppBundle:frontend/group:album.html.twig', [
+            'album' => $album,
         ]);
     }
 

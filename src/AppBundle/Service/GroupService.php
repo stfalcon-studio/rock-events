@@ -46,39 +46,4 @@ class GroupService
         return $this->entityManager->getRepository('AppBundle:Group')
                                    ->findGroupsByFilter($genre, $country, $city, $like);
     }
-
-    /**
-     * Find Albums by group
-     *
-     * @param string $urlApiService Url Api of service
-     * @param string $apiKey        Api key
-     * @param Group  $group         Group
-     *
-     * @return []
-     */
-    public function findAlbumsByGroup($urlApiService, $apiKey, $group)
-    {
-        $albums = [];
-
-        $client   = new Client();
-        $response = json_decode($client->get($urlApiService, [
-            'query' => [
-                'method'  => 'artist.gettopalbums',
-                'artist'  => $group->getName(),
-                'api_key' => $apiKey,
-                'limit'   => 10,
-                'format'  => 'json',
-            ],
-        ])->getBody()->getContents());
-
-        if (!array_key_exists('error', get_object_vars($response))) {
-            foreach ($response->topalbums->album as $album) {
-                if ('(null)' !== $album->name && "" !== $album->image[0]->{'#text'}) {
-                    $albums[] = $album;
-                }
-            }
-        }
-
-        return $albums;
-    }
 }

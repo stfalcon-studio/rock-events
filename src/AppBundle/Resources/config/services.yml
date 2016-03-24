@@ -9,6 +9,12 @@ services:
         arguments:
             - @doctrine.orm.default_entity_manager
 
+    app.group_api:
+        class: AppBundle\Service\GroupApiService
+        arguments:
+            - '%last_fm_api_url%'
+            - '%last_fm_key%'
+
     app.manager:
         class: AppBundle\Service\ManagerService
         arguments:

@@ -2565,6 +2565,42 @@ iframe {
   font-size: 14px;
 }
 
+.album-img{
+  float: left;
+  margin: 20px 0 5px 0;
+}
+
+.album-description{
+  float: left;
+  margin-top: 20px;
+}
+
+.album-artist{
+  text-align: left;
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 0 4px 10px;
+}
+
+.album-name{
+  color: #fff;
+  font-size: 28px;
+  text-transform: uppercase;
+  margin-left: 10px;
+}
+
+.album-about{
+  color: #fff;
+  font-size: 13px;
+  text-align: left;
+  margin: 10px 0 0 10px;
+}
+
+.album-description a{
+  text-decoration: none;
+  color: #fff;
+}
 
 @media (max-width: 960px) {
   .concert-header-button {
