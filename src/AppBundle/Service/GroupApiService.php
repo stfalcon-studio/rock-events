@@ -46,7 +46,7 @@ class GroupApiService
     {
         $albums = [];
 
-        $response = json_decode($this->client->get($this->lastFmApiUrl, [
+        $response = $this->client->get($this->lastFmApiUrl, [
             'query' => [
                 'method'  => 'artist.gettopalbums',
                 'artist'  => $group->getName(),
@@ -54,10 +54,12 @@ class GroupApiService
                 'limit'   => 10,
                 'format'  => 'json',
             ],
-        ])->getBody()->getContents());
+        ]);
 
-        if (!array_key_exists('error', get_object_vars($response))) {
-            foreach ($response->topalbums->album as $album) {
+        $data = json_decode((string) $response->getBody()->getContents());
+
+        if (!array_key_exists('error', get_object_vars($data))) {
+            foreach ($data->topalbums->album as $album) {
                 if ('(null)' !== $album->name && "" !== $album->image[0]->{'#text'}) {
                     $albums[] = $album;
                 }
@@ -79,7 +81,7 @@ class GroupApiService
      */
     public function findAlbumGroup($group, $album)
     {
-        $response = json_decode($this->client->get($this->lastFmApiUrl, [
+        $response = $this->client->get($this->lastFmApiUrl, [
             'query' => [
                 'method'  => 'album.getinfo',
                 'artist'  => $group->getName(),
@@ -87,14 +89,21 @@ class GroupApiService
                 'api_key' => $this->lastFmKey,
                 'format'  => 'json',
             ],
-        ])->getBody()->getContents());
+        ]);
 
-        if (array_key_exists('error', get_object_vars($response))) {
+        $data = json_decode((string) $response->getBody()->getContents());
+
+        if (array_key_exists('error', get_object_vars($data))) {
             throw new BadRequestHttpException('Не правильний запит');
         }
 
         $durationMinutes = 0;
-        $album           = $response->album;
+        $album           = $data->album;
+
+        if (!property_exists($album, 'wiki')) {
+            $album->wiki            = new \stdClass();
+            $album->wiki->published = 'Не відомо';
+        }
 
         foreach ($album->tracks->track as $track) {
             $durationMinutes += $track->duration;
