@@ -56,11 +56,11 @@ class GroupApiService
             ],
         ]);
 
-        $data = json_decode((string) $response->getBody()->getContents());
+        $data = json_decode((string) $response->getBody()->getContents(), true);
 
-        if (!array_key_exists('error', get_object_vars($data))) {
-            foreach ($data->topalbums->album as $album) {
-                if ('(null)' !== $album->name && "" !== $album->image[0]->{'#text'}) {
+        if (!array_key_exists('error', $data)) {
+            foreach ($data['topalbums']['album'] as $album) {
+                if ('(null)' !== $album['name'] && "" !== $album['image'][0]['#text']) {
                     $albums[] = $album;
                 }
             }
@@ -91,29 +91,28 @@ class GroupApiService
             ],
         ]);
 
-        $data = json_decode((string) $response->getBody()->getContents());
+        $data = json_decode((string) $response->getBody()->getContents(), true);
 
-        if (array_key_exists('error', get_object_vars($data))) {
+        if (array_key_exists('error', $data)) {
             throw new BadRequestHttpException('Не правильний запит');
         }
 
         $durationMinutes = 0;
-        $album           = $data->album;
+        $album           = $data['album'];
 
-        if (!property_exists($album, 'wiki')) {
-            $album->wiki            = new \stdClass();
-            $album->wiki->published = 'Не відомо';
+        if (!array_key_exists('wiki', $album)) {
+            $album['wiki']['published'] = 'Не відомо';
         }
 
-        foreach ($album->tracks->track as $track) {
-            $durationMinutes += $track->duration;
+        foreach ($album['tracks']['track'] as $track) {
+            $durationMinutes += $track['duration'];
         }
 
-        $album->duration  = [
+        $album['duration']  = [
             'hour'   => round($durationMinutes / 60),
             'minute' => $durationMinutes % 60,
         ];
-        $album->groupSlug = $group->getSlug();
+        $album['groupSlug'] = $group->getSlug();
 
         return $album;
     }

@@ -15,13 +15,11 @@ var outerForm = $('.sign-tabs');
 var burger = $('.navigation__burger');
 var navigation = $('.navigation:first-child');
 var cabHead = $('.user-cabinet__head');
-
 function close(elem) {
     if (butClose.is(elem) || outerForm.is(elem)) {
         sign.hide();
     }
 };
-
 burger.click(function () {
     navigation.toggleClass('active');
     if (navigation.hasClass('active')) {
@@ -30,7 +28,6 @@ burger.click(function () {
         navigation.find('.navigation__items').slideUp();
     }
 });
-
 var scrollInit = function (elem) {
     if (!elem.length > 0) {
         return;
@@ -40,7 +37,6 @@ var scrollInit = function (elem) {
         });
     }
 };
-
 userCab.bind('click', function (e) {
     var but = this;
     if (!$(but).find('.user-cabinet__head').hasClass('active')) {
@@ -52,17 +48,14 @@ userCab.bind('click', function (e) {
         });
     }
 });
-
 $(document).bind('mousedown', function (e) {
     close(e.target);
 });
-
 $(document).bind('touchstart resize', function (e) {
     if (!(cabHead).is(e.target) && $(cabHead).hasClass('active')) {
         userCab.trigger('click');
     }
 });
-
 $(document).bind('mouseup resize', function (e) {
     if (everywhereDrop.is(e.target)) {
         everywhereDrop.toggleClass('active');
@@ -101,7 +94,6 @@ $(document).bind('mouseup resize', function (e) {
         }
     }
 });
-
 $(window).bind('scroll resize', function () {
     if (($(this).scrollTop() > $(this).height()) && ( $(this).width() > 960)) {
         scrollBut.show();
@@ -109,15 +101,12 @@ $(window).bind('scroll resize', function () {
         scrollBut.hide();
     }
 });
-
 scrollBut.bind('click', function () {
     $('body').animate({scrollTop: 0}, 500);
 });
-
 sortBut.bind('click', function () {
     $('body').animate({scrollTop: $('#sort').offset().top}, 500);
 });
-
 (function filInit() {
     if (!(filter.length > 0)) {
         return;
@@ -127,7 +116,6 @@ sortBut.bind('click', function () {
         });
     }
 })();
-
 $(window).bind('load resize', function () {
     if (everywhereDrop.length > 0) {
         if ($(window).width() > 959) {
@@ -153,7 +141,6 @@ $(window).bind('load resize', function () {
         }
     }
 });
-
 (function fancyInit() {
     if (!(fancyBox.length > 0)) {
         return;
@@ -161,7 +148,6 @@ $(window).bind('load resize', function () {
         fancyBox.fancybox();
     }
 })();
-
 (function tabInit() {
     if (!(tabs.length > 0)) {
         return;
@@ -176,7 +162,6 @@ $(window).bind('load resize', function () {
         })
     }
 })();
-
 (function adminTabs() {
     if (!(tabsAdmin.length > 0)) {
         return;
@@ -191,7 +176,6 @@ $(window).bind('load resize', function () {
         })
     }
 })();
-
 //for like active
 (function () {
     if (!($('.like-icon-t').length > 0)) {
@@ -202,7 +186,6 @@ $(window).bind('load resize', function () {
         });
     }
 })();
-
 var elem = $(".clock__number");
 if (elem.length) {
     var days = elem.eq(0);
