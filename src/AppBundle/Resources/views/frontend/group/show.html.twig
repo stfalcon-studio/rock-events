@@ -44,6 +44,7 @@
                 <div id="tabs-block" class="about-body">
                     <ul  class="about-body__list">
                         <li class="about-body__item"><a href="#tab-1" class="about-body__link active">Про гурт</a></li>
+                        <li class="about-body__item"><a href="#tab-2" class="about-body__link active">Альбоми</a></li>
                         <li class="about-body__item"><a href="#tab-3" class="about-body__link">Схожі гурти</a></li>
                         <li class="about-body__item"><a href="#tab-4" class="about-body__link">Коментарі</a></li>
                     </ul>
@@ -52,6 +53,21 @@
                             {{ group.description | raw }}
                         </div>
                     </div>
+                    <div id="tab-2">
+                        <ul class="gallery-group">
+                            {% for album in albums %}
+                                <li class="gallery-group__item">
+                                    <a href="{{ path('album_group_show', { slug: group.slug, album: album.name}) }}" class="gallery-group__link">
+                                        <img src="{{ (attribute(album.image[3], '#text')) }}" alt="{{ album.name }}" class="gallery-group__img" height="288px">
+                                        <section class="gallery-group__description">
+                                            <h3 class="gallery-group__group-name">{{ album.name }}</h3>
+                                        </section>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
                     <div id="tab-3">
                         <ul class="gallery-group">
                             {% for similar_group in similar_groups %}
@@ -61,7 +77,6 @@
                                         <section class="gallery-group__description">
                                             <h3 class="gallery-group__group-name">{{ similar_group.name }}</h3>
                                         </section>
-
                                     </a>
                                     {{ render(controller('AppBundle:Frontend/Group:genreTags', { 'group' : similar_group } )) }}
                                 </li>

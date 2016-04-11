@@ -87,12 +87,15 @@ class GroupController extends Controller
         //Delete selected group
         unset($similarGroups[array_search($group, $similarGroups)]);
 
+        $albums = $this->get('app.group_api')->findAlbumsByGroup($group);
+
         if (null === $user) {
             return $this->render('AppBundle:frontend\group:show.html.twig', [
                 'group'          => $group,
                 'genres'         => $genres,
                 'count_like'     => $groupCountLikes['likes'],
                 'similar_groups' => $similarGroups,
+                'albums'         => $albums,
             ]);
         }
 
@@ -104,6 +107,27 @@ class GroupController extends Controller
             'count_like'     => $groupCountLikes['likes'],
             'similar_groups' => $similarGroups,
             'userGroups'     => $userGroups,
+            'albums'         => $albums,
+        ]);
+    }
+
+    /**
+     * Album group show
+     *
+     * @param Group  $group Group
+     * @param string $album Album
+     *
+     * @return Response
+     *
+     * @Route("/album/{slug}/{album}", name="album_group_show")
+     * @ParamConverter("group", class="AppBundle:Group")
+     */
+    public function albumGroupAction($group, $album)
+    {
+        $album = $this->get('app.group_api')->findAlbumGroup($group, $album);
+
+        return $this->render('AppBundle:frontend/group:album.html.twig', [
+            'album' => $album,
         ]);
     }
 

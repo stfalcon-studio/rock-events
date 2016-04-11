@@ -2,7 +2,9 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Group;
 use Doctrine\ORM\EntityManager;
+use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,6 +43,7 @@ class GroupService
         $city    = $request->query->get('city');
         $like    = $request->query->get('like');
 
-        return $this->entityManager->getRepository('AppBundle:Group')->findGroupsByFilter($genre, $country, $city, $like);
+        return $this->entityManager->getRepository('AppBundle:Group')
+                                   ->findGroupsByFilter($genre, $country, $city, $like);
     }
 }

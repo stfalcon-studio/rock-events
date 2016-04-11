@@ -27,7 +27,8 @@
         "sonata-project/doctrine-orm-admin-bundle": "^2.3",
         "vich/uploader-bundle": "^0.14.0",
         "helios-ag/fm-elfinder-bundle": "~5",
-        "twig/extensions": "1.0.*@dev"
+        "twig/extensions": "1.0.*@dev",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
