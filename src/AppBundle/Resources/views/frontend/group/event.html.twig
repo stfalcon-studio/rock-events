@@ -1,33 +1,33 @@
 {% extends 'group.html.twig' %}
 
 {% block body %}
-    <h3>{{ group.name }}</h3>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Назва</th>
-            <th>Опис</th>
-            <th>Країна</th>
-            <th>Місто</th>
-            <th>Адреса</th>
-            <th>Початок</th>
-            <th>Кінцеь</th>
-            <th>Тривалість</th>
-        </tr>
-        </thead>
-        <tbody class="table table-hover">
-        {% for event in events %}
-            <tr id="groups">
-                <td><a href="{{ path('event_show',{ 'slug' : event.slug })}}">{{ event.name }}</a></td>
-                <td>{{ event.description }}</td>
-                <td>{{ event.country }}</td>
-                <td>{{ event.city }}</td>
-                <td>{{ event.address }}</td>
-                <td>{{ event.beginAt|date('F jS \\a\\t g:ia') }}</td>
-                <td>{{ event.endAt|date('F jS \\a\\t g:ia') }}</td>
-                <td>{{ event.duration }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="l-events">
+        <div class="content">
+            <h1 class="concert-header__h">Список майбутніх концертів {{ group.name }}</h1>
+            <table class="tabs-list">
+                <thead class="tabs-list__header">
+                    <tr class="tabs-list__row">
+                        <td class="tabs-list__td">№</td>
+                        <td class="tabs-list__td">Назва</td>
+                        <td class="tabs-list__td">Місто</td>
+                        <td class="tabs-list__td">Адреса</td>
+                        <td class="tabs-list__td">Початок о</td>
+                    </tr>
+                </thead>
+                <tbody class="tabs-list__body">
+                    {% for event in events %}
+                        <tr class="tabs-list__row" id="groups">
+                            <td class="tabs-list__td">{{ loop.index }}</td>
+                            <td class="tabs-list__td">
+                                <a href="{{ path('event_show', { 'slug': event.slug }) }}" class="tabs-list__link">{{ event.name }}</a>
+                            </td>
+                            <td class="tabs-list__td">{{ event.city }}</td>
+                            <td class="tabs-list__td">{{ event.address }}</td>
+                            <td class="tabs-list__td">{{ event.beginAt|localizeddate('full', 'none', app.request.locale) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

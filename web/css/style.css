@@ -133,7 +133,9 @@ body {
   z-index: 5;
 }
 .l-admin {
-  margin: 90px auto;
+  margin: 0 auto;
+  padding-bottom: 90px;
+  padding-top:90px;
   font-size: 0;
 }
 .l-profile {
@@ -642,13 +644,13 @@ body {
   font-weight: 700;
   margin-top: 250px;
   color: #fff;
-  font-size: 83px;
+  font-size: 75px;
 }
 .l-header__text {
   color: #fff;
   font-weight: 300;
   font-size: 22px;
-  margin-top: 10px;
+  margin-top: 50px;
   margin-bottom: 15px;
   display: inline-block;
 }
@@ -871,7 +873,7 @@ body {
   padding: 9px 19px;
 }
 .event-list_normal .event-list__details {
-  left: 22px;
+  left: 32px;
   bottom: 18px;
 }
 .event-list_normal .event-list__group {
@@ -919,7 +921,7 @@ body {
   opacity: 0.5;
 }
 .event-list_normal-big .event-list__group {
-  font-size: 26px;
+  font-size: 24px;
   width: 80%;
   display: inline-block;
   text-transform: uppercase;
@@ -956,7 +958,7 @@ body {
   margin-top: 12px;
 }
 .event-list_normal-big .event-list__groups-count:after {
-  content: ' Groups';
+  content: ' Гуртів';
   text-transform: uppercase;
 }
 .event-list_normal-medium {
@@ -1016,7 +1018,7 @@ body {
   margin-top: 12px;
 }
 .event-list_normal-medium .event-list__groups-count:after {
-  content: ' Groups';
+  content: ' Гуртів';
   text-transform: uppercase;
 }
 .event-list_normal-medium .event-list__link_concert .concert-header__h {
@@ -1105,6 +1107,7 @@ body {
   z-index: 3;
 }
 .event-list__details {
+  padding-right: 35%;
   position: absolute;
   font-size: 14px;
   color: #9996c4;
@@ -1167,9 +1170,11 @@ body {
   padding-right: 0;
 }
 .latest-concert__link {
-  display: block;
   padding: 10px;
   background: rgba(255,255,255,0.1);
+  display: inline-block;
+  height: 100%;
+  vertical-align: top;
 }
 .latest-concert__link:hover {
   background: rgba(255,255,255,0.2);
@@ -1181,7 +1186,7 @@ body {
   margin-top: 30px;
   margin-bottom: 16px;
   color: #9996c4;
-  font-size: 14px;
+  font-size: 11px;
   text-transform: uppercase;
 }
 .latest-concert__group {
@@ -1429,13 +1434,13 @@ body {
   margin-top: 12px;
 }
 .clock__item_days:after {
-  content: 'Days';
+  content: 'Днів';
 }
 .clock__item_hours:after {
-  content: 'Hour';
+  content: 'Годин';
 }
 .clock__item_minutes:after {
-  content: 'Min';
+  content: 'Хвилин';
 }
 .recommendations {
   padding-top: 25px;
@@ -2186,7 +2191,6 @@ iframe {
 }
 .l-admin__list {
   display: table-cell;
-  font-size: 15px;
   vertical-align: top;
   width: 170px;
 }
@@ -2547,19 +2551,64 @@ iframe {
   background: #2089f4;
 }
 
+.cke_wysiwyg_frame, .cke_wysiwyg_div {
+  display: block;
+}
 .alert-danger {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1
 }
 
+.ckeditor__div{
+  color: #fff;
+  font-size: 14px;
+}
+
+.album-img{
+  float: left;
+  margin: 20px 0 5px 0;
+}
+
+.album-description{
+  float: left;
+  margin-top: 20px;
+}
+
+.album-artist{
+  text-align: left;
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 0 4px 10px;
+}
+
+.album-name{
+  color: #fff;
+  font-size: 28px;
+  text-transform: uppercase;
+  margin-left: 10px;
+}
+
+.album-about{
+  color: #fff;
+  font-size: 13px;
+  text-align: left;
+  margin: 10px 0 0 10px;
+}
+
+.album-description a{
+  text-decoration: none;
+  color: #fff;
+}
+
 @media (max-width: 960px) {
+  .concert-header-button {
+    float: none;
+  }
   .l-header__h {
     margin-top: 80px;
     font-size: 65px;
-  }
-  .user-cabinet {
-    float: none;
   }
   .logo {
     float: none;
@@ -2576,11 +2625,17 @@ iframe {
     width: 49%;
     float: right;
   }
+  #everywhere .l-sort__list {
+    overflow-y: scroll;
+  }
   #everything {
     width: 49%;
   }
   #everything .l-sort__header {
     display: block;
+  }
+  #everything .l-sort__list {
+    overflow-y: scroll;
   }
   .l-sort__everything {
     display: none;
@@ -2675,11 +2730,10 @@ iframe {
   .about-header_prev .about-header__link {
     padding: 5px 10px;
   }
-  .event-list_normal-medium {
-    margin-right: -30px;
-  }
-  .event-list_normal-medium {
+  .but-wrapper {
     width: 80%;
+    margin: 0 auto;
+    float: none;
   }
   .event-list__link {
     display: block;
@@ -2742,8 +2796,7 @@ iframe {
     white-space: nowrap;
   }
   .event-list_aside .event-list__item {
-    width: 100%;
-    max-width: 330px;
+    width: 330px;
     margin-right: 15px;
     white-space: normal;
     display: inline-block;
@@ -2756,6 +2809,55 @@ iframe {
     padding-top: 20px;
     padding-bottom: 40px;
   }
+  .event-list_normal-medium {
+    margin: 0 -15px;
+  }
+  .event-list_normal-medium .event-list__item {
+    padding: 0 15px;
+  }
+  .event-list_normal,
+  .l-event-dated__h {
+    margin-bottom: 30px;
+  }
+  .l-event-dated,
+  .l-events,
+  .l-filters {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .l-about {
+    padding-top: 30px;
+  }
+  .content-bg-white_margin-top {
+    padding-bottom: 30px;
+  }
+  .about-header_head {
+    margin-bottom: 77px;
+  }
+  #tab-1,
+  #tab-2,
+  #tab-3,
+  #tab-4,
+  #tab-5,
+  #tab-6 {
+    overflow-y: scroll;
+  }
+  #tabs-block-admin .r-tabs-nav {
+    display: none;
+  }
+  #tabs-block-admin .r-tabs-accordion-title {
+    display: block;
+  }
+  .l-admin {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  #tabs-block-admin .r-tabs-accordion-title.r-tabs-state-active {
+    display: block;
+  }
+  #tabs-block-admin .r-tabs-accordion-title.r-tabs-state-active .r-tabs-anchor {
+    background: #2089f4;
+  }
 }
 @media (max-width: 800px) {
   .l-header__h {
@@ -2763,7 +2865,6 @@ iframe {
     font-size: 50px;
   }
   .user-cabinet {
-    float: none;
     min-width: 190px;
   }
   .user-cabinet__head {
@@ -2784,33 +2885,42 @@ iframe {
   .content-bg-white_margin-top {
     padding-bottom: 40px;
   }
-  .event-list_normal-medium {
+  .but-wrapper {
     width: 90%;
   }
-  #tabs-block .r-tabs-accordion-title.r-tabs-state-active {
-    display: block;
+  .button_medium {
+    padding: 2px 18px;
+    font-size: 12px;
   }
 }
 @media (max-width: 700px) {
+  .navigation__items {
+    display: inline-block;
+    width: 100%;
+  }
+  #allTime .l-sort__list {
+    overflow-y: scroll;
+  }
   .l-header__h {
     font-size: 30px;
   }
   .l-header__text {
     font-size: 18px;
   }
-  .user-cabinet {
-    float: right;
-  }
   .navigation__items {
     display: none;
+    margin-top: 10px;
   }
   .navigation__item {
     display: block;
   }
+  .navigation__item:not(:last-child) {
+    margin-bottom: 5px;
+  }
   .navigation__burger {
     display: inline-block;
     float: left;
-    margin-top: 10px;
+    margin-top: 5px;
   }
   .button_big {
     padding: 15px 26px;
@@ -2839,10 +2949,12 @@ iframe {
     display: none;
   }
   #everything,
-  #everywhere,
-  #allTime {
+  #everywhere {
     width: 100%;
     margin-bottom: 15px;
+  }
+  #allTime {
+    width: 100%;
   }
   .gallery-group {
     text-align: center;
@@ -2854,6 +2966,7 @@ iframe {
   }
   .group-concerts-list__items {
     max-height: 400px;
+    overflow-y: scroll;
   }
   .about-header_head .about-header__link {
     font-size: 12px;
@@ -2863,6 +2976,7 @@ iframe {
   }
   .filtered-element .group-statistic__item {
     margin: 0;
+    margin-bottom: 5px;
   }
   .filtered-element .group-statistic__item_text {
     display: block;
@@ -2877,8 +2991,11 @@ iframe {
   .about-header_prev .group-statistic {
     width: 15%;
   }
-  .event-list_normal-medium {
+  .but-wrapper {
     width: 100%;
+    text-align: center;
+  }
+  .event-list_normal-medium {
     text-align: center;
   }
   .event-list_normal-medium .event-list__item {
@@ -2897,6 +3014,12 @@ iframe {
   .l-concert {
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+  .concert-header__list {
+    width: 100%;
+  }
+  .profile-form__item {
+    width: 100%;
   }
 }
 @media (max-width: 600px) {
@@ -2917,6 +3040,23 @@ iframe {
   }
   .about-header_prev .about-header__header {
     font-size: 20px;
+  }
+  .l-filters__item {
+    width: 100%;
+  }
+  .l-filters__item:not(:last-child) {
+    margin-right: 0;
+  }
+  .l-filters__select {
+    width: 100%;
+  }
+  .l-filters__label,
+  .selectize-input.items.full.has-options.has-items,
+  .selectize-dropdown [data-selectable] {
+    font-size: 16px;
+  }
+  .filtered-element {
+    padding: 15px 0;
   }
 }
 @media (max-width: 400px) {
@@ -2954,13 +3094,11 @@ iframe {
   .about-header_prev .about-header__style:nth-child(2) {
     display: inline-block;
   }
-  .concert-header__h {
-    font-size: 18px;
-  }
   .concert-header__country,
   .concert-header__date,
   .concert-header__price {
     font-size: 13px;
+    padding: 5px 0;
   }
   .concert-header__followers {
     font-size: 12px;
@@ -2981,5 +3119,28 @@ iframe {
   }
   .event-list_normal-big .event-list__group {
     font-size: 18px;
+  }
+  .sign-tabs-wrapper #tabs-block {
+    width: 100%;
+    overflow-y: scroll;
+    height: 100%;
+  }
+  .sign-tabs-wrapper {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  #closeBut {
+    width: 18px;
+    height: 18px;
+  }
+  .clock__item {
+    line-height: 55px;
+    font-size: 24px;
+  }
+  .clock__item:after {
+    font-size: 10px;
+  }
+  .clock__number {
+    width: 55px;
   }
 }

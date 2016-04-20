@@ -152,9 +152,15 @@ class Group
     public $isActive = true;
 
     /**
+     * @var File $imageFile Image File
+     *
      * @Vich\UploadableField(mapping="group_image", fileNameProperty="imageName", nullable=true)
      *
-     * @var File $imageFile Image File
+     *
+     * @Assert\Image(
+     *     minWidth = 500,
+     *     minHeight = 300
+     * )
      */
     private $imageFile;
 

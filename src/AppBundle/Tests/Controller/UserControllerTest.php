@@ -47,8 +47,8 @@ class UserControllerTest extends WebTestCase
         $crawler      = $this->client->request('GET', '/cabinet');
 
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $this->assertCount(1, $crawler->filter('table'));
-        $this->assertCount(11, $crawler->filter('tr#events'));
+        $this->assertCount(3, $crawler->filter('table'));
+        $this->assertCount(7, $crawler->filter('tr#events'));
     }
 
     /**

@@ -105,14 +105,15 @@ class UserController extends Controller
      */
     public function requestRightManagerAction(Request $request)
     {
-        $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         if (null === $user) {
             throw new UnauthorizedHttpException('Не зареєстрований');
         }
 
-        $form = $this->createForm('request_manager');
+        $form = $this->createForm('request_manager', null, [
+            'action' => $this->generateUrl('user_request_manager'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -120,30 +121,10 @@ class UserController extends Controller
             /** @var RequestManagerForm $requestManagerForm */
             $requestManagerForm = $form->getData();
 
-            $requestManager = (new RequestManager())
-                ->setFullName($requestManagerForm->getFullName())
-                ->setPhone($requestManagerForm->getPhone())
-                ->setText($requestManagerForm->getText())
-                ->setRequestedBy($user)
-                ->setCreatedBy($user)
-                ->setUpdatedBy($user);
+            $userService = $this->get('app.user');
+            $userService->saveRequestRightManager($requestManagerForm, $user);
 
-            $em->persist($requestManager);
-
-            foreach ($requestManagerForm->getGroups() as $group) {
-                $group = $em->getRepository('AppBundle:Group')->findOneBy([
-                    'slug' => $group->getSlug(),
-                ]);
-
-                $requestManagerGroup = (new RequestManagerGroup())
-                    ->setGroup($group)
-                    ->setRequestManager($requestManager);
-                $em->persist($requestManagerGroup);
-            }
-
-            $em->flush();
-
-            return $this->redirectToRoute('user_request_manager');
+            return $this->redirectToRoute('user_cabinet');
         }
 
         return $this->render('AppBundle:frontend/user:request-manager.html.twig', [

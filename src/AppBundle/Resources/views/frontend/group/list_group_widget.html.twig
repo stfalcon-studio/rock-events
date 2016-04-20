@@ -13,10 +13,9 @@
                     {% include '@App/frontend/group/bookmark_group.html.twig' with { 'group': group[0], 'userGroups': userGroups } %}
                 {% endif %}
                 <li class="group-statistic__item">
-                    <p id="fans" class="group-statistic__link group-statistic__link_fans">{{ group['likes'] }}</p></li>
+                    <p id="fans" class="group-statistic__link group-statistic__link_fans"><span>{{ group['likes'] }}</span> like</p></li>
                 <li class="group-statistic__item f-r">
-                    <a href="{{ path('group_show', { 'slug': group[0].slug }) }}" class="group-statistic__link group-statistic__but">See
-                                                                                                                                     more</a>
+                    <a href="{{ path('group_show', { 'slug': group[0].slug }) }}" class="group-statistic__link group-statistic__but">Детальніше</a>
                 </li>
             </ul>
         </div>

@@ -6,9 +6,9 @@
             <section class="event-list__details">
                 <h3 class="event-list__group">{{ event.name }}</h3>
                 <p class="event-list__place pin-icon-t">{{ event.city }}, {{ event.address }}</p>
-                <p class="event-list__time time-icon-t">{{ event.beginAt|date('F jS \\a\\t g:ia') }}</p>
+                <p class="event-list__time time-icon-t">{{ event.beginAt|localizeddate('full', 'none', app.request.locale) }}</p>
             </section>
-            <div class="event-list__but">See more</div>
+            <div class="event-list__but">Детальніше</div>
         </a>
     </li>
 {% endfor %}

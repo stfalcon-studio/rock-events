@@ -8,13 +8,11 @@
             <li class="user-cabinet__item">
                 <a href="{{ path('user_cabinet') }}#tab-1" class="user-cabinet__link profile-icon-t">Профіль</a></li>
             <li class="user-cabinet__item">
-                <a href="{{ path('user_cabinet') }}#tab-2" class="user-cabinet__link concert-icon-t">Найближчі
-                                                                                                     концерти</a>
+                <a href="{{ path('user_cabinet') }}#tab-2" class="user-cabinet__link concert-icon-t">Найближчіконцерти</a>
                 <a href="{{ path('user_cabinet') }}#tab-3" class="user-cabinet__link group-icon-t">Гурти</a>
                 <a href="{{ path('user_cabinet') }}#tab-4" class="user-cabinet__link genre-icon-t">Жанри</a></li>
             {% if is_granted('ROLE_MANAGER') %}
-                <li class="user-cabinet__item"><a href="" class="user-cabinet__link cabinet-icon-t">Кабінет
-                                                                                                    менеджера</a></li>
+                <li class="user-cabinet__item"><a href="{{ path('manager_cabinet_dashboard') }}" class="user-cabinet__link cabinet-icon-t">Кабінетменеджера</a></li>
             {% endif %}
             <li class="user-cabinet__item">
                 <a href="{{ path('fos_user_security_logout') }}" class="user-cabinet__link logout-icon-t">Вийти</a></li>

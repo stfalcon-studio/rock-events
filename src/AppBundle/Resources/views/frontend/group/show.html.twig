@@ -4,7 +4,7 @@
     <div class="l-breadcrumbs">
         <div class="content">
             <ul class="l-breadcrumbs__list">
-                <li class="l-breadcrumbs__item"><a href="{{ path('group_list') }}" class="l-breadcrumbs__link">Groups</a></li>
+                <li class="l-breadcrumbs__item"><a href="{{ path('group_list') }}" class="l-breadcrumbs__link">Гурти</a></li>
                 <li class="l-breadcrumbs__item"><a href="" class="l-breadcrumbs__link">{{ group.name }}</a></li>
             </ul>
         </div>
@@ -14,7 +14,7 @@
     <article>
         <header class="about-header about-header_head content">
             <div class="style-wrapper">
-                <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="{{ group.name }}" class="about-header__img" height="219">
+                <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="{{ group.name }}" class="about-header__img" height="275">
                 <div class="style-list-wrapper">
                     <ul class="about-header__styles">
                         {% for genre in genres %}
@@ -43,45 +43,31 @@
                 {{ render(controller('AppBundle:Frontend/Group:nextConcerts', { 'group' : group } )) }}
                 <div id="tabs-block" class="about-body">
                     <ul  class="about-body__list">
-                        <li class="about-body__item"><a href="#tab-1" class="about-body__link active">About band</a></li>
-                        <li class="about-body__item"><a href="#tab-3" class="about-body__link"> Similar artists </a></li>
-                        <li class="about-body__item"><a href="#tab-4" class="about-body__link"> Comments </a></li>
+                        <li class="about-body__item"><a href="#tab-1" class="about-body__link active">Про гурт</a></li>
+                        <li class="about-body__item"><a href="#tab-2" class="about-body__link active">Альбоми</a></li>
+                        <li class="about-body__item"><a href="#tab-3" class="about-body__link">Схожі гурти</a></li>
+                        <li class="about-body__item"><a href="#tab-4" class="about-body__link">Коментарі</a></li>
                     </ul>
                     <div id="tab-1">
-                       <p>{{ group.description }}</p>
-                        <ul class="gallery">
-                            <li class="gallery__item  gallery__item_small">
-                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
-                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img">
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_small">
-                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
-                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img" rel="gallery">
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_small">
-                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
-                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img">
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_small">
-                                <a href="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__fancy-link gallery__item_img-grad fancybox" rel="gallery">
-                                    <img src="{{ vich_uploader_asset(group, 'imageFile') }}" alt="" class="gallery__img">
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_big">
-                                <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
-                                    <video poster="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__video"></video>
-                                </a>
-                            </li>
-                            <li class="gallery__item  gallery__item_big">
-                                <a href="#video1" class="gallery__fancy-link gallery__item_video-grad fancybox" rel="gallery">
-                                    <video poster="{{ vich_uploader_asset(group, 'imageFile') }}" class="gallery__video"></video>
-                                </a>
-                            </li>
+                        <div class="ckeditor__div">
+                            {{ group.description | raw }}
+                        </div>
+                    </div>
+                    <div id="tab-2">
+                        <ul class="gallery-group">
+                            {% for album in albums %}
+                                <li class="gallery-group__item">
+                                    <a href="{{ path('album_group_show', { slug: group.slug, album: album.name}) }}" class="gallery-group__link">
+                                        <img src="{{ (attribute(album.image[3], '#text')) }}" alt="{{ album.name }}" class="gallery-group__img" height="288px">
+                                        <section class="gallery-group__description">
+                                            <h3 class="gallery-group__group-name">{{ album.name }}</h3>
+                                        </section>
+                                    </a>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
+
                     <div id="tab-3">
                         <ul class="gallery-group">
                             {% for similar_group in similar_groups %}
@@ -91,7 +77,6 @@
                                         <section class="gallery-group__description">
                                             <h3 class="gallery-group__group-name">{{ similar_group.name }}</h3>
                                         </section>
-
                                     </a>
                                     {{ render(controller('AppBundle:Frontend/Group:genreTags', { 'group' : similar_group } )) }}
                                 </li>

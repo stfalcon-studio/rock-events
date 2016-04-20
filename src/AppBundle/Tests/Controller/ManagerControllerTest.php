@@ -72,38 +72,7 @@ class ManagerControllerTest extends WebTestCase
         ];
         $this->client->request('POST', '/manager/group/create', $data);
 
-        $this->assertStatusCode(Response::HTTP_OK, $this->client);
-    }
-
-    /**
-     * Test update group action
-     */
-    public function testUpdateGroupAction()
-    {
-        $fixtures = $this->loadFixtures([
-            'AppBundle\DataFixtures\ORM\LoadUserData',
-            'AppBundle\DataFixtures\ORM\LoadGroupData',
-            'AppBundle\DataFixtures\ORM\LoadManagerGroupData',
-        ])->getReferenceRepository();
-
-        $this->loginAs($fixtures->getReference('user-manager'), 'main');
-        $this->client = static::makeClient();
-
-        //GET
-        $crawler = $this->client->request('GET', '/manager/group/bmth/update');
-        $this->assertStatusCode(Response::HTTP_OK, $this->client);
-
-        //PUT
-        $token = $crawler->filter('[name="group[_token]"]')->attr('value');
-        $data  = [
-            'group' => [
-                'name'   => 'BMTH',
-                '_token' => $token,
-            ],
-        ];
-        $this->client->request('PUT', '/manager/group/bmth/update', $data);
-
-        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+        $this->assertStatusCode(Response::HTTP_FOUND, $this->client);
     }
 
     /**

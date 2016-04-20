@@ -46,34 +46,21 @@ class ManagerController extends Controller
      */
     public function addGroupAction(Request $request)
     {
-        $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        $form = $this->createForm('group');
+        $form = $this->createForm('group', null, [
+            'action' => $this->generateUrl('manager_cabinet_group_create'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             /** @var \AppBundle\Form\Entity\Group $groupForm */
             $groupForm = $form->getData();
 
-            $group = (new Group())
-                ->setName($groupForm->getName())
-                ->setDescription($groupForm->getDescription())
-                ->setCountry($groupForm->getCountry())
-                ->setCity($groupForm->getCity())
-                ->setSlug($groupForm->getName())
-                ->setImageName($groupForm->getImageName())
-                ->setFoundedAt((new \DateTime())->setDate($groupForm->getFoundedAt(), 1, 1))
-                ->setCreatedBy($user)
-                ->setUpdatedBy($user);
+            $managerService = $this->get('app.manager');
+            $managerService->saveGroupOnCreate($groupForm, $user);
 
-            $managerGroup = (new ManagerGroup())
-                ->setGroup($group)
-                ->setManager($user);
-
-            $em->persist($group);
-            $em->persist($managerGroup);
-            $em->flush();
+            return $this->redirectToRoute('manager_cabinet_dashboard');
         }
 
         return $this->render('AppBundle:frontend/manager:group_create.html.twig', [
@@ -97,10 +84,9 @@ class ManagerController extends Controller
         $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        $groupForm = (new GroupForm())
-            ->setName($group->getName())
-            ->setDescription($group->getDescription())
-            ->setFoundedAt($group->getFoundedAt()->format('Y'));
+        $managerService = $this->get('app.manager');
+
+        $groupForm = $managerService->convertToGroupForm($group);
 
         $form = $this->createForm(new GroupType($em), $groupForm);
         $form->handleRequest($request);
@@ -109,27 +95,9 @@ class ManagerController extends Controller
             /** @var \AppBundle\Form\Entity\Group $groupForm */
             $groupForm = $form->getData();
 
-            $managerGroup = $em->getRepository('AppBundle:ManagerGroup')->findOneBy([
-                'group' => $group,
-            ]);
+            $managerService->saveGroupOnUpdate($groupForm, $group, $user);
 
-            $group->setName($groupForm->getName())
-                  ->setDescription($groupForm->getDescription())
-                  ->setCountry($groupForm->getCountry())
-                  ->setCity($groupForm->getCity())
-                  ->setSlug($groupForm->getName())
-                  ->setFoundedAt((new \DateTime())->setDate($groupForm->getFoundedAt(), 1, 1))
-                  ->setCreatedBy($user)
-                  ->setUpdatedBy($user);
-
-            $managerGroup->setGroup($group);
-
-            $em->persist($group);
-            $em->persist($managerGroup);
-
-            $em->flush();
-
-            return $this->redirectToRoute('manager_cabinet_groups_list');
+            return $this->redirectToRoute('manager_cabinet_dashboard');
         }
 
         return $this->render('AppBundle:frontend/manager:group_update.html.twig', [
@@ -184,44 +152,19 @@ class ManagerController extends Controller
      */
     public function addEventAction(Request $request)
     {
-        $em   = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        $form = $this->createForm('event_groups');
+        $form = $this->createForm('event_groups', null, [
+            'action' => $this->generateUrl('manager_cabinet_event_create'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             /** @var EventForm $eventForm */
             $eventForm = $form->getData();
 
-            $event = (new Event())
-                ->setName($eventForm->getName())
-                ->setDescription($eventForm->getDescription())
-                ->setCountry($eventForm->getCountry())
-                ->setCity($eventForm->getCity())
-                ->setAddress($eventForm->getAddress())
-                ->setBeginAt($eventForm->getBeginAt())
-                ->setEndAt($eventForm->getEndAt())
-                ->setSlug($eventForm->getName())
-                ->setCreatedBy($user)
-                ->setUpdatedBy($user);
-
-            $em->persist($event);
-
-            /** @var Group $groupElement */
-            foreach ($eventForm->getGroups() as $groupElement) {
-                $group = $em->getRepository('AppBundle:Group')->findOneBy([
-                    'slug' => $groupElement->getSlug(),
-                ]);
-
-                $eventGroups = (new EventGroup())
-                    ->setEvent($event)
-                    ->setGroup($group);
-
-                $em->persist($eventGroups);
-            }
-
-            $em->flush();
+            $managerService = $this->get('app.manager');
+            $managerService->saveEventOnCreate($eventForm, $user);
 
             return $this->redirectToRoute('manager_cabinet_dashboard');
         }
@@ -244,63 +187,24 @@ class ManagerController extends Controller
      */
     public function updateEvent(Event $event, Request $request)
     {
-        $em   = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
+        $user   = $this->getUser();
+        $groups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByEvent($event);
 
-        $groupRepository = $em->getRepository('AppBundle:Group');
+        $managerService = $this->get('app.manager');
 
-        $groups = $groupRepository->findGroupsByEvent($event);
+        $eventForm = $managerService->convertToEventForm($event);
 
-        $eventForm = (new EventForm())
-            ->setName($event->getName())
-            ->setDescription($event->getDescription())
-            ->setCountry($event->getCountry())
-            ->setCity($event->getCity())
-            ->setAddress($event->getAddress())
-            ->setBeginAt($event->getBeginAt())
-            ->setEndAt($event->getEndAt())
-            ->setGroups($groups);
-
-        $form = $this->createForm('event_groups', $eventForm);
+        $form = $this->createForm('event_groups', $eventForm, [
+            'action' => $this->generateUrl('manager_cabinet_event_update', ['slug' => $event->getSlug()]),
+        ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
             /** @var EventForm $eventForm */
-            $eventFormData = $form->getData();
+            $eventForm = $form->getData();
 
-            /** @var Event $event */
-            $event
-                ->setName($eventFormData->getName())
-                ->setDescription($eventFormData->getDescription())
-                ->setCountry($eventFormData->getCountry())
-                ->setCity($eventFormData->getCity())
-                ->setAddress($eventFormData->getAddress())
-                ->setBeginAt($eventFormData->getBeginAt())
-                ->setEndAt($eventFormData->getEndAt())
-                ->setSlug($eventFormData->getName())
-                ->setCreatedBy($event->getCreatedBy())
-                ->setUpdatedBy($user);
+            $managerService->saveEventOnUpdate($eventForm, $event, $user);
 
-            $em->persist($event);
-
-            $groups = $groupRepository->findGroupsByEvent($event);
-
-            /** @var Group $groupElement */
-            foreach ($eventForm->getGroups() as $groupElement) {
-                $group = $groupRepository->findOneBy([
-                    'slug' => $groupElement->getSlug(),
-                ]);
-
-                if (!in_array($group, $groups)) {
-                    $eventGroups = (new EventGroup())
-                        ->setEvent($event)
-                        ->setGroup($group);
-
-                    $em->persist($eventGroups);
-                }
-            }
-            $em->flush();
-
-            return $this->redirectToRoute('manager_cabinet_events_list');
+            return $this->redirectToRoute('manager_cabinet_dashboard');
         }
 
         return $this->render('AppBundle:frontend/manager:event_update.html.twig', [

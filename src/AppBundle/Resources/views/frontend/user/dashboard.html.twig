@@ -6,26 +6,26 @@
         <ul class="l-admin__list">
             <li class="l-admin__item">
                 <a href="#tab-1" class="l-admin__link ">
-                    <p class="l-admin__icon profile-icon-big-t"></p><span class="l-admin__head">Profile</span>
+                    <p class="l-admin__icon profile-icon-big-t"></p><span class="l-admin__head">Профіль</span>
                 </a>
             </li>
             <li class="l-admin__item">
                 <a href="#tab-2" class="l-admin__link">
-                    <p class="l-admin__icon concert-icon-big-t"></p><span class="l-admin__head">Next concerts</span>
+                    <p class="l-admin__icon concert-icon-big-t"></p><span class="l-admin__head">Майбутні концерти</span>
                 </a>
             </li>
             <li class="l-admin__item">
                 <a href="#tab-3" class="l-admin__link ">
-                    <p class="l-admin__icon group-icon-big-t"></p> <span class="l-admin__head">Groups </span></a>
+                    <p class="l-admin__icon group-icon-big-t"></p> <span class="l-admin__head">Гурти</span></a>
             </li>
             <li class="l-admin__item">
                 <a href="#tab-4" class="l-admin__link ">
-                    <p class="l-admin__icon genre-icon-big-t"></p><span class="l-admin__head"> Genre</span> </a>
+                    <p class="l-admin__icon genre-icon-big-t"></p><span class="l-admin__head"> Жанри</span> </a>
             </li>
             {% if is_granted('ROLE_MANAGER') == false %}
                 <li class="l-admin__item">
                     <a href="#tab-5" class="l-admin__link  ">
-                        <p class="l-admin__icon cabinet-icon-big-t"></p><span class="l-admin__head">Manager</span> </a>
+                        <p class="l-admin__icon cabinet-icon-big-t"></p><span class="l-admin__head">Менеджер</span> </a>
                 </li>
             {% endif %}
         </ul>
@@ -47,5 +47,6 @@
     {{ parent() }}
     <script src="{{ asset('js/group.js') }}"></script>
     <script src="{{ asset('js/genre.js') }}"></script>
+    <script src="{{ asset('js/add_groups.js') }}"></script>
 {% endblock %}
 

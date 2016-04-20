@@ -15,6 +15,22 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
+     * @var string $imageFixturesDirectory Image fixtures directory
+     */
+    private $imageFixturesDirectory = '';
+
+    /** @var string $imageWebDirectory Image Web directory */
+    private $imageWebDirectory = __DIR__.'/../../../../web/images/groups';
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->imageFixturesDirectory = __DIR__.'/../../Resources/fixtures/images/groups';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getDependencies()
@@ -34,9 +50,29 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
          */
         $userAdmin = $this->getReference('user-admin');
 
+        $this->prepareDirectories();
+        $this->prepareImages();
+
         $group1 = (new Group())
             ->setName('Enter Shikari')
-            ->setDescription('Enter Shikari (стилизованно ΣΠΤΣR SHΦΚΔRΦ) — британская пост-хардкор группа, образованная в 2003 году, в городе Сент-Олбанс. Стиль коллектива сочетает пост-хардкор с элементами различных электронных жанров, таких как дабстеп, транс и иногда драм-н-бэйс.')
+            ->setDescription(
+<<<HTML
+<p>
+Enter Shikari (стилизованно &Sigma;&Pi;&Tau;&Sigma;R SH&Phi;&Kappa;&Delta;R&Phi;) &mdash; британская пост-хардкор группа, образованная в 2003 году, в городе Сент-Олбанс. Стиль коллектива сочетает пост-хардкор с элементами различных электронных жанров, таких как дабстеп, транс и иногда драм-н-бэйс.&nbsp;
+</p>
+<p>
+Дебютный альбом Enter Shikari, Take to the Skies, был выпущен 19 марта 2007 и достиг четвёртой позиции в британском хит-параде UK Albums Chart. Их второй диск, Common Dreads, вышел 15 июня 2009 и дебютировал в UK Albums Chart с шестнадцатой строчки. Их третья пластинка, A Flash Flood Of Colour, была издана 16 января 2012 и дебютировала с четвёртой строчки хит-парада. Группа завоевала большое количество поклонников благодаря своей страничке на сайте MySpace, где они публиковали все свои работы.</p><p>&laquo;Шикари&raquo; на языках фарси, хинди, непали, урду и панджаби значит &laquo;охотник&raquo;[источник не указан 785 дней]. Это персонаж в пьесе, которую вокалист коллектива Роутон Рейнольдс написал ещё до создания группы. Шикари является метафорой позитивной агрессии. Он есть сила в человеке, надежда, дающая энергию охотиться за панацеей от проблем[источник не указан 785 дней].</p><p>Члены группы являются приверженцами DIY-этики.
+</p>
+<p>
+19 января 2015 года вышел 4-й студийный альбом под названием &laquo;The Mindsweep&raquo;.</p>
+<p>
+<img alt="" src="/images/groups/shikari1.jpg" style="height:200px; width:300px" />
+<img alt="" src="/images/groups/shikari2.jpg" style="height:200px; width:300px" />
+<img alt="" src="/images/groups/shikari3.jpg" style="height:200px; width:300px" />
+<img alt="" src="/images/groups/shikari4.jpg" style="height:200px; width:300px" />
+</p>
+HTML
+)
             ->setCountry('Великобританія')
             ->setCity('Гартфордшир')
             ->setFoundedAt(new \DateTime('2003-1-1 0:0:0'))
@@ -50,7 +86,18 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
 
         $group2 = (new Group())
             ->setName('Bring me the horizon')
-            ->setDescription('На данный момент группа имеет 5 выпущенных полноформатных альбомов и 1 мини-альбом, ставший их дебютным релизом. На протяжении карьеры участники старались экспериментировать со звучанием: ранние релизы имели более тяжелый звук и были классифицированы как дэткор, металкор и маткор, в настоящее же время в звучание группы добавились элементы мелодичного хардкора, альтернативного, электронного и пост-рока. Изначально, бессменный вокалист и фронтмен Оливер Сайкс владел лишь экстремальным вокалом, но позже освоил традиционный и значительно увеличил его присутствие в песнях. В 2013 году был выпущен альбом «Sempiternal», принесший группе новую волну популярности и открывший ей перспективы выступления на аренах в качестве хэдлайнера. На следующем альбоме That\'s the Spirit, вышедшем в 2015 году, группа продолжила творческие эксперименты, отказавшись от привычного металкор и пост-хардкор звучания в пользу альтернативного рока.[1]')
+            ->setDescription(
+<<<HTML
+<p>
+Bring Me The Horizon (також BMTH) - англійський металкор гурт з міста Шеффілда, заснований в 2004 році. В даний час група складається з вокаліста Олівера Сайкса, гітариста Лі Малії, басиста Метта Кіна, барабанщика Метта Ніколлса і клавішника Джордана Фіша. На даний момент гурт підписаний на глобальний лейбл RCA Records та Epitaph Records по США. На початку творчості гурт грав в стилі дезкор але згодом вони перейшли на металкор. А їхні останні сингли (&quot;Drown&quot; та &quot;Don&#39;t Look Down&quot;) орієнтуються на менш важких жанрах рок-музики.</p>
+<p>
+<img alt="" src="/images/groups/bring1.jpg" style="height:250px; width:375px" />
+<img alt="" src="/images/groups/bring2.jpg" style="height:250px; width:375px" />
+<img alt="" src="/images/groups/bring3.jpg" style="height:250px; width:375px" />
+<img alt="" src="/images/groups/bring4.jpg" style="height:250px; width:375px" />
+</p>
+HTML
+)
             ->setCountry('Великобританія')
             ->setCity('Шеффілд')
             ->setFoundedAt(new \DateTime('2004-1-1 0:0:0'))
@@ -64,7 +111,29 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
 
         $group3 = (new Group())
             ->setName('Jinjer')
-            ->setDescription('Jinjer — украинская метал-группа, основанная в 2009 году в городе Горловка, Донецкой области. В их музыке сочетаются элементы прогрессивного металкора, грув-метала и прогрессивного дэт-метала. С момента существования группа выпустила один полноформатный альбом, два мини-альбома, пять синглов и 5 клипов. После издания полноформатного альбома стиль группы сместился более в сторону дэт-метала.')
+            ->setDescription(
+<<<HTML
+<p>
+Jinjer &mdash; украинская метал-группа, основанная в 2009 году в городе Горловка, Донецкой области. В их музыке сочетаются элементы прогрессивного металкора, грув-метала и прогрессивного дэт-метала. С момента существования группа выпустила один полноформатный альбом, два мини-альбома, пять синглов и 5 клипов. После издания полноформатного альбома стиль группы сместился более в сторону дэт-метала.</p>
+<p>
+<span style="font-size:18px">
+<strong>Склад групи:</strong>
+</span>
+</p>
+<ul>
+<li>Тетяна Шмайлюк - вокал&nbsp;</li>
+<li>Роман Ібрамхалілов - гітара</li>
+<li>Євген Мантулін - ударні</li>
+<li>Євген Абдюханов - бас-гітара</li>
+</ul>
+<p>
+<img alt="" src="/images/groups/jinjer1.jpg" style="height:250px; width:375px" />
+<img alt="" src="/images/groups/jinjer2.jpg" style="height:250px; width:375px" />
+<img alt="" src="/images/groups/jinjer3.jpg" style="height:250px; width:375px" />
+<img alt="" src="/images/groups/jinjer4.jpg" style="height:250px; width:375px" />
+</p>
+HTML
+)
             ->setCountry('Україна')
             ->setCity('Горлівка')
             ->setFoundedAt(new \DateTime('2009-1-1 0:0:0'))
@@ -182,5 +251,48 @@ class LoadGroupData extends AbstractFixture implements DependentFixtureInterface
         $this->setReference('group-somali', $group11);
 
         $manager->flush();
+    }
+
+    /**
+     * Prepare directories
+     */
+    private function prepareDirectories()
+    {
+        if (!file_exists($this->imageWebDirectory)) {
+            mkdir($this->imageWebDirectory, 0777, true);
+        }
+    }
+
+    /**
+     * Prepare images
+     */
+    private function prepareImages()
+    {
+        //Main images
+        copy($this->imageFixturesDirectory.'/shikari.jpg', $this->imageWebDirectory.'/shikari.jpg');
+        copy($this->imageFixturesDirectory.'/bring.jpg', $this->imageWebDirectory.'/bring.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer.jpg', $this->imageWebDirectory.'/jinjer.jpg');
+        copy($this->imageFixturesDirectory.'/anti-flag.jpg', $this->imageWebDirectory.'/anti-flag.jpg');
+        copy($this->imageFixturesDirectory.'/rhcp.jpg', $this->imageWebDirectory.'/rhcp.jpg');
+        copy($this->imageFixturesDirectory.'/ffdp.jpg', $this->imageWebDirectory.'/ffdp.jpg');
+        copy($this->imageFixturesDirectory.'/coldplay.jpg', $this->imageWebDirectory.'/coldplay.jpg');
+        copy($this->imageFixturesDirectory.'/onerepublic.jpg', $this->imageWebDirectory.'/onerepublic.jpg');
+        copy($this->imageFixturesDirectory.'/imagine-dragons.jpg', $this->imageWebDirectory.'/imagine-dragons.jpg');
+        copy($this->imageFixturesDirectory.'/torvald.jpg', $this->imageWebDirectory.'/torvald.jpg');
+        copy($this->imageFixturesDirectory.'/somali.jpg', $this->imageWebDirectory.'/somali.jpg');
+
+        //Additional images
+        copy($this->imageFixturesDirectory.'/bring1.jpg', $this->imageWebDirectory.'/bring1.jpg');
+        copy($this->imageFixturesDirectory.'/bring2.jpg', $this->imageWebDirectory.'/bring2.jpg');
+        copy($this->imageFixturesDirectory.'/bring3.jpg', $this->imageWebDirectory.'/bring3.jpg');
+        copy($this->imageFixturesDirectory.'/bring4.jpg', $this->imageWebDirectory.'/bring4.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer1.jpg', $this->imageWebDirectory.'/jinjer1.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer2.jpg', $this->imageWebDirectory.'/jinjer2.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer3.jpg', $this->imageWebDirectory.'/jinjer3.jpg');
+        copy($this->imageFixturesDirectory.'/jinjer4.jpg', $this->imageWebDirectory.'/jinjer4.jpg');
+        copy($this->imageFixturesDirectory.'/shikari1.jpg', $this->imageWebDirectory.'/shikari1.jpg');
+        copy($this->imageFixturesDirectory.'/shikari2.jpg', $this->imageWebDirectory.'/shikari2.jpg');
+        copy($this->imageFixturesDirectory.'/shikari3.jpg', $this->imageWebDirectory.'/shikari3.jpg');
+        copy($this->imageFixturesDirectory.'/shikari4.jpg', $this->imageWebDirectory.'/shikari4.jpg');
     }
 }

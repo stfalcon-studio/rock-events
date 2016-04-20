@@ -87,12 +87,15 @@ class GroupController extends Controller
         //Delete selected group
         unset($similarGroups[array_search($group, $similarGroups)]);
 
+        $albums = $this->get('app.group_api')->findAlbumsByGroup($group);
+
         if (null === $user) {
             return $this->render('AppBundle:frontend\group:show.html.twig', [
                 'group'          => $group,
                 'genres'         => $genres,
                 'count_like'     => $groupCountLikes['likes'],
                 'similar_groups' => $similarGroups,
+                'albums'         => $albums,
             ]);
         }
 
@@ -104,6 +107,27 @@ class GroupController extends Controller
             'count_like'     => $groupCountLikes['likes'],
             'similar_groups' => $similarGroups,
             'userGroups'     => $userGroups,
+            'albums'         => $albums,
+        ]);
+    }
+
+    /**
+     * Album group show
+     *
+     * @param Group  $group Group
+     * @param string $album Album
+     *
+     * @return Response
+     *
+     * @Route("/album/{slug}/{album}", name="album_group_show")
+     * @ParamConverter("group", class="AppBundle:Group")
+     */
+    public function albumGroupAction($group, $album)
+    {
+        $album = $this->get('app.group_api')->findAlbumGroup($group, $album);
+
+        return $this->render('AppBundle:frontend/group:album.html.twig', [
+            'album' => $album,
         ]);
     }
 
@@ -155,6 +179,7 @@ class GroupController extends Controller
         $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findActualEventsByGroup($group);
 
         return $this->render('AppBundle:frontend/group:next_concert.html.twig', [
+            'group'  => $group,
             'events' => $events,
         ]);
     }
@@ -293,21 +318,15 @@ class GroupController extends Controller
 
         $user = $this->getUser();
 
-        $groupRepository = $this->getDoctrine()->getRepository('AppBundle:Group');
-
-        $genre   = $request->query->get('genre');
-        $country = $request->query->get('country');
-        $city    = $request->query->get('city');
-        $like    = $request->query->get('like');
-
-        $groups = $groupRepository->findGroupsByFilter($genre, $country, $city, $like);
+        $groupService = $this->get('app.group');
+        $groups       = $groupService->findGroupsByFilter($request);
 
         if (null === $user) {
             $template = $this->renderView('AppBundle:frontend/group:list_group_widget.html.twig', [
                 'groups' => $groups,
             ]);
         } else {
-            $userGroups = $groupRepository->findGroupsByUser($user);
+            $userGroups = $this->getDoctrine()->getRepository('AppBundle:Group')->findGroupsByUser($user);
             $template   = $this->renderView('AppBundle:frontend/group:list_group_widget.html.twig', [
                 'groups'     => $groups,
                 'userGroups' => $userGroups,

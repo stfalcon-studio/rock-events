@@ -1,4 +1,35 @@
 services:
+    app.event:
+        class: AppBundle\Service\EventService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+
+    app.group:
+        class: AppBundle\Service\GroupService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+
+    app.group_api:
+        class: AppBundle\Service\GroupApiService
+        arguments:
+            - '%last_fm_api_url%'
+            - '%last_fm_key%'
+
+    app.manager:
+        class: AppBundle\Service\ManagerService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+
+    app.user:
+        class: AppBundle\Service\UserService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+
+    app.entity_listener.request_manager:
+        class: AppBundle\EntityListener\RequestManagerListener
+        tags:
+            -  { name: doctrine.orm.entity_listener }
+
     app.vich_uploader_directory_namer:
         class: AppBundle\Service\DirectoryNamerService
 
@@ -8,7 +39,3 @@ services:
             - "@fos_user.user_manager"
             - { facebook: facebookId, google: googleId, vk: vkId }
 
-    app.entity_listener.request_manager:
-        class: AppBundle\EntityListener\RequestManagerListener
-        tags:
-            -  { name: doctrine.orm.entity_listener }
