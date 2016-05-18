@@ -357,7 +357,7 @@ class EventRepository extends EntityRepository
                       'now'    => (new \DateTime())->format('Y-m-d H:i:s'),
                   ])
                   ->distinct('e')
-                  ->setMaxResults(5)
+                  ->setMaxResults($limit)
                   ->getQuery()
                   ->getResult();
     }

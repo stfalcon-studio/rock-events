@@ -17,3 +17,11 @@
         </div>
     </header>
 {% endblock %}
+{% block footer_menu %}
+    <ul class="navigation__items">
+        <li class="navigation__item"><a href="{{ path('event_index') }}" class="navigation__link">Головна</a></li>
+        <li class="navigation__item"><a href="{{ path('event_list') }}" class="navigation__link">Концерти</a></li>
+        <li class="navigation__item"><a href="{{ path('group_list') }}" class="navigation__link">Гурти</a></li>
+        <li class="navigation__item"><a href="{{ path('genre_list') }}" class="navigation__link active">Жанри</a></li>
+    </ul>
+{% endblock %}

@@ -38,6 +38,21 @@
             <section class="concert-body">
                 <div class="ckeditor__div">
                     {{ event.description | raw }}
+                    {% set groups = event.eventGroups %}
+                    {% if groups|length>1 %}
+                        Cписок гуртів:
+                        <ul>
+                            {% for group in groups %}
+                                <li>
+                                    <a href="{{ path('group_show', { 'slug': group.group.slug }) }}" class="about-header__group">
+                                        {{ group.group.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <a href="{{ path('group_show', { 'slug': groups.get(0).group.slug }) }}" class="about-header__group">Профіль гурту</a>
+                    {% endif %}
                 </div>
             </section>
             <aside class="concert-sidebar f-l">
