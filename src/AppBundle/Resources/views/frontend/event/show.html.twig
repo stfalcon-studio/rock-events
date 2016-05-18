@@ -38,9 +38,6 @@
             <section class="concert-body">
                 <div class="ckeditor__div">
                     {{ event.description | raw }}
-                </div>
-                <div class="ckeditor__div">
-                    {{ event.description | raw }}
                     {% set groups = event.eventGroups %}
                     {% if groups|length>1 %}
                         Cписок гуртів:
