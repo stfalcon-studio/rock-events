@@ -176,16 +176,6 @@ $(window).bind('load resize', function () {
         })
     }
 })();
-//for like active
-(function () {
-    if (!($('.like-icon-t').length > 0)) {
-        return;
-    } else {
-        $('.like-icon-t').click(function () {
-            $(this).toggleClass('active');
-        });
-    }
-})();
 var elem = $(".clock__number");
 if (elem.length) {
     var days = elem.eq(0);
