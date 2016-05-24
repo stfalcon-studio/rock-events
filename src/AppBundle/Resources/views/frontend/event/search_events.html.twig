@@ -1,0 +1,13 @@
+{% for event in events %}
+    <li class="search-item">
+        <a href="{{ path('event_show', { 'slug': event.slug }) }}">
+            <div>
+                <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.name }}" class="event-list__img" height="200px">
+            </div>
+            <h3>{{ event.name }}</h3>
+            <p class="text">
+                {{ event.description|striptags|slice(0, 200)  ~ '...' }}
+            </p>
+        </a>
+    </li>
+{% endfor %}

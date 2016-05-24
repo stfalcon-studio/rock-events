@@ -10,6 +10,7 @@ imports:
     - { resource: sonata/admin.yml }
     - { resource: vich_uploader.yml }
     - { resource: fm/elfinder.yml }
+    - { resource: fos/elastica.yml }
 
 parameters:
     locale: uk

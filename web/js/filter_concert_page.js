@@ -13,6 +13,8 @@ $(function () {
                 if (true === response.status) {
                     $ulElement.children().remove();
                     $ulElement.append(response.template);
+                } else {
+                    $('.errors ul').append('<li>Помилка, при обробці запиту</li>');
                 }
             }
         });

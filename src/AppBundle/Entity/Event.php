@@ -119,6 +119,8 @@ class Event
      *
      * @ORM\Column(type="datetime", nullable=true)
      *
+     * @Assert\GreaterThan("+6 hours")
+     *
      * @Gedmo\Versioned
      */
     private $beginAt;
@@ -127,6 +129,8 @@ class Event
      * @var \DateTime $endAt End At
      *
      * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @Assert\GreaterThan("+6 hours 15 minutes")
      *
      * @Gedmo\Versioned
      */

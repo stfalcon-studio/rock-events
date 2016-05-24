@@ -1,0 +1,20 @@
+<button class="search_button search-mob" xmlns="http://www.w3.org/1999/html">
+    <img class="icon-search" src="{{ asset('img/search.png') }}">
+</button>
+<div class="search-form-wrap">
+    <button class="search_button_form">
+        <img class="icon-search" src="{{ asset('img/search.png') }}">
+    </button>
+    <span class="close-form">
+        <img class="close-icon" src="{{ asset('img/close.png') }}">
+    </span>
+    <div class="wrapper-results">
+        <div>
+            <label for="search_searchPhrase" class="required">Пошук</label>
+            <input type="text" id="search_searchPhrase" name="search" required="required" class="search-phrase">
+        </div>
+        <ul id="search-results">
+        </ul>
+    </div>
+</div>
+

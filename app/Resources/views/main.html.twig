@@ -1,14 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
+    {% include 'search.html.twig' %}
     <header class="l-header l-header_bg-style">
         <div class="content">
             <nav class="navigation cf">
                 <div class="logo f-l"><a href="{{ path('event_index') }}" class="logo__link logo-icon"></a></div>
                 <ul class="navigation__items">
-                    <li class="navigation__item navigation__link_upper"><a href="{{ path('event_list') }}" class="navigation__link">Концерти</a></li>
-                    <li class="navigation__item navigation__link_upper"><a href="{{ path('group_list') }}" class="navigation__link">Гурти</a></li>
-                    <li class="navigation__item navigation__link_upper"><a href="{{ path('genre_list') }}" class="navigation__link">Жанри</a></li>
+                    <li class="navigation__item navigation__link_upper">
+                        <a href="{{ path('event_list') }}" class="navigation__link">Концерти</a></li>
+                    <li class="navigation__item navigation__link_upper">
+                        <a href="{{ path('group_list') }}" class="navigation__link">Гурти</a></li>
+                    <li class="navigation__item navigation__link_upper">
+                        <a href="{{ path('genre_list') }}" class="navigation__link">Жанри</a></li>
                 </ul>
                 {% include 'cabinet_menu_item.html.twig' %}
             </nav>

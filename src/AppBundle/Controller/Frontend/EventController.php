@@ -176,6 +176,45 @@ class EventController extends Controller
         ]);
     }
 
+    public function searchResultsAction($events)
+    {
+        return $this->render('AppBundle:frontend/event:search_events.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
+    /**
+     * Ajax search
+     *
+     * @param Request $request Request
+     *
+     * @throws BadRequestHttpException
+     *
+     * @return Event[]
+     *
+     * @Route("/event-search", name="event_search")
+     */
+    public function ajaxSearch(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('Не правильний запит');
+        }
+
+        $search = $request->query->get('search');
+
+        $events = $this->get('app.event')->findEventByNameWithElastic($search);
+
+        $template = $this->renderView('AppBundle:frontend/event:search_events.html.twig', [
+            'events' => $events,
+        ]);
+
+        return new JsonResponse([
+            'status'   => true,
+            'message'  => 'Success',
+            'template' => $template,
+        ]);
+    }
+
     /**
      * Ajax filter for event
      *

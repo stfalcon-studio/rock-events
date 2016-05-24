@@ -1,0 +1,43 @@
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        app:
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            app_analyzer:
+                                type: custom
+                                tokenizer: nGram
+                                filter   : [app_ngram, asciifolding, lowercase, snowball, worddelimiter]
+                        tokenizer:
+                            nGram:
+                                type:     "nGram"
+                                min_gram: 3
+                                max_gram: 10
+                        filter:
+                            snowball:
+                                type:     snowball
+                                language: English
+                            app_ngram:
+                                type: "nGram"
+                                min_gram: 3
+                                max_gram: 10
+                            worddelimiter :
+                                 type: word_delimiter
+            types:
+                event:
+                    mappings:
+                        name: ~
+                        description: ~
+                        begin_at: { type: date }
+                        city: ~
+                        is_active: { type: boolean }
+                    persistence:
+                        driver: orm
+                        model: AppBundle\Entity\Event
+                        provider: ~
+                        listener:
+                            immediate: ~
+                        finder: ~

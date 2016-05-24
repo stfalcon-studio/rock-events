@@ -7,6 +7,13 @@ use AppBundle\Entity\EventGroup;
 use AppBundle\Entity\GroupGenre;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Elastica\Filter\Term;
+use Elastica\Query;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Match;
+use Elastica\Query\QueryString;
+use Elastica\Query\Terms;
+use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,13 +29,19 @@ class EventService
     private $entityManager;
 
     /**
+     * @var TransformedFinder $finderEvent Finder event
+     */
+    private $finderEvent;
+
+    /**
      * Constructor
      *
      * @param EntityManager $em Entity manager
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, TransformedFinder $finderEvent)
     {
         $this->entityManager = $em;
+        $this->finderEvent   = $finderEvent;
     }
 
     /**
@@ -99,5 +112,34 @@ class EventService
         $date  = $request->query->get('date');
 
         return $this->entityManager->getRepository('AppBundle:Event')->findEventsByFilter($genre, $city, $date);
+    }
+
+    /**
+     * Find event by name with elastic search
+     *
+     * @param string $name Name
+     *
+     * @return Event[]
+     */
+    public function findEventByNameWithElastic($name)
+    {
+        $boolQuery   = new BoolQuery();
+        $query       = new Query();
+        $queryString = new QueryString();
+
+        $queryString->setQuery($name);
+        $queryString->setAnalyzer('app_analyzer');
+
+        $boolQuery->addMust($queryString);
+        $query->setQuery($queryString);
+        $query->addSort([
+            'begin_at' => [
+                'order' => 'desc',
+            ],
+        ]);
+
+        $events = $this->finderEvent->find($query);
+
+        return $events;
     }
 }

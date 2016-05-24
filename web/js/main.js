@@ -206,5 +206,30 @@ if (elem.length) {
         }, 1000 * 60);
     })();
 }
+$(function () {
+    $('.search_button').click(function () {
+        $('.search-form-wrap').show();
+    });
 
+    $('.close-icon').click(function () {
+        $('.search-form-wrap').hide();
+        $("input[name=search]").val('');
+        $("#search-results").children().remove();
+    });
+
+    $('.search_button_form').click(function () {
+        var search = $("input[name=search]").val();
+        var $ulElement = $("#search-results");
+        $.ajax({
+            url: 'event-search',
+            data: { 'search': search },
+            success: function (response) {
+                if (true === response.status) {
+                    $ulElement.children().remove();
+                    $ulElement.append(response.template);
+                }
+            }
+        });
+    });
+});
 

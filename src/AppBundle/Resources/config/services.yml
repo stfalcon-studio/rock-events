@@ -3,6 +3,7 @@ services:
         class: AppBundle\Service\EventService
         arguments:
             - @doctrine.orm.default_entity_manager
+            - @fos_elastica.finder.app.event
 
     app.group:
         class: AppBundle\Service\GroupService

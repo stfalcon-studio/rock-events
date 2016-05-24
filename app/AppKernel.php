@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new FM\ElfinderBundle\FMElfinderBundle(),
+            new FOS\ElasticaBundle\FOSElasticaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
