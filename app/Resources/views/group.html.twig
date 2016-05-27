@@ -5,14 +5,28 @@
     <header class="l-header l-header_grad-bg">
         <div class="content">
             <nav class="navigation cf">
-                <div><li class="logo f-l"><a href="{{ path('event_index') }}" class="logo__link logo-icon"></a></li></div>
+                <div>
+                    <li class="logo f-l"><a href="{{ path('event_index') }}" class="logo__link logo-icon"></a></li>
+                </div>
                 <ul class="navigation__items">
-                    <li class="navigation__item navigation__link_upper"><a href="{{ path('event_list') }}" class="navigation__link ">Концерти</a></li>
-                    <li class="navigation__item navigation__link_upper"><a href="{{ path('group_list') }}" class="navigation__link active">Гурти</a></li>
-                    <li class="navigation__item navigation__link_upper"><a href="{{ path('genre_list') }}" class="navigation__link">Жанри</a></li>
+                    <li class="navigation__item navigation__link_upper">
+                        <a href="{{ path('event_list') }}" class="navigation__link ">Концерти</a></li>
+                    <li class="navigation__item navigation__link_upper">
+                        <a href="{{ path('group_list') }}" class="navigation__link active">Гурти</a></li>
+                    <li class="navigation__item navigation__link_upper">
+                        <a href="{{ path('genre_list') }}" class="navigation__link">Жанри</a></li>
                 </ul>
                 {% include 'cabinet_menu_item.html.twig' %}
             </nav>
         </div>
     </header>
+{% endblock %}
+{% block footer_menu %}
+    <ul class="navigation__items">
+        <li class="navigation__item"><a href="{{ path('event_index') }}" class="navigation__link">Головна</a></li>
+        <li class="navigation__item"><a href="{{ path('event_list') }}" class="navigation__link">Концерти</a></li>
+        <li class="navigation__item"><a href="{{ path('group_list') }}" class="navigation__link active">Гурти</a>
+        </li>
+        <li class="navigation__item"><a href="{{ path('genre_list') }}" class="navigation__link">Жанри</a></li>
+    </ul>
 {% endblock %}

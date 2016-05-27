@@ -47,12 +47,14 @@
             <footer class="l-footer">
                 <div class="content cf">
                     <nav class="navigation navigation_dark f-l">
-                        <ul class="navigation__items">
-                            <li class="navigation__item"><a href="{{ path('event_index') }}" class="navigation__link active">Головна</a></li>
-                            <li class="navigation__item"><a href="{{ path('event_list') }}" class="navigation__link">Концерти</a></li>
-                            <li class="navigation__item"><a href="{{ path('group_list') }}" class="navigation__link">Гурти</a></li>
-                            <li class="navigation__item"><a href="{{ path('genre_list') }}" class="navigation__link">Жанри</a></li>
-                        </ul>
+                        {% block footer_menu %}
+                            <ul class="navigation__items">
+                                <li class="navigation__item"><a href="{{ path('event_index') }}" class="navigation__link active">Головна</a></li>
+                                <li class="navigation__item"><a href="{{ path('event_list') }}" class="navigation__link">Концерти</a></li>
+                                <li class="navigation__item"><a href="{{ path('group_list') }}" class="navigation__link">Гурти</a></li>
+                                <li class="navigation__item"><a href="{{ path('genre_list') }}" class="navigation__link">Жанри</a></li>
+                            </ul>
+                        {% endblock %}
                         <p class="copyright">&copy; RockEvents 2016</p>
                     </nav>
                     <ul class="contacts f-r">

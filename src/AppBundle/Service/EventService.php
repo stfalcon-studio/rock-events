@@ -76,6 +76,12 @@ class EventService
             Event::NUMBER
         );
 
+        foreach ($events as $key => $element) {
+            if ($event === $element) {
+                unset($events[$key]);
+            }
+        }
+
         return $events;
     }
 
