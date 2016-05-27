@@ -1,0 +1,12 @@
+services:
+    app.entity_listener.event:
+        class: AppBundle\EntityListener\EventListener
+        tags:
+            -  { name: doctrine.orm.entity_listener }
+        arguments: [ @old_sound_rabbit_mq.send_message_producer ]
+
+
+    app.entity_listener.request_manager:
+        class: AppBundle\EntityListener\RequestManagerListener
+        tags:
+            -  { name: doctrine.orm.entity_listener }
