@@ -22,7 +22,7 @@ class LoadUserData extends AbstractFixture
         $adminUser = (new User())
             ->setUsername('admin')
             ->setEnabled(true)
-            ->setEmail('admin@stfalcon.com')
+            ->setEmail('blackbullet@i.ua')
             ->setPlainPassword('qwerty');
         $this->setReference('user-admin', $adminUser);
         $manager->persist($adminUser);
@@ -31,7 +31,7 @@ class LoadUserData extends AbstractFixture
         $parserUser = (new User())
             ->setUsername('user')
             ->setEnabled(true)
-            ->setEmail('user@stfalcon.com')
+            ->setEmail('blackbullet@ukr.net')
             ->setPlainPassword('qwerty');
         $this->setReference('user-user', $parserUser);
         $manager->persist($parserUser);

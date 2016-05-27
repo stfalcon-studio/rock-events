@@ -19,6 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table(name="events")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
+ * @ORM\EntityListeners({"AppBundle\EntityListener\EventListener"})
  *
  * @Gedmo\Loggable
  *

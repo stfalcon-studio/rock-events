@@ -28,9 +28,11 @@ class LoadUserGroupData extends AbstractFixture implements DependentFixtureInter
     public function load(ObjectManager $manager)
     {
         /**
-         * @var User $user
+         * @var User $user1
+         * @var User $user2
          */
-        $user = $this->getReference('user-admin');
+        $user1 = $this->getReference('user-admin');
+        $user2 = $this->getReference('user-user');
 
 
          /** @var Group $groupEnterShikari */
@@ -41,19 +43,24 @@ class LoadUserGroupData extends AbstractFixture implements DependentFixtureInter
         $groupJinjer       = $this->getReference('group-jinjer');
 
         $userGroup1 = (new UserGroup())
-            ->setUser($user)
+            ->setUser($user1)
             ->setGroup($groupEnterShikari);
         $manager->persist($userGroup1);
 
         $userGroup2 = (new UserGroup())
-            ->setUser($user)
+            ->setUser($user1)
             ->setGroup($groupBMTH);
         $manager->persist($userGroup2);
 
         $userGroup3 = (new UserGroup())
-            ->setUser($user)
+            ->setUser($user1)
             ->setGroup($groupJinjer);
         $manager->persist($userGroup3);
+
+        $userGroup4 = (new UserGroup())
+            ->setUser($user2)
+            ->setGroup($groupBMTH);
+        $manager->persist($userGroup4);
 
         $manager->flush();
     }
